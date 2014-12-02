@@ -1,0 +1,5 @@
+fh_bingen_mhb:
+    resource: "@FHBingenMHBBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
