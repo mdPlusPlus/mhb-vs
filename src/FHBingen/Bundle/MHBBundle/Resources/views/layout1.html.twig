@@ -104,7 +104,7 @@
 <div id="header" class="navbar navbar-default navbar-fixed-top" style="min-height:75px">
     <div class="navbar-header">
         <a class="navbar-brand" href="#">
-            <img alt="Titel"  src="{{ asset('bundles/fhbingenmhb/images/logo.png') }}" alt="logo" />
+            <img src="{{ asset('bundles/fhbingenmhb/images/logo.png') }}" alt="logo" />
             <span>Modulhandbuch</span>
         </a>
     </div>
@@ -128,7 +128,7 @@
     <div id="sidebar-wrapper" class="col-md-2">
         <nav id="sidebar">
             <ul class="nav list-group nav-pills nav-stacked">
-                {% include 'FHBingenMHBBundle:navi:rendernavi.html.twig' %}
+                {% include 'FHBingenMHBBundle:Navigation:rendernavi.html.twig' %}
 
             </ul>
         </nav>
