@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Class DozentDemo
+ * Class DBTest
  * @package Acme\DemoBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="DBTest")
