@@ -21,7 +21,8 @@ TODO
 Deployment
 ==========
 
-- (?) Umleitung von 80 auf 8000
+- (?) Umleitung von 80 auf 8000 (apache sites-available ?)
+- (?) composer update macht .git history kaputt
 
 Voraussetzungen
 ----------------
