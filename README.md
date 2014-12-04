@@ -12,3 +12,4 @@ built on Symfony 2.5.*
 //TODO
 - .gitignore muss vermutlich noch angepasst werden wegen /web/bundles/
 (unter windows lokale kopie, soll auf server nur symlink sein, eventuell auf server löschen und update assets machen)
+- MySQL-Konfiguration auf Produktiv-VM anpassen (bzw Anleitung schreiben für Deployment)
