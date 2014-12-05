@@ -16,6 +16,10 @@ TODO
 (außerdem vllt parameters.yml drauf setzen)
 - MySQL-Konfiguration auf Produktiv-VM anpassen (bzw Anleitung schreiben für Deployment)
 - .htacces relativieren?
+- [mysqld]
+  collation-server = utf8_general_ci
+  character-set-server = utf8
+- 
 
 
 Deployment
