@@ -3,62 +3,117 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * User
- *
- * @ORM\Table()
+ * Class Studiengang
+ * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
+ * @ORM\Table(name="Users")
+ *
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(type="string", length=25, unique=true)
      */
-    private $name;
-
+    private $username;
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @ORM\Column(type="string", length=64)
      */
-    public function getId()
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=60, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    public function __construct()
     {
-        return $this->id;
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid(null, true));
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return User
+     * @inheritDoc
      */
-    public function setName($name)
+    public function getUsername()
     {
-        $this->name = $name;
-    
-        return $this;
+        return $this->username;
     }
 
     /**
-     * Get name
-     *
-     * @return string 
+     * @inheritDoc
      */
-    public function getName()
+    public function getSalt()
     {
-        return $this->name;
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
     }
 }
