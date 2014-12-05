@@ -30,11 +30,14 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="date", nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
     protected $Erstellungsdatum;
 
     /**
      * @ORM\Column(type="string", length=60, nullable=false)
+     * @Assert\NotBlank()
      */
     protected $erstellt_von;
 
@@ -46,6 +49,10 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
+     * @Assert\Choice(
+     * choices = { "in Planung", "in Arbeit", "freigegeben" },
+     * message = "Bitte geben Sie einen korrekten Status an!"
+     * )
      */
     protected $Status;
 
@@ -53,8 +60,12 @@ class Veranstaltung
      * @ORM\Column(type="string", length=10, nullable=true)
      * @Assert\Length(
      * min= "3",
-     * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * max= "5",
+     * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * maxMessage="Ein Modul-Kuerzel muss aus maximal {{ limit }} Zeichen bestehen.",
+     * invalidMessage = "This value should be a valid number."
      * )
+     * @Assert\NotBlank()
      */
     protected $Kuerzel;
 
@@ -62,8 +73,10 @@ class Veranstaltung
      * @ORM\Column(type="string", length=60, nullable=false)
     * @Assert\Length(
      * min= "8",
-     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * invalidMessage = "This value should be a valid number."
      * )
+     * @Assert\NotBlank()
      */
     protected $Name;
 
@@ -71,83 +84,100 @@ class Veranstaltung
      * @ORM\Column(type="string", length=60, nullable=true)
      * @Assert\Length(
      * min= "8",
-     * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * invalidMessage = "This value should be a valid number."
      * )
+     * @Assert\NotBlank()
      */
     protected $Name_en;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\NotBlank()
      */
     protected $Haeufigkeit;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank()
      */
     protected $Dauer;
 
 /**
  * @ORM\Column(type="string", length=60, nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Lehrveranstaltungen;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Kontaktzeit_VL;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Kontaktzeit_sonstige;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Selbststudium;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Gruppengroesse;
 
 /**
  * @ORM\Column(type="text", nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Lernergebnisse;
 
 /**
  * @ORM\Column(type="text", nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Inhalte;
 
 /**
  * @ORM\Column(type="text", nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Pruefungsformen;
 
 /**
  * @ORM\Column(type="string", length=20, nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Sprache;
 
 /**
  * @ORM\Column(type="text", nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Literatur;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
+ *
  */
 protected $Leistungspunkte;
 
 /**
  * @ORM\Column(type="text", nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Voraussetzung_LP;
 
 /**
  * @ORM\Column(type="text", nullable=true)
+ * @Assert\NotBlank()
  */
 protected $Voraussetzung_inh;
 

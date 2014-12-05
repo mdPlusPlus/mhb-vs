@@ -35,6 +35,7 @@ class Modulhandbuch
 
     /**
      * @ORM\Column(type="date", nullable=false)
+     * @Assert\Date()
      */
     protected $Erstellungsdatum;
 

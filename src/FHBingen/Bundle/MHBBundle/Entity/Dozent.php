@@ -33,6 +33,10 @@ class Dozent
 
     /**
      * @ORM\Column(type="string", length=4, nullable=false)
+     * @Assert\Choice(
+     * choices = { "Herr", "Frau" },
+     * message = "Bitte geben Sie eine korrekte Anrede an!"
+     * )
      */
     protected	$Anrede;
 
@@ -43,17 +47,27 @@ class Dozent
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
+     * @Assert\Length(
+     * min= "3",
+     * minMessage="Ein Dozenten-Vorname muss aus mindestens {{ limit }} Zeichen bestehen."
+     * )
      */
     protected	$Name;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=false)
+     * @Assert\Length(
+     * min= "3",
+     * minMessage="Ein Dozenten-Nachname muss aus mindestens {{ limit }} Zeichen bestehen."
+     * )
      */
     protected	$Nachname;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Email(message="Bitte eine gültige Email eingeben")
+     * @Assert\Email(
+     *     message = "Die Email '{{ value }}' ist keine gueltige Email.",
+     *     checkMX = true
+     * )
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      */
     private $Email;

@@ -37,6 +37,7 @@ class Vertiefung
      * min= "8",
      * minMessage="Ein Vertiefungsrichtungstitel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
+     * @Assert\NotBlank()
      */
     protected $Vertiefungsrichtung;
 

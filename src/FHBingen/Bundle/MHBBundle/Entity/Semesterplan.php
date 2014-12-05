@@ -48,21 +48,43 @@ class Semesterplan
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      */
     protected $sws_uebung;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter",
+     * invalidMessage = "This value should be a valid number."
+     * )
      */
     protected $sws_vorlesung;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter",
+     * invalidMessage = "This value should be a valid number."
+     * )
      */
     protected $anzahl_uebungsgruppen;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter",
+     * invalidMessage = "This value should be a valid number."
+     * )
      */
     protected $groesse_uebungsgruppen;
 
