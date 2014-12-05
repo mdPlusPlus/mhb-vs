@@ -20,16 +20,39 @@ class InsertController extends Controller{
 
 
     /**
-     * @Route("/sql/dozent")
+     * @Route("/sql/*")
      */
     public function createAction()
     {
-      /*  $this->dozent0();
-        $this->dozent1();*/
+        $this->createAction_dozent();
+        $this->createAction_semester();
+        return new Response('Dozenten und Semester angelegt!');
+    }
+
+    /**
+     * @Route("/sql/dozent")
+     */
+    public function createAction_dozent()
+    {
+        $this->dozent0();
+        $this->dozent1();
         $this->dozent2();
         $this->dozent3();
         $this->dozent4();
         return new Response('Dozenten angelegt!');
+    }
+
+    /**
+     * @Route("/sql/semester")
+     */
+    public function createAction_semester()
+    {
+        $this->sem0();
+        $this->sem1();
+        $this->sem2();
+        $this->sem3();
+        $this->sem4();
+        return new Response('Semester angelegt!');
     }
 
     public function  dozent0(){
