@@ -46,6 +46,7 @@ class InsertController extends Controller
         $dozent->setName('Lucky');
         $dozent->setNachname('Luke');
         $dozent->setEmail('lucky@luke.com');
+        $this->dozentAssert($dozent);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($dozent);
@@ -62,6 +63,7 @@ class InsertController extends Controller
         $dozent->setName('Rot');
         $dozent->setNachname('Kaeppchen');
         $dozent->setEmail('rot@kaeppchen.com');
+        $this->dozentAssert($dozent);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($dozent);
@@ -77,6 +79,7 @@ class InsertController extends Controller
         $dozent->setName('Andrea');
         $dozent->setNachname('Stasche');
         $dozent->setEmail('stasche@sprechart.com');
+        $this->dozentAssert($dozent);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($dozent);
@@ -93,6 +96,7 @@ class InsertController extends Controller
         $dozent->setName('Max');
         $dozent->setNachname('Raabe');
         $dozent->setEmail('raabe@fh-bingne.de');
+        $this->dozentAssert($dozent);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($dozent);
@@ -108,7 +112,8 @@ class InsertController extends Controller
         $dozent->setTitel('Prof. Dr.');
         $dozent->setName('Peter');
         $dozent->setNachname('Lustig');
-        $dozent->setEmail('lustig@fh-bingne.de');
+        $dozent->setEmail('lustig@fh-bingen.de');
+        $this->dozentAssert($dozent);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($dozent);
