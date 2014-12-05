@@ -61,8 +61,7 @@ class InsertController extends Controller{
         $this->dozent3();
         $this->dozent4();
         $this->semesterAction();
-       // return $this->redirect($this->generateUrl('/sql/semester'));
-       // return new Response('Dozenten angelegt!');
+
 
     }
 
