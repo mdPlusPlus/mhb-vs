@@ -60,7 +60,7 @@ class Studiengang
     protected $Kuerzel;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=false)
      */
     protected $Beschreibung;
 

@@ -42,7 +42,7 @@ class Dozent
     protected	$Titel;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=false)
      */
     protected	$Name;
 
@@ -54,7 +54,7 @@ class Dozent
     /**
      * @Assert\NotBlank()
      * @Assert\Email(message="Bitte eine gültige Email eingeben")
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      */
     private $Email;
 

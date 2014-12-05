@@ -50,7 +50,7 @@ class Veranstaltung
     protected $Status;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, nullable=true)
      * @Assert\Length(
      * min= "3",
      * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen."
@@ -68,7 +68,7 @@ class Veranstaltung
     protected $Name;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=60, nullable=true)
      * @Assert\Length(
      * min= "8",
      * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
@@ -77,77 +77,77 @@ class Veranstaltung
     protected $Name_en;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     protected $Haeufigkeit;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $Dauer;
 
 /**
- * @ORM\Column(type="string", length=60)
+ * @ORM\Column(type="string", length=60, nullable=true)
  */
 protected $Lehrveranstaltungen;
 
 /**
- * @ORM\Column(type="integer")
+ * @ORM\Column(type="integer", nullable=true)
  */
 protected $Kontaktzeit_VL;
 
 /**
- * @ORM\Column(type="integer")
+ * @ORM\Column(type="integer", nullable=true)
  */
 protected $Kontaktzeit_sonstige;
 
 /**
- * @ORM\Column(type="integer")
+ * @ORM\Column(type="integer", nullable=true)
  */
 protected $Selbststudium;
 
 /**
- * @ORM\Column(type="integer")
+ * @ORM\Column(type="integer", nullable=true)
  */
 protected $Gruppengroesse;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Lernergebnisse;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Inhalte;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Pruefungsformen;
 
 /**
- * @ORM\Column(type="string", length=20)
+ * @ORM\Column(type="string", length=20, nullable=true)
  */
 protected $Sprache;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Literatur;
 
 /**
- * @ORM\Column(type="integer")
+ * @ORM\Column(type="integer", nullable=true)
  */
 protected $Leistungspunkte;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Voraussetzung_LP;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Voraussetzung_inh;
 

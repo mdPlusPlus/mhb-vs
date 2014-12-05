@@ -53,6 +53,27 @@ class Angebot
      * */
     protected $studiengang;
 
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=false)
+     */
+    protected	$Angebotsart;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=false)
+     */
+    protected	$Code;
+
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    protected	$abweichender_Titel_DE;
+
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    protected	$abweichender_Titel_EN;
+
     /**
      * Get id
      *
