@@ -28,7 +28,7 @@ class InsertController extends Controller {
 			if ($resultArr [0]) {
 				$em->persist ( $dozent );
 			} else {
-				return new Response ( $resultArr [1] );
+				return new Response ( (string) $dozent .': '. $resultArr [1] );
 			}
 		}
 		
@@ -41,7 +41,7 @@ class InsertController extends Controller {
 			if ($this->assertObject ( $semester )) {
 				$em->persist ( $semester );
 			} else {
-				return new Response ( $resultArr [1] );
+				return new Response ( (string) $semester .': '. $resultArr [1] );
 			}
 		}
 		
