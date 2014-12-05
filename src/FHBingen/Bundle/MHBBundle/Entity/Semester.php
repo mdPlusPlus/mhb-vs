@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="Semester")
  * @ORM\HasLifecycleCallbacks
  */
-
 class Semester
 {
     /**
