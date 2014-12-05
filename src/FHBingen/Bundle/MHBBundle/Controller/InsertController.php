@@ -24,13 +24,14 @@ class InsertController extends Controller{
      */
     public function createAction()
     {
-      /*  $this->dozent0();*/
-        $this->dozent1();
+      /*  $this->dozent0();
+        $this->dozent1();*/
         $this->dozent2();
         $this->dozent3();
         $this->dozent4();
+        return new Response('Dozenten angelegt!');
     }
-/*
+
     public function  dozent0(){
         $dozent = new Dozent();
         $dozent->setAnrede('Herr');
@@ -46,7 +47,7 @@ class InsertController extends Controller{
 
         return new Response('Created DozentenID '.$dozent->getDozentenID());
     }
-*/
+
     public function dozent1(){
         $dozent = new Dozent();
         $dozent->setAnrede('Frau');
