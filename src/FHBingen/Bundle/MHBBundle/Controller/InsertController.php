@@ -17,18 +17,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class InsertController extends Controller{
 
-
     /**
      * @Route("/sql/dozent")
      */
     public function createAction()
     {
-
-        dozent0();
-        dozent1();
-        dozent2();
-        dozent3();
-        dozent4();
+        $this->dozent0();
+        $this->dozent1();
+        $this->dozent2();
+        $this->dozent3();
+        $this->dozent4();
     }
 
     public function  dozent0(){
