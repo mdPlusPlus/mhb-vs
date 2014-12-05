@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Class Studiengang
  * @package FHBingen\Bundle\MHBBundle\Entity
+ * @ORM\Entity
  * @ORM\Table(name="Users")
  *
  */
