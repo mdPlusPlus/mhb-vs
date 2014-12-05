@@ -13,22 +13,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
+use FHBingen\Bundle\MHBBundle\Entity\Semester;
 use Symfony\Component\HttpFoundation\Response;
 
 class InsertController extends Controller{
+
 
     /**
      * @Route("/sql/dozent")
      */
     public function createAction()
     {
-        $this->dozent0();
+      /*  $this->dozent0();*/
         $this->dozent1();
         $this->dozent2();
         $this->dozent3();
         $this->dozent4();
     }
-
+/*
     public function  dozent0(){
         $dozent = new Dozent();
         $dozent->setAnrede('Herr');
@@ -44,7 +46,7 @@ class InsertController extends Controller{
 
         return new Response('Created DozentenID '.$dozent->getDozentenID());
     }
-
+*/
     public function dozent1(){
         $dozent = new Dozent();
         $dozent->setAnrede('Frau');
@@ -108,26 +110,31 @@ class InsertController extends Controller{
     public function sem0(){
         $sem = new Semester();
         $sem->setSemester('WS14');
+        return new Response('Created Semester '.$sem->getSemester());
     }
 
     public function sem1(){
         $sem = new Semester();
         $sem->setSemester('SS15');
+        return new Response('Created Semester '.$sem->getSemester());
     }
 
     public function sem2(){
         $sem = new Semester();
         $sem->setSemester('WS15');
+        return new Response('Created Semester '.$sem->getSemester());
     }
 
     public function sem3(){
         $sem = new Semester();
         $sem->setSemester('SS16');
+        return new Response('Created Semester '.$sem->getSemester());
     }
 
     public function sem4(){
         $sem = new Semester();
         $sem->setSemester('S14');
+        return new Response('Created Semester '.$sem->getSemester());
     }
 
 }
