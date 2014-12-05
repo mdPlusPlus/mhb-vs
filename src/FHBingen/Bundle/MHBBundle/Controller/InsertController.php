@@ -137,7 +137,8 @@ class InsertController extends Controller{
         return new Response('Created DozentenID '.$dozent->getDozentenID());
     }
 
-    public function dozent4(){
+    public function dozent4()
+    {
         $dozent = new Dozent();
         $dozent->setAnrede('Herr');
         $dozent->setTitel('Prof. Dr.');
@@ -153,7 +154,8 @@ class InsertController extends Controller{
     }
 
 
-    public function sem0(){
+    public function sem0()
+    {
         $sem = new Semester();
         $sem->setSemester('WS14');
         $this->indexAction();
@@ -165,7 +167,8 @@ class InsertController extends Controller{
         return new Response('Created Semester '.$sem->getSemester());
     }
 
-    public function sem1(){
+    public function sem1()
+    {
         $sem = new Semester();
         $sem->setSemester('SS15');
         $this->indexAction();
@@ -177,7 +180,8 @@ class InsertController extends Controller{
         return new Response('Created Semester '.$sem->getSemester());
     }
 
-    public function sem2(){
+    public function sem2()
+    {
         $sem = new Semester();
         $sem->setSemester('WS15');
         $this->indexAction();
@@ -189,7 +193,8 @@ class InsertController extends Controller{
         return new Response('Created Semester '.$sem->getSemester());
     }
 
-    public function sem3(){
+    public function sem3()
+    {
         $sem = new Semester();
         $sem->setSemester('SS16');
         $this->indexAction();
@@ -201,7 +206,8 @@ class InsertController extends Controller{
         return new Response('Created Semester '.$sem->getSemester());
     }
 
-    public function sem4(){
+    public function sem4()
+    {
         $sem = new Semester();
         $sem->setSemester('S14');
         $this->indexAction();
