@@ -6,8 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use FHBingen\Bundle\MHBBundle\Entity\Dozent;
-use Symfony\Component\HttpFoundation\Response;
+
 
 class DefaultController extends Controller
 {
@@ -18,26 +17,5 @@ class DefaultController extends Controller
     public function indexAction($name)
     {
         return array('name' => $name,'pageTitle' => 'STARTSEITE');
-    }
-
-
-    /**
-     * @Route("/sql/dozent")
-     */
-    public function createAction()
-    {
-        $dozent = new Dozent();
-        $dozent->setAnrede('Herr');
-        $dozent->setTitel('Prof. Dr.');
-        $dozent->setName('Lucky');
-        $dozent->setNachname('Luke');
-        $dozent->setEmail('lucky@luke.com');
-
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($dozent);
-        $em->flush();
-
-        return new Response('Created product id '.$dozent->getDozentenID());
     }
 }
