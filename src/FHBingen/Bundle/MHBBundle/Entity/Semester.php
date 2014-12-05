@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Semester
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
- * @UniqueEntity(fields="semester", message="Dieses Semester wurde bereits in die Datenbank eingetragen.")
+ * @UniqueEntity(fields="Semester", message="Dieses Semester wurde bereits in die Datenbank eingetragen.")
  * @ORM\Table(name="Semester")
  * @ORM\HasLifecycleCallbacks
  */
@@ -24,12 +24,14 @@ class Semester
     /**
      * @ORM\Column(type="string",  length=5, nullable=false, unique=true)
      * @Assert\Length(
-     * min= "4",
-     * minMessage="Ein Semester muss aus mindestens {{ limit }} Zeichen bestehen."
+     * min= 4,
+     * max= 5,
+     * minMessage="Ein Semester muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * maxMessage="Ein Semester darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      * @ORM\ID
      */
-    public $Semester;
+    protected $Semester;
 
     /**
      * Set Semester
