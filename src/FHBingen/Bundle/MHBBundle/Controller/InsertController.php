@@ -24,26 +24,26 @@ class InsertController extends Controller{
      */
     public function createAction()
     {
-        $this->dozent_Action();
-        $this->semester_Action();
+        $this->dozentAction();
+        $this->semesterAction();
         return new Response('Dozenten und Semester angelegt!');
     }
 
 
-    public function dozent_Action()
+    public function dozentAction()
     {
         $this->dozent0();
         $this->dozent1();
         $this->dozent2();
         $this->dozent3();
         $this->dozent4();
-        return $this->redirect($this->generateUrl('/sql/semester'));
+       // return $this->redirect($this->generateUrl('/sql/semester'));
        // return new Response('Dozenten angelegt!');
 
     }
 
 
-    public function semester_Action()
+    public function semesterAction()
     {
         $this->sem0();
         $this->sem1();
