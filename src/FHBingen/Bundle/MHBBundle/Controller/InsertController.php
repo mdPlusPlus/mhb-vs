@@ -20,6 +20,67 @@ class InsertController extends Controller
 {
 
     /**
+     * @Route("/test")
+     */
+    public function testAction()
+    {
+        $response4 = $this->dozent4Action();
+        $response0 = $this->dozent0Action();
+
+        //what the fuck
+        if($response4->isClientError()){
+            return new Response("client error");
+        }
+        if($response4->isServerError()){
+            return new Response("server error");
+        }
+
+
+        return new Response("Halt' doch's Maul!");
+    }
+
+    public function dozent0Action()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $validator = $this->get('validator');
+
+        $dozent = $this->dozent0();
+        $errors = $validator->validate($dozent);
+
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+
+
+        $em->persist($dozent);
+        $em->flush();
+
+        return new Response('Dozent ist valide.');
+    }
+    public function dozent4Action()
+    {$em = $this->getDoctrine()->getManager();
+        $validator = $this->get('validator');
+
+        $dozent = $this->dozent4();
+        $errors = $validator->validate($dozent);
+
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+
+
+        $em->persist($dozent);
+        $em->flush();
+
+        return new Response('Dozent ist valide.');
+    }
+
+
+    /**
      * @Route("/sql/")
      */
     public function createAction()
@@ -96,7 +157,7 @@ class InsertController extends Controller
         $dozent->setNachname('Luke');
         $dozent->setEmail('lucky@luke.com');
 
-        return new $dozent;
+        return $dozent;
     }
 
     public function dozent1()
@@ -162,7 +223,7 @@ class InsertController extends Controller
     public function dozent4()
     {
         $dozent = new Dozent();
-        $dozent->setAnrede('Blubb');
+        $dozent->setAnrede('foob');
         $dozent->setTitel('Prof. Dr.');
         $dozent->setName('Peter');
         $dozent->setNachname('Lustig');
