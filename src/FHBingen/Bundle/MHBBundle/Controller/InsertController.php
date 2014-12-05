@@ -25,25 +25,8 @@ class InsertController extends Controller
     public function createAction()
     {
         $this->dozentAction();
+        $this->semesterAction();
         return new Response('Dozenten und Semester angelegt!');
-    }
-
-    public function semesterAssert($sem)
-    {
-        $validator = $this->get('validator');
-        $errors = $validator->validate($sem);
-
-        if (count($errors) > 0) {
-            /*
-             * Uses a __toString method on the $errors variable which is a
-             * ConstraintViolationList object. This gives us a nice string
-             * for debugging
-             */
-            $errorsString = (string) $errors;
-
-            return new Response($errorsString);
-        }
-        return new Response('Das Semester ist valide!');
     }
 
     public function dozentAction()
@@ -53,16 +36,6 @@ class InsertController extends Controller
         $this->dozent2();
         $this->dozent3();
         $this->dozent4();
-        $this->semesterAction();
-    }
-
-    public function semesterAction()
-    {
-        $this->sem0();
-        $this->sem1();
-        $this->sem2();
-        $this->sem3();
-        $this->sem4();
     }
 
     public function  dozent0()
@@ -73,7 +46,6 @@ class InsertController extends Controller
         $dozent->setName('Lucky');
         $dozent->setNachname('Luke');
         $dozent->setEmail('lucky@luke.com');
-
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($dozent);
@@ -145,6 +117,14 @@ class InsertController extends Controller
         return new Response('Created DozentenID ' . $dozent->getDozentenID());
     }
 
+    public function semesterAction()
+    {
+        $this->sem0();
+        $this->sem1();
+        $this->sem2();
+        $this->sem3();
+        $this->sem4();
+    }
 
     public function sem0()
     {
@@ -211,4 +191,21 @@ class InsertController extends Controller
         return new Response('Created Semester ' . $sem->getSemester());
     }
 
+    public function semesterAssert($sem)
+    {
+        $validator = $this->get('validator');
+        $errors = $validator->validate($sem);
+
+        if (count($errors) > 0) {
+            /*
+             * Uses a __toString method on the $errors variable which is a
+             * ConstraintViolationList object. This gives us a nice string
+             * for debugging
+             */
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+        return new Response('Das Semester ist valide!');
+    }
 }
