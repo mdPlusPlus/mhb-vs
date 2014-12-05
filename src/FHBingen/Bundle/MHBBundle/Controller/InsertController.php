@@ -16,13 +16,20 @@ use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Semester;
 use Symfony\Component\HttpFoundation\Response;
 
-class InsertController extends Controller{
+class InsertController extends Controller
+{
 
-
-    public function indexAction()
+    /**
+     * @Route("/sql/")
+     */
+    public function createAction()
     {
-        $sem = new Semester();
+        $this->dozentAction();
+        return new Response('Dozenten und Semester angelegt!');
+    }
 
+    public function semesterAssert($sem)
+    {
         $validator = $this->get('validator');
         $errors = $validator->validate($sem);
 
@@ -36,22 +43,8 @@ class InsertController extends Controller{
 
             return new Response($errorsString);
         }
-
         return new Response('Das Semester ist valide!');
     }
-
-
-
-
-    /**
-     * @Route("/sql/")
-     */
-    public function createAction()
-    {
-        $this->dozentAction();
-        return new Response('Dozenten und Semester angelegt!');
-    }
-
 
     public function dozentAction()
     {
@@ -61,10 +54,7 @@ class InsertController extends Controller{
         $this->dozent3();
         $this->dozent4();
         $this->semesterAction();
-
-
     }
-
 
     public function semesterAction()
     {
@@ -73,10 +63,10 @@ class InsertController extends Controller{
         $this->sem2();
         $this->sem3();
         $this->sem4();
-        return new Response('Semester angelegt!');
     }
 
-    public function  dozent0(){
+    public function  dozent0()
+    {
         $dozent = new Dozent();
         $dozent->setAnrede('Herr');
         $dozent->setTitel('Prof. Dr.');
@@ -89,10 +79,11 @@ class InsertController extends Controller{
         $em->persist($dozent);
         $em->flush();
 
-        return new Response('Created DozentenID '.$dozent->getDozentenID());
+        return new Response('Created DozentenID ' . $dozent->getDozentenID());
     }
 
-    public function dozent1(){
+    public function dozent1()
+    {
         $dozent = new Dozent();
         $dozent->setAnrede('Frau');
         $dozent->setTitel('Prof. Dr.');
@@ -104,10 +95,11 @@ class InsertController extends Controller{
         $em->persist($dozent);
         $em->flush();
 
-        return new Response('Created DozentenID '.$dozent->getDozentenID());
+        return new Response('Created DozentenID ' . $dozent->getDozentenID());
     }
 
-    public function dozent2(){
+    public function dozent2()
+    {
         $dozent = new Dozent();
         $dozent->setAnrede('Frau');
         $dozent->setName('Andrea');
@@ -118,10 +110,11 @@ class InsertController extends Controller{
         $em->persist($dozent);
         $em->flush();
 
-        return new Response('Created DozentenID '.$dozent->getDozentenID());
+        return new Response('Created DozentenID ' . $dozent->getDozentenID());
     }
 
-    public function dozent3(){
+    public function dozent3()
+    {
         $dozent = new Dozent();
         $dozent->setAnrede('Herr');
         $dozent->setTitel('Dipl. Inf.');
@@ -133,10 +126,11 @@ class InsertController extends Controller{
         $em->persist($dozent);
         $em->flush();
 
-        return new Response('Created DozentenID '.$dozent->getDozentenID());
+        return new Response('Created DozentenID ' . $dozent->getDozentenID());
     }
 
-    public function dozent4(){
+    public function dozent4()
+    {
         $dozent = new Dozent();
         $dozent->setAnrede('Herr');
         $dozent->setTitel('Prof. Dr.');
@@ -148,68 +142,73 @@ class InsertController extends Controller{
         $em->persist($dozent);
         $em->flush();
 
-        return new Response('Created DozentenID '.$dozent->getDozentenID());
+        return new Response('Created DozentenID ' . $dozent->getDozentenID());
     }
 
 
-    public function sem0(){
+    public function sem0()
+    {
         $sem = new Semester();
         $sem->setSemester('WS14');
-        $this->indexAction();
+        $this->semesterAssert($sem);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($sem);
         $em->flush();
 
-        return new Response('Created Semester '.$sem->getSemester());
+        return new Response('Created Semester ' . $sem->getSemester());
     }
 
-    public function sem1(){
+    public function sem1()
+    {
         $sem = new Semester();
         $sem->setSemester('SS15');
-        $this->indexAction();
+        $this->semesterAssert($sem);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($sem);
         $em->flush();
 
-        return new Response('Created Semester '.$sem->getSemester());
+        return new Response('Created Semester ' . $sem->getSemester());
     }
 
-    public function sem2(){
+    public function sem2()
+    {
         $sem = new Semester();
         $sem->setSemester('WS15');
-        $this->indexAction();
+        $this->semesterAssert($sem);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($sem);
         $em->flush();
 
-        return new Response('Created Semester '.$sem->getSemester());
+        return new Response('Created Semester ' . $sem->getSemester());
     }
 
-    public function sem3(){
+    public function sem3()
+    {
         $sem = new Semester();
         $sem->setSemester('SS16');
-        $this->indexAction();
+        $this->semesterAssert($sem);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($sem);
         $em->flush();
 
-        return new Response('Created Semester '.$sem->getSemester());
+        return new Response('Created Semester ' . $sem->getSemester());
     }
 
-    public function sem4(){
+    public function sem4()
+    {
         $sem = new Semester();
         $sem->setSemester('S14');
-        $this->indexAction();
+        $this->semesterAssert($sem);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($sem);
         $em->flush();
 
-        return new Response('Created Semester '.$sem->getSemester());
+        return new Response('Created Semester ' . $sem->getSemester());
     }
 
 }
