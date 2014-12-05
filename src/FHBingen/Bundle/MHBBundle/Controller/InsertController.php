@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use FHBingen\Bundle\MHBBundle\Entity;
+use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use Symfony\Component\HttpFoundation\Response;
 
 class InsertController extends Controller{
