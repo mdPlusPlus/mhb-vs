@@ -25,7 +25,6 @@ class InsertController extends Controller{
     public function createAction()
     {
         $this->dozentAction();
-        $this->semesterAction();
         return new Response('Dozenten und Semester angelegt!');
     }
 
@@ -37,6 +36,7 @@ class InsertController extends Controller{
         $this->dozent2();
         $this->dozent3();
         $this->dozent4();
+        $this->semesterAction();
        // return $this->redirect($this->generateUrl('/sql/semester'));
        // return new Response('Dozenten angelegt!');
 
@@ -132,30 +132,55 @@ class InsertController extends Controller{
     public function sem0(){
         $sem = new Semester();
         $sem->setSemester('WS14');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($sem);
+        $em->flush();
+
         return new Response('Created Semester '.$sem->getSemester());
     }
 
     public function sem1(){
         $sem = new Semester();
         $sem->setSemester('SS15');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($sem);
+        $em->flush();
+
         return new Response('Created Semester '.$sem->getSemester());
     }
 
     public function sem2(){
         $sem = new Semester();
         $sem->setSemester('WS15');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($sem);
+        $em->flush();
+
         return new Response('Created Semester '.$sem->getSemester());
     }
 
     public function sem3(){
         $sem = new Semester();
         $sem->setSemester('SS16');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($sem);
+        $em->flush();
+
         return new Response('Created Semester '.$sem->getSemester());
     }
 
     public function sem4(){
         $sem = new Semester();
         $sem->setSemester('S14');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($sem);
+        $em->flush();
+
         return new Response('Created Semester '.$sem->getSemester());
     }
 
