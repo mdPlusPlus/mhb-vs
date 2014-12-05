@@ -21,7 +21,7 @@ class InsertController extends Controller {
 		
 		foreach ( $dozentArr as $dozent ) {
 			$resultArr = $this->assertObject ( $dozent );
-			/*
+			/**
 			 * $resultArr[0] = $isValid (boolean)
 			 * $resultArr[1] = $errorsString (string)
 			 */
@@ -34,7 +34,7 @@ class InsertController extends Controller {
 		
 		foreach ( $semesterArr as $semester ) {
 			$resultArr = $this->assertObject ( $semester );
-			/*
+			/**
 			 * $resultArr[0] = $isValid (boolean)
 			 * $resultArr[1] = $errorsString (string)
 			 */
@@ -131,9 +131,8 @@ class InsertController extends Controller {
 		
 		if (count ( $errors ) > 0) {
 			$isValid = false;
-			$errorsString = ( string ) $errors;	
-		}
-		else{
+			$errorsString = ( string ) $errors;
+		} else {
 			$isValid = true;
 		}
 		
