@@ -21,6 +21,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Semester
 {
+	
+	public function __toString()
+	{
+		//TODO $Semester richtig? getter?
+		$string = $this->$Semester;
+		return $string;
+	}
+	
     /**
      * @ORM\Column(type="string",  length=5, nullable=false, unique=true)
      * @Assert\Length(

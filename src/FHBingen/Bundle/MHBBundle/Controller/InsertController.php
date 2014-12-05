@@ -1,381 +1,147 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Mischa
- * Date: 05.12.2014
- * Time: 12:49
- */
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
+use Symfony\Component\HttpFoundation\Response;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Semester;
-use Symfony\Component\HttpFoundation\Response;
 
-class InsertController extends Controller
-{
-
-    /**
-     * @Route("/test")
-     */
-    public function testAction()
-    {
-        $response4 = $this->dozent4Action();
-        $response0 = $this->dozent0Action();
-
-        //what the fuck
-        if($response4->isClientError()){
-            return new Response("client error");
-        }
-        if($response4->isServerError()){
-            return new Response("server error");
-        }
-
-
-        return new Response("Halt' doch's Maul!");
-    }
-
-    public function dozent0Action()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $validator = $this->get('validator');
-
-        $dozent = $this->dozent0();
-        $errors = $validator->validate($dozent);
-
-        if (count($errors) > 0) {
-            $errorsString = (string) $errors;
-
-            return new Response($errorsString);
-        }
-
-
-        $em->persist($dozent);
-        $em->flush();
-
-        return new Response('Dozent ist valide.');
-    }
-    public function dozent4Action()
-    {$em = $this->getDoctrine()->getManager();
-        $validator = $this->get('validator');
-
-        $dozent = $this->dozent4();
-        $errors = $validator->validate($dozent);
-
-        if (count($errors) > 0) {
-            $errorsString = (string) $errors;
-
-            return new Response($errorsString);
-        }
-
-
-        $em->persist($dozent);
-        $em->flush();
-
-        return new Response('Dozent ist valide.');
-    }
-
-
-    /**
-     * @Route("/sql/")
-     */
-    public function createAction()
-    {
-        $fehler = false;
-        if ($this->dozentAction()) {
-            $fehler = true;
-        }
-        if ($this->semesterAction()) {
-            $fehler = true;
-        }
-
-        if (!$fehler) {
-            return new Response('Dozenten und Semester angelegt!');
-        } else {
-            return new Response('Es gab einen Fehler!');
-        }
-
-
-    }
-
-    public function dozentAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $fehler = false;
-
-        $dozent = $this->dozent0();
-        if ($this->dozentAssert($dozent)) {
-            $em->persist($dozent);
-        }
-        else{
-            $fehler = true;
-        }
-        $dozent = $this->dozent1();
-        if ($this->dozentAssert($dozent)) {
-            $em->persist($dozent);
-        }
-        else{
-            $fehler = true;
-        }
-        $dozent = $this->dozent2();
-        if ($this->dozentAssert($dozent)) {
-            $em->persist($dozent);
-        }
-        else{
-            $fehler = true;
-        }
-        $dozent = $this->dozent3();
-        if ($this->dozentAssert($dozent)) {
-            $em->persist($dozent);
-        }
-        else{
-            $fehler = true;
-        }
-        $dozent = $this->dozent4();
-        if ($this->dozentAssert($dozent)) {
-            $em->persist($dozent);
-        }
-        else{
-            $fehler = true;
-        }
-
-        $em->flush();
-
-        return $fehler;
-    }
-
-    public function dozent0()
-    {
-        $dozent = new Dozent();
-        $dozent->setAnrede('Herr');
-        $dozent->setTitel('Prof. Dr.');
-        $dozent->setName('Lucky');
-        $dozent->setNachname('Luke');
-        $dozent->setEmail('lucky@luke.com');
-
-        return $dozent;
-    }
-
-    public function dozent1()
-    {
-        $dozent = new Dozent();
-        $dozent->setAnrede('Frau');
-        $dozent->setTitel('Prof. Dr.');
-        $dozent->setName('Rot');
-        $dozent->setNachname('Kaeppchen');
-        $dozent->setEmail('rot@kaeppchen.com');
-
-        //$this->dozentAssert($dozent);
-        /*
-        if($this->dozentAssert($dozent)){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($dozent);
-            $em->flush();
-        }
-        */
-        return $dozent;
-    }
-
-    public function dozent2()
-    {
-        $dozent = new Dozent();
-        $dozent->setAnrede('Frau');
-        $dozent->setName('Andrea');
-        $dozent->setNachname('Stasche');
-        $dozent->setEmail('stasche@sprechart.com');
-
-        //$this->dozentAssert($dozent);
-
-        /*
-        if($this->dozentAssert($dozent)){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($dozent);
-            $em->flush();
-        }
-        */
-
-        return $dozent;
-    }
-
-    public function dozent3()
-    {
-        $dozent = new Dozent();
-        $dozent->setAnrede('Herr');
-        $dozent->setTitel('Dipl. Inf.');
-        $dozent->setName('Max');
-        $dozent->setNachname('Raabe');
-        $dozent->setEmail('raabe@fh-bingne.de');
-        //$this->dozentAssert($dozent);
-
-        /* if($this->dozentAssert($dozent)){
-             $em = $this->getDoctrine()->getManager();
-             $em->persist($dozent);
-             $em->flush();
-         }*/
-
-        return $dozent;
-    }
-
-    public function dozent4()
-    {
-        $dozent = new Dozent();
-        $dozent->setAnrede('foob');
-        $dozent->setTitel('Prof. Dr.');
-        $dozent->setName('Peter');
-        $dozent->setNachname('Lustig');
-        $dozent->setEmail('lustig@fh-bingen.de');
-        //$this->dozentAssert($dozent);
-
-        /*
-        if($this->dozentAssert($dozent)){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($dozent);
-            $em->flush();
-        }
-        */
-
-        return $dozent;
-    }
-
-    public function semesterAction()
-    {
-        $fehler = false;
-
-        if (!$this->semesterAssert($this->sem0())) {
-            $fehler = true;
-        }
-        if (!$this->semesterAssert($this->sem1())) {
-            $fehler = true;
-        }
-        if (!$this->semesterAssert($this->sem2())) {
-            $fehler = true;
-        }
-        if (!$this->semesterAssert($this->sem3())) {
-            $fehler = true;
-        }
-        if (!$this->semesterAssert($this->sem4())) {
-            $fehler = true;
-        }
-
-        return $fehler;
-    }
-
-    public function sem0()
-    {
-        $semester = new Semester();
-        $semester->setSemester('WS14');
-        //$this->semesterAssert($semester);
-
-        /*
-        if($this->semesterAssert($semester)){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($semester);
-            $em->flush();
-        }
-        */
-
-        return $semester;
-    }
-
-    public function sem1()
-    {
-        $semester = new Semester();
-        $semester->setSemester('SS15');
-        //$this->semesterAssert($semester);
-
-        /*
-        if($this->semesterAssert($semester)){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($semester);
-            $em->flush();
-        }
-        */
-
-        return $semester;
-    }
-
-    public function sem2()
-    {
-        $semester = new Semester();
-        $semester->setSemester('WS15');
-        //$this->semesterAssert($semester);
-
-        /*
-        if($this->semesterAssert($semester)){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($semester);
-            $em->flush();
-        }
-        */
-
-        return $semester;
-    }
-
-    public function sem3()
-    {
-        $semester = new Semester();
-        $semester->setSemester('SS16');
-        //$this->semesterAssert($semester);
-
-        /*
-        if($this->semesterAssert($semester)){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($semester);
-            $em->flush();
-        }
-        */
-
-        return $semester;
-    }
-
-    public function sem4()
-    {
-        $semester = new Semester();
-        $semester->setSemester('S14');
-        //$this->semesterAssert($semester);
-
-        /*
-        if($this->semesterAssert($semester)){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($semester);
-            $em->flush();
-        }
-        */
-
-        return $semester;
-    }
-
-    public function semesterAssert($semester)
-    {
-        $validator = $this->get('validator');
-        $errors = $validator->validate($semester);
-
-        if (count($errors) > 0) {
-            $errorsString = (string)$errors;
-
-            return new Response($errorsString);
-        } else {
-            //true = keine fehler;
-            return true;
-        }
-    }
-
-    public function dozentAssert($dozent)
-    {
-        $validator = $this->get('validator');
-        $errors = $validator->validate($dozent);
-
-        if (count($errors) > 0) {
-            $errorsString = (string)$errors;
-
-            return new Response($errorsString);
-        } else {
-            //true = keine fehler;
-            return true;
-        }
-    }
+class InsertController extends Controller {
+	
+	/**
+	 * @Route("/input")
+	 */
+	public function assertAction() {
+		$em = $this->getDoctrine ()->getManager ();
+		
+		$dozentArr = $this->dozentCreate ();
+		$semesterArr = $this->semesterCreate ();
+		
+		foreach ( $dozentArr as $dozent ) {
+			$resultArr = $this->assertObject ( $dozent );
+			/*
+			 * $resultArr[0] = $isValid (boolean)
+			 * $resultArr[1] = $errorsString (string)
+			 */
+			if ($resultArr [0]) {
+				$em->persist ( $dozent );
+			} else {
+				return new Response ( $resultArr [1] );
+			}
+		}
+		
+		foreach ( $semesterArr as $semester ) {
+			$resultArr = $this->assertObject ( $semester );
+			/*
+			 * $resultArr[0] = $isValid (boolean)
+			 * $resultArr[1] = $errorsString (string)
+			 */
+			if ($this->assertObject ( $semester )) {
+				$em->persist ( $semester );
+			} else {
+				return new Response ( $resultArr [1] );
+			}
+		}
+		
+		$em->flush ();
+		
+		return new Response ( "Halt' doch's Maul!" );
+	}
+	public function dozentCreate() {
+		// legt die Dozenten-Objekte an und gibt sie als Array zurück
+		$dozent0 = new Dozent ();
+		$dozent0->setAnrede ( 'Herr' );
+		$dozent0->setTitel ( 'Prof. Dr.' );
+		$dozent0->setName ( 'Lucky' );
+		$dozent0->setNachname ( 'Luke' );
+		$dozent0->setEmail ( 'lucky@luke.com' );
+		
+		$dozent1 = new Dozent ();
+		$dozent1->setAnrede ( 'Frau' );
+		$dozent1->setTitel ( 'Prof. Dr.' );
+		$dozent1->setName ( 'Rot' );
+		$dozent1->setNachname ( 'Kaeppchen' );
+		$dozent1->setEmail ( 'rot@kaeppchen.com' );
+		
+		$dozent2 = new Dozent ();
+		$dozent2->setAnrede ( 'Frau' );
+		$dozent2->setName ( 'Andrea' );
+		$dozent2->setNachname ( 'Stasche' );
+		$dozent2->setEmail ( 'stasche@sprechart.com' );
+		
+		$dozent3 = new Dozent ();
+		$dozent3->setAnrede ( 'Herr' );
+		$dozent3->setTitel ( 'Dipl. Inf.' );
+		$dozent3->setName ( 'Max' );
+		$dozent3->setNachname ( 'Raabe' );
+		$dozent3->setEmail ( 'raabe@fh-bingen.de' );
+		
+		$dozent4 = new Dozent ();
+		$dozent4->setAnrede ( 'foob' );
+		$dozent4->setTitel ( 'Prof. Dr.' );
+		$dozent4->setName ( 'Peter' );
+		$dozent4->setNachname ( 'Lustig' );
+		$dozent4->setEmail ( 'lustig@fh-bingen.de' );
+		
+		$dozentArr = array (
+				$dozent0,
+				$dozent1,
+				$dozent2,
+				$dozent3,
+				$dozent4 
+		);
+		
+		return $dozentArr;
+	}
+	public function semesterCreate() {
+		// legt die Semester-Objekte an und gibt sie als Array zurück
+		$semester0 = new Semester ();
+		$semester0->setSemester ( 'WS14' );
+		
+		$semester1 = new Semester ();
+		$semester1->setSemester ( 'SS15' );
+		
+		$semester2 = new Semester ();
+		$semester2->setSemester ( 'WS15' );
+		
+		$semester3 = new Semester ();
+		$semester3->setSemester ( 'SS16' );
+		
+		$semester4 = new Semester ();
+		$semester4->setSemester ( 'S14' );
+		
+		$semesterArr = array (
+				$semester0,
+				$semester1,
+				$semester2,
+				$semester3,
+				$semester4 
+		);
+		
+		return $semesterArr;
+	}
+	public function assertObject($obj) {
+		$isValid;
+		$errorsString = 'no errors';
+		
+		$validator = $this->get ( 'validator' );
+		$errors = $validator->validate ( $obj );
+		
+		if (count ( $errors ) > 0) {
+			$isValid = false;
+			$errorsString = ( string ) $errors;	
+		}
+		else{
+			$isValid = true;
+		}
+		
+		$resultArr = array (
+				$isValid,
+				$errorsString 
+		);
+		
+		return $resultArr;
+	}
 }

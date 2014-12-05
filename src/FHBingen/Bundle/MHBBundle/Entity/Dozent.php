@@ -24,6 +24,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Dozent
 {
 
+	public function __toString()
+	{
+		//TODO $string mit allen feldern füllen
+		$string = $this->getName();
+		return $string;
+	}
+	
     /**
      * @ORM\Column(type="integer")
      * @ORM\ID
