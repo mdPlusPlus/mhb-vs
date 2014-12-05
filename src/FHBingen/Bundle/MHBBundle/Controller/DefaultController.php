@@ -12,16 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
- * @Route("/test123/{name}")
- * @Template("FHBingenMHBBundle:SGL:main.html.twig")
- */
+    * @Route("/test123/{name}")
+    * @Template("FHBingenMHBBundle:SGL:main.html.twig")
+    */
     public function indexAction($name)
     {
         return array('name' => $name,'pageTitle' => 'STARTSEITE');
     }
 
 
-
+    /**
+     * @Route("/sql/dozent")
+     */
     public function createAction()
     {
         $dozent = new Dozent();
