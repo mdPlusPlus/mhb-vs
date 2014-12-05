@@ -197,7 +197,7 @@ class InsertController extends Controller
         $errors = $validator->validate($sem);
 
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            $errorsString = (string)$errors;
 
             return new Response($errorsString);
         }
