@@ -48,7 +48,9 @@ class InsertController extends Controller
         $dozent->setEmail('lucky@luke.com');
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($dozent);
+        if (!$em->contains($dozent)) {
+            $em->persist($dozent);
+        }
         $em->flush();
 
         return new Response('Created DozentenID ' . $dozent->getDozentenID());
@@ -64,7 +66,9 @@ class InsertController extends Controller
         $dozent->setEmail('rot@kaeppchen.com');
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($dozent);
+        if (!$em->contains($dozent)) {
+            $em->persist($dozent);
+        }
         $em->flush();
 
         return new Response('Created DozentenID ' . $dozent->getDozentenID());
@@ -79,7 +83,9 @@ class InsertController extends Controller
         $dozent->setEmail('stasche@sprechart.com');
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($dozent);
+        if (!$em->contains($dozent)) {
+            $em->persist($dozent);
+        }
         $em->flush();
 
         return new Response('Created DozentenID ' . $dozent->getDozentenID());
@@ -95,7 +101,9 @@ class InsertController extends Controller
         $dozent->setEmail('raabe@fh-bingne.de');
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($dozent);
+        if (!$em->contains($dozent)) {
+            $em->persist($dozent);
+        }
         $em->flush();
 
         return new Response('Created DozentenID ' . $dozent->getDozentenID());
@@ -111,7 +119,9 @@ class InsertController extends Controller
         $dozent->setEmail('lustig@fh-bingne.de');
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($dozent);
+        if (!$em->contains($dozent)) {
+            $em->persist($dozent);
+        }
         $em->flush();
 
         return new Response('Created DozentenID ' . $dozent->getDozentenID());
@@ -133,7 +143,9 @@ class InsertController extends Controller
         $this->semesterAssert($sem);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($sem);
+        if (!$em->contains($sem)) {
+            $em->persist($sem);
+        }
         $em->flush();
 
         return new Response('Created Semester ' . $sem->getSemester());
@@ -146,7 +158,9 @@ class InsertController extends Controller
         $this->semesterAssert($sem);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($sem);
+        if (!$em->contains($sem)) {
+            $em->persist($sem);
+        }
         $em->flush();
 
         return new Response('Created Semester ' . $sem->getSemester());
@@ -159,7 +173,9 @@ class InsertController extends Controller
         $this->semesterAssert($sem);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($sem);
+        if (!$em->contains($sem)) {
+            $em->persist($sem);
+        }
         $em->flush();
 
         return new Response('Created Semester ' . $sem->getSemester());
@@ -172,7 +188,9 @@ class InsertController extends Controller
         $this->semesterAssert($sem);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($sem);
+        if (!$em->contains($sem)) {
+            $em->persist($sem);
+        }
         $em->flush();
 
         return new Response('Created Semester ' . $sem->getSemester());
@@ -185,7 +203,9 @@ class InsertController extends Controller
         $this->semesterAssert($sem);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($sem);
+        if (!$em->contains($sem)) {
+            $em->persist($sem);
+        }
         $em->flush();
 
         return new Response('Created Semester ' . $sem->getSemester());
@@ -197,7 +217,7 @@ class InsertController extends Controller
         $errors = $validator->validate($sem);
 
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            $errorsString = (string)$errors;
 
             return new Response($errorsString);
         }
