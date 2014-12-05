@@ -43,23 +43,46 @@ class InsertController extends Controller
 
     public function dozentAction()
     {
+        $em = $this->getDoctrine()->getManager();
         $fehler = false;
 
-        if (!$this->dozentAssert($this->dozent0())) {
+        $dozent = $this->dozent0();
+        if ($this->dozentAssert($dozent)) {
+            $em->persist($dozent);
+        }
+        else{
             $fehler = true;
         }
-        if (!$this->dozentAssert($this->dozent1())) {
+        $dozent = $this->dozent1();
+        if ($this->dozentAssert($dozent)) {
+            $em->persist($dozent);
+        }
+        else{
             $fehler = true;
         }
-        if (!$this->dozentAssert($this->dozent2())) {
+        $dozent = $this->dozent2();
+        if ($this->dozentAssert($dozent)) {
+            $em->persist($dozent);
+        }
+        else{
             $fehler = true;
         }
-        if (!$this->dozentAssert($this->dozent3())) {
+        $dozent = $this->dozent3();
+        if ($this->dozentAssert($dozent)) {
+            $em->persist($dozent);
+        }
+        else{
             $fehler = true;
         }
-        if (!$this->dozentAssert($this->dozent4())) {
+        $dozent = $this->dozent4();
+        if ($this->dozentAssert($dozent)) {
+            $em->persist($dozent);
+        }
+        else{
             $fehler = true;
         }
+
+        $em->flush();
 
         return $fehler;
     }
@@ -262,7 +285,7 @@ class InsertController extends Controller
         }
         */
 
-        return semester;
+        return $semester;
     }
 
     public function semesterAssert($semester)
