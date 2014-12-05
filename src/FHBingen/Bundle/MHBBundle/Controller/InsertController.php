@@ -19,6 +19,30 @@ use Symfony\Component\HttpFoundation\Response;
 class InsertController extends Controller{
 
 
+    public function indexAction()
+    {
+        $sem = new Semester();
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($sem);
+
+        if (count($errors) > 0) {
+            /*
+             * Uses a __toString method on the $errors variable which is a
+             * ConstraintViolationList object. This gives us a nice string
+             * for debugging
+             */
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+
+        return new Response('Das Semester ist valide!');
+    }
+
+
+
+
     /**
      * @Route("/sql/")
      */
@@ -132,6 +156,7 @@ class InsertController extends Controller{
     public function sem0(){
         $sem = new Semester();
         $sem->setSemester('WS14');
+        $this->indexAction();
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($sem);
@@ -143,6 +168,7 @@ class InsertController extends Controller{
     public function sem1(){
         $sem = new Semester();
         $sem->setSemester('SS15');
+        $this->indexAction();
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($sem);
@@ -154,6 +180,7 @@ class InsertController extends Controller{
     public function sem2(){
         $sem = new Semester();
         $sem->setSemester('WS15');
+        $this->indexAction();
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($sem);
@@ -165,6 +192,7 @@ class InsertController extends Controller{
     public function sem3(){
         $sem = new Semester();
         $sem->setSemester('SS16');
+        $this->indexAction();
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($sem);
@@ -176,6 +204,7 @@ class InsertController extends Controller{
     public function sem4(){
         $sem = new Semester();
         $sem->setSemester('S14');
+        $this->indexAction();
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($sem);
