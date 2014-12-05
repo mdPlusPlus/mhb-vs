@@ -24,21 +24,47 @@ class InsertController extends Controller
      */
     public function createAction()
     {
-        $this->dozentAction();
-        $this->semesterAction();
-        return new Response('Dozenten und Semester angelegt!');
+        $fehler = false;
+        if ($this->dozentAction()) {
+            $fehler = true;
+        }
+        if ($this->semesterAction()) {
+            $fehler = true;
+        }
+
+        if (!$fehler) {
+            return new Response('Dozenten und Semester angelegt!');
+        } else {
+            return new Response('Es gab einen Fehler!');
+        }
+
+
     }
 
     public function dozentAction()
     {
-        $this->dozent0();
-        $this->dozent1();
-        $this->dozent2();
-        $this->dozent3();
-        $this->dozent4();
+        $fehler = false;
+
+        if (!$this->dozentAssert($this->dozent0())) {
+            $fehler = true;
+        }
+        if (!$this->dozentAssert($this->dozent1())) {
+            $fehler = true;
+        }
+        if (!$this->dozentAssert($this->dozent2())) {
+            $fehler = true;
+        }
+        if (!$this->dozentAssert($this->dozent3())) {
+            $fehler = true;
+        }
+        if (!$this->dozentAssert($this->dozent4())) {
+            $fehler = true;
+        }
+
+        return $fehler;
     }
 
-    public function  dozent0()
+    public function dozent0()
     {
         $dozent = new Dozent();
         $dozent->setAnrede('Herr');
@@ -47,13 +73,7 @@ class InsertController extends Controller
         $dozent->setNachname('Luke');
         $dozent->setEmail('lucky@luke.com');
 
-        if($this->dozentAssert($dozent)){
-         $em = $this->getDoctrine()->getManager();
-            $em->persist($dozent);
-            $em->flush();
-        }
-
-        return new Response('Created DozentenID ' . $dozent->getDozentenID());
+        return new $dozent;
     }
 
     public function dozent1()
@@ -65,15 +85,15 @@ class InsertController extends Controller
         $dozent->setNachname('Kaeppchen');
         $dozent->setEmail('rot@kaeppchen.com');
 
-        $this->dozentAssert($dozent);
-
+        //$this->dozentAssert($dozent);
+        /*
         if($this->dozentAssert($dozent)){
             $em = $this->getDoctrine()->getManager();
             $em->persist($dozent);
             $em->flush();
         }
-
-        return new Response('Created DozentenID ' . $dozent->getDozentenID());
+        */
+        return $dozent;
     }
 
     public function dozent2()
@@ -84,15 +104,17 @@ class InsertController extends Controller
         $dozent->setNachname('Stasche');
         $dozent->setEmail('stasche@sprechart.com');
 
-        $this->dozentAssert($dozent);
+        //$this->dozentAssert($dozent);
 
+        /*
         if($this->dozentAssert($dozent)){
             $em = $this->getDoctrine()->getManager();
             $em->persist($dozent);
             $em->flush();
         }
+        */
 
-        return new Response('Created DozentenID ' . $dozent->getDozentenID());
+        return $dozent;
     }
 
     public function dozent3()
@@ -103,15 +125,15 @@ class InsertController extends Controller
         $dozent->setName('Max');
         $dozent->setNachname('Raabe');
         $dozent->setEmail('raabe@fh-bingne.de');
-        $this->dozentAssert($dozent);
+        //$this->dozentAssert($dozent);
 
-        if($this->dozentAssert($dozent)){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($dozent);
-            $em->flush();
-        }
+        /* if($this->dozentAssert($dozent)){
+             $em = $this->getDoctrine()->getManager();
+             $em->persist($dozent);
+             $em->flush();
+         }*/
 
-        return new Response('Created DozentenID ' . $dozent->getDozentenID());
+        return $dozent;
     }
 
     public function dozent4()
@@ -122,110 +144,139 @@ class InsertController extends Controller
         $dozent->setName('Peter');
         $dozent->setNachname('Lustig');
         $dozent->setEmail('lustig@fh-bingen.de');
-        $this->dozentAssert($dozent);
+        //$this->dozentAssert($dozent);
 
+        /*
         if($this->dozentAssert($dozent)){
             $em = $this->getDoctrine()->getManager();
             $em->persist($dozent);
             $em->flush();
         }
+        */
 
-        return new Response('Created DozentenID ' . $dozent->getDozentenID());
+        return $dozent;
     }
 
     public function semesterAction()
     {
-        $this->sem0();
-        $this->sem1();
-        $this->sem2();
-        $this->sem3();
-        $this->sem4();
+        $fehler = false;
+
+        if (!$this->semesterAssert($this->sem0())) {
+            $fehler = true;
+        }
+        if (!$this->semesterAssert($this->sem1())) {
+            $fehler = true;
+        }
+        if (!$this->semesterAssert($this->sem2())) {
+            $fehler = true;
+        }
+        if (!$this->semesterAssert($this->sem3())) {
+            $fehler = true;
+        }
+        if (!$this->semesterAssert($this->sem4())) {
+            $fehler = true;
+        }
+
+        return $fehler;
     }
 
     public function sem0()
     {
-        $sem = new Semester();
-        $sem->setSemester('WS14');
-        $this->semesterAssert($sem);
+        $semester = new Semester();
+        $semester->setSemester('WS14');
+        //$this->semesterAssert($semester);
 
-        if($this->semesterAssert($sem)){
+        /*
+        if($this->semesterAssert($semester)){
             $em = $this->getDoctrine()->getManager();
-            $em->persist($sem);
+            $em->persist($semester);
             $em->flush();
         }
+        */
 
-        return new Response('Created Semester ' . $sem->getSemester());
+        return $semester;
     }
 
     public function sem1()
     {
-        $sem = new Semester();
-        $sem->setSemester('SS15');
-        $this->semesterAssert($sem);
+        $semester = new Semester();
+        $semester->setSemester('SS15');
+        //$this->semesterAssert($semester);
 
-        if($this->semesterAssert($sem)){
+        /*
+        if($this->semesterAssert($semester)){
             $em = $this->getDoctrine()->getManager();
-            $em->persist($sem);
+            $em->persist($semester);
             $em->flush();
         }
+        */
 
-        return new Response('Created Semester ' . $sem->getSemester());
+        return $semester;
     }
 
     public function sem2()
     {
-        $sem = new Semester();
-        $sem->setSemester('WS15');
-        $this->semesterAssert($sem);
+        $semester = new Semester();
+        $semester->setSemester('WS15');
+        //$this->semesterAssert($semester);
 
-        if($this->semesterAssert($sem)){
+        /*
+        if($this->semesterAssert($semester)){
             $em = $this->getDoctrine()->getManager();
-            $em->persist($sem);
+            $em->persist($semester);
             $em->flush();
         }
+        */
 
-        return new Response('Created Semester ' . $sem->getSemester());
+        return $semester;
     }
 
     public function sem3()
     {
-        $sem = new Semester();
-        $sem->setSemester('SS16');
-        $this->semesterAssert($sem);
+        $semester = new Semester();
+        $semester->setSemester('SS16');
+        //$this->semesterAssert($semester);
 
-        if($this->semesterAssert($sem)){
+        /*
+        if($this->semesterAssert($semester)){
             $em = $this->getDoctrine()->getManager();
-            $em->persist($sem);
+            $em->persist($semester);
             $em->flush();
         }
+        */
 
-        return new Response('Created Semester ' . $sem->getSemester());
+        return $semester;
     }
 
     public function sem4()
     {
-        $sem = new Semester();
-        $sem->setSemester('S14');
-        $this->semesterAssert($sem);
+        $semester = new Semester();
+        $semester->setSemester('S14');
+        //$this->semesterAssert($semester);
 
-        if($this->semesterAssert($sem)){
+        /*
+        if($this->semesterAssert($semester)){
             $em = $this->getDoctrine()->getManager();
-            $em->persist($sem);
+            $em->persist($semester);
             $em->flush();
         }
+        */
 
-        return new Response('Created Semester ' . $sem->getSemester());
+        return semester;
     }
 
-    public function semesterAssert($sem)
+    public function semesterAssert($semester)
     {
         $validator = $this->get('validator');
-        $errors = $validator->validate($sem);
+        $errors = $validator->validate($semester);
 
         if (count($errors) > 0) {
             $errorsString = (string)$errors;
 
             return new Response($errorsString);
+        } else {
+            //true = keine fehler;
+            return true;
         }
     }
 
@@ -238,8 +289,7 @@ class InsertController extends Controller
             $errorsString = (string)$errors;
 
             return new Response($errorsString);
-        }
-        else{
+        } else {
             //true = keine fehler;
             return true;
         }
