@@ -29,7 +29,7 @@ class Semester
      * )
      * @ORM\ID
      */
-    protected $Semester;
+    public $Semester;
 
     /**
      * Set Semester
