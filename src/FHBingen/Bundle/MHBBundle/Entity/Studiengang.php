@@ -63,9 +63,8 @@ class Studiengang
      * @Assert\Length(
      * min= "3",
      * min= "3",
-     * minMessage="Ein Studiengangs-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * minMessage="Ein Studiengangs-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
      * maxMessage="Ein Studiengangs-Kuerzel darf aus maximal {{ limit }} Zeichen bestehen."
-     * invalidMessage = "This value should be a valid number."
      * )
      * @Assert\NotBlank()
      */

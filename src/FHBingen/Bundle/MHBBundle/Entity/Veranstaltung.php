@@ -62,8 +62,7 @@ class Veranstaltung
      * min= "3",
      * max= "5",
      * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * maxMessage="Ein Modul-Kuerzel muss aus maximal {{ limit }} Zeichen bestehen.",
-     * invalidMessage = "This value should be a valid number."
+     * maxMessage="Ein Modul-Kuerzel muss aus maximal {{ limit }} Zeichen bestehen."
      * )
      * @Assert\NotBlank()
      */
@@ -73,8 +72,7 @@ class Veranstaltung
      * @ORM\Column(type="string", length=60, nullable=false)
     * @Assert\Length(
      * min= "8",
-     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * invalidMessage = "This value should be a valid number."
+     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      * @Assert\NotBlank()
      */
@@ -84,8 +82,7 @@ class Veranstaltung
      * @ORM\Column(type="string", length=60, nullable=true)
      * @Assert\Length(
      * min= "8",
-     * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * invalidMessage = "This value should be a valid number."
+     * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      * @Assert\NotBlank()
      */

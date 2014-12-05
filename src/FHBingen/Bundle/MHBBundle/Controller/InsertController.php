@@ -104,7 +104,7 @@ class InsertController extends Controller
     public function dozent4()
     {
         $dozent = new Dozent();
-        $dozent->setAnrede('Herr');
+        $dozent->setAnrede('Blubb');
         $dozent->setTitel('Prof. Dr.');
         $dozent->setName('Peter');
         $dozent->setNachname('Lustig');
@@ -202,5 +202,18 @@ class InsertController extends Controller
             return new Response($errorsString);
         }
         return new Response('Das Semester ist valide!');
+    }
+
+    public function dozentAssert($dozent)
+    {
+        $validator = $this->get('validator');
+        $errors = $validator->validate($dozent);
+
+        if (count($errors) > 0) {
+            $errorsString = (string)$errors;
+
+            return new Response($errorsString);
+        }
+        return new Response('Der Dozent ist valide!');
     }
 }

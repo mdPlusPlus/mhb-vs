@@ -8,6 +8,7 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Semesterplan
@@ -58,8 +59,7 @@ class Semesterplan
      * min = 1,
      * max = 50,
      * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter",
-     * invalidMessage = "This value should be a valid number."
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
      * )
      */
     protected $sws_vorlesung;
@@ -70,8 +70,7 @@ class Semesterplan
      * min = 1,
      * max = 50,
      * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter",
-     * invalidMessage = "This value should be a valid number."
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
      * )
      */
     protected $anzahl_uebungsgruppen;
@@ -82,8 +81,7 @@ class Semesterplan
      * min = 1,
      * max = 50,
      * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter",
-     * invalidMessage = "This value should be a valid number."
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
      * )
      */
     protected $groesse_uebungsgruppen;
