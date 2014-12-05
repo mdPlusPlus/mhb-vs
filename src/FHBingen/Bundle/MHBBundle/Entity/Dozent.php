@@ -72,8 +72,7 @@ class Dozent
 
     /**
      * @Assert\Email(
-     *     message = "Die Email '{{ value }}' ist keine gueltige Email.",
-     *     checkMX = true
+     *     message = "Die Email '{{ value }}' ist keine gueltige Email."
      * )
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      */
