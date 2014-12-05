@@ -686,10 +686,7 @@ protected $Voraussetzung_inh;
 
     /*Kernfach*/
 
-    /**
-     * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="vertiefung", cascade={"all"})
-     * */
-    protected   $modul_kernfach;
+
 
     /*Angebot*/
 
@@ -896,10 +893,6 @@ protected $Voraussetzung_inh;
      * */
     protected  $modul;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Dozent", mappedBy="Module")
-     **/
-    protected $Lehrende;
 
 
     /*Modulbeauftragter (Dozent/Modul)*/
@@ -932,20 +925,6 @@ protected $Voraussetzung_inh;
         $this->modul_ = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /*Regelsemester*/
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Semester", mappedBy="modul_regel")
-
-    private $reg_mod;
-     **/
-
-    /*Startsemester*/
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Semester", mappedBy="modul_start")
-
-    private $start_mod;   **/
 
     /**
      * Set beauftragter
@@ -1008,4 +987,10 @@ protected $Voraussetzung_inh;
      * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="modul", cascade={"all"})
      * */
     protected $studienplan_modul;
+
+    /*Kernfach*/
+    /**
+     * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="modul", cascade={"all"})
+     * */
+    protected $kernfach;
 }

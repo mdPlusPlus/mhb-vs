@@ -28,15 +28,22 @@ class Kernfach
     protected $id;
 
 
+    /*Abhaengigkeiten*/
+
+    /*Kernfach*/
+
     /**
-     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="lehrende")
+     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="kernfach")
      * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID")
      * */
     protected $modul;
 
 
+
+    /*Vertiefung*/
+
     /**
-     * @ORM\ManyToOne(targetEntity="Vertiefung", inversedBy="lehrende")
+     * @ORM\ManyToOne(targetEntity="Vertiefung", inversedBy="vertiefung")
      * @ORM\JoinColumn(name="vertiefungs_id", referencedColumnName="Vertiefungs_ID")
      * */
     protected $vertiefung;

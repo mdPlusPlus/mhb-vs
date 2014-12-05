@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class InsertController extends Controller{
 
 
-    public function indexAction()
+    public function sem_validation()
     {
         $sem = new Semester();
 
