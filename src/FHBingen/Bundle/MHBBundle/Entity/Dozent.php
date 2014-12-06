@@ -58,6 +58,7 @@ class Dozent
      * min= "3",
      * minMessage="Ein Dozenten-Vorname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
+     * @Assert\NotBlank()
      */
     protected	$Name;
 
@@ -67,6 +68,7 @@ class Dozent
      * min= "3",
      * minMessage="Ein Dozenten-Nachname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
+     * @Assert\NotBlank()
      */
     protected	$Nachname;
 
@@ -74,6 +76,7 @@ class Dozent
      * @Assert\Email(
      *     message = "Die Email '{{ value }}' ist keine gueltige Email."
      * )
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      */
     private $Email;

@@ -2,11 +2,13 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Semester;
+use FHBingen\Bundle\MHBBundle\Entity\Studiengang;
 
 class InsertController extends Controller {
 	
@@ -16,12 +18,13 @@ class InsertController extends Controller {
 	public function assertAction() {
 		/*
 		 * TODO
-		 * überprüfen ob bereits in der Datenbank, siehe findAllAction()
+		 * ï¿½berprï¿½fen ob bereits in der Datenbank, siehe findAllAction()
 		 */
 		$em = $this->getDoctrine ()->getManager ();
 		
 		$dozentArr = $this->dozentCreate ();
 		$semesterArr = $this->semesterCreate ();
+
 		
 		foreach ( $dozentArr as $dozent ) {
 			$resultArr = $this->assertObject ( $dozent );
@@ -32,10 +35,13 @@ class InsertController extends Controller {
 			
 			if ($resultArr [0]) {
 				$em->persist ( $dozent );
+                $em->flush ();
 			} else {
 				return new Response ( /*( string ) $dozent . ': ' .*/ $resultArr [1] );
 			}
 		}
+
+
 		
 		foreach ( $semesterArr as $semester ) {
 			$resultArr = $this->assertObject ( $semester );
@@ -45,18 +51,35 @@ class InsertController extends Controller {
 			 */
 			if ($resultArr [0]) {
 				$em->persist ( $semester );
+                $em->flush ();
 			} else {
 				return new Response ( /*( string ) $semester . ': ' .*/ $resultArr [1] );
-				// $semester kann nicht ausgegeben werden, weil das feld nicht gesetzt wird, wenn die assert fehlschlägt
-				// Lösung? ignorieren?
+				// $semester kann nicht ausgegeben werden, weil das feld nicht gesetzt wird, wenn die assert fehlschlï¿½gt
+				// Lï¿½sung? ignorieren?
 			}
 		}
-		
-		$em->flush ();
-		
-		return new Response ( "Dozenten und Semester eingepflegt!" );
+
+     //   $stgangArr = $this->studiengangCreate();
+
+//        foreach ( $stgangArr as $stgang ) {
+//            $resultArr = $this->assertObject ( $stgang );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $stgang );
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
+
+
+		return new Response ( "Studiengang, Dozenten und Semester eingepflegt!" );
 	}
-	
+
 	/**
 	 * @Route("/findAll")
 	 */
@@ -81,8 +104,10 @@ class InsertController extends Controller {
 		
 		return new Response ( $response );
 	}
+
+
 	public function dozentCreate() {
-		// legt die Dozenten-Objekte an und gibt sie als Array zurück
+		// legt die Dozenten-Objekte an und gibt sie als Array zurï¿½ck
 		$dozent0 = new Dozent ();
 		$dozent0->setAnrede ( 'Herr' );
 		$dozent0->setTitel ( 'Prof. Dr.' );
@@ -127,8 +152,10 @@ class InsertController extends Controller {
 		
 		return $dozentArr;
 	}
+
+
 	public function semesterCreate() {
-		// legt die Semester-Objekte an und gibt sie als Array zurück
+		// legt die Semester-Objekte an und gibt sie als Array zurï¿½ck
 		$semester0 = new Semester ();
 		$semester0->setSemester ( 'WS14' );
 		
@@ -141,19 +168,66 @@ class InsertController extends Controller {
 		$semester3 = new Semester ();
 		$semester3->setSemester ( 'SS16' );
 		
-		$semester4 = new Semester ();
-		$semester4->setSemester ( 'S14' );
-		
 		$semesterArr = array (
 				$semester0,
 				$semester1,
 				$semester2,
-				$semester3,
-				$semester4 
+				$semester3
 		);
 		
 		return $semesterArr;
 	}
+
+
+//    public function studiengangCreate() {
+//        // legt die Studiengang-Objekte an und gibt sie als Array zurueck
+//        $stgang0 =new Studiengang();
+//        $stgang0->setFachbereich(1);
+//        $stgang0->setGrad("Bachelor");
+//        $stgang0->setTitel("Bionformatik");
+//        $stgang0->setKuerzel("BI0");
+//        $stgang0->setBeschreibung("Bio-Computer science");
+//
+//        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+//        $entryArr = $table->find(0);
+//
+//        $stgang0->setSgl($entryArr->getDozentenID());
+
+//        $stgang1 =new Studiengang();
+//        $stgang1->setFachbereich(1);
+//        $stgang1->setGrad("Bachelor");
+//        $stgang1->setTitel("Informatik");
+//        $stgang1->setKuerzel("BINF");
+//        $stgang1->setBeschreibung("Computer science");
+//        $stgang1->setSgl((object)129);
+//
+//        $stgang2 =new Studiengang();
+//        $stgang2->setFachbereich(1);
+//        $stgang2->setGrad("Bachelor");
+//        $stgang2->setTitel("Mobile Computing");
+//        $stgang2->setKuerzel("MOCO");
+//        $stgang2->setBeschreibung("Handy science");
+//        $stgang2->setSgl(130);
+//
+//        $stgang3 =new Studiengang();
+//        $stgang3->setFachbereich(2);
+//        $stgang3->setGrad("Master");
+//        $stgang3->setTitel("Informationssysteme");
+//        $stgang3->setKuerzel("MINF");
+//        $stgang3->setBeschreibung("Info science");
+//        $stgang3->setSgl(131);
+
+//        $stgangArr = array (
+//            $stgang0
+////            $stgang1,
+////            $stgang2,
+////            $stgang3
+//        );
+//
+//        return $stgangArr;
+//    }
+
+
 	public function assertObject($obj) {
 		$isValid;
 		$errorsString = 'no errors';

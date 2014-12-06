@@ -42,6 +42,7 @@ class Modulhandbuch
 
     /**
      * @ORM\Column(type="text", nullable=false)
+     * @Assert\NotBlank()
      */
     protected $Beschreibung;
 

@@ -51,7 +51,7 @@ class Studiengang
     /**
      * @ORM\Column(type="string", length=40, nullable=false, unique=true)
      * @Assert\Length(
-     * min= "8",
+     * min= 8,
      * minMessage="Ein Studiengang-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      * @Assert\NotBlank()
@@ -61,8 +61,8 @@ class Studiengang
     /**
      * @ORM\Column(type="string", length=10, nullable=false, unique=true)
      * @Assert\Length(
-     * min= "3",
-     * min= "3",
+     * min= 3,
+     * max= 5,
      * minMessage="Ein Studiengangs-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
      * maxMessage="Ein Studiengangs-Kuerzel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
@@ -324,7 +324,7 @@ class Studiengang
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $sgl
      * @return Studiengang
      */
-    public function setSgl(\FHBingen\Bundle\MHBBundle\Entity\Dozent $sgl = null)
+    public function setSgl(\FHBingen\Bundle\MHBBundle\Entity\Dozent $sgl)
     {
         $this->sgl = $sgl;
     

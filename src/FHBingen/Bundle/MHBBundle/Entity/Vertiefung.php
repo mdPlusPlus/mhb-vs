@@ -34,7 +34,7 @@ class Vertiefung
     /**
      * @ORM\Column(type="string", length=30, unique=true, nullable=false)
      * @Assert\Length(
-     * min= "8",
+     * min= 8,
      * minMessage="Ein Vertiefungsrichtungstitel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      * @Assert\NotBlank()

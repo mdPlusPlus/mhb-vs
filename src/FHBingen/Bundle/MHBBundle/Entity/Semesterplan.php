@@ -49,7 +49,12 @@ class Semesterplan
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * )
      */
     protected $sws_uebung;
 

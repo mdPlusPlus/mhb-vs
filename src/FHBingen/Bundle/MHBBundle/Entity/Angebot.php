@@ -57,11 +57,16 @@ class Angebot
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
+     * @Assert\Choice(
+     * choices = { "Wahlpflichtfach", "Pflichtfach" },
+     * message = "Bitte geben Sie eine korrekte Angebotsart an!"
+     * )
      */
     protected	$Angebotsart;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
+     * @Assert\NotBlank()
      */
     protected	$Code;
 

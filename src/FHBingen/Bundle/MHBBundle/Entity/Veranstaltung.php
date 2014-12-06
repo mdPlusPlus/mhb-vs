@@ -30,7 +30,6 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="date", nullable=false)
-     * @Assert\NotBlank()
      * @Assert\Date()
      */
     protected $Erstellungsdatum;
@@ -64,7 +63,6 @@ class Veranstaltung
      * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
      * maxMessage="Ein Modul-Kuerzel muss aus maximal {{ limit }} Zeichen bestehen."
      * )
-     * @Assert\NotBlank()
      */
     protected $Kuerzel;
 
@@ -84,49 +82,41 @@ class Veranstaltung
      * min= "8",
      * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
-     * @Assert\NotBlank()
      */
     protected $Name_en;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
-     * @Assert\NotBlank()
      */
     protected $Haeufigkeit;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\NotBlank()
      */
     protected $Dauer;
 
 /**
  * @ORM\Column(type="string", length=60, nullable=true)
- * @Assert\NotBlank()
  */
 protected $Lehrveranstaltungen;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
- * @Assert\NotBlank()
  */
 protected $Kontaktzeit_VL;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
- * @Assert\NotBlank()
  */
 protected $Kontaktzeit_sonstige;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
- * @Assert\NotBlank()
  */
 protected $Selbststudium;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
- * @Assert\NotBlank()
  */
 protected $Gruppengroesse;
 
@@ -138,43 +128,36 @@ protected $Lernergebnisse;
 
 /**
  * @ORM\Column(type="text", nullable=true)
- * @Assert\NotBlank()
  */
 protected $Inhalte;
 
 /**
  * @ORM\Column(type="text", nullable=true)
- * @Assert\NotBlank()
  */
 protected $Pruefungsformen;
 
 /**
  * @ORM\Column(type="string", length=20, nullable=true)
- * @Assert\NotBlank()
  */
 protected $Sprache;
 
 /**
  * @ORM\Column(type="text", nullable=true)
- * @Assert\NotBlank()
  */
 protected $Literatur;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
- *
  */
 protected $Leistungspunkte;
 
 /**
  * @ORM\Column(type="text", nullable=true)
- * @Assert\NotBlank()
  */
 protected $Voraussetzung_LP;
 
 /**
  * @ORM\Column(type="text", nullable=true)
- * @Assert\NotBlank()
  */
 protected $Voraussetzung_inh;
 
