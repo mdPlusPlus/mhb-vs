@@ -14,6 +14,10 @@ class InsertController extends Controller {
 	 * @Route("/input")
 	 */
 	public function assertAction() {
+		/*
+		 * TODO
+		 * überprüfen ob bereits in der Datenbank, siehe findAllAction()
+		 */
 		$em = $this->getDoctrine ()->getManager ();
 		
 		$dozentArr = $this->dozentCreate ();
@@ -25,10 +29,11 @@ class InsertController extends Controller {
 			 * $resultArr[0] = $isValid (boolean)
 			 * $resultArr[1] = $errorsString (string)
 			 */
+			
 			if ($resultArr [0]) {
 				$em->persist ( $dozent );
 			} else {
-				return new Response ( (string) $dozent .': '. $resultArr [1] );
+				return new Response ( ( string ) $dozent . ': ' . $resultArr [1] );
 			}
 		}
 		
@@ -41,13 +46,38 @@ class InsertController extends Controller {
 			if ($this->assertObject ( $semester )) {
 				$em->persist ( $semester );
 			} else {
-				return new Response ( (string) $semester .': '. $resultArr [1] );
+				return new Response ( ( string ) $semester . ': ' . $resultArr [1] );
 			}
 		}
 		
 		$em->flush ();
 		
-		return new Response ( "Halt' doch's Maul!" );
+		return new Response ( "Dozenten und Semester eingepflegt!" );
+	}
+	
+	/**
+	 * @Route("/findAll")
+	 */
+	public function findAllAction() {
+		// NUR EIN TEST
+		
+		/**
+		 * $obj = $this->getDoctrine()->getRepository('AcmeStoreBundle:Product')->find($id);
+		 *
+		 * if (!$obj) {
+		 * throw $this->createNotFoundException('No object found for id '.$id);
+		 * }
+		 */
+		$table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+		$entryArr = $table->findAll ();
+		
+		$response = '<response>';
+		foreach ( $entryArr as $entry ) {
+			$response = $response . ' ' . ( string ) $entry;
+		}
+		$response = $response . '</response>';
+		
+		return new Response ( $response );
 	}
 	public function dozentCreate() {
 		// legt die Dozenten-Objekte an und gibt sie als Array zurück
@@ -79,7 +109,7 @@ class InsertController extends Controller {
 		$dozent3->setEmail ( 'raabe@fh-bingen.de' );
 		
 		$dozent4 = new Dozent ();
-		$dozent4->setAnrede ( 'foob' );
+		$dozent4->setAnrede ( 'Herr' );
 		$dozent4->setTitel ( 'Prof. Dr.' );
 		$dozent4->setName ( 'Peter' );
 		$dozent4->setNachname ( 'Lustig' );
