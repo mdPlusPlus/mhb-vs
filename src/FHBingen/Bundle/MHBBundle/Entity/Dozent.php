@@ -26,7 +26,7 @@ class Dozent
 
 	public function __toString()
 	{
-		//TODO $string mit allen feldern füllen
+		//TODO richtig?
 		$string = $this->getName();
 		return $string;
 	}

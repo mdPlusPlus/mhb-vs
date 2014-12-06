@@ -30,14 +30,14 @@ class Semester
 	}
 	
     /**
+     * @ORM\ID
      * @ORM\Column(type="string",  length=5, nullable=false, unique=true)
      * @Assert\Length(
-     * min= 4,
-     * max= 5,
+     * min = 4,
+     * max = 5,
      * minMessage="Ein Semester muss aus mindestens {{ limit }} Zeichen bestehen.",
      * maxMessage="Ein Semester darf aus maximal {{ limit }} Zeichen bestehen."
      * )
-     * @ORM\ID
      */
     protected $Semester;
 

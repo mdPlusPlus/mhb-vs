@@ -33,7 +33,7 @@ class InsertController extends Controller {
 			if ($resultArr [0]) {
 				$em->persist ( $dozent );
 			} else {
-				return new Response ( ( string ) $dozent . ': ' . $resultArr [1] );
+				return new Response ( /*( string ) $dozent . ': ' .*/ $resultArr [1] );
 			}
 		}
 		
@@ -43,10 +43,12 @@ class InsertController extends Controller {
 			 * $resultArr[0] = $isValid (boolean)
 			 * $resultArr[1] = $errorsString (string)
 			 */
-			if ($this->assertObject ( $semester )) {
+			if ($resultArr [0]) {
 				$em->persist ( $semester );
 			} else {
-				return new Response ( ( string ) $semester . ': ' . $resultArr [1] );
+				return new Response ( /*( string ) $semester . ': ' .*/ $resultArr [1] );
+				// $semester kann nicht ausgegeben werden, weil das feld nicht gesetzt wird, wenn die assert fehlschlägt
+				// Lösung? ignorieren?
 			}
 		}
 		
