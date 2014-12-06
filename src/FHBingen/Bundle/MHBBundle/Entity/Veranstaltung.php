@@ -36,7 +36,6 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="string", length=60, nullable=false)
-     * @Assert\NotBlank()
      */
     protected $erstellt_von;
 
@@ -72,7 +71,6 @@ class Veranstaltung
      * min= "8",
      * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
-     * @Assert\NotBlank()
      */
     protected $Name;
 
@@ -122,7 +120,6 @@ protected $Gruppengroesse;
 
 /**
  * @ORM\Column(type="text", nullable=true)
- * @Assert\NotBlank()
  */
 protected $Lernergebnisse;
 

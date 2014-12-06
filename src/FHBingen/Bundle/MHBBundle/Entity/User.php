@@ -24,13 +24,11 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25, unique=true, nullable=false)
-     * * @Assert\NotBlank()
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=false)
-     * * @Assert\NotBlank()
      */
     private $password;
 
@@ -40,13 +38,11 @@ class User implements UserInterface, \Serializable
      *     message = "Die Email '{{ value }}' ist keine gueltige Email.",
      *     checkMX = true
      * )
-     * * @Assert\NotBlank()
      */
     private $email;
 
     /**
      * @ORM\Column(name="is_active", type="boolean", nullable=false)
-     * * @Assert\NotBlank()
      */
     private $isActive;
 

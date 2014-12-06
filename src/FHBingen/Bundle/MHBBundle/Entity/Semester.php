@@ -38,7 +38,6 @@ class Semester
      * minMessage="Ein Semester muss aus mindestens {{ limit }} Zeichen bestehen.",
      * maxMessage="Ein Semester darf aus maximal {{ limit }} Zeichen bestehen."
      * )
-     * @Assert\NotBlank()
      */
     protected $Semester;
 

@@ -54,7 +54,6 @@ class Studiengang
      * min= 8,
      * minMessage="Ein Studiengang-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
-     * @Assert\NotBlank()
      */
     protected $Titel;
 
@@ -66,13 +65,11 @@ class Studiengang
      * minMessage="Ein Studiengangs-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
      * maxMessage="Ein Studiengangs-Kuerzel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
-     * @Assert\NotBlank()
      */
     protected $Kuerzel;
 
     /**
      * @ORM\Column(type="text", nullable=false)
-     * @Assert\NotBlank()
      */
     protected $Beschreibung;
 

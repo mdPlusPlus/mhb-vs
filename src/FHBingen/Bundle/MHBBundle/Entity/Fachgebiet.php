@@ -36,7 +36,6 @@ class Fachgebiet
      * min= "4",
      * minMessage="Der Fachgebietstitel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
-     * @Assert\NotBlank()
      */
     protected $Titel;
 

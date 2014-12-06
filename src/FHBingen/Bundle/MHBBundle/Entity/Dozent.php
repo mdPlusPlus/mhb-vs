@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Dozent")
- * @UniqueEntity(fields="Titel", message="Unter dieser EMail ist bereits ein Dozent eingetragen.")
+ * @UniqueEntity(fields="Email", message="Unter dieser EMail ist bereits ein Dozent eingetragen.")
  * @ORM\HasLifecycleCallbacks
  */
 
@@ -55,20 +55,18 @@ class Dozent
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
      * @Assert\Length(
-     * min= "3",
+     * min= 3,
      * minMessage="Ein Dozenten-Vorname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
-     * @Assert\NotBlank()
      */
     protected	$Name;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=false)
      * @Assert\Length(
-     * min= "3",
+     * min= 3,
      * minMessage="Ein Dozenten-Nachname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
-     * @Assert\NotBlank()
      */
     protected	$Nachname;
 
@@ -76,7 +74,6 @@ class Dozent
      * @Assert\Email(
      *     message = "Die Email '{{ value }}' ist keine gueltige Email."
      * )
-     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      */
     private $Email;

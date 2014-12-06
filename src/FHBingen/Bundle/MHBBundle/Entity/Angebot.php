@@ -66,7 +66,6 @@ class Angebot
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
-     * @Assert\NotBlank()
      */
     protected	$Code;
 
