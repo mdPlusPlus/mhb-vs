@@ -36,7 +36,6 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      * @Assert\Email(
      *     message = "Die Email '{{ value }}' ist keine gueltige Email.",
-     *     checkMX = true
      * )
      */
     private $email;
