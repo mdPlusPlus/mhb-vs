@@ -8,11 +8,8 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        users:
-            entity:
-                class:        FHBingenMHBBundle:User
-                property:     username
-                manager_name: default #braucht man das? ist das richtig?
+        administrators:
+            entity: { FHBingenMHBBundle:User }
 
     firewalls:
         dev:
