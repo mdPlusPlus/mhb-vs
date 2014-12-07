@@ -18,8 +18,20 @@ class InsertFormController extends Controller
 {
     /**
      * @Route("/creation/form")
+     * Reihenfolge:
+     * Dozent, Semester (nix)
+     * Module (Dozent)
+     * Angebot (Modul; Modulhandbuch; Fachgebiet; Studiengang)
+     * Fachgebiet (Studiengang)
+     * Kernfach (Modul; Vertiefung)
+     * Lehrende (Modul; Dozent)
+     * Modulhandbuch (Semester, Studiengang)
+     * Semesterplan (Modul; Dozent; Semester)
+     * Studiengang (Dozent)
+     * Studienplan(Semester; Modul; Studiengang)
+     * Vertiefung (Studiengang)
+     * Vorraussetztung (Modul?)
      */
-
     public function formAction()
     {
         $person = new Person();
