@@ -8,6 +8,7 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
+use Doctrine\ORM\EntityNotFoundException;
 use FHBingen\Bundle\MHBBundle\Entity\Role;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -95,17 +96,45 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/security/setrole/{user}/{role}")
+     * @Route("/security/addUserToRole/{username}/{rolename}")
      */
-    public function setRolesAction($user, $role){
+    public function addUserToRoleAction($username, $rolename)
+    {
 
-        /* TODO
-         * hole Benutzer $user aus Users
-         * hole Rolle $role aus Roles
-         * setze Beuntzer §user auf Rolle $role
-         */
+        $em = $this->getDoctrine()->getManager();
 
-        return new Response($user . ' is set to '. $role);
+        $usersTable = $em->getRepository('FHBingenMHBBundle:User');
+        $rolesTable = $em->getRepository('FHBingenMHBBundle:Role');
+
+        $user = $usersTable->findOneBy(array('username' => $username));
+        $role = $rolesTable->findOneBy(array('name' => $rolename));
+
+        if ($user == null) {
+            //TODO $username einbauen
+            throw new EntityNotFoundException();
+        }
+        if ($role == null) {
+            //TODO $rolename einbauen
+            throw new EntityNotFoundException();
+        }
+
+        $role->addUser($user);
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($role);
+
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+
+        $em->merge($role);
+        $em->flush();
+
+
+        return new Response($username . ' is added to ' . $rolename);
+
     }
 
 }
