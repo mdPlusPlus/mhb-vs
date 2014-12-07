@@ -1,4 +1,8 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: mdPlusPlus
+ */
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
