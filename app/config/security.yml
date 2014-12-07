@@ -11,7 +11,7 @@ security:
         administrators:
             entity:
                 class:        FHBingenMHBBundle:User
-                property:     username
+                #property:     username
                 manager_name: default #braucht man das? ist das richtig?
 
     firewalls:
