@@ -15,6 +15,11 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
+/*
+ * TODO
+ * aus \Entity verschieben, ist keine Entity
+ * dabei beachten: repositoryClass in User.php korrigieren
+ */
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
     public function loadUserByUsername($username)
