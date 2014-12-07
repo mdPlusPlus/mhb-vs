@@ -15,6 +15,8 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
+
+//TODO Datei vermutlich gar nicht benötigt
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
     public function loadUserByUsername($username)
