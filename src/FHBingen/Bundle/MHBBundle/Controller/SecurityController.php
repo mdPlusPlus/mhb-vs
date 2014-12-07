@@ -8,6 +8,7 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
+use FHBingen\Bundle\MHBBundle\Entity\Role;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,57 @@ use FHBingen\Bundle\MHBBundle\Entity\User;
 
 class SecurityController extends Controller
 {
+    /**
+     * @Route("/security/create/roles")
+     */
+    public function createRolesAction()
+    {
+        $roleUser = new Role();
+        $roleUser->setName("ROLE_USER");
+        $roleUser->setRole("ROLE_USER");
+
+        $roleAdmin = new Role();
+        $roleAdmin->setName("ROLE_ADMIN");
+        $roleAdmin->setRole("ROLE_ADMIN");
+        //$roleAdmin->setRole("ROLE_USER");
+        //$roleAdmin->setRole($roleUser);
+
+        $roleSuperAdmin = new Role();
+        $roleSuperAdmin->setName("ROLE_SUPER_ADMIN");
+        $roleSuperAdmin->setRole("ROLE_SUPER_ADMIN");
+        //ROLE_ALLOWED_TO_SWITCH
+
+        $validator = $this->get('validator');
+
+        $errors = $validator->validate($roleUser);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+        $errors = $validator->validate($roleAdmin);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+        $errors = $validator->validate($roleSuperAdmin);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($roleUser);
+        $em->persist($roleAdmin);
+        $em->persist($roleSuperAdmin);
+        $em->flush();
+
+        return new Response("Rollen angelegt");
+    }
+
+
     /**
      * @Route("/security/create/testuser")
      */
@@ -41,4 +93,19 @@ class SecurityController extends Controller
 
         return new Response("testuser angelegt");
     }
+
+    /**
+     * @Route("/security/setrole/{user}/{role}")
+     */
+    public function setRolesAction($user, $role){
+
+        /* TODO
+         * hole Benutzer $user aus Users
+         * hole Rolle $role aus Roles
+         * setze Beuntzer §user auf Rolle $role
+         */
+
+        return new Response($user . ' is set to '. $role);
+    }
+
 }
