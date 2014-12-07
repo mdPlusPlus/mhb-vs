@@ -63,4 +63,14 @@ class Person
     {
         $this->fullname = $fullname;
     }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }
