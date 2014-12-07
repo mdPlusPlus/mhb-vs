@@ -8,6 +8,7 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Semesterplan
@@ -48,21 +49,45 @@ class Semesterplan
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * )
      */
     protected $sws_uebung;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * )
      */
     protected $sws_vorlesung;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * )
      */
     protected $anzahl_uebungsgruppen;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * )
      */
     protected $groesse_uebungsgruppen;
 

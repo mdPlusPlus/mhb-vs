@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Studiengang
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
- * @UniqueEntity(fields="semester", message="Diese Vertiefungsrichtung wurde bereits in die Datenbank eingetragen.")
+ * @UniqueEntity(fields="Vertiefungsrichtung", message="Diese Vertiefungsrichtung wurde bereits in die Datenbank eingetragen.")
  * @ORM\Table(name="Vertiefung")
  * @ORM\HasLifecycleCallbacks
  */
@@ -34,7 +34,7 @@ class Vertiefung
     /**
      * @ORM\Column(type="string", length=30, unique=true, nullable=false)
      * @Assert\Length(
-     * min= "8",
+     * min= 8,
      * minMessage="Ein Vertiefungsrichtungstitel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */

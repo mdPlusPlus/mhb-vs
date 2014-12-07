@@ -8,3 +8,5 @@
 /bin/
 /composer.phar
 /.idea/
+.project
+/.settings/

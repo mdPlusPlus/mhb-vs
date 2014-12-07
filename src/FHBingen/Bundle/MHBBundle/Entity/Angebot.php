@@ -9,6 +9,7 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Angebot
@@ -52,6 +53,31 @@ class Angebot
      * @ORM\JoinColumn(name="studiengang_id", referencedColumnName="Studiengang_ID")
      * */
     protected $studiengang;
+
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=false)
+     * @Assert\Choice(
+     * choices = { "Wahlpflichtfach", "Pflichtfach" },
+     * message = "Bitte geben Sie eine korrekte Angebotsart an!"
+     * )
+     */
+    protected	$Angebotsart;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=false)
+     */
+    protected	$Code;
+
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    protected	$abweichender_Titel_DE;
+
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    protected	$abweichender_Titel_EN;
 
     /**
      * Get id
@@ -153,5 +179,97 @@ class Angebot
     public function getStudiengang()
     {
         return $this->studiengang;
+    }
+
+    /**
+     * Set Angebotsart
+     *
+     * @param string $angebotsart
+     * @return Angebot
+     */
+    public function setAngebotsart($angebotsart)
+    {
+        $this->Angebotsart = $angebotsart;
+    
+        return $this;
+    }
+
+    /**
+     * Get Angebotsart
+     *
+     * @return string 
+     */
+    public function getAngebotsart()
+    {
+        return $this->Angebotsart;
+    }
+
+    /**
+     * Set Code
+     *
+     * @param string $code
+     * @return Angebot
+     */
+    public function setCode($code)
+    {
+        $this->Code = $code;
+    
+        return $this;
+    }
+
+    /**
+     * Get Code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->Code;
+    }
+
+    /**
+     * Set abweichender_Titel_DE
+     *
+     * @param string $abweichenderTitelDE
+     * @return Angebot
+     */
+    public function setAbweichenderTitelDE($abweichenderTitelDE)
+    {
+        $this->abweichender_Titel_DE = $abweichenderTitelDE;
+    
+        return $this;
+    }
+
+    /**
+     * Get abweichender_Titel_DE
+     *
+     * @return string 
+     */
+    public function getAbweichenderTitelDE()
+    {
+        return $this->abweichender_Titel_DE;
+    }
+
+    /**
+     * Set abweichender_Titel_EN
+     *
+     * @param string $abweichenderTitelEN
+     * @return Angebot
+     */
+    public function setAbweichenderTitelEN($abweichenderTitelEN)
+    {
+        $this->abweichender_Titel_EN = $abweichenderTitelEN;
+    
+        return $this;
+    }
+
+    /**
+     * Get abweichender_Titel_EN
+     *
+     * @return string 
+     */
+    public function getAbweichenderTitelEN()
+    {
+        return $this->abweichender_Titel_EN;
     }
 }

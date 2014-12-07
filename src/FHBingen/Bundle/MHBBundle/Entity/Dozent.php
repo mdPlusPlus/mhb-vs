@@ -17,13 +17,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Dozent")
- * @UniqueEntity(fields="Titel", message="Unter dieser EMail ist bereits ein Dozent eingetragen.")
+ * @UniqueEntity(fields="Email", message="Unter dieser EMail ist bereits ein Dozent eingetragen.")
  * @ORM\HasLifecycleCallbacks
  */
 
 class Dozent
 {
 
+	public function __toString()
+	{
+		//TODO richtig?
+		$string = $this->getName();
+		return $string;
+	}
+	
     /**
      * @ORM\Column(type="integer")
      * @ORM\ID
@@ -33,6 +40,10 @@ class Dozent
 
     /**
      * @ORM\Column(type="string", length=4, nullable=false)
+     * @Assert\Choice(
+     * choices = { "Herr", "Frau" },
+     * message = "Bitte geben Sie eine korrekte Anrede an!"
+     * )
      */
     protected	$Anrede;
 
@@ -42,19 +53,28 @@ class Dozent
     protected	$Titel;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=false)
+     * @Assert\Length(
+     * min= 3,
+     * minMessage="Ein Dozenten-Vorname muss aus mindestens {{ limit }} Zeichen bestehen."
+     * )
      */
     protected	$Name;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=false)
+     * @Assert\Length(
+     * min= 3,
+     * minMessage="Ein Dozenten-Nachname muss aus mindestens {{ limit }} Zeichen bestehen."
+     * )
      */
     protected	$Nachname;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Email(message="Bitte eine gültige Email eingeben")
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\Email(
+     *     message = "Die Email '{{ value }}' ist keine gueltige Email."
+     * )
+     * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      */
     private $Email;
 

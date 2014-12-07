@@ -9,6 +9,7 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Lehrende
@@ -29,7 +30,7 @@ class Lehrende
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="lehrende")
+     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="modul")
      * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID")
      * */
     protected $module;

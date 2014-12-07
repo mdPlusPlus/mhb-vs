@@ -33,18 +33,25 @@ class Studiengang
 
     /**
      * @ORM\Column(type="integer", nullable=false)
+     * @Assert\Range(
+     * min = 1,
+     * max = 2,
+     * minMessage = "Fachbereich {{ limit }} ist Minimum",
+     * maxMessage = "Fachbereich {{ limit }} ist Maximum"
+     * )
      */
     protected $Fachbereich;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
+     * @Assert\Choice(choices = {"Bachelor", "Master"}, message = "Waehlen Sie einen gueltigen Bildungsgrad")
      */
     protected $Grad;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=false, unique=true)
      * @Assert\Length(
-     * min= "8",
+     * min= 8,
      * minMessage="Ein Studiengang-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
@@ -53,14 +60,16 @@ class Studiengang
     /**
      * @ORM\Column(type="string", length=10, nullable=false, unique=true)
      * @Assert\Length(
-     * min= "3",
-     * minMessage="Ein Studiengangs-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * min= 3,
+     * max= 5,
+     * minMessage="Ein Studiengangs-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * maxMessage="Ein Studiengangs-Kuerzel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Kuerzel;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=false)
      */
     protected $Beschreibung;
 
@@ -312,7 +321,7 @@ class Studiengang
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $sgl
      * @return Studiengang
      */
-    public function setSgl(\FHBingen\Bundle\MHBBundle\Entity\Dozent $sgl = null)
+    public function setSgl(\FHBingen\Bundle\MHBBundle\Entity\Dozent $sgl)
     {
         $this->sgl = $sgl;
     
@@ -400,4 +409,37 @@ class Studiengang
      * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="studiengang", cascade={"all"})
      * */
     protected $studienplan_stgang;
+
+    /**
+     * Add studienplan_stgang
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang
+     * @return Studiengang
+     */
+    public function addStudienplanStgang(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang)
+    {
+        $this->studienplan_stgang[] = $studienplanStgang;
+    
+        return $this;
+    }
+
+    /**
+     * Remove studienplan_stgang
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang
+     */
+    public function removeStudienplanStgang(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang)
+    {
+        $this->studienplan_stgang->removeElement($studienplanStgang);
+    }
+
+    /**
+     * Get studienplan_stgang
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStudienplanStgang()
+    {
+        return $this->studienplan_stgang;
+    }
 }

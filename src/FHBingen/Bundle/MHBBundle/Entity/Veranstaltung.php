@@ -30,11 +30,16 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="date", nullable=false)
+     * @Assert\Date()
      */
     protected $Erstellungsdatum;
 
     /**
      * @ORM\Column(type="string", length=60, nullable=false)
+     * @Assert\Length(
+     * min= 3,
+     * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * )
      */
     protected $erstellt_von;
 
@@ -46,14 +51,20 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
+     * @Assert\Choice(
+     * choices = { "in Planung", "in Arbeit", "freigegeben" },
+     * message = "Bitte geben Sie einen korrekten Status an!"
+     * )
      */
     protected $Status;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, nullable=true)
      * @Assert\Length(
-     * min= "3",
-     * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * min= 3,
+     * max= 5,
+     * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * maxMessage="Ein Modul-Kuerzel muss aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Kuerzel;
@@ -61,93 +72,97 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=60, nullable=false)
     * @Assert\Length(
-     * min= "8",
+     * min= 8,
      * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Name;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=60, nullable=true)
      * @Assert\Length(
-     * min= "8",
+     * min= 8,
      * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Name_en;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\Choice(
+     * choices = { "Wintersemester", "Sommersemester", "wechselnd", "jedes Semester"},
+     * message = "Bitte geben Sie eine korrekte Haeufigkeit an!"
+     * )
      */
     protected $Haeufigkeit;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $Dauer;
 
 /**
- * @ORM\Column(type="string", length=60)
+ * @ORM\Column(type="string", length=60, nullable=true)
  */
 protected $Lehrveranstaltungen;
 
 /**
- * @ORM\Column(type="integer")
+ * @ORM\Column(type="integer", nullable=true)
  */
 protected $Kontaktzeit_VL;
 
 /**
- * @ORM\Column(type="integer")
+ * @ORM\Column(type="integer", nullable=true)
  */
 protected $Kontaktzeit_sonstige;
 
 /**
- * @ORM\Column(type="integer")
+ * @ORM\Column(type="integer", nullable=true)
  */
 protected $Selbststudium;
 
 /**
- * @ORM\Column(type="integer")
+ * @ORM\Column(type="integer", nullable=true)
  */
 protected $Gruppengroesse;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Lernergebnisse;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Inhalte;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Pruefungsformen;
 
 /**
- * @ORM\Column(type="string", length=20)
+ * @ORM\Column(type="string", length=20, nullable=true)
  */
 protected $Sprache;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Literatur;
 
 /**
- * @ORM\Column(type="integer")
+ * @ORM\Column(type="integer", nullable=true)
  */
 protected $Leistungspunkte;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Voraussetzung_LP;
 
 /**
- * @ORM\Column(type="text")
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Voraussetzung_inh;
 
@@ -686,10 +701,7 @@ protected $Voraussetzung_inh;
 
     /*Kernfach*/
 
-    /**
-     * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="vertiefung", cascade={"all"})
-     * */
-    protected   $modul_kernfach;
+
 
     /*Angebot*/
 
@@ -896,10 +908,6 @@ protected $Voraussetzung_inh;
      * */
     protected  $modul;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Dozent", mappedBy="Module")
-     **/
-    protected $Lehrende;
 
 
     /*Modulbeauftragter (Dozent/Modul)*/
@@ -932,20 +940,6 @@ protected $Voraussetzung_inh;
         $this->modul_ = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /*Regelsemester*/
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Semester", mappedBy="modul_regel")
-
-    private $reg_mod;
-     **/
-
-    /*Startsemester*/
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Semester", mappedBy="modul_start")
-
-    private $start_mod;   **/
 
     /**
      * Set beauftragter
@@ -1008,4 +1002,76 @@ protected $Voraussetzung_inh;
      * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="modul", cascade={"all"})
      * */
     protected $studienplan_modul;
+
+    /*Kernfach*/
+    /**
+     * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="modul", cascade={"all"})
+     * */
+    protected $kernfach;
+
+    /**
+     * Add studienplan_modul
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul
+     * @return Veranstaltung
+     */
+    public function addStudienplanModul(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul)
+    {
+        $this->studienplan_modul[] = $studienplanModul;
+    
+        return $this;
+    }
+
+    /**
+     * Remove studienplan_modul
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul
+     */
+    public function removeStudienplanModul(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul)
+    {
+        $this->studienplan_modul->removeElement($studienplanModul);
+    }
+
+    /**
+     * Get studienplan_modul
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStudienplanModul()
+    {
+        return $this->studienplan_modul;
+    }
+
+    /**
+     * Add kernfach
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Kernfach $kernfach
+     * @return Veranstaltung
+     */
+    public function addKernfach(\FHBingen\Bundle\MHBBundle\Entity\Kernfach $kernfach)
+    {
+        $this->kernfach[] = $kernfach;
+    
+        return $this;
+    }
+
+    /**
+     * Remove kernfach
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Kernfach $kernfach
+     */
+    public function removeKernfach(\FHBingen\Bundle\MHBBundle\Entity\Kernfach $kernfach)
+    {
+        $this->kernfach->removeElement($kernfach);
+    }
+
+    /**
+     * Get kernfach
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getKernfach()
+    {
+        return $this->kernfach;
+    }
 }

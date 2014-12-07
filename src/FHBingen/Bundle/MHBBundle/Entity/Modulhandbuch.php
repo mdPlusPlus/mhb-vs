@@ -9,6 +9,7 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Studiengang
@@ -35,6 +36,7 @@ class Modulhandbuch
 
     /**
      * @ORM\Column(type="date", nullable=false)
+     * @Assert\Date()
      */
     protected $Erstellungsdatum;
 
