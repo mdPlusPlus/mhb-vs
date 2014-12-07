@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class InsertFormController extends Controller
 {
     /**
-     * @Route("/form")
+     * @Route("/creation/form")
      */
 
     public function formAction()
