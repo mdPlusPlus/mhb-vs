@@ -15,8 +15,6 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
-
-//TODO Datei vermutlich gar nicht benötigt
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
     public function loadUserByUsername($username)
@@ -34,7 +32,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             $user = $q->getSingleResult();
         } catch (NoResultException $e) {
             $message = sprintf(
-                'Unable to find an active admin AcmeUserBundle:User object identified by "%s".',
+                'Unable to find an active admin FHBingenMHBBundle:User object identified by "%s".',
                 $username
             );
             throw new UsernameNotFoundException($message, 0, $e);

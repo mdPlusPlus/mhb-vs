@@ -9,10 +9,7 @@ security:
 
     providers:
         administrators:
-            entity:
-                class:        FHBingenMHBBundle:User
-                #property:     username
-                #manager_name: default #braucht man das? ist das richtig?
+            entity: { class: FHBingenMHBBundle:User }
 
     firewalls:
         dev:

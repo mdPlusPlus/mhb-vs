@@ -19,6 +19,16 @@ use FHBingen\Bundle\MHBBundle\Entity\User;
 class SecurityController extends Controller
 {
     /**
+     * @Route("/security/test")
+     */
+    public function testAction(){
+        $this->createRolesAction();
+        $this->createTestUserAction();
+        $this->addUserToRoleAction('testuser', 'ROLE_ADMIN');
+
+        return new Response("ausgeführt");
+    }
+    /**
      * @Route("/security/create/roles")
      */
     public function createRolesAction()
