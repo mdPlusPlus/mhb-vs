@@ -4,6 +4,9 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 
 
 use FHBingen\Bundle\MHBBundle\Entity\Fachgebiet;
+use FHBingen\Bundle\MHBBundle\Entity\Kernfach;
+use FHBingen\Bundle\MHBBundle\Entity\Lehrende;
+use FHBingen\Bundle\MHBBundle\Entity\Semesterplan;
 use FHBingen\Bundle\MHBBundle\Entity\Veranstaltung;
 use FHBingen\Bundle\MHBBundle\Entity\Vertiefung;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,27 +28,27 @@ class InsertController extends Controller {
 		 */
 		$em = $this->getDoctrine ()->getManager ();
 		
-		$dozentArr = $this->dozentCreate ();
+//		$dozentArr = $this->dozentCreate ();
+//
+//		foreach ( $dozentArr as $dozent ) {
+//			$resultArr = $this->assertObject ( $dozent );
+//			/**
+//			 * $resultArr[0] = $isValid (boolean)
+//			 * $resultArr[1] = $errorsString (string)
+//			 */
+//
+//			if ($resultArr [0]) {
+//				$em->persist ( $dozent );
+//			} else {
+//				return new Response ( /*( string ) $dozent . ': ' .*/ $resultArr [1] );
+//			}
+//
+//		}
+//
+//        $em->flush ();
+
 //		$semesterArr = $this->semesterCreate ();
-
-		
-		foreach ( $dozentArr as $dozent ) {
-			$resultArr = $this->assertObject ( $dozent );
-			/**
-			 * $resultArr[0] = $isValid (boolean)
-			 * $resultArr[1] = $errorsString (string)
-			 */
-			
-			if ($resultArr [0]) {
-				$em->persist ( $dozent );
-			} else {
-				return new Response ( /*( string ) $dozent . ': ' .*/ $resultArr [1] );
-			}
-
-		}
-
-        $em->flush ();
-		
+//
 //		foreach ( $semesterArr as $semester ) {
 //			$resultArr = $this->assertObject ( $semester );
 //			/**
@@ -62,22 +65,22 @@ class InsertController extends Controller {
 //			}
 //		}
 
-        $stgangArr = $this->studiengangCreate();
-
-        foreach ( $stgangArr as $stgang ) {
-            $resultArr = $this->assertObject ( $stgang );
-            /**
-             * $resultArr[0] = $isValid (boolean)
-             * $resultArr[1] = $errorsString (string)
-             */
-
-            if ($resultArr [0]) {
-                $em->persist ( $stgang );
-                $em->flush ();
-            } else {
-                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-            }
-        }
+//        $stgangArr = $this->studiengangCreate();
+//
+//        foreach ( $stgangArr as $stgang ) {
+//            $resultArr = $this->assertObject ( $stgang );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $stgang );
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
 
 //        $vertArr = $this->vertiefungCreate();
 //
@@ -129,6 +132,74 @@ class InsertController extends Controller {
 //                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
 //            }
 //        }
+
+//         $lehrArr = $this->lehrCreate();
+//
+//        foreach ( $lehrArr as $lehrende ) {
+//            $resultArr = $this->assertObject ( $lehrende );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $lehrende );
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
+
+//        $semesterplanArr = $this->semesterplanCreate();
+//
+//        foreach ( $semesterplanArr as $semesterplan ) {
+//            $resultArr = $this->assertObject ( $semesterplan );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $semesterplan );
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
+
+//        $kernfachArr = $this->kernfachCreate();
+//
+//        foreach ( $kernfachArr as $kernfach ) {
+//            $resultArr = $this->assertObject ( $kernfach );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $kernfach );
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
+
+         $mhbArr = $this->mhbCreate();
+
+        foreach ( $mhbArr as $mhb ) {
+            $resultArr = $this->assertObject ( $mhb );
+            /**
+             * $resultArr[0] = $isValid (boolean)
+             * $resultArr[1] = $errorsString (string)
+             */
+
+            if ($resultArr [0]) {
+                $em->persist ( $mhb );
+                $em->flush ();
+            } else {
+                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+            }
+        }
 
 		return new Response ( "Studiengang, Dozenten und Semester eingepflegt!" );
 	}
@@ -242,7 +313,7 @@ class InsertController extends Controller {
         $stgang0->setBeschreibung("Bio-Computer science");
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
-        $entry = $table->find(27);
+        $entry = $table->find(35);
 
         $stgang0->setSgl($entry);
 
@@ -303,7 +374,7 @@ class InsertController extends Controller {
 
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-        $entry = $table->find(26);
+        $entry = $table->find(34);
 
         $vert0->setStgang($entry);
 
@@ -325,7 +396,7 @@ class InsertController extends Controller {
 
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-        $entry = $table->find(26);
+        $entry = $table->find(34);
 
         $fach0->setHat($entry);
 
@@ -339,8 +410,10 @@ class InsertController extends Controller {
     public function veranstaltungCreate() {
         // legt die Veranstaltungs-Objekte an und gibt sie als Array zurueck
         $veranstaltung0 = new Veranstaltung();
-        $veranstaltung0->setErstellungsdatum(date(1));
+        //$veranstaltung0->setErstellungsdatum("2014-12-07");
+        $veranstaltung0->setErstellungsdatum(new \DateTime());
         $veranstaltung0->setErstelltVon("HCR");
+        $veranstaltung0->setVersionsnummerModul(1);
         $veranstaltung0->setStatus("freigegeben");
         $veranstaltung0->setKuerzel("ABC");
         $veranstaltung0->setName("Die Katze raucht den Schnee");
@@ -366,7 +439,7 @@ class InsertController extends Controller {
 
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
-        $entry = $table->find(27);
+        $entry = $table->find(35);
 
         $veranstaltung0->setBeauftragter($entry);
 
@@ -375,6 +448,83 @@ class InsertController extends Controller {
         );
 
         return $veranstaltungArr;
+    }
+
+    public function lehrCreate() {
+        // legt die Lehrende-Objekte an und gibt sie als Array zurueck
+        $lehr0 = new Lehrende();
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $entry = $table->find(1);
+
+        $lehr0->setmodule($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+        $entry = $table->find(35);
+
+        $lehr0->setLehrender($entry);
+
+        $fachArr = array (
+            $lehr0
+        );
+
+        return $fachArr;
+    }
+
+
+    public function semesterplanCreate() {
+        // legt die Semesterplan-Objekte an und gibt sie als Array zurueck
+        $semplan0 = new Semesterplan();
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $entry = $table->find(1);
+
+        $semplan0->setmodule($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+        $entry = $table->find(35);
+
+        $semplan0->setLehrender($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
+        $entry = $table->find("WS15");
+
+        $semplan0->setSemester($entry);
+
+        $semplan0->setAnzahlUebungsgruppen(3);
+        $semplan0->setSwsUebung(5);
+        $semplan0->setSwsVorlesung(5);
+        $semplan0->setAnzahlUebungsgruppen(5);
+        $semplan0->setGroesseUebungsgruppen(10);
+
+
+
+        $semplanArr = array (
+            $semplan0
+        );
+
+        return $semplanArr;
+    }
+
+    public function kernfachCreate() {
+        // legt die Kernfach-Objekte an und gibt sie als Array zurueck
+        $kern0 = new Kernfach();
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $entry = $table->find(1);
+
+        $kern0->setmodul($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Vertiefung' );
+        $entry = $table->find(5);
+
+        $kern0->setVertiefung($entry);
+
+       $kernfachArr = array (
+            $kern0
+        );
+
+        return $kernfachArr;
     }
 
 	public function assertObject($obj) {
