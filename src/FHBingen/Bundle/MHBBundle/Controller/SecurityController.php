@@ -25,7 +25,7 @@ class SecurityController extends Controller
         $testUser = new User();
         $testUser->setEmail("user@test.com");
         $testUser->setUsername("testuser");
-        $testUser->setPassword("testpass");
+        $testUser->setPassword(password_hash('testpasspass', PASSWORD_BCRYPT, array('cost' => 12)));
 
         $validator = $this->get('validator');
         $errors = $validator->validate($testUser);
