@@ -5,7 +5,7 @@ namespace FHBingen\Bundle\MHBBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="FHBingen\Bundle\MHBBundle\Entity\UserRepository")
  * @ORM\Table(name="Users")
  */
-class User implements AdvancedUserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable, EncoderAwareInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -233,6 +233,12 @@ class User implements AdvancedUserInterface, \Serializable
     public function removeRole(\FHBingen\Bundle\MHBBundle\Entity\Role $roles)
     {
         $this->roles->removeElement($roles);
+    }
+
+    public function getEncoderName()
+    {
+        //always return encoder 'blubb' defined in security.yml
+        return 'blubb';
     }
 
     //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen

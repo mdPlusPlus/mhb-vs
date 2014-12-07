@@ -40,13 +40,10 @@ class SecurityController extends Controller
         $roleAdmin = new Role();
         $roleAdmin->setName("ROLE_ADMIN");
         $roleAdmin->setRole("ROLE_ADMIN");
-        //$roleAdmin->setRole("ROLE_USER");
-        //$roleAdmin->setRole($roleUser);
 
         $roleSuperAdmin = new Role();
         $roleSuperAdmin->setName("ROLE_SUPER_ADMIN");
         $roleSuperAdmin->setRole("ROLE_SUPER_ADMIN");
-        //ROLE_ALLOWED_TO_SWITCH
 
         $validator = $this->get('validator');
 
@@ -80,14 +77,15 @@ class SecurityController extends Controller
 
 
     /**
-     * @Route("/security/create/testuser")
+     * @Route("/security/create/testUser/{user}")
      */
-    public function createTestUserAction()
+    public function createTestUserAction($user)
     {
         $testUser = new User();
-        $testUser->setEmail("user@test.com");
-        $testUser->setUsername("testuser");
-        $testUser->setPassword(password_hash('testpasspass', PASSWORD_BCRYPT, array('cost' => 12)));
+        $testUser->setEmail($user . '@test.com');
+        $testUser->setUsername($user);
+        $testUser->setPassword(password_hash('testpass', PASSWORD_BCRYPT, array('cost' => 12)));
+        //$testUser->setPassword('testpass');
 
         $validator = $this->get('validator');
         $errors = $validator->validate($testUser);
@@ -102,7 +100,7 @@ class SecurityController extends Controller
         $em->persist($testUser);
         $em->flush();
 
-        return new Response("testuser angelegt");
+        return new Response($user . ' angelegt');
     }
 
     /**
