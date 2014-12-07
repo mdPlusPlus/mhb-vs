@@ -46,11 +46,19 @@ class User implements UserInterface, \Serializable
      */
     private $isActive;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     *
+     */
+    private $roles;
+
     public function __construct()
     {
         $this->isActive = true;
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid(null, true));
+
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -84,7 +92,8 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        //return array('ROLE_USER');
+        return $this->roles->toArray();
     }
 
     /**
@@ -202,5 +211,28 @@ class User implements UserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Add roles
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Role $roles
+     * @return User
+     */
+    public function addRole(\FHBingen\Bundle\MHBBundle\Entity\Role $roles)
+    {
+        $this->roles[] = $roles;
+    
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Role $roles
+     */
+    public function removeRole(\FHBingen\Bundle\MHBBundle\Entity\Role $roles)
+    {
+        $this->roles->removeElement($roles);
     }
 }

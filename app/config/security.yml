@@ -1,6 +1,6 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        #Symfony\Component\Security\Core\User\User: plaintext
         FHBingen\Bundle\MHBBundle\Entity\User : bcrypt
 
     role_hierarchy:
@@ -9,7 +9,10 @@ security:
 
     providers:
         administrators:
-            entity: { FHBingenMHBBundle:User }
+            entity:
+                class:        FHBingenMHBBundle:User
+                property:     username
+                manager_name: default #braucht man das? ist das richtig?
 
     firewalls:
         dev:
