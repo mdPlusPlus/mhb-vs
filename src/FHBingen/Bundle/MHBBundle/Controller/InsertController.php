@@ -4,6 +4,7 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 
 
 use FHBingen\Bundle\MHBBundle\Entity\Fachgebiet;
+use FHBingen\Bundle\MHBBundle\Entity\Veranstaltung;
 use FHBingen\Bundle\MHBBundle\Entity\Vertiefung;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -95,22 +96,39 @@ class InsertController extends Controller {
 //            }
 //        }
 
-        $fachArr = $this->fachCreate();
-
-        foreach ( $fachArr as $fach ) {
-            $resultArr = $this->assertObject ( $fach );
-            /**
-             * $resultArr[0] = $isValid (boolean)
-             * $resultArr[1] = $errorsString (string)
-             */
-
-            if ($resultArr [0]) {
-                $em->persist ( $fach );
-                $em->flush ();
-            } else {
-                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-            }
-        }
+//        $fachArr = $this->fachCreate();
+//
+//        foreach ( $fachArr as $fach ) {
+//            $resultArr = $this->assertObject ( $fach );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $fach );
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
+//
+//        $veranstaltungArr = $this->veranstaltungCreate();
+//
+//        foreach ( $veranstaltungArr as $veranstaltung ) {
+//            $resultArr = $this->assertObject ( $veranstaltung );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $veranstaltung );
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
 
 		return new Response ( "Studiengang, Dozenten und Semester eingepflegt!" );
 	}
@@ -224,7 +242,7 @@ class InsertController extends Controller {
         $stgang0->setBeschreibung("Bio-Computer science");
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
-        $entry = $table->find(15);
+        $entry = $table->find(27);
 
         $stgang0->setSgl($entry);
 
@@ -285,7 +303,7 @@ class InsertController extends Controller {
 
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-        $entry = $table->find(15);
+        $entry = $table->find(26);
 
         $vert0->setStgang($entry);
 
@@ -307,18 +325,56 @@ class InsertController extends Controller {
 
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-        $entry = $table->find(15);
+        $entry = $table->find(26);
 
         $fach0->setHat($entry);
 
         $fachArr = array (
             $fach0
-//            $fach1,
-//            $fach2,
-//            $fach3
         );
 
         return $fachArr;
+    }
+
+    public function veranstaltungCreate() {
+        // legt die Veranstaltungs-Objekte an und gibt sie als Array zurueck
+        $veranstaltung0 = new Veranstaltung();
+        $veranstaltung0->setErstellungsdatum(date(1));
+        $veranstaltung0->setErstelltVon("HCR");
+        $veranstaltung0->setStatus("freigegeben");
+        $veranstaltung0->setKuerzel("ABC");
+        $veranstaltung0->setName("Die Katze raucht den Schnee");
+        $veranstaltung0->setNameEn("High Cat");
+        $veranstaltung0->setHaeufigkeit("wechselnd");
+        $veranstaltung0->setDauer(1);
+        $veranstaltung0->setLehrveranstaltungen("Vorlesung mit Uebung");
+        $veranstaltung0->setKontaktzeitVL(100);
+        $veranstaltung0->setKontaktzeitSonstige(80);
+        $veranstaltung0->setSelbststudium(180);
+        $veranstaltung0->setGruppengroesse(50);
+        $veranstaltung0->setLernergebnisse("dapfpädskflkläsdkflksl rejtglöjktlörelötjllölkösdj sdgföjopertjreöglm vrojgoriejtojojdslövmlkdsm
+        sdägkjlsdkgöklösdkgölkr dvlknkklödsjgfäjr aslkdjklasdjfjasklöfjergn ökljroejglsdmvspätk asdasäfdp oasifsdfv-msd-gmrpojssda
+        sakdfjlksjsdlög nbjoijerjtzsdlvm lfdgkreäghl smläaskfe#iopaÖ,tß0");
+        $veranstaltung0->setInhalte("ABC die Katze raucht den Schnee");
+        $veranstaltung0->setPruefungsformen("schriftliche Klausur (90 Minuten)");
+        $veranstaltung0->setSprache("englisch");
+        $veranstaltung0->setLiteratur("sadpoig");
+        $veranstaltung0->setLeistungspunkte(6);
+        $veranstaltung0->setVoraussetzungLP("Bestehen der Klausur sowie Studienleistung");
+        $veranstaltung0->setVoraussetzungInh("Schulmathematik");
+
+
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+        $entry = $table->find(27);
+
+        $veranstaltung0->setBeauftragter($entry);
+
+        $veranstaltungArr = array (
+            $veranstaltung0
+        );
+
+        return $veranstaltungArr;
     }
 
 	public function assertObject($obj) {

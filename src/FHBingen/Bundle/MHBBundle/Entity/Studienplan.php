@@ -54,4 +54,106 @@ class Studienplan
      * @ORM\JoinColumn(name="Studiengang_ID", referencedColumnName="Studiengang_ID")
      * */
     protected $studiengang;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set reg_sem
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $regSem
+     * @return Studienplan
+     */
+    public function setRegSem(\FHBingen\Bundle\MHBBundle\Entity\Semester $regSem = null)
+    {
+        $this->reg_sem = $regSem;
+    
+        return $this;
+    }
+
+    /**
+     * Get reg_sem
+     *
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Semester 
+     */
+    public function getRegSem()
+    {
+        return $this->reg_sem;
+    }
+
+    /**
+     * Set start_sem
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $startSem
+     * @return Studienplan
+     */
+    public function setStartSem(\FHBingen\Bundle\MHBBundle\Entity\Semester $startSem = null)
+    {
+        $this->start_sem = $startSem;
+    
+        return $this;
+    }
+
+    /**
+     * Get start_sem
+     *
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Semester 
+     */
+    public function getStartSem()
+    {
+        return $this->start_sem;
+    }
+
+    /**
+     * Set modul
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul
+     * @return Studienplan
+     */
+    public function setModul(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul = null)
+    {
+        $this->modul = $modul;
+    
+        return $this;
+    }
+
+    /**
+     * Get modul
+     *
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
+     */
+    public function getModul()
+    {
+        return $this->modul;
+    }
+
+    /**
+     * Set studiengang
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     * @return Studienplan
+     */
+    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null)
+    {
+        $this->studiengang = $studiengang;
+    
+        return $this;
+    }
+
+    /**
+     * Get studiengang
+     *
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Studiengang 
+     */
+    public function getStudiengang()
+    {
+        return $this->studiengang;
+    }
 }

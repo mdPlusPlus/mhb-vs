@@ -409,4 +409,37 @@ class Studiengang
      * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="studiengang", cascade={"all"})
      * */
     protected $studienplan_stgang;
+
+    /**
+     * Add studienplan_stgang
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang
+     * @return Studiengang
+     */
+    public function addStudienplanStgang(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang)
+    {
+        $this->studienplan_stgang[] = $studienplanStgang;
+    
+        return $this;
+    }
+
+    /**
+     * Remove studienplan_stgang
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang
+     */
+    public function removeStudienplanStgang(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang)
+    {
+        $this->studienplan_stgang->removeElement($studienplanStgang);
+    }
+
+    /**
+     * Get studienplan_stgang
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStudienplanStgang()
+    {
+        return $this->studienplan_stgang;
+    }
 }

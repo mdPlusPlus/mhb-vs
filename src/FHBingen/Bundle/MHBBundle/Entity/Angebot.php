@@ -180,4 +180,96 @@ class Angebot
     {
         return $this->studiengang;
     }
+
+    /**
+     * Set Angebotsart
+     *
+     * @param string $angebotsart
+     * @return Angebot
+     */
+    public function setAngebotsart($angebotsart)
+    {
+        $this->Angebotsart = $angebotsart;
+    
+        return $this;
+    }
+
+    /**
+     * Get Angebotsart
+     *
+     * @return string 
+     */
+    public function getAngebotsart()
+    {
+        return $this->Angebotsart;
+    }
+
+    /**
+     * Set Code
+     *
+     * @param string $code
+     * @return Angebot
+     */
+    public function setCode($code)
+    {
+        $this->Code = $code;
+    
+        return $this;
+    }
+
+    /**
+     * Get Code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->Code;
+    }
+
+    /**
+     * Set abweichender_Titel_DE
+     *
+     * @param string $abweichenderTitelDE
+     * @return Angebot
+     */
+    public function setAbweichenderTitelDE($abweichenderTitelDE)
+    {
+        $this->abweichender_Titel_DE = $abweichenderTitelDE;
+    
+        return $this;
+    }
+
+    /**
+     * Get abweichender_Titel_DE
+     *
+     * @return string 
+     */
+    public function getAbweichenderTitelDE()
+    {
+        return $this->abweichender_Titel_DE;
+    }
+
+    /**
+     * Set abweichender_Titel_EN
+     *
+     * @param string $abweichenderTitelEN
+     * @return Angebot
+     */
+    public function setAbweichenderTitelEN($abweichenderTitelEN)
+    {
+        $this->abweichender_Titel_EN = $abweichenderTitelEN;
+    
+        return $this;
+    }
+
+    /**
+     * Get abweichender_Titel_EN
+     *
+     * @return string 
+     */
+    public function getAbweichenderTitelEN()
+    {
+        return $this->abweichender_Titel_EN;
+    }
 }

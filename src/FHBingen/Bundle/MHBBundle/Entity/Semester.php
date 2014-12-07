@@ -202,4 +202,70 @@ class Semester
      * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="start_sem", cascade={"all"})
      * */
     protected $startsem;
+
+    /**
+     * Add regelsem
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem
+     * @return Semester
+     */
+    public function addRegelsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem)
+    {
+        $this->regelsem[] = $regelsem;
+    
+        return $this;
+    }
+
+    /**
+     * Remove regelsem
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem
+     */
+    public function removeRegelsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem)
+    {
+        $this->regelsem->removeElement($regelsem);
+    }
+
+    /**
+     * Get regelsem
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRegelsem()
+    {
+        return $this->regelsem;
+    }
+
+    /**
+     * Add startsem
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem
+     * @return Semester
+     */
+    public function addStartsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem)
+    {
+        $this->startsem[] = $startsem;
+    
+        return $this;
+    }
+
+    /**
+     * Remove startsem
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem
+     */
+    public function removeStartsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem)
+    {
+        $this->startsem->removeElement($startsem);
+    }
+
+    /**
+     * Get startsem
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStartsem()
+    {
+        return $this->startsem;
+    }
 }
