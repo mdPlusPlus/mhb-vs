@@ -1,0 +1,13 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Formulartest{% endblock %}
+
+{% block body %}
+    <h1>Hier soll mal ein Formular zu sehen sein</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.fullname) }}
+    {{ form_end(form) }}
+
+{% endblock %}
