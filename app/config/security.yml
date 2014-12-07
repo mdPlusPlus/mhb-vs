@@ -9,6 +9,7 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
+        #TODO umbennenen
         administrators:
             entity: { class: FHBingenMHBBundle:User }
 
