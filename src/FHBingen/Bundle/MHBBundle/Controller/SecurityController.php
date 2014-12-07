@@ -118,20 +118,32 @@ class SecurityController extends Controller
             throw new EntityNotFoundException();
         }
 
-        $role->addUser($user);
+
+        $user->addRole($role);
+        /*
+         * alternativ
+         * $role->addUser($user);
+         */
 
         $validator = $this->get('validator');
-        $errors = $validator->validate($role);
 
+        $errors = $validator->validate($user);
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
 
             return new Response($errorsString);
         }
 
-        $em->merge($role);
-        $em->flush();
+        $errors = $validator->validate($role);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
 
+            return new Response($errorsString);
+        }
+
+        $em->persist($user);
+        $em->persist($role);
+        $em->flush();
 
         return new Response($username . ' is added to ' . $rolename);
 
