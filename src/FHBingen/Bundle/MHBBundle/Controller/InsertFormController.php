@@ -32,7 +32,17 @@ class InsertFormController extends Controller
         {
             if($form->isValid())
             {
-                return new Response('success');
+                $email = $form->get('email')->getData();
+                $fullname = $form->get('fullname')->getData();
+
+                $person->setEmail($email);
+                $person->setFullname($fullname);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($person);
+                $em->flush();
+
+                return new Response('Success: Person '.$fullname.' with '.$email.' was created');
             }
             return $this->render('FHBingenMHBBundle:InsertForm:form.html.twig', array('form'=>$form->createView()));
         }
