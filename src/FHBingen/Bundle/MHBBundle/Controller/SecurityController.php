@@ -152,6 +152,7 @@ class SecurityController extends Controller
      */
     public function createUserAction($username, $password, $email, $roles)
     {
+        //TODO testen
         $user = new User();
         $user->setUsername($username);
         $user->setPassword($password);
@@ -173,6 +174,8 @@ class SecurityController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
+
+        return new Response($username . ' wurde angelegt.');
     }
 
     /**
