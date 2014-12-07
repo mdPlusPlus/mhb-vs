@@ -3,10 +3,13 @@
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
 
+use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 use FHBingen\Bundle\MHBBundle\Entity\Fachgebiet;
 use FHBingen\Bundle\MHBBundle\Entity\Kernfach;
 use FHBingen\Bundle\MHBBundle\Entity\Lehrende;
+use FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch;
 use FHBingen\Bundle\MHBBundle\Entity\Semesterplan;
+use FHBingen\Bundle\MHBBundle\Entity\Studienplan;
 use FHBingen\Bundle\MHBBundle\Entity\Veranstaltung;
 use FHBingen\Bundle\MHBBundle\Entity\Vertiefung;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -184,22 +187,74 @@ class InsertController extends Controller {
 //            }
 //        }
 
-         $mhbArr = $this->mhbCreate();
+//         $mhbArr = $this->mhbCreate();
+//
+//        foreach ( $mhbArr as $mhb ) {
+//            $resultArr = $this->assertObject ( $mhb );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $mhb );
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
 
-        foreach ( $mhbArr as $mhb ) {
-            $resultArr = $this->assertObject ( $mhb );
+//        $stuplanArr = $this->stuplanCreate();
+//
+//        foreach ( $stuplanArr as $stuplan ) {
+//            $resultArr = $this->assertObject ( $stuplan );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $stuplan );
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
+
+
+        $vorausArr = $this->voraussetzungCreate();
+
+        foreach ( $vorausArr as $voraus ) {
+            $resultArr = $this->assertObject ( $voraus );
             /**
              * $resultArr[0] = $isValid (boolean)
              * $resultArr[1] = $errorsString (string)
              */
 
             if ($resultArr [0]) {
-                $em->persist ( $mhb );
+                $em->persist ( $voraus );
                 $em->flush ();
             } else {
                 return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
             }
         }
+
+//        $angebotArr = $this->angebotCreate();
+//
+//        foreach ( $angebotArr as $angebot ) {
+//            $resultArr = $this->assertObject ( $angebot );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $angebot);
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
 
 		return new Response ( "Studiengang, Dozenten und Semester eingepflegt!" );
 	}
@@ -410,7 +465,6 @@ class InsertController extends Controller {
     public function veranstaltungCreate() {
         // legt die Veranstaltungs-Objekte an und gibt sie als Array zurueck
         $veranstaltung0 = new Veranstaltung();
-        //$veranstaltung0->setErstellungsdatum("2014-12-07");
         $veranstaltung0->setErstellungsdatum(new \DateTime());
         $veranstaltung0->setErstelltVon("HCR");
         $veranstaltung0->setVersionsnummerModul(1);
@@ -443,8 +497,40 @@ class InsertController extends Controller {
 
         $veranstaltung0->setBeauftragter($entry);
 
+        $veranstaltung1 = new Veranstaltung();
+        $veranstaltung1->setErstellungsdatum(new \DateTime());
+        $veranstaltung1->setErstelltVon("PCR");
+        $veranstaltung1->setVersionsnummerModul(1);
+        $veranstaltung1->setStatus("freigegeben");
+        $veranstaltung1->setKuerzel("DEF");
+        $veranstaltung1->setName("Blubbksadjökajsf");
+        $veranstaltung1->setNameEn("Blaasdasfasdasdh");
+        $veranstaltung1->setHaeufigkeit("Wintersemester");
+        $veranstaltung1->setDauer(1);
+        $veranstaltung1->setLehrveranstaltungen("Vorlesung mit Uebung");
+        $veranstaltung1->setKontaktzeitVL(100);
+        $veranstaltung1->setKontaktzeitSonstige(80);
+        $veranstaltung1->setSelbststudium(180);
+        $veranstaltung1->setGruppengroesse(50);
+        $veranstaltung1->setLernergebnisse("Argh");
+        $veranstaltung1->setInhalte("DEF");
+        $veranstaltung1->setPruefungsformen("schriftliche Klausur (90 Minuten)");
+        $veranstaltung1->setSprache("englisch");
+        $veranstaltung1->setLiteratur("Buch");
+        $veranstaltung1->setLeistungspunkte(6);
+        $veranstaltung1->setVoraussetzungLP("Bestehen der Klausur sowie Studienleistung");
+        $veranstaltung1->setVoraussetzungInh("Schulmathematik");
+
+
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+        $entry = $table->find(35);
+
+        $veranstaltung0->setBeauftragter($entry);
+
         $veranstaltungArr = array (
-            $veranstaltung0
+            $veranstaltung0,
+            $veranstaltung1
         );
 
         return $veranstaltungArr;
@@ -525,6 +611,123 @@ class InsertController extends Controller {
         );
 
         return $kernfachArr;
+    }
+
+    public function mhbCreate() {
+        // legt die MHB-Objekte an und gibt sie als Array zurueck
+        $mhb0 = new Modulhandbuch();
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
+        $entry = $table->find("WS15");
+
+        $mhb0->setGueltigAb($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
+        $entry = $table->find(34);
+
+        $mhb0->setGehoertZu($entry);
+
+        $mhb0->setMHBVersionsnummer(1);
+        $mhb0->setErstellungsdatum(new \DateTime());
+        $mhb0->setBeschreibung("MHB ABC");
+
+        $mhbArr = array (
+            $mhb0
+        );
+
+        return $mhbArr;
+    }
+
+    public function stuplanCreate() {
+        // legt die Studienplan-Objekte an und gibt sie als Array zurueck
+        $stuplan0 = new Studienplan();
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
+        $entry = $table->find("WS15");
+
+        $stuplan0->setStartSem($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
+        $entry = $table->find("SS15");
+
+        $stuplan0->setRegSem($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $entry = $table->find(1);
+
+        $stuplan0->setModul($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
+        $entry = $table->find(34);
+
+        $stuplan0->setStudiengang($entry);
+
+
+        $stuplanArr = array (
+            $stuplan0
+        );
+
+        return $stuplanArr;
+    }
+
+    public function voraussetzungCreate() {
+        // legt die Voraussetzung-Objekte an und gibt sie als Array zurueck
+        $voraus0 = new Veranstaltung();
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $entry = $table->find(1);
+
+        $voraus0->addModulVoraussetzung($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $entry = $table->find(3);
+
+        $voraus0->addModulVoraussetzung($entry);
+
+
+        $vorausArr = array (
+            $voraus0
+        );
+
+        return $vorausArr;
+    }
+
+
+    public function angebotCreate() {
+        // legt die Voraussetzung-Objekte an und gibt sie als Array zurueck
+        $angebot0 = new Angebot();
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $entry = $table->find(1);
+
+        $angebot0->setModule($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Modulhandbuch' );
+        $entry = $table->find(1);
+
+        $angebot0->setMhb($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Fachgebiet' );
+        $entry = $table->find(1);
+
+        $angebot0->setFachgebiet($entry);
+
+        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
+        $entry = $table->find(34);
+
+        $angebot0->setStudiengang($entry);
+
+        $angebot0->setAngebotsart("Pflichtfach");
+        $angebot0->setCode("BINF-000");
+        $angebot0->setAbweichenderTitelDE("Peter");
+        $angebot0->setAbweichenderTitelEN("Lustig");
+
+
+        $angebotArr = array (
+            $angebot0
+        );
+
+        return $angebotArr;
     }
 
 	public function assertObject($obj) {
