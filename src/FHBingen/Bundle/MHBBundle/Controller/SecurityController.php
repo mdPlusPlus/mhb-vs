@@ -16,7 +16,6 @@ use FHBingen\Bundle\MHBBundle\Entity\User;
 
 class SecurityController extends Controller
 {
-
     /**
      * @Route("/security/create/testuser")
      */
@@ -31,7 +30,7 @@ class SecurityController extends Controller
         $errors = $validator->validate($testUser);
 
         if (count($errors) > 0) {
-            $errorsString = (string)$errors;
+            $errorsString = (string) $errors;
 
             return new Response($errorsString);
         }
