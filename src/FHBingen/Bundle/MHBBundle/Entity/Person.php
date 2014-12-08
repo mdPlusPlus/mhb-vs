@@ -8,9 +8,40 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
+
+/**
+ * Class Person
+ * @package FHBingen\Bundle\MHBBundle\Entity
+ * @ORM\Entity
+ * @ORM\Table(name="Person")
+ * @ORM\HasLifecycleCallbacks
+ */
 class Person
 {
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *  message = "Die Email '{{ value }}' ist keine gueltige Email.",
+     *  checkMX = true
+     * )
+     * @ORM\Column(type="string", length=40, unique=true, nullable=false)
+     */
     protected $email;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+     */
     protected $fullname;
 
     public function getEmail()
@@ -31,5 +62,15 @@ class Person
     public function setFullname($fullname)
     {
         $this->fullname = $fullname;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
