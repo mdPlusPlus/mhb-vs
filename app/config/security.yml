@@ -9,8 +9,7 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        #TODO umbennenen
-        administrators:
+        users:
             entity: { class: FHBingenMHBBundle:User }
 
     firewalls:
@@ -33,6 +32,15 @@ security:
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
+
+        sec:
+            pattern: ^/sec/restricted
+            form_login:
+                check_path: _security_check
+                login_path: _login
+            logout:
+                path:   _logout
+                target: _index
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
