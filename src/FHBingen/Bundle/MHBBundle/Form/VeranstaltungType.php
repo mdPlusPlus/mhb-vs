@@ -35,7 +35,7 @@ class VeranstaltungType extends AbstractType
             ->add('kontaktzeit_vl', 'integer', array('label' => 'Kontaktzeit Vorlesung: ', 'required' => true))
             ->add('kontaktzeit_sonstige', 'integer', array('label' => 'Kontaktzeit sonstige: ', 'required' => true))
             ->add('selbststudium', 'integer', array('label' => 'Selbststudium: ', 'required' => true))
-            ->add('gruppen', 'integer', array('label' => 'Gruppengröße: ', 'required' => true))
+            ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße: ', 'required' => true))
             ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse: ', 'required' => true))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => true))
             ->add('pruefform', 'text', array('label' => 'Prüfungsform: ', 'required' => true))

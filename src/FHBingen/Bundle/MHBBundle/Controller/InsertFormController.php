@@ -111,7 +111,7 @@ class InsertFormController extends Controller
                 $veranstaltung->setKontaktzeitVL($form->get('kontaktzeit_vl')->getData());
                 $veranstaltung->setKontaktzeitSonstige($form->get('kontaktzeit_sonstige')->getData());
                 $veranstaltung->setSelbststudium($form->get('selbststudium')->getData());
-                $veranstaltung->setGruppengroesse($form->get('gruppen')->getData());
+                $veranstaltung->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $veranstaltung->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $veranstaltung->setInhalte($form->get('inhalte')->getData());
                 $veranstaltung->setPruefungsformen($form->get('pruefform')->getData());
