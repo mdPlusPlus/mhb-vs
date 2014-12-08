@@ -42,18 +42,19 @@ class InsertFormController extends Controller
 
         if($request->getMethod() == 'POST')
         {
-//            $anrede = $form->get('anrede')->getData();
-//            $titel = $form->get('titel')->getData();
-//            $name = $form->get('name')->getData();
-//            $nachname = $form->get('nachname')->getData();
-//            $email = $form->get('email')->getData();
+            $anrede = $form->get('anrede')->getData();
+            $titel = $form->get('titel')->getData();
+            $name = $form->get('name')->getData();
+            $nachname = $form->get('nachname')->getData();
+            $email = $form->get('email')->getData();
+
             if($form->isValid())
             {
-                $dozent->setAnrede ($form->get('anrede')->getData());
-                $dozent->setTitel ($form->get('titel')->getData());
-                $dozent->setName ($form->get('name')->getData());
-                $dozent->setNachname ($form->get('nachname')->getData());
-                $dozent->setEmail ($form->get('email')->getData());
+                $dozent->setAnrede ($anrede);
+                $dozent->setTitel ($titel);
+                $dozent->setName ($name);
+                $dozent->setNachname ($nachname);
+                $dozent->setEmail ($email);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($dozent);
