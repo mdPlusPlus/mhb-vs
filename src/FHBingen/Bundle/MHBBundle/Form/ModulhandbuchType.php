@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Christian
+ * User: Mischa
  * Date: 08.12.2014
- * Time: 11:05
+ * Time: 16:07
  */
 
 namespace FHBingen\Bundle\MHBBundle\Form;
@@ -11,20 +11,21 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class VertiefungType extends AbstractType
+class ModulhandbuchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         $builder
+            ->add('semester', 'entity', array('label' => 'Semester: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Semester'))
             ->add('studiengang', 'entity', array('label' => 'Studiengang: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
-            ->add('vertiefungsrichtung', 'text', array('label' => 'Vertiefungsrichtung: ', 'required' => false))
+            ->add('beschreibung', 'text', array('label' => 'Beschreibung: ', 'required' => false))
             ->add('reset', 'reset')
             ->add('submit', 'submit');
     }
 
     public function getName()
     {
-        return 'vertiefung';
+        return 'modulhandbuch';
     }
 }

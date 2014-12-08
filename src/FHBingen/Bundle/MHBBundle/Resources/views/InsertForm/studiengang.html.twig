@@ -1,0 +1,17 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Formulartest{% endblock %}
+
+{% block body %}
+    <h1>Hier soll mal ein Studienplan-Formular zu sehen sein</h1>
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    {{ form_row(form.fachbereich) }}
+    {{ form_row(form.grad) }}
+    {{ form_row(form.titel) }}
+    {{ form_row(form.kuerzel) }}
+    {{ form_row(form.beschreibung) }}
+    {{ form_row(form.sgl) }}
+    {{ form_end(form) }}
+
+{% endblock %}
