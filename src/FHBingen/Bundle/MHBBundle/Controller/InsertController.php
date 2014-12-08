@@ -30,6 +30,9 @@ class InsertController extends Controller {
 		 * �berpr�fen ob bereits in der Datenbank, siehe findAllAction()
 		 */
 		$em = $this->getDoctrine ()->getManager ();
+
+
+
 		
 //		$dozentArr = $this->dozentCreate ();
 //
@@ -136,6 +139,12 @@ class InsertController extends Controller {
 //            }
 //        }
 
+        $modulArr = $this->showAction(11);
+
+        foreach($modulArr as $modul){
+            return new Response($modul);
+        }
+
 //         $lehrArr = $this->lehrCreate();
 //
 //        foreach ( $lehrArr as $lehrende ) {
@@ -222,28 +231,28 @@ class InsertController extends Controller {
 //        }
 
 
-        $vorausArr = $this->voraussetzungCreate();
-
-        foreach ( $vorausArr as $voraus ) {
-            $resultArr = $this->assertObject ( $voraus );
-            /**
-             * $resultArr[0] = $isValid (boolean)
-             * $resultArr[1] = $errorsString (string)
-             */
-
-            if ($resultArr [0]) {
-                $em->persist ( $voraus );
-                $em->flush ();
-            } else {
-                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-            }
-        }
+//        $vorausArr = $this->voraussetzungCreate();
+//
+//        foreach ( $vorausArr as $voraus ) {
+//            $resultArr = $this->assertObject ( $voraus );
+//            /**
+//             * $resultArr[0] = $isValid (boolean)
+//             * $resultArr[1] = $errorsString (string)
+//             */
+//
+//            if ($resultArr [0]) {
+//                $em->persist ( $voraus );
+//                $em->flush ();
+//            } else {
+//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
+//            }
+//        }
 
 //        $angebotArr = $this->angebotCreate();
 //
 //        foreach ( $angebotArr as $angebot ) {
 //            $resultArr = $this->assertObject ( $angebot );
-//            /**
+
 //             * $resultArr[0] = $isValid (boolean)
 //             * $resultArr[1] = $errorsString (string)
 //             */
@@ -482,9 +491,7 @@ class InsertController extends Controller {
         $veranstaltung0->setKontaktzeitSonstige(80);
         $veranstaltung0->setSelbststudium(180);
         $veranstaltung0->setGruppengroesse(50);
-        $veranstaltung0->setLernergebnisse("dapfpädskflkläsdkflksl rejtglöjktlörelötjllölkösdj sdgföjopertjreöglm vrojgoriejtojojdslövmlkdsm
-        sdägkjlsdkgöklösdkgölkr dvlknkklödsjgfäjr aslkdjklasdjfjasklöfjergn ökljroejglsdmvspätk asdasäfdp oasifsdfv-msd-gmrpojssda
-        sakdfjlksjsdlög nbjoijerjtzsdlvm lfdgkreäghl smläaskfe#iopaÖ,tß0");
+        $veranstaltung0->setLernergebnisse("<ul><li>Peter</li><li>Lustig</li></ul>");
         $veranstaltung0->setInhalte("ABC die Katze raucht den Schnee");
         $veranstaltung0->setPruefungsformen("schriftliche Klausur (90 Minuten)");
         $veranstaltung0->setSprache("englisch");
@@ -731,6 +738,24 @@ class InsertController extends Controller {
         );
 
         return $angebotArr;
+    }
+
+
+    public function showAction($id)
+    {
+        $modul = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Veranstaltung')->find($id);
+
+        if (!$modul) {
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
+        }
+
+        $modulArr = array (
+            $modul
+        );
+
+        return $modulArr;
     }
 
 	public function assertObject($obj) {

@@ -32,10 +32,14 @@ class Studienplan
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="regelsem")
-     * @ORM\JoinColumn(name="Regelsemester", referencedColumnName="Semester")
+     * @ORM\Column(type="string"), nullable=false
      * */
-    protected $reg_sem;
+    protected $reg_sem_som;
+
+    /**
+     * @ORM\Column(type="string"), nullable=false
+     * */
+    protected $reg_sem_winter;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="startsem")
