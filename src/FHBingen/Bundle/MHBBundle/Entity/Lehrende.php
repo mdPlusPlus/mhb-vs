@@ -25,7 +25,7 @@ class Lehrende
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string = (string)$this->$module;
+        $string = (string)$this->getId();
         return $string;
     }
 

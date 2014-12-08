@@ -25,9 +25,10 @@ class Modulhandbuch
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string = $this->$Beschreibung;
+        $string =(string) $this->getMHBID();
         return $string;
     }
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\ID

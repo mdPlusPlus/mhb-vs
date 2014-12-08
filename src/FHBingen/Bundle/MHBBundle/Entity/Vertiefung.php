@@ -27,7 +27,7 @@ class Vertiefung
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string = $this->$Vertiefungsrichtung;
+        $string =(string) $this->getVertiefungsID();
         return $string;
     }
 

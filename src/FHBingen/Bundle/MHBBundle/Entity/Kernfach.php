@@ -22,20 +22,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Kernfach
 {
 
-    public function __toString()
-    {
-        //TODO $Semester richtig? getter?
-        $string = (string)$this->$vertiefung;
-        return $string;
-    }
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
 
     /*Abhaengigkeiten*/
 

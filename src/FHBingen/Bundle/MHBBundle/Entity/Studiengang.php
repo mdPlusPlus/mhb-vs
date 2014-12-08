@@ -23,8 +23,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Studiengang
 {
-
-
+    public function __toString()
+    {
+        //TODO $Semester richtig? getter?
+        $string =(string) $this->getStudiengangID();
+        return $string;
+    }
 
     /**
      * @ORM\Column(type="integer")
@@ -58,14 +62,6 @@ class Studiengang
      * )
      */
     protected $Titel;
-
-    public function __toString()
-    {
-        //TODO $Semester richtig? getter?
-        $string = $this->$Titel;
-        return $string;
-    }
-
     /**
      * @ORM\Column(type="string", length=10, nullable=false, unique=true)
      * @Assert\Length(

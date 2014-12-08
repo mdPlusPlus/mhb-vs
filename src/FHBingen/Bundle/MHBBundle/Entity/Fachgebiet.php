@@ -26,9 +26,10 @@ class Fachgebiet
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string = $this->$titel;
+        $string =(string) $this->getFachgebietsID();
         return $string;
     }
+
 
     /**
      * @ORM\Column(type="integer")
