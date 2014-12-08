@@ -1,0 +1,17 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Formulartest{% endblock %}
+
+{% block body %}
+    <h1>Hier soll mal ein Semesterplan-Formular zu sehen sein</h1>
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    {{ form_row(form.semester) }}
+    {{ form_row(form.dozent) }}
+    {{ form_row(form.veranstaltung) }}
+    {{ form_row(form.sws_uebung) }}
+    {{ form_row(form.anzahl_uebungsgruppen) }}
+    {{ form_row(form.groesse_uebungsgruppen) }}
+    {{ form_end(form) }}
+
+{% endblock %}

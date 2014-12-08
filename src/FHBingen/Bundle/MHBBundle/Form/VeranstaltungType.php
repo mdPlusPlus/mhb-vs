@@ -17,22 +17,34 @@ class VeranstaltungType extends AbstractType
     {
         $state =['in Planung' => 'in Planung', 'Freigegeben' => 'Freigegeben', 'expired' => 'expired'];
 
-        $frequency= ['' => '', 'Sommersemester' => 'Sommersemester', 'Wintersemester' => 'Wintersemester', 'wechselnd' => 'wechselnd', 'jedes Semester' => 'jedes Semester'];
+        $frequency=['' => '', 'Sommersemester' => 'Sommersemester', 'Wintersemester' => 'Wintersemester', 'wechselnd' => 'wechselnd', 'jedes Semester' => 'jedes Semester'];
+
+        $lang=['deutsch' => 'deutsch', 'englisch' => 'englisch'];
+
+        $lp=['3' => '3', '6' => '6', '9' => '9', '12' => '12', '15' => '15'];
 
         $builder
             ->add('erstellt_von', 'entity', array('label' => 'Ersteller: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
-            ->add('status', 'choice', array('label' => 'Status: ', 'required' => true, 'choice' => $state))
-            ->add('kürzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))
+            ->add('status', 'choice', array('label' => 'Status: ', 'required' => true, 'choices' => $state))
+            ->add('kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))
             ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true))
             ->add('name_en', 'text', array('label' => 'Modulname (englisch): ', 'required' => false))
-            ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots: ', 'required' => false, 'choice' => $frequency))
+            ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots: ', 'required' => false, 'choices' => $frequency))
             ->add('dauer', 'text', array('label' => 'Dauer: ', 'required' => true))
-            //Lehrveranstaltungen Design Frage????
-            ->add('lehrveranstalungen', 'text', array('label' => 'Lehrveranstaltungen: ', 'required' => true))
+            ->add('lehrveranstaltungen', 'text', array('label' => 'Lehrveranstaltungen: ', 'required' => true))
             ->add('kontaktzeit_vl', 'integer', array('label' => 'Kontaktzeit Vorlesung: ', 'required' => true))
             ->add('kontaktzeit_sonstige', 'integer', array('label' => 'Kontaktzeit sonstige: ', 'required' => true))
             ->add('selbststudium', 'integer', array('label' => 'Selbststudium: ', 'required' => true))
-            ->add('gruppen', 'integer', array('label' => ': ', 'required' => true))
+            ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße: ', 'required' => true))
+            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse: ', 'required' => true))
+            ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => true))
+            ->add('pruefform', 'text', array('label' => 'Prüfungsform: ', 'required' => true))
+            ->add('sprache', 'choice', array('label' => 'Sprache: ', 'required' => true, 'choices' => $lang))
+            ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => true))
+            ->add('punkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
+            ->add('vor_lp', 'textarea', array('label' => 'Voraussetzung für Leistungspunkte: ', 'required' => true))
+            ->add('vor_inh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true))
+            ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
             ->add('reset', 'reset')
             ->add('submit', 'submit');
     }

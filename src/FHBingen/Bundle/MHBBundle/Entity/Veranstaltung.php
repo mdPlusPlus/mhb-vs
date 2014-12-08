@@ -21,6 +21,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Veranstaltung
 {
+
+    public function __toString()
+    {
+        //TODO $Semester richtig? getter?
+        $string = $this->$Name;
+        return $string;
+    }
+
     /**
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\ID
@@ -97,12 +105,12 @@ class Veranstaltung
     protected $Haeufigkeit;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $Dauer;
 
 /**
- * @ORM\Column(type="string", length=60, nullable=true)
+ * @ORM\Column(type="text", nullable=true)
  */
 protected $Lehrveranstaltungen;
 
@@ -1073,12 +1081,5 @@ protected $Voraussetzung_inh;
     public function getKernfach()
     {
         return $this->kernfach;
-    }
-
-    public function __toString()
-    {
-        //TODO richtig?
-        $string = $this->getLernergebnisse();
-        return $string;
     }
 }

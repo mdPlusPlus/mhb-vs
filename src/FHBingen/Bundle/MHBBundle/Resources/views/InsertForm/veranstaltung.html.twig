@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Formulartest{% endblock %}
+
+{% block body %}
+    <h1>Hier soll ein Veranstaltung-Formular zu sehen sein</h1>
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {{ form_row(form.erstellt_von) }}
+        {{ form_row(form.status) }}
+        {{ form_row(form.kuerzel) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.name_en) }}
+        {{ form_row(form.haeufigkeit) }}
+        {{ form_row(form.dauer) }}
+        {{ form_row(form.lehrveranstaltung) }}
+        {{ form_row(form.kontaktzeit_vl) }}
+        {{ form_row(form.kontaktzeit_sonstige) }}
+        {{ form_row(form.selbststudium) }}
+        {{ form_row(form.gruppen) }}
+        {{ form_row(form.lernergebnisse) }}
+        {{ form_row(form.inhalte) }}
+        {{ form_row(form.pruefform) }}
+        {{ form_row(form.sprache) }}
+        {{ form_row(form.literatur) }}
+        {{ form_row(form.punkte) }}
+        {{ form_row(form.vor_lp) }}
+        {{ form_row(form.vor_inh) }}
+        {{ form_row(form.beauftragter) }}
+    {{ form_end(form) }}
+
+{% endblock %}

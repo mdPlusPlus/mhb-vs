@@ -23,6 +23,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Fachgebiet
 {
 
+    public function __toString()
+    {
+        //TODO $Semester richtig? getter?
+        $string = $this->$titel;
+        return $string;
+    }
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\ID
