@@ -15,54 +15,60 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 
 class SecurityDemoController extends Controller
 {
     /**
-     * @Route("/sec/", name="_index")
+     * @Route("/sec/")
      * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
      */
-    public function indexAction(){
+    public function indexAction()
+    {
         return array('error' => '', 'last_username' => '');
     }
 
     /**
-     * @Route("/sec/login", name="_login")
+     * @Route("/sec/login")
      * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
      */
     public function loginAction(Request $request)
     {
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        $session = $request->getSession();
+
+        // get the login error if there is one
+        if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(
+                SecurityContextInterface::AUTHENTICATION_ERROR
+            );
+        } elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
         } else {
-            $error = $request->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
+            $error = '';
         }
 
+        // last username entered by the user
+        $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
+
         return array(
-            'last_username' => $request->getSession()->get(SecurityContext::LAST_USERNAME),
-            'error' => $error,
+            // last username entered by the user
+            'last_username' => $lastUsername,
+            'error'         => $error
         );
     }
 
     /**
-     * @Route("/sec/login_check", name="_security_check")
+     * @Route("/sec/restricted/login_check")
      */
     public function securityCheckAction()
     {
-        //$em = $this->getDoctrine()->getManager();
-        //$users = $em->getRepository('FHBingenMHBBundle:User');
-        //$users->findOneBy(array('username' => $username));
-
-        //return new Response($username);
-
-
         // The security layer will intercept this request
     }
 
     /**
-     * @Route("/sec/logout", name="_logout")
+     * @Route("/sec/restricted/logout")
      */
     public function logoutAction()
     {
@@ -70,7 +76,8 @@ class SecurityDemoController extends Controller
     }
 
     /**
-     * @Route("/sec/restricted", name="_restricted")
+     * @Route("/sec/restricted")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function restrictedAction(){
         return new Response("Congratulations, you accessed the restricted area!");

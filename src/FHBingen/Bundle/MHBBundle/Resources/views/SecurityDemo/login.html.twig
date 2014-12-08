@@ -1,30 +1,23 @@
-{% block content %}
-    <h1 class="title">Login</h1>
+<h1 class="title">Login</h1>
 
-    {% if error %}
-        <div class="error">{{ error.message }}</div>
-    {% endif %}
+{% if error %}
+    <div class="error">{{ error.message }}</div>
+{% endif %}
 
-    {# FHBingenMHBBundle:SecurityDemo:securityCheck #}
-    <form action="{{ path("_security_check") }}" method="post" id="login">
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" />
-        </div>
+<form action="{{ '/sec/restricted/login_check' }}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="_password" />
-        </div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="_password" />
 
-        <button type="submit" class="sf-button">
-            <span class="border-l">
-                <span class="border-r">
-                    <span class="btn-bg">Login</span>
-                </span>
-            </span>
-        </button>
-    </form>
-{% endblock %}
+    {#
+        If you want to control the URL the user
+        is redirected to on success (more details below)
+        <input type="hidden" name="_target_path" value="/account" />
+    #}
 
-{% set code = code(_self) %}
+    <input type="hidden" name="_target_path" value="/sec/restricted" />
+
+    <button type="submit">login</button>
+</form>

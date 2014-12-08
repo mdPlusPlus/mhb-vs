@@ -22,6 +22,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Studienplan
 {
+
+    public function __toString()
+    {
+        //TODO $Semester richtig? getter?
+        $string = (string)$this->$reg_sem_som;
+        return $string;
+    }
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
