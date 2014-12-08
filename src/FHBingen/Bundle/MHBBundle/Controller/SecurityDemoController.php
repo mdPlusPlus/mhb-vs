@@ -76,10 +76,26 @@ class SecurityDemoController extends Controller
     }
 
     /**
-     * @Route("/sec/restricted")
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @Route("/sec/restricted/res")
+     * @Security("is_granted('rollo@test.com')")
      */
     public function restrictedAction(){
         return new Response("Congratulations, you accessed the restricted area!");
+    }
+
+    /**
+     * @Route("/sec/restricted/printRoles")
+     */
+    public function printRolesAction()
+    {
+        $user= $this->get('security.context')->getToken()->getUser();
+        $roleArr = $user->getRoles();
+        $response = 'X';
+        foreach($roleArr as $role){
+            $response = $response . ' - ' . (string) $role;
+        }
+        $response = $response . 'X';
+
+        return new Response($response);
     }
 } 

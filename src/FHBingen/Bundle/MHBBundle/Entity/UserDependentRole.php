@@ -15,6 +15,14 @@ class UserDependentRole implements RoleInterface
 {
     private $user;
 
+    public function __toString()
+    {
+        //TODO noch ändern?
+        $string = $this->getRole();
+
+        return $string;
+    }
+
     public function __construct(User $user)
     {
         $this->user = $user;
