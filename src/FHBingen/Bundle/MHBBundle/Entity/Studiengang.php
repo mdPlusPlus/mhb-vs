@@ -25,9 +25,7 @@ class Studiengang
 {
     public function __toString()
     {
-        //TODO $Semester richtig? getter?
-        $string =(string) $this->getKuerzel();
-        return $string;
+        return $this->getTitel();
     }
 
     /**

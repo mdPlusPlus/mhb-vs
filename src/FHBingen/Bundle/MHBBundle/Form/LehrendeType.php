@@ -18,7 +18,9 @@ class LehrendeType extends AbstractType
         $builder
             ->add('id', 'integer', array('label' => 'ID): ', 'required' => true))
             ->add('module', 'entity', array('label' => 'Modul_ID: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
-            ->add('lehrender', 'entity', array('label' => 'Dozenten_ID: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'));
+            ->add('lehrender', 'entity', array('label' => 'Dozenten_ID: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+            ->add('reset', 'reset')
+            ->add('submit', 'submit');
 
 
     }

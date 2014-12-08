@@ -26,9 +26,7 @@ class Dozent
 
 	public function __toString()
 	{
-		//TODO richtig?
-		$string = $this->getEmail();
-		return $string;
+		return $this->getEmail();
 	}
 	
     /**

@@ -16,7 +16,9 @@ class SemesterType extends AbstractType
     {
 
         $builder
-            ->add('semester', 'text', array('label' => 'Semester): ', 'required' => true));
+            ->add('semester', 'text', array('label' => 'Semester): ', 'required' => true))
+            ->add('reset', 'reset')
+            ->add('submit', 'submit');
 
     }
     public function getName()
