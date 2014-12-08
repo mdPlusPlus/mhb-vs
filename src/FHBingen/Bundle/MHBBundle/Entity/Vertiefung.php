@@ -24,6 +24,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Vertiefung
 {
 
+    public function __toString()
+    {
+        //TODO $Semester richtig? getter?
+        $string = $this->$Vertiefungsrichtung;
+        return $string;
+    }
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\ID;

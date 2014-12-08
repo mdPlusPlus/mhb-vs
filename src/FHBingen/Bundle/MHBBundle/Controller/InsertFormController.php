@@ -8,6 +8,8 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
+use FHBingen\Bundle\MHBBundle\Entity\Vertiefung;
+use FHBingen\Bundle\MHBBundle\Form\VertiefungType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
@@ -70,18 +72,6 @@ class InsertFormController extends Controller
 
     /**
      * @Route("/creation/Modul")
-     * Reihenfolge:
-     * Dozent, Semester
-     * Module (Dozent)
-     * Angebot (Modul; Modulhandbuch; Fachgebiet; Studiengang)
-     * Fachgebiet (Studiengang)
-     * Kernfach (Modul; Vertiefung)
-     * Lehrende (Modul; Dozent)
-     * Modulhandbuch (Semester, Studiengang)
-     * Semesterplan (Modul; Dozent; Semester)
-     * Studiengang (Dozent)
-     * Studienplan(Semester; Modul; Studiengang)
-     * Vertiefung (Studiengang)
      * Vorraussetztung (Modul?)
      */
     public function VeranstaltungAction()
@@ -111,5 +101,35 @@ class InsertFormController extends Controller
             return $this->render('FHBingenMHBBundle:InsertForm:form.html.twig', array('form'=>$form->createView()));
         }
         return $this->render('FHBingenMHBBundle:InsertForm:form.html.twig', array('form'=>$form->createView()));
+    }
+
+    /**
+     * @Route("/creation/Vertiefung")
+     * Vorraussetztung (Modul?)
+     */
+    public function VertiefungAction()
+    {
+        $vertiefung = new Vertiefung();
+        $form = $this->createForm(new VertiefungType(), $vertiefung);
+
+        $request = $this->get('request');
+        $form->handleRequest($request);
+
+        if($request->getMethod() == 'POST')
+        {
+            if($form->isValid())
+            {
+                $vertiefung->setStgang($form->get('studiengang')->getData());
+                $vertiefung->setVertiefungsrichtung($form->get('vertiefungsrichtung')->getData());
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($vertiefung);
+                $em->flush();
+
+                return new Response('Dozent wurde erfolgreich erstellt');
+            }
+            return $this->render('FHBingenMHBBundle:InsertForm:vertiefung.html.twig', array('form'=>$form->createView()));
+        }
+        return $this->render('FHBingenMHBBundle:InsertForm:vertiefung.html.twig', array('form'=>$form->createView()));
     }
 }
