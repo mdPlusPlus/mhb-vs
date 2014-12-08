@@ -15,7 +15,7 @@ class SemesterplanType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $regelsem =['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7',];
+        $regelsem =['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7'];
 
         $builder
             ->add('regelsemester', 'choice', array('label' => 'Regelsemester: ', 'required' => true, 'choices' => $regelsem))
