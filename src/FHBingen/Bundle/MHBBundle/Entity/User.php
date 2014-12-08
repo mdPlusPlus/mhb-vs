@@ -96,7 +96,11 @@ class User implements AdvancedUserInterface, \Serializable, EncoderAwareInterfac
     public function getRoles()
     {
         //return array('ROLE_USER');
-        return $this->roles->toArray();
+        //return $this->roles->toArray();
+
+        $rolesArr = $this->roles->toArray();
+        $rolesArr[] = new UserDependentRole($this);
+        return $rolesArr;
     }
 
     /**
@@ -166,7 +170,7 @@ class User implements AdvancedUserInterface, \Serializable, EncoderAwareInterfac
     public function setPassword($password)
     {
         $this->password = $password;
-    
+
         return $this;
     }
 

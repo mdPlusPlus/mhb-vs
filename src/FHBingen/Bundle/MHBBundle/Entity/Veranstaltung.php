@@ -52,14 +52,14 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
      * @Assert\Choice(
-     * choices = { "in Planung", "in Arbeit", "freigegeben" },
+     * choices = { "in Planung", "freigegeben", "expired" },
      * message = "Bitte geben Sie einen korrekten Status an!"
      * )
      */
     protected $Status;
 
     /**
-     * @ORM\Column(type="string", length=10, nullable=true)
+     * @ORM\Column(type="string", length=10, nullable=true, unique=true)
      * @Assert\Length(
      * min= 3,
      * max= 5,
@@ -70,7 +70,7 @@ class Veranstaltung
     protected $Kuerzel;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=false)
+     * @ORM\Column(type="string", length=60, nullable=false, unique=true)
     * @Assert\Length(
      * min= 8,
      * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
