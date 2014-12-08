@@ -1074,4 +1074,11 @@ protected $Voraussetzung_inh;
     {
         return $this->kernfach;
     }
+
+    public function __toString()
+    {
+        //TODO richtig?
+        $string = $this->getLernergebnisse();
+        return $string;
+    }
 }
