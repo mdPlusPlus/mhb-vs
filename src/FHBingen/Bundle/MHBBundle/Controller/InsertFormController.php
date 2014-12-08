@@ -128,7 +128,7 @@ class InsertFormController extends Controller
 
     /**
      * @Route("/creation/Vertiefung")
-     * Vorraussetztung (Modul?)
+     * Vertiefung (Studiengang)
      */
     public function VertiefungAction()
     {
