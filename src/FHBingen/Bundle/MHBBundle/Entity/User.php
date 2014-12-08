@@ -100,7 +100,6 @@ class User implements AdvancedUserInterface, \Serializable, EncoderAwareInterfac
 
         $rolesArr = $this->roles->toArray();
         $rolesArr[] = new UserDependentRole($this);
-
         return $rolesArr;
     }
 
