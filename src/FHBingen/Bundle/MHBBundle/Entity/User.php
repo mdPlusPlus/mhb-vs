@@ -1,19 +1,23 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: mdPlusPlus
+ */
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Studiengang
- * @package FHBingen\Bundle\MHBBundle\Entity
- * @ORM\Entity
+ * Class User
+ * @ORM\Entity(repositoryClass="FHBingen\Bundle\MHBBundle\Entity\UserRepository")
  * @ORM\Table(name="Users")
- *
  */
-class User implements UserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable, EncoderAwareInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -233,5 +237,35 @@ class User implements UserInterface, \Serializable
     public function removeRole(\FHBingen\Bundle\MHBBundle\Entity\Role $roles)
     {
         $this->roles->removeElement($roles);
+    }
+
+    public function getEncoderName()
+    {
+        //always return encoder 'blubb' defined in security.yml
+        return 'blubb';
+    }
+
+    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    public function isEnabled()
+    {
+        return $this->isActive;
     }
 }
