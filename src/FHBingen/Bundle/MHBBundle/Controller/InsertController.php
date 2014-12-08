@@ -470,6 +470,9 @@ class InsertController extends Controller {
 
         return $fachArr;
     }
+    /**
+     * @Route("/find")
+     */
 
     public function veranstaltungCreate() {
         // legt die Veranstaltungs-Objekte an und gibt sie als Array zurueck
