@@ -33,5 +33,14 @@ security:
             #http_basic:
             #    realm: "Secured Demo Area"
 
+        sec:
+            pattern: ^/sec/restricted
+            form_login:
+                check_path: _security_check
+                login_path: _login
+            logout:
+                path:   _logout
+                target: _index
+
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

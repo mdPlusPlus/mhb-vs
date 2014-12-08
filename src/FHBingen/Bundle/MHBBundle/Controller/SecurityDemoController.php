@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 class SecurityDemoController extends Controller
 {
     /**
-     * @Route("/sec")
+     * @Route("/sec/", name="_index")
      * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
      */
     public function indexAction(){
@@ -30,6 +30,7 @@ class SecurityDemoController extends Controller
 
     /**
      * @Route("/sec/login", name="_login")
+     * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
      */
     public function loginAction(Request $request)
     {
@@ -66,5 +67,12 @@ class SecurityDemoController extends Controller
     public function logoutAction()
     {
         // The security layer will intercept this request
+    }
+
+    /**
+     * @Route("/sec/restricted", name="_restricted")
+     */
+    public function restrictedAction(){
+        return new Response("Congratulations, you accessed the restricted area!");
     }
 } 
