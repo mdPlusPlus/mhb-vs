@@ -17,9 +17,10 @@ class ModulhandbuchType extends AbstractType
     {
 
         $builder
-            ->add('semester', 'entity', array('label' => 'Semester: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Semester'))
-            ->add('studiengang', 'entity', array('label' => 'Studiengang: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
-            ->add('beschreibung', 'text', array('label' => 'Beschreibung: ', 'required' => false))
+            ->add('beschreibung', 'text', array('label' => 'Beschreibung: ', 'required' => true))
+            ->add('gueltig_ab', 'entity', array('label' => 'gueltig_ab: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Semester'))
+            ->add('gehoert_zu', 'entity', array('label' => 'gehoert_zu: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
+
             ->add('reset', 'reset')
             ->add('submit', 'submit');
     }

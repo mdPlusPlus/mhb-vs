@@ -24,7 +24,7 @@ class Semesterplan
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string = (string)$this->$sws_uebung;
+        $string = (string)$this->getSemester();
         return $string;
     }
     /**

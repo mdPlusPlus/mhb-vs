@@ -26,7 +26,7 @@ class Studienplan
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string = (string)$this->$reg_sem_som;
+        $string = (string)$this->getRegSem();
         return $string;
     }
     /**
@@ -41,12 +41,7 @@ class Studienplan
     /**
      * @ORM\Column(type="string"), nullable=false
      * */
-    protected $reg_sem_som;
-
-    /**
-     * @ORM\Column(type="string"), nullable=false
-     * */
-    protected $reg_sem_winter;
+    protected $reg_sem;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="startsem")

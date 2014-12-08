@@ -25,7 +25,7 @@ class Semester
 	public function __toString()
 	{
 		//TODO $Semester richtig? getter?
-		$string = $this->$Semester;
+		$string = $this->getSemester();
 		return $string;
 	}
 	

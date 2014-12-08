@@ -11,15 +11,15 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class StudienplanType extends AbstractType
+class SemesterplanType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         $builder
             ->add('semester', 'entity', array('label' => 'Semester: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Semester'))
-            ->add('dozent', 'entity', array('label' => 'Dozent: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
-            ->add('veranstaltung', 'entity', array('label' => 'Veranstaltung: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
+            ->add('module', 'entity', array('label' => 'Dozent: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+            ->add('lehrender', 'entity', array('label' => 'Veranstaltung: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
             ->add('sws_uebung', 'integer', array('label' => 'SWS Uebung: ', 'required' => true))
             ->add('sws_vorlesung', 'integer', array('label' => 'SWS Vorlesung: ', 'required' => true))
             ->add('anzahl_uebungsgruppen', 'integer', array('label' => 'Anzahl Uebungsgruppen: ', 'required' => true))
@@ -30,6 +30,6 @@ class StudienplanType extends AbstractType
 
     public function getName()
     {
-        return 'studienplan';
+        return 'semesterplan';
     }
 }

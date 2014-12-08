@@ -25,7 +25,7 @@ class Veranstaltung
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string =(string) $this->getModulID();
+        $string =(string) $this->getName();
         return $string;
     }
 

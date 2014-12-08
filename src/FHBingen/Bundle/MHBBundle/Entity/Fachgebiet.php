@@ -26,7 +26,7 @@ class Fachgebiet
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string =(string) $this->getFachgebietsID();
+        $string =(string) $this->getTitel();
         return $string;
     }
 

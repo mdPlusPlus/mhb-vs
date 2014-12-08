@@ -25,7 +25,7 @@ class Modulhandbuch
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string =(string) $this->getMHBID();
+        $string =(string) $this->getBeschreibung();
         return $string;
     }
 

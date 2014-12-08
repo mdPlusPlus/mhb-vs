@@ -18,9 +18,9 @@ class StudienplanType extends AbstractType
         $regelsem =['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7'];
 
         $builder
-            ->add('regelsemester', 'choice', array('label' => 'Regelsemester: ', 'required' => true, 'choices' => $regelsem))
-            ->add('startsemester', 'entity', array('label' => 'Startsemester: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Semester'))
-            ->add('veranstaltung', 'entity', array('label' => 'Veranstaltung: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
+            ->add('reg_sem', 'choice', array('label' => 'Regelsemester: ', 'required' => true, 'choices' => $regelsem))
+            ->add('start_sem', 'entity', array('label' => 'Startsemester: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Semester'))
+            ->add('modul', 'entity', array('label' => 'Veranstaltung: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
             ->add('studiengang', 'entity', array('label' => 'Studiengang: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
             ->add('reset', 'reset')
             ->add('submit', 'submit');
