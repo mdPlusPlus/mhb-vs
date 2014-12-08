@@ -15,7 +15,12 @@ class DozentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('anrede', 'text')->add('titel', 'text')->add('name', 'text')->add('nachname', 'text')->add('email', 'email')->add('submit', 'submit');
+        $builder->add('anrede', 'text', array('label' => 'Anrede: ', 'required' => true));
+        $builder->add('titel', 'text', array('label' => 'Titel: ', 'required' => false));
+        $builder->add('name', 'text', array('label' => 'Vorname: ', 'required' => true));
+        $builder->add('nachname', 'text', array('label' => 'Nachname: ', 'required' => true));
+        $builder->add('email', 'email', array('label' => 'Email: ', 'required' => true));
+        $builder->add('submit', 'submit');
     }
 
     public function getName()
