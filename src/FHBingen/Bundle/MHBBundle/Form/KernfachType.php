@@ -16,7 +16,6 @@ class KernfachType extends AbstractType
     {
 
         $builder
-            ->add('id', 'integer', array('label' => 'ID): ', 'required' => true))
             ->add('modul', 'entity', array('label' => 'Modul_ID: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
             ->add('vertiefung', 'entity', array('label' => 'Vertiefung_ID: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Vertiefung'))
             ->add('reset', 'reset')

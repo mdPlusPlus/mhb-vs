@@ -46,12 +46,6 @@ class InsertFormController extends Controller
 
         if($request->getMethod() == 'POST')
         {
-//            $anrede = $form->get('anrede')->getData();
-//            $titel = $form->get('titel')->getData();
-//            $name = $form->get('name')->getData();
-//            $nachname = $form->get('nachname')->getData();
-//            $email = $form->get('email')->getData();
-
             if($form->isValid())
             {
                 $dozent->setAnrede ($form->get('anrede')->getData());

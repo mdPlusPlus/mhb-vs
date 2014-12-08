@@ -118,7 +118,6 @@ class InsertmomoController extends Controller
         {
             if($form->isValid())
             {
-                $kernfach->setId($form->get('id')->getData());
                 $kernfach->setModul($form->get('modul')->getData());
                 $kernfach->setVertiefung ($form->get('vertiefung')->getData());
 
@@ -149,7 +148,6 @@ class InsertmomoController extends Controller
         {
             if($form->isValid())
             {
-                $lehr->setId($form->get('id')->getData());
                 $lehr->setModule($form->get('module')->getData());
                 $lehr->setLehrender($form->get('lehrender')->getData());
 
@@ -183,6 +181,8 @@ class InsertmomoController extends Controller
                 $mhb->setBeschreibung($form->get('beschreibung')->getData());
                 $mhb->setGueltigAb($form->get('gueltig_ab')->getData());
                 $mhb->setGehoertZu($form->get('gehoert_zu')->getData());
+                $mhb->setErstellungsdatum(new \DateTime());
+                $mhb->setMHBVersionsnummer(1);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($mhb);
@@ -245,8 +245,8 @@ class InsertmomoController extends Controller
                 $semesterplan->setModule($form->get('veranstaltung')->getData());
                 $semesterplan->setSwsUebung($form->get('swsUebung')->getData());
                 $semesterplan->setSwsVorlesung($form->get('swsVorlesung')->getData());
-                $semesterplan->setAnzahlUebungsgruppen($form->get('nnzahlUebungsgruppen')->getData());
-                $semesterplan->setGroesseUebungsgruppen($form->get('GroesseUebungsgruppen')->getData());
+                $semesterplan->setAnzahlUebungsgruppen($form->get('anzahl_Uebungsgruppen')->getData());
+                $semesterplan->setGroesseUebungsgruppen($form->get('groesse_uebungsgruppen')->getData());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($semesterplan);
