@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class InsertFormController extends Controller
 {
     /**
-     * @Route("/creation/form")
+     * @Route("/creation/dozent")
      * Reihenfolge:
      * Dozent, Semester (nix)
      * Module (Dozent)
@@ -32,33 +32,37 @@ class InsertFormController extends Controller
      * Vertiefung (Studiengang)
      * Vorraussetztung (Modul?)
      */
-    public function formAction()
+    public function DozentAction()
     {
-        $person = new Person();
-        $form = $this->createForm(new PersonType(), $person);
+        $dozent = new Dozent();
+        $form = $this->createForm(new DozentType(), $dozent);
 
         $request = $this->get('request');
         $form->handleRequest($request);
 
         if($request->getMethod() == 'POST')
         {
+//            $anrede = $form->get('anrede')->getData();
+//            $titel = $form->get('titel')->getData();
+//            $name = $form->get('name')->getData();
+//            $nachname = $form->get('nachname')->getData();
+//            $email = $form->get('email')->getData();
             if($form->isValid())
             {
-                $email = $form->get('email')->getData();
-                $fullname = $form->get('fullname')->getData();
-
-                $person->setEmail($email);
-                $person->setFullname($fullname);
+                $dozent->setAnrede ($form->get('anrede')->getData());
+                $dozent->setTitel ($form->get('titel')->getData());
+                $dozent->setName ($form->get('name')->getData());
+                $dozent->setNachname ($form->get('nachname')->getData());
+                $dozent->setEmail ($form->get('email')->getData());
 
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($person);
+                $em->persist($dozent);
                 $em->flush();
 
-                return new Response('Success: Person '.$fullname.' with '.$email.' was created');
+                return new Response('Dozent wurde erfolgreich erstellt');
             }
             return $this->render('FHBingenMHBBundle:InsertForm:form.html.twig', array('form'=>$form->createView()));
         }
-
         return $this->render('FHBingenMHBBundle:InsertForm:form.html.twig', array('form'=>$form->createView()));
     }
 }
