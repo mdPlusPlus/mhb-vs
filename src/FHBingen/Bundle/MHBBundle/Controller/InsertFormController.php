@@ -11,7 +11,7 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
-use FHBingen\Bundle\MHBBundle\Entity\Semester;
+use FHBingen\Bundle\MHBBundle\Entity\Veranstaltung;
 use FHBingen\Bundle\MHBBundle\Form\DozentType;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -69,9 +69,9 @@ class InsertFormController extends Controller
     }
 
     /**
-     * @Route("/creation/Semester")
+     * @Route("/creation/Modul")
      * Reihenfolge:
-     * Dozent, Semester (nix)
+     * Dozent, Semester
      * Module (Dozent)
      * Angebot (Modul; Modulhandbuch; Fachgebiet; Studiengang)
      * Fachgebiet (Studiengang)
@@ -84,22 +84,16 @@ class InsertFormController extends Controller
      * Vertiefung (Studiengang)
      * Vorraussetztung (Modul?)
      */
-    public function SemesterAction()
+    public function VeranstaltungAction()
     {
-        $semester = new Semester();
-        $form = $this->createForm(new DozentType(), $dozent);
+        $veranstaltung = new Veranstaltung();
+        $form = $this->createForm(new DozentType(), $veranstaltung);
 
         $request = $this->get('request');
         $form->handleRequest($request);
 
         if($request->getMethod() == 'POST')
         {
-//            $anrede = $form->get('anrede')->getData();
-//            $titel = $form->get('titel')->getData();
-//            $name = $form->get('name')->getData();
-//            $nachname = $form->get('nachname')->getData();
-//            $email = $form->get('email')->getData();
-
             if($form->isValid())
             {
                 $dozent->setAnrede ($form->get('anrede')->getData());
