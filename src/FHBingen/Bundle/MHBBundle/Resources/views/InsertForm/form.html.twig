@@ -3,11 +3,14 @@
 {% block title %}Formulartest{% endblock %}
 
 {% block body %}
-    <h1>Hier soll mal ein Formular zu sehen sein</h1>
+    <h1>Hier soll mal ein Dozent-Formular zu sehen sein</h1>
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {{ form_row(form.anrede) }}
+        {{ form_row(form.titel) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.nachname) }}
         {{ form_row(form.email) }}
-        {{ form_row(form.fullname) }}
     {{ form_end(form) }}
 
 {% endblock %}
