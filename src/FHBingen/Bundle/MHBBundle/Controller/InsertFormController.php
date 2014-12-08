@@ -73,7 +73,7 @@ class InsertFormController extends Controller
 
     /**
      * @Route("/creation/Modul")
-     * Vorraussetztung (Modul?)
+     * Vorraussetztung (Modul)
      */
     public function VeranstaltungAction()
     {
@@ -87,7 +87,6 @@ class InsertFormController extends Controller
         {
             if($form->isValid())
             {
-
                 $veranstaltung->setErstellungsdatum(new \DateTime());
                 $veranstaltung->setErstelltVon($form->get('erstellt_von')->getData());
                 $veranstaltung->setVersionsnummerModul(1);
@@ -111,11 +110,11 @@ class InsertFormController extends Controller
                 $veranstaltung->setVoraussetzungLP($form->get('Voraussetzung_LP')->getData());
                 $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
 
-                $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+                $em = $this->getDoctrine()->getManager();
+                $table = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
                 $entry = $table->findOneBy(array('Email' => $form->get('beauftragter')->getData()));
                 $veranstaltung->setBeauftragter($entry->getDozentenID());
 
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($veranstaltung);
                 $em->flush();
 

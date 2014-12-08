@@ -2,10 +2,21 @@
 
 {% block title %}Formulartest{% endblock %}
 
+{% form_theme form _self %}
+{# form_row.html.twig #}
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
+
 {% block body %}
     <h1>Hier soll ein Veranstaltung-Formular zu sehen sein</h1>
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    <table>
         {{ form_row(form.erstellt_von) }}
         {{ form_row(form.Status) }}
         {{ form_row(form.Kuerzel) }}
@@ -27,6 +38,7 @@
         {{ form_row(form.Voraussetzung_LP) }}
         {{ form_row(form.Voraussetzung_inh) }}
         {{ form_row(form.beauftragter) }}
+    </table>
     {{ form_end(form) }}
 
 {% endblock %}
