@@ -77,7 +77,7 @@ class SecurityDemoController extends Controller
 
     /**
      * @Route("/sec/restricted/res")
-     * @Security("is_granted('rollo@test.com')")
+     * @Security("is_granted('ROLE_ROLLO@TEST.COM')")
      */
     public function restrictedAction(){
         return new Response("Congratulations, you accessed the restricted area!");

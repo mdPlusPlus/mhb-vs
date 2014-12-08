@@ -31,6 +31,6 @@ class UserDependentRole implements RoleInterface
     public function getRole()
     {
         //return 'ROLE_' . strtoupper($this->user->getUsername());
-        return $this->user->getEmail();
+        return 'ROLE_' . strtoupper($this->user->getEmail());
     }
 }
