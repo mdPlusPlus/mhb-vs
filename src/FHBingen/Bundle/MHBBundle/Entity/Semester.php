@@ -190,12 +190,6 @@ class Semester
 
 
     /*Studienplan*/
-    /*Startsemester*/
-    /**
-     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="reg_sem", cascade={"all"})
-     * */
-    protected $regelsem;
-
 
     /*Regelsemester*/
     /**
