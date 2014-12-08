@@ -11,8 +11,8 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
-use FHBingen\Bundle\MHBBundle\Entity\Veranstaltung;
 use FHBingen\Bundle\MHBBundle\Form\DozentType;
+use FHBingen\Bundle\MHBBundle\Form\VeranstaltungType;
 use Symfony\Component\HttpFoundation\Response;
 
 class InsertFormController extends Controller
