@@ -190,12 +190,12 @@ class Semester
 
 
     /*Studienplan*/
-
-    /*Regelsemester*/
+    /*Startsemester*/
     /**
-     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="start_sem", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="reg_sem", cascade={"all"})
      * */
-    protected $startsem;
+    protected $regelsem;
+
 
     /**
      * Add regelsem
