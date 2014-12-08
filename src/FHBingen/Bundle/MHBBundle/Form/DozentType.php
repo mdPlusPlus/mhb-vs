@@ -11,6 +11,7 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+
 class DozentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)

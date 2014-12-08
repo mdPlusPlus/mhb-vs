@@ -1,0 +1,13 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Formulartest{% endblock %}
+
+{% block body %}
+    <h1>Hier soll mal ein Fachgebiet-Formular zu sehen sein</h1>
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    {{ form_row(form.hat) }}
+    {{ form_row(form.titel) }}
+    {{ form_end(form) }}
+
+{% endblock %}

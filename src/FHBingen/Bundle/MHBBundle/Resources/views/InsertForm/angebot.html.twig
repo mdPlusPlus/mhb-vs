@@ -1,0 +1,19 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Formulartest{% endblock %}
+
+{% block body %}
+    <h1>Hier soll mal ein Fachgebiet-Formular zu sehen sein</h1>
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    {{ form_row(form.module) }}
+    {{ form_row(form.mhb) }}
+    {{ form_row(form.fachgebiet) }}
+    {{ form_row(form.studiengang) }}
+    {{ form_row(form.angebotsart) }}
+    {{ form_row(form.code) }}
+    {{ form_row(form.abweichender_Titel_DE) }}
+    {{ form_row(form.abweichender_Titel_EN) }}
+    {{ form_end(form) }}
+
+{% endblock %}
