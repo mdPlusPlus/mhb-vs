@@ -23,33 +23,23 @@ class SecurityController extends Controller
      */
     public function createRolesAction()
     {
-        $roleUser = new Role();
-        $roleUser->setName("ROLE_USER");
-        $roleUser->setRole("ROLE_USER");
+        $roleDozent = new Role();
+        $roleDozent->setName("ROLE_DOZENT");
+        $roleDozent->setRole("ROLE_DOZENT");
 
-        $roleAdmin = new Role();
-        $roleAdmin->setName("ROLE_ADMIN");
-        $roleAdmin->setRole("ROLE_ADMIN");
-
-        $roleSuperAdmin = new Role();
-        $roleSuperAdmin->setName("ROLE_SUPER_ADMIN");
-        $roleSuperAdmin->setRole("ROLE_SUPER_ADMIN");
+        $roleSgl = new Role();
+        $roleSgl->setName("ROLE_SGL");
+        $roleSgl->setRole("ROLE_SGL");
 
         $validator = $this->get('validator');
 
-        $errors = $validator->validate($roleUser);
+        $errors = $validator->validate($roleDozent);
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
 
             return new Response($errorsString);
         }
-        $errors = $validator->validate($roleAdmin);
-        if (count($errors) > 0) {
-            $errorsString = (string) $errors;
-
-            return new Response($errorsString);
-        }
-        $errors = $validator->validate($roleSuperAdmin);
+        $errors = $validator->validate($roleSgl);
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
 
@@ -57,9 +47,8 @@ class SecurityController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($roleUser);
-        $em->persist($roleAdmin);
-        $em->persist($roleSuperAdmin);
+        $em->persist($roleDozent);
+        $em->persist($roleSgl);
         $em->flush();
 
         return new Response("Rollen angelegt");

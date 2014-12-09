@@ -9,7 +9,7 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Symfony\Component\Security\Core\Role\RoleInterface;
-//use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserDependentRole implements RoleInterface
 {
@@ -23,7 +23,7 @@ class UserDependentRole implements RoleInterface
         return $string;
     }
 
-    public function __construct(User $user)
+    public function __construct(UserInterface $user)
     {
         $this->user = $user;
     }
