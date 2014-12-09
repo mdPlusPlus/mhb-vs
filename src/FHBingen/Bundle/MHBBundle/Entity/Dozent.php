@@ -403,7 +403,7 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
     private $isActive;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
      */
     private $roles;
 
