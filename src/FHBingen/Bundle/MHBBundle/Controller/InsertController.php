@@ -756,7 +756,7 @@ class InsertController extends Controller {
     }
 
 	public function assertObject($obj) {
-		$isValid;
+		$isValid = true;
 		$errorsString = 'no errors';
 		
 		$validator = $this->get ( 'validator' );
@@ -765,8 +765,6 @@ class InsertController extends Controller {
 		if (count ( $errors ) > 0) {
 			$isValid = false;
 			$errorsString = ( string ) $errors;
-		} else {
-			$isValid = true;
 		}
 		
 		$resultArr = array (
