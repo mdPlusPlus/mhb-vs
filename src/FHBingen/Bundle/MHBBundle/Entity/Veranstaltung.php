@@ -330,7 +330,7 @@ protected $Voraussetzung_inh;
      */
     public function setNameEn($nameEn)
     {
-        $this->Name_en = $nameEn;
+        $this->Name_EN = $nameEn;
     
         return $this;
     }
@@ -342,7 +342,7 @@ protected $Voraussetzung_inh;
      */
     public function getNameEn()
     {
-        return $this->Name_en;
+        return $this->Name_EN;
     }
 
     /**
@@ -445,7 +445,7 @@ protected $Voraussetzung_inh;
      */
     public function setKontaktzeitSonstige($kontaktzeitSonstige)
     {
-        $this->Kontaktzeit_sonstige = $kontaktzeitSonstige;
+        $this->Kontaktzeit_Sonstige = $kontaktzeitSonstige;
     
         return $this;
     }
@@ -457,7 +457,7 @@ protected $Voraussetzung_inh;
      */
     public function getKontaktzeitSonstige()
     {
-        return $this->Kontaktzeit_sonstige;
+        return $this->Kontaktzeit_Sonstige;
     }
 
     /**
