@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -224,10 +225,9 @@ class User implements AdvancedUserInterface, \Serializable, EncoderAwareInterfac
     /**
      * Add roles
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Role $roles
      * @return User
      */
-    public function addRole(\FHBingen\Bundle\MHBBundle\Entity\Role $roles)
+    public function addRole(RoleInterface $roles)
     {
         $this->roles[] = $roles;
     
@@ -237,17 +237,16 @@ class User implements AdvancedUserInterface, \Serializable, EncoderAwareInterfac
     /**
      * Remove roles
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Role $roles
      */
-    public function removeRole(\FHBingen\Bundle\MHBBundle\Entity\Role $roles)
+    public function removeRole(RoleInterface $roles)
     {
         $this->roles->removeElement($roles);
     }
 
     public function getEncoderName()
     {
-        //always return encoder 'blubb' defined in security.yml
-        return 'blubb';
+        //always return encoder 'pwenc' defined in security.yml
+        return 'pwenc';
     }
 
     //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen

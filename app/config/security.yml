@@ -1,6 +1,6 @@
 security:
     encoders:
-        blubb:
+        pwenc:
             algorithm: bcrypt
             cost:      12
 

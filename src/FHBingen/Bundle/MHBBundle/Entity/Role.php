@@ -9,6 +9,7 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -111,10 +112,9 @@ class Role implements RoleInterface
     /**
      * Add users
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\User $users
      * @return Role
      */
-    public function addUser(\FHBingen\Bundle\MHBBundle\Entity\User $users)
+    public function addUser(UserInterface $users)
     {
         $this->users[] = $users;
     
@@ -124,9 +124,8 @@ class Role implements RoleInterface
     /**
      * Remove users
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\User $users
      */
-    public function removeUser(\FHBingen\Bundle\MHBBundle\Entity\User $users)
+    public function removeUser(UserInterface $users)
     {
         $this->users->removeElement($users);
     }
