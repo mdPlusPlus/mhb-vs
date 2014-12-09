@@ -8,7 +8,9 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -184,8 +186,8 @@ class Dozent
      */
     public function __construct()
     {
-        $this->lehrende = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->semesterplan = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lehrende = new ArrayCollection();
+        $this->semesterplan = new ArrayCollection();
     }
 
     /**
