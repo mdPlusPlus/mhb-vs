@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Role implements RoleInterface
 {
+    /*
     public function __toString()
     {
         //TODO noch ändern?
@@ -26,6 +27,7 @@ class Role implements RoleInterface
 
         return $string;
     }
+    */
 
     /**
      * @ORM\Column(name="id", type="integer")
