@@ -89,7 +89,7 @@ class SecurityDemoController extends Controller
      */
     public function printRolesAction()
     {
-        $user= $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.context')->getToken()->getUser();
         $roleArr = $user->getRoles();
         $response = 'X';
         foreach ($roleArr as $role) {
