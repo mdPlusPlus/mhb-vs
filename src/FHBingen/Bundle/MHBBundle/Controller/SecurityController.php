@@ -93,11 +93,21 @@ class SecurityController extends Controller
     /**
      * @Route("/security/create/testUsers")
      */
-    public function createTestUsersAction(){
-        //return $this->createDozent('Herr', 'Prof.', 'Max', 'Mustermann', 'm.mustermann@fh-bingen.de', 'm.mustermann', 'testpass');
-        return $this->createSgl('Herr', 'Prof. Dr.', 'Peter', 'Lustig', 'p.lustig@fh-bingen.de', 'p.lustig', 'testpass');
+    public function createTestUsersAction()
+    {
+        $respArr = array(
+            $this->createDozent('Herr', 'Prof.', 'Max', 'Mustermann', 'm.mustermann@fh-bingen.de', 'm.mustermann', 'testpass'),
+            $this->createSgl('Herr', 'Prof. Dr.', 'Peter', 'Lustig', 'p.lustig@fh-bingen.de', 'p.lustig', 'testpass'),
+            $this->createDozent('Frau', 'Prof. Dr.', 'Alpha', 'Beta', 'a.beta@fh-bingen.de', 'a.beta', 'testpass'),
+            $this->createSgl('Herr', '', 'Rollo', 'Rollo', 'rollo@test.com', 'rollo', 'testpass'),
+        );
 
+        $responseStr = '';
+        foreach($respArr as $resp){
+            $responseStr = $responseStr . $resp->getContent() . '<br />';
+        }
 
+        return new Response($responseStr);
     }
 
 
