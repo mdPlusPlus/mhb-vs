@@ -39,19 +39,19 @@ class SecurityController extends Controller
 
         $errors = $validator->validate($roleUser);
         if (count($errors) > 0) {
-            $errorsString = (string)$errors;
+            $errorsString = (string) $errors;
 
             return new Response($errorsString);
         }
         $errors = $validator->validate($roleAdmin);
         if (count($errors) > 0) {
-            $errorsString = (string)$errors;
+            $errorsString = (string) $errors;
 
             return new Response($errorsString);
         }
         $errors = $validator->validate($roleSuperAdmin);
         if (count($errors) > 0) {
-            $errorsString = (string)$errors;
+            $errorsString = (string) $errors;
 
             return new Response($errorsString);
         }
@@ -127,14 +127,14 @@ class SecurityController extends Controller
 
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            $errorsString = (string)$errors;
 
             return new Response($errorsString);
         }
 
         $errors = $validator->validate($role);
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            $errorsString = (string)$errors;
 
             return new Response($errorsString);
         }
@@ -158,7 +158,7 @@ class SecurityController extends Controller
         $user->setPassword($password);
         $user->setEmail($email);
         $user->setIsActive(true);
-        foreach($roles as $role){
+        foreach ($roles as $role) {
             $user->addRole($role);
         }
 
@@ -166,7 +166,7 @@ class SecurityController extends Controller
 
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            $errorsString = (string)$errors;
 
             return new Response($errorsString);
         }
@@ -181,14 +181,16 @@ class SecurityController extends Controller
     /**
      * @Route("/security/create/dozent")
      */
-    public function createDozentAction(){
+    public function createDozentAction()
+    {
         //TODO
     }
 
     /**
      * @Route("/security/create/sgl")
      */
-    public function createSglAction(){
+    public function createSglAction()
+    {
         //TODO
     }
 

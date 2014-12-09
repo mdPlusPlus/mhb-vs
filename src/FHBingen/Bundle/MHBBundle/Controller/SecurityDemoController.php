@@ -79,7 +79,8 @@ class SecurityDemoController extends Controller
      * @Route("/sec/restricted/res")
      * @Security("is_granted('ROLE_ROLLO@TEST.COM')")
      */
-    public function restrictedAction(){
+    public function restrictedAction()
+    {
         return new Response("Congratulations, you accessed the restricted area!");
     }
 
@@ -91,7 +92,7 @@ class SecurityDemoController extends Controller
         $user= $this->get('security.context')->getToken()->getUser();
         $roleArr = $user->getRoles();
         $response = 'X';
-        foreach($roleArr as $role){
+        foreach ($roleArr as $role) {
             $response = $response . ' - ' . (string) $role;
         }
         $response = $response . 'X';
