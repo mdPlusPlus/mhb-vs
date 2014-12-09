@@ -86,7 +86,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         //reset roles
         $this->roles->clear();
         //add $role
-        $this->roles[] = $role;
+        $this->roles->add($role);
 
         return $this;
     }

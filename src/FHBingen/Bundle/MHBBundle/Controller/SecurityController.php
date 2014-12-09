@@ -14,11 +14,46 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
+
 use FHBingen\Bundle\MHBBundle\Entity\Role;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 class SecurityController extends Controller
 {
+
+    /**
+     * @Route("/security/test/roles");
+     *
+     * only for testing
+     */
+    public function testGetRolesAction()
+    {
+        $roleDozent = $this->getRoleDozent();
+        $roleSgl = $this->getRoleSgl();
+
+        return new Response('<p>'. $roleDozent->getName() .'<br />'. $roleDozent->getRole() .'</p><p>'. $roleSgl->getName() .'<br />'. $roleSgl->getRole() .'</p>');
+    }
+
+    ////////////////////////////////////
+
+    private function getRoleDozent(){
+        $em = $this->getDoctrine()->getManager();
+        $roleArr = $em->getRepository('FHBingenMHBBundle:Role');
+        $roleDozent = $roleArr->findOneBy(array('role' => 'ROLE_DOZENT'));
+
+        return $roleDozent;
+    }
+
+    private function getRoleSgl(){
+        $em = $this->getDoctrine()->getManager();
+        $roleArr = $em->getRepository('FHBingenMHBBundle:Role');
+        $roleSgl = $roleArr->findOneBy(array('role' => 'ROLE_SGL'));
+
+        return $roleSgl;
+    }
+
+
     /**
      * @Route("/security/create/roles")
      */
@@ -55,6 +90,56 @@ class SecurityController extends Controller
         return new Response("Rollen angelegt");
     }
 
+    /**
+     * @Route("/security/create/testUsers")
+     */
+    public function createTestUsersAction(){
+        return $this->createDozent('Herr', 'Prof.', 'Max', 'Mustermann', 'm.mustermann@fh-bingen.de', 'm.mustermann', 'testpass');
+        //return $this->createSgl('Herr', 'Prof. Dr.', 'Peter', 'Lustig', 'p.lustig@fh-bingen.de', 'p.lustig', 'testpass');
+
+
+    }
+
+
+    public function createDozent($anrede, $titel, $vorname, $nachname, $email, $username, $password){
+        $roleDozent = $this->getRoleDozent();
+
+        return $this->createUser($roleDozent, $anrede, $titel, $vorname, $nachname, $email, $username, $password);
+    }
+
+    public function createSgl($anrede, $titel, $vorname, $nachname, $email, $username, $password){
+        $roleSgl = $this->getRoleSgl();
+
+        return $this->createUser($roleSgl, $anrede, $titel, $vorname, $nachname, $email, $username, $password);
+    }
+
+    private function createUser(RoleInterface $rolle, $anrede, $titel, $vorname, $nachname, $email, $username, $password)
+    {
+        $user = new Dozent();
+        $user->setRole($rolle);
+        $user->setAnrede($anrede);
+        $user->setTitel($titel);
+        $user->setName($vorname);
+        $user->setNachname($nachname);
+        $user->setEmail($email);
+        $user->setUsername($username);
+        $user->setPassword(password_hash($password, PASSWORD_BCRYPT, array('cost' => 12)));
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($user);
+
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        } else {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush(); //ohne flush kommt kein fehler...
+
+            return new Response('User erfolgreich angelegt.');
+        }
+    }
 
 //    /**
 //     * @Route("/security/create/testUser/{user}")
