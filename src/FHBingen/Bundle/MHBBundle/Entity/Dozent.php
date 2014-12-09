@@ -545,6 +545,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function addRole(RoleInterface $roles)
     {
+        //TODO auf setRole umschreiben (Dozenten haben in der DB nur eine Rolle)
         $this->roles[] = $roles;
 
         return $this;
