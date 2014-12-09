@@ -18,7 +18,7 @@ use Doctrine\ORM\NoResultException;
 /*
  * TODO
  * aus \Entity verschieben, ist keine Entity
- * dabei beachten: repositoryClass in User.php korrigieren
+ * dabei beachten: repositoryClass in User.php bzw Doezent.php korrigieren
  */
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
