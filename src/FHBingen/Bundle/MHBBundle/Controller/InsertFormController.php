@@ -97,8 +97,19 @@ class InsertFormController extends Controller
                 $entry = $table->findOneBy(array('MHB_Versionsnummer' => $form->get('mhb')->getData()));
                 $angebot->setMhb($entry);
 
+                $validator = $this->get('validator');
+                $errors = $validator->validate($angebot);
+
+                if (count($errors) > 0){
+                    $errorsString = (string) $errors;
+
+                    return new Response("Fail");
+                }
+
                 $em->persist($angebot);
                 $em->flush();
+
+
 
                 return new Response('Angebot wurde erfolgreich erstellt');
             }

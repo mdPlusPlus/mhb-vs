@@ -45,7 +45,7 @@ class Kernfach
 
     /**
      * @ORM\ManyToOne(targetEntity="Vertiefung", inversedBy="vertiefung")
-     * @ORM\JoinColumn(name="vertiefungs_id", referencedColumnName="Vertiefungs_ID")
+     * @ORM\JoinColumn(name="vertiefung_id", referencedColumnName="Vertiefung_ID")
      * */
     protected $vertiefung;
 
