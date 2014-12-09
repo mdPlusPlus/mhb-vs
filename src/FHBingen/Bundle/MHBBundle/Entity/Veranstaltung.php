@@ -60,7 +60,7 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
      * @Assert\Choice(
-     * choices = { "in Planung", "freigegeben", "expired" },
+     * choices = { "in Planung", "Freigegeben", "expired" },
      * message = "Bitte geben Sie einen korrekten Status an!"
      * )
      */
