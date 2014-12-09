@@ -23,7 +23,7 @@ class UserDependentRole implements RoleInterface
         return $string;
     }
 
-    public function __construct(UserInterface $user)
+    public function __construct(Dozent $user)
     {
         $this->user = $user;
     }

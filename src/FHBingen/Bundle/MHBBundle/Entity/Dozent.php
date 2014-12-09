@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks
  */
 
-class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterface
+class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, EncoderAwareInterface
 {
     /*
 	public function __toString()
@@ -48,12 +49,12 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
      * message = "Bitte geben Sie eine korrekte Anrede an!"
      * )
      */
-    protected	$Anrede;
+    protected $Anrede;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected	$Titel;
+    protected $Titel;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
@@ -62,7 +63,7 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
      * minMessage="Ein Dozenten-Vorname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected	$Name;
+    protected $Name;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=false)
@@ -71,7 +72,7 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
      * minMessage="Ein Dozenten-Nachname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected	$Nachname;
+    protected $Nachname;
 
     /**
      * @Assert\Email(
@@ -81,6 +82,7 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
      */
     private $Email;
 
+
     /**
      * Get Dozenten_ID
      *
@@ -89,6 +91,14 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
     public function getDozentenID()
     {
         return $this->Dozenten_ID;
+    }
+
+    public function getId()
+    {
+        /**
+         * nur für Kompabilität mit UserRepository
+         */
+        return $this->getDozentenID();
     }
 
     /**
@@ -183,14 +193,13 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
         return $this->Nachname;
     }
 
-
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->isActive = true;
-        $this->roles = new ArrayCollection();
+        //$this->roles = new ArrayCollection();
         $this->lehrende = new ArrayCollection();
         $this->semesterplan = new ArrayCollection();
     }
@@ -407,6 +416,11 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
      */
     private $roles;
 
+    public function setRole(RoleInterface $role){
+        $this->roles = $role;
+
+        return $this;
+    }
 
     /**
      * @inheritDoc
@@ -439,7 +453,9 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
      */
     public function getRoles()
     {
-        $rolesArr = $this->roles->toArray();
+        $rolesArrCol = new ArrayCollection();
+        $rolesArr = $rolesArrCol->toArray();
+        $rolesArr[] = $this->roles;
         $rolesArr[] = new UserDependentRole($this);
 
         return $rolesArr;
@@ -527,27 +543,6 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
     public function getIsActive()
     {
         return $this->isActive;
-    }
-
-    /**
-     * Add roles
-     *
-     * @return Dozent
-     */
-    public function addRole(RoleInterface $roles)
-    {
-        $this->roles[] = $roles;
-
-        return $this;
-    }
-
-    /**
-     * Remove roles
-     *
-     */
-    public function removeRole(RoleInterface $roles)
-    {
-        $this->roles->removeElement($roles);
     }
 
     public function getEncoderName()

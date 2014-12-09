@@ -8,16 +8,52 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
+
 use Doctrine\ORM\EntityNotFoundException;
-use FHBingen\Bundle\MHBBundle\Entity\Role;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-use FHBingen\Bundle\MHBBundle\Entity\User;
+
+use FHBingen\Bundle\MHBBundle\Entity\Role;
+use FHBingen\Bundle\MHBBundle\Entity\Dozent;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 class SecurityController extends Controller
 {
+
+    /**
+     * @Route("/security/test/roles");
+     *
+     * only for testing
+     */
+    public function testGetRolesAction()
+    {
+        $roleDozent = $this->getRoleDozent();
+        $roleSgl = $this->getRoleSgl();
+
+        return new Response('<p>'. $roleDozent->getName() .'<br />'. $roleDozent->getRole() .'</p><p>'. $roleSgl->getName() .'<br />'. $roleSgl->getRole() .'</p>');
+    }
+
+    ////////////////////////////////////
+
+    private function getRoleDozent(){
+        $em = $this->getDoctrine()->getManager();
+        $roleArr = $em->getRepository('FHBingenMHBBundle:Role');
+        $roleDozent = $roleArr->findOneBy(array('role' => 'ROLE_DOZENT'));
+
+        return $roleDozent;
+    }
+
+    private function getRoleSgl(){
+        $em = $this->getDoctrine()->getManager();
+        $roleArr = $em->getRepository('FHBingenMHBBundle:Role');
+        $roleSgl = $roleArr->findOneBy(array('role' => 'ROLE_SGL'));
+
+        return $roleSgl;
+    }
+
+
     /**
      * @Route("/security/create/roles")
      */
@@ -54,134 +90,120 @@ class SecurityController extends Controller
         return new Response("Rollen angelegt");
     }
 
-
     /**
-     * @Route("/security/create/testUser/{user}")
+     * @Route("/security/create/testUsers")
      */
-    public function createTestUserAction($user)
+    public function createTestUsersAction()
     {
-        $testUser = new User();
-        $testUser->setEmail($user . '@test.com');
-        $testUser->setUsername($user);
-        $testUser->setPassword(password_hash('testpass', PASSWORD_BCRYPT, array('cost' => 12)));
-        //$testUser->setPassword('testpass');
+        $respArr = array(
+            $this->createDozent('Herr', 'Prof.', 'Max', 'Mustermann', 'm.mustermann@fh-bingen.de', 'm.mustermann', 'testpass'),
+            $this->createSgl('Herr', 'Prof. Dr.', 'Peter', 'Lustig', 'p.lustig@fh-bingen.de', 'p.lustig', 'testpass'),
+            $this->createDozent('Frau', 'Prof. Dr.', 'Alpha', 'Beta', 'a.beta@fh-bingen.de', 'a.beta', 'testpass'),
+            $this->createSgl('Herr', '', 'Rollo', 'Rollo', 'rollo@test.com', 'rollo', 'testpass'),
+        );
 
-        $validator = $this->get('validator');
-        $errors = $validator->validate($testUser);
-
-        if (count($errors) > 0) {
-            $errorsString = (string)$errors;
-
-            return new Response($errorsString);
+        $responseStr = '';
+        foreach($respArr as $resp){
+            $responseStr = $responseStr . $resp->getContent() . '<br />';
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($testUser);
-        $em->flush();
-
-        return new Response($user . ' angelegt');
+        return new Response($responseStr);
     }
 
-    /**
-     * @Route("/security/addUserToRole/{username}/{rolename}")
-     */
-    public function addUserToRoleAction($username, $rolename)
-    {
 
-        $em = $this->getDoctrine()->getManager();
+    public function createDozent($anrede, $titel, $vorname, $nachname, $email, $username, $password){
+        $roleDozent = $this->getRoleDozent();
 
-        $usersTable = $em->getRepository('FHBingenMHBBundle:User');
-        $rolesTable = $em->getRepository('FHBingenMHBBundle:Role');
-
-        $user = $usersTable->findOneBy(array('username' => $username));
-        $role = $rolesTable->findOneBy(array('name' => $rolename));
-
-        if ($user == null) {
-            //TODO $username einbauen
-            throw new EntityNotFoundException();
-        }
-        if ($role == null) {
-            //TODO $rolename einbauen
-            throw new EntityNotFoundException();
-        }
-
-
-        $user->addRole($role);
-        /*
-         * alternativ
-         * $role->addUser($user);
-         */
-
-        $validator = $this->get('validator');
-
-        $errors = $validator->validate($user);
-        if (count($errors) > 0) {
-            $errorsString = (string)$errors;
-
-            return new Response($errorsString);
-        }
-
-        $errors = $validator->validate($role);
-        if (count($errors) > 0) {
-            $errorsString = (string)$errors;
-
-            return new Response($errorsString);
-        }
-
-        $em->persist($user);
-        $em->persist($role);
-        $em->flush();
-
-        return new Response($username . ' is added to ' . $rolename);
-
+        return $this->createUser($roleDozent, $anrede, $titel, $vorname, $nachname, $email, $username, $password);
     }
 
-    /**
-     * @Route("/security/create/user")
-     */
-    public function createUserAction($username, $password, $email, $roles)
+    public function createSgl($anrede, $titel, $vorname, $nachname, $email, $username, $password){
+        $roleSgl = $this->getRoleSgl();
+
+        return $this->createUser($roleSgl, $anrede, $titel, $vorname, $nachname, $email, $username, $password);
+    }
+
+    private function createUser(RoleInterface $rolle, $anrede, $titel, $vorname, $nachname, $email, $username, $password)
     {
-        //TODO testen
-        $user = new User();
-        $user->setUsername($username);
-        $user->setPassword($password);
+        $user = new Dozent();
+        $user->setRole($rolle);
+        $user->setAnrede($anrede);
+        $user->setTitel($titel);
+        $user->setName($vorname);
+        $user->setNachname($nachname);
         $user->setEmail($email);
-        $user->setIsActive(true);
-        foreach ($roles as $role) {
-            $user->addRole($role);
-        }
+        $user->setUsername($username);
+        $user->setPassword(password_hash($password, PASSWORD_BCRYPT, array('cost' => 12)));
 
         $validator = $this->get('validator');
-
         $errors = $validator->validate($user);
+
         if (count($errors) > 0) {
-            $errorsString = (string)$errors;
+            $errorsString = (string) $errors;
 
             return new Response($errorsString);
+        } else {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush(); //ohne flush kommt kein fehler...
+
+            return new Response('User erfolgreich angelegt.');
         }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-
-        return new Response($username . ' wurde angelegt.');
     }
 
-    /**
-     * @Route("/security/create/dozent")
-     */
-    public function createDozentAction()
-    {
-        //TODO
-    }
-
-    /**
-     * @Route("/security/create/sgl")
-     */
-    public function createSglAction()
-    {
-        //TODO
-    }
-
+//
+//    /**
+//     * @Route("/security/addUserToRole/{username}/{rolename}")
+//     */
+//    public function addUserToRoleAction($username, $rolename)
+//    {
+//
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $usersTable = $em->getRepository('FHBingenMHBBundle:User');
+//        $rolesTable = $em->getRepository('FHBingenMHBBundle:Role');
+//
+//        $user = $usersTable->findOneBy(array('username' => $username));
+//        $role = $rolesTable->findOneBy(array('name' => $rolename));
+//
+//        if ($user == null) {
+//            //TODO $username einbauen
+//            throw new EntityNotFoundException();
+//        }
+//        if ($role == null) {
+//            //TODO $rolename einbauen
+//            throw new EntityNotFoundException();
+//        }
+//
+//
+//        $user->addRole($role);
+//        /*
+//         * alternativ
+//         * $role->addUser($user);
+//         */
+//
+//        $validator = $this->get('validator');
+//
+//        $errors = $validator->validate($user);
+//        if (count($errors) > 0) {
+//            $errorsString = (string)$errors;
+//
+//            return new Response($errorsString);
+//        }
+//
+//        $errors = $validator->validate($role);
+//        if (count($errors) > 0) {
+//            $errorsString = (string)$errors;
+//
+//            return new Response($errorsString);
+//        }
+//
+//        $em->persist($user);
+//        $em->persist($role);
+//        $em->flush();
+//
+//        return new Response($username . ' is added to ' . $rolename);
+//
+//    }
 
 }
