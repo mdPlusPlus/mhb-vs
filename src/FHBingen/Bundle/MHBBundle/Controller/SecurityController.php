@@ -94,8 +94,8 @@ class SecurityController extends Controller
      * @Route("/security/create/testUsers")
      */
     public function createTestUsersAction(){
-        return $this->createDozent('Herr', 'Prof.', 'Max', 'Mustermann', 'm.mustermann@fh-bingen.de', 'm.mustermann', 'testpass');
-        //return $this->createSgl('Herr', 'Prof. Dr.', 'Peter', 'Lustig', 'p.lustig@fh-bingen.de', 'p.lustig', 'testpass');
+        //return $this->createDozent('Herr', 'Prof.', 'Max', 'Mustermann', 'm.mustermann@fh-bingen.de', 'm.mustermann', 'testpass');
+        return $this->createSgl('Herr', 'Prof. Dr.', 'Peter', 'Lustig', 'p.lustig@fh-bingen.de', 'p.lustig', 'testpass');
 
 
     }

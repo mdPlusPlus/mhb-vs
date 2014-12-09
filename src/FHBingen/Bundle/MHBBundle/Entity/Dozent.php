@@ -82,14 +82,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     private $Email;
 
-    public function setRole(RoleInterface $role){
-        //reset roles
-        $this->roles->clear();
-        //add $role
-        $this->roles->add($role);
-
-        return $this;
-    }
 
     /**
      * Get Dozenten_ID
@@ -201,14 +193,13 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $this->Nachname;
     }
 
-
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->isActive = true;
-        $this->roles = new ArrayCollection();
+        //$this->roles = new ArrayCollection();
         $this->lehrende = new ArrayCollection();
         $this->semesterplan = new ArrayCollection();
     }
@@ -425,6 +416,11 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     private $roles;
 
+    public function setRole(RoleInterface $role){
+        $this->roles = $role;
+
+        return $this;
+    }
 
     /**
      * @inheritDoc
