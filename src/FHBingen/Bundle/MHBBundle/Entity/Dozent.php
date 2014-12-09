@@ -49,12 +49,12 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * message = "Bitte geben Sie eine korrekte Anrede an!"
      * )
      */
-    protected	$Anrede;
+    protected $Anrede;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected	$Titel;
+    protected $Titel;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
@@ -63,7 +63,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * minMessage="Ein Dozenten-Vorname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected	$Name;
+    protected $Name;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=false)
@@ -72,7 +72,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * minMessage="Ein Dozenten-Nachname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected	$Nachname;
+    protected $Nachname;
 
     /**
      * @Assert\Email(
@@ -81,6 +81,15 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      */
     private $Email;
+
+    public function setRole(RoleInterface $role){
+        //reset roles
+        $this->roles->clear();
+        //add $role
+        $this->roles[] = $role;
+
+        return $this;
+    }
 
     /**
      * Get Dozenten_ID
@@ -536,28 +545,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function getIsActive()
     {
         return $this->isActive;
-    }
-
-    /**
-     * Add roles
-     *
-     * @return Dozent
-     */
-    public function addRole(RoleInterface $roles)
-    {
-        //TODO auf setRole umschreiben (Dozenten haben in der DB nur eine Rolle)
-        $this->roles[] = $roles;
-
-        return $this;
-    }
-
-    /**
-     * Remove roles
-     *
-     */
-    public function removeRole(RoleInterface $roles)
-    {
-        $this->roles->removeElement($roles);
     }
 
     public function getEncoderName()
