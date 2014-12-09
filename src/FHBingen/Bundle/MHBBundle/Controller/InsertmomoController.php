@@ -31,8 +31,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 use FHBingen\Bundle\MHBBundle\Form\AngebotType;
-use FHBingen\Bundle\MHBBundle\Controller\InsertController;
-use FHBingen\Bundle\MHBBundle\Form\Veranstaltung;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -62,15 +60,15 @@ class InsertmomoController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $table = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
                 $entry = $table->findOneBy(array('Name' => $form->get('module')->getData()));
-                $angebot->setModule($entry->getModuleID);//schauen
+                $angebot->setModule($entry->getModulID());//schauen
 
                 $table1 = $em->getRepository ( 'FHBingenMHBBundle:Modulhandbuch' );
                 $entry1 = $table1->findOneBy(array('Beschreibung' => $form->get('mhb')->getData()));
-                $angebot->setMhb($entry1);//schauen
+                $angebot->setMhb($entry1->getMHBID());//schauen
 
                 $table2 = $em->getRepository ( 'FHBingenMHBBundle:Fachgebiet' );
                 $entry2 = $table2->findOneBy(array('Titel' => $form->get('fachgebiet')->getData()));
-                $angebot->setFachgebiet($entry2);//schauen
+                $angebot->setFachgebiet($entry2->getFachgebietsID());//schauen
 
                 $table3 = $em->getRepository ( 'FHBingenMHBBundle:Studiengang' );
                 $entry3 = $table3->findOneBy(array('Titel' => $form->get('studiengang')->getData()));
