@@ -34,7 +34,7 @@ class Angebot
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $Angebots_ID;
 
 
     /**
@@ -80,21 +80,21 @@ class Angebot
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
      */
-    protected	$abweichender_Titel_DE;
+    protected	$Abweichender_Titel_DE;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
      */
-    protected	$abweichender_Titel_EN;
+    protected	$Abweichender_Titel_EN;
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
+    public function getAngebots_ID()
     {
-        return $this->id;
+        return $this->Angebots_ID;
     }
 
     /**
@@ -243,7 +243,7 @@ class Angebot
      */
     public function setAbweichenderTitelDE($abweichenderTitelDE)
     {
-        $this->abweichender_Titel_DE = $abweichenderTitelDE;
+        $this->Abweichender_Titel_DE = $abweichenderTitelDE;
     
         return $this;
     }
@@ -255,7 +255,7 @@ class Angebot
      */
     public function getAbweichenderTitelDE()
     {
-        return $this->abweichender_Titel_DE;
+        return $this->Abweichender_Titel_DE;
     }
 
     /**
@@ -266,7 +266,7 @@ class Angebot
      */
     public function setAbweichenderTitelEN($abweichenderTitelEN)
     {
-        $this->abweichender_Titel_EN = $abweichenderTitelEN;
+        $this->Abweichender_Titel_EN = $abweichenderTitelEN;
     
         return $this;
     }
@@ -278,6 +278,6 @@ class Angebot
      */
     public function getAbweichenderTitelEN()
     {
-        return $this->abweichender_Titel_EN;
+        return $this->Abweichender_Titel_EN;
     }
 }

@@ -27,7 +27,7 @@ class Kernfach
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $Kernfach_ID;
 
     /*Abhaengigkeiten*/
 
@@ -54,9 +54,9 @@ class Kernfach
      *
      * @return integer 
      */
-    public function getId()
+    public function getKernfach_ID()
     {
-        return $this->id;
+        return $this->Kernfach_ID;
     }
 
     /**
