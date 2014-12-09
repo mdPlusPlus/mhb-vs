@@ -77,7 +77,7 @@ class Studienplan
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $regSem
      * @return Studienplan
      */
-    public function setRegSem(\FHBingen\Bundle\MHBBundle\Entity\Semester $regSem = null)
+    public function setRegSem($regSem = null)
     {
         $this->reg_sem = $regSem;
     

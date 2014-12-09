@@ -2,18 +2,30 @@
 
 {% block title %}Formulartest{% endblock %}
 
+{% form_theme form _self %}
+{# form_row.html.twig #}
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
+
 {% block body %}
     <h1>Hier soll mal ein Angebot-Formular zu sehen sein</h1>
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-    {{ form_row(form.module) }}
-    {{ form_row(form.mhb) }}
-    {{ form_row(form.fachgebiet) }}
-    {{ form_row(form.studiengang) }}
-    {{ form_row(form.angebotsart) }}
-    {{ form_row(form.code) }}
-    {{ form_row(form.abweichender_Titel_DE) }}
-    {{ form_row(form.abweichender_Titel_EN) }}
+    <table>
+        {{ form_row(form.module) }}
+        {{ form_row(form.mhb) }}
+        {{ form_row(form.fachgebiet) }}
+        {{ form_row(form.studiengang) }}
+        {{ form_row(form.angebotsart) }}
+        {{ form_row(form.code) }}
+        {{ form_row(form.abweichender_Titel_DE) }}
+        {{ form_row(form.abweichender_Titel_EN) }}
+    </table>
     {{ form_end(form) }}
 
 {% endblock %}

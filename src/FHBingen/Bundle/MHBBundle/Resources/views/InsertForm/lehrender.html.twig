@@ -2,12 +2,24 @@
 
 {% block title %}Formulartest{% endblock %}
 
+{% form_theme form _self %}
+{# form_row.html.twig #}
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
+
 {% block body %}
     <h1>Hier soll mal ein Lehrender-Formular zu sehen sein</h1>
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-    {{ form_row(form.module) }}
-    {{ form_row(form.lehrender) }}
+    <table>
+        {{ form_row(form.module) }}
+        {{ form_row(form.lehrender) }}
+    </table>
     {{ form_end(form) }}
 
 {% endblock %}
