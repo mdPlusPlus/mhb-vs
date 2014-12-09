@@ -36,7 +36,7 @@ class Vertiefung
      * @ORM\ID;
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $Vertiefungs_ID;
+    protected $Vertiefung_ID;
 
     /**
      * @ORM\Column(type="string", length=30, unique=true, nullable=false)
@@ -52,9 +52,9 @@ class Vertiefung
      *
      * @return integer 
      */
-    public function getVertiefungsID()
+    public function getVertiefungID()
     {
-        return $this->Vertiefungs_ID;
+        return $this->Vertiefung_ID;
     }
 
     /**

@@ -35,13 +35,13 @@ class Studienplan
      * @ORM\GeneratedValue(strategy="AUTO")
      * @var integer $id
      */
-    protected $id;
+    protected $Studienplan_ID;
 
 
     /**
      * @ORM\Column(type="string"), nullable=false
      * */
-    protected $reg_sem;
+    protected $Reg_Sem;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="startsem")
@@ -66,9 +66,9 @@ class Studienplan
      *
      * @return integer 
      */
-    public function getId()
+    public function getStudienplan_ID()
     {
-        return $this->id;
+        return $this->Studienplan_ID;
     }
 
     /**
@@ -79,7 +79,7 @@ class Studienplan
      */
     public function setRegSem($regSem = null)
     {
-        $this->reg_sem = $regSem;
+        $this->Reg_Sem = $regSem;
     
         return $this;
     }
@@ -91,7 +91,7 @@ class Studienplan
      */
     public function getRegSem()
     {
-        return $this->reg_sem;
+        return $this->Reg_Sem;
     }
 
     /**

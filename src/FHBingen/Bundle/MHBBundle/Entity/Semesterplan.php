@@ -32,8 +32,55 @@ class Semesterplan
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $Semesterplan_ID;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * )
+     */
+    protected $SWS_Uebung;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * )
+     */
+    protected $SWS_Vorlesung;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * )
+     */
+    protected $Anzahl_Uebungsgruppen;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min = 1,
+     * max = 50,
+     * minMessage = "You must be at least {{ limit }}cm tall to enter",
+     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * )
+     */
+    protected $Groesse_Uebungsgruppen;
+
+    /**
+     * Abhaengigkeiten
+     */
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="semesterplan")
@@ -55,57 +102,13 @@ class Semesterplan
     protected $semester;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\Range(
-     * min = 1,
-     * max = 50,
-     * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
-     * )
-     */
-    protected $sws_uebung;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\Range(
-     * min = 1,
-     * max = 50,
-     * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
-     * )
-     */
-    protected $sws_vorlesung;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\Range(
-     * min = 1,
-     * max = 50,
-     * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
-     * )
-     */
-    protected $anzahl_uebungsgruppen;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\Range(
-     * min = 1,
-     * max = 50,
-     * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
-     * )
-     */
-    protected $groesse_uebungsgruppen;
-
-    /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
+    public function getSemesterplan_ID()
     {
-        return $this->id;
+        return $this->Semesterplan_ID;
     }
 
     /**
@@ -116,7 +119,7 @@ class Semesterplan
      */
     public function setSwsUebung($swsUebung)
     {
-        $this->sws_uebung = $swsUebung;
+        $this->SWS_Uebung = $swsUebung;
     
         return $this;
     }
@@ -128,7 +131,7 @@ class Semesterplan
      */
     public function getSwsUebung()
     {
-        return $this->sws_uebung;
+        return $this->SWS_Uebung;
     }
 
     /**
@@ -139,7 +142,7 @@ class Semesterplan
      */
     public function setSwsVorlesung($swsVorlesung)
     {
-        $this->sws_vorlesung = $swsVorlesung;
+        $this->SWS_Vorlesung = $swsVorlesung;
     
         return $this;
     }
@@ -151,7 +154,7 @@ class Semesterplan
      */
     public function getSwsVorlesung()
     {
-        return $this->sws_vorlesung;
+        return $this->SWS_Vorlesung;
     }
 
     /**
@@ -162,7 +165,7 @@ class Semesterplan
      */
     public function setAnzahlUebungsgruppen($anzahlUebungsgruppen)
     {
-        $this->anzahl_uebungsgruppen = $anzahlUebungsgruppen;
+        $this->Anzahl_Uebungsgruppen = $anzahlUebungsgruppen;
     
         return $this;
     }
@@ -174,7 +177,7 @@ class Semesterplan
      */
     public function getAnzahlUebungsgruppen()
     {
-        return $this->anzahl_uebungsgruppen;
+        return $this->Anzahl_Uebungsgruppen;
     }
 
     /**
@@ -185,7 +188,7 @@ class Semesterplan
      */
     public function setGroesseUebungsgruppen($groesseUebungsgruppen)
     {
-        $this->groesse_uebungsgruppen = $groesseUebungsgruppen;
+        $this->Groesse_Uebungsgruppen = $groesseUebungsgruppen;
     
         return $this;
     }
@@ -197,7 +200,7 @@ class Semesterplan
      */
     public function getGroesseUebungsgruppen()
     {
-        return $this->groesse_uebungsgruppen;
+        return $this->Groesse_Uebungsgruppen;
     }
 
     /**

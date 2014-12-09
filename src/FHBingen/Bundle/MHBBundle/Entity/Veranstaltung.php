@@ -49,7 +49,7 @@ class Veranstaltung
      * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
      * )
      */
-    protected $erstellt_von;
+    protected $Erstellt_von;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
@@ -93,7 +93,7 @@ class Veranstaltung
      * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $Name_en;
+    protected $Name_EN;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
@@ -122,7 +122,7 @@ protected $Kontaktzeit_VL;
 /**
  * @ORM\Column(type="integer", nullable=true)
  */
-protected $Kontaktzeit_sonstige;
+protected $Kontaktzeit_Sonstige;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
@@ -215,7 +215,7 @@ protected $Voraussetzung_inh;
      */
     public function setErstelltVon($erstelltVon)
     {
-        $this->erstellt_von = $erstelltVon;
+        $this->Erstellt_von = $erstelltVon;
     
         return $this;
     }
@@ -227,7 +227,7 @@ protected $Voraussetzung_inh;
      */
     public function getErstelltVon()
     {
-        return $this->erstellt_von;
+        return $this->Erstellt_von;
     }
 
     /**

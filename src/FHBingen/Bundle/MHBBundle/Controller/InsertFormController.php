@@ -164,6 +164,7 @@ class InsertFormController extends Controller
                 $fachgebiet->setHat($entry);
 
 
+                $em->validate($fachgebiet);
                 $em->persist($fachgebiet);
                 $em->flush();
 

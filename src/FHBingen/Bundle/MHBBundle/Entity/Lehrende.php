@@ -34,7 +34,7 @@ class Lehrende
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $Lehrende_ID;
 
 
     /**
@@ -55,9 +55,9 @@ class Lehrende
      *
      * @return integer 
      */
-    public function getId()
+    public function getLehrende_ID()
     {
-        return $this->id;
+        return $this->Lehrende_ID;
     }
 
     /**
