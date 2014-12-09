@@ -10,30 +10,33 @@ namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Dozent
  * @package FHBingen\Bundle\MHBBundle\Entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="FHBingen\Bundle\MHBBundle\Entity\UserRepository")
  * @ORM\Table(name="Dozent")
  * @UniqueEntity(fields="Email", message="Unter dieser EMail ist bereits ein Dozent eingetragen.")
  * @ORM\HasLifecycleCallbacks
  */
 
-class Dozent
+class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterface
 {
-
+    /*
 	public function __toString()
 	{
 		return $this->getEmail();
 	}
-	
+    */
+
     /**
      * @ORM\Column(type="integer")
-     * @ORM\ID
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $Dozenten_ID;
@@ -186,6 +189,8 @@ class Dozent
      */
     public function __construct()
     {
+        $this->isActive = true;
+        $this->roles = new ArrayCollection();
         $this->lehrende = new ArrayCollection();
         $this->semesterplan = new ArrayCollection();
     }
@@ -375,5 +380,204 @@ class Dozent
     public function getStudiengang()
     {
         return $this->studiengang;
+    }
+
+
+    ///////////////////////////////////
+
+    ///////////////////////////////////
+
+    /**
+     * @ORM\Column(type="string", length=25, unique=true, nullable=false)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=64, nullable=false)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean", nullable=false)
+     */
+    private $isActive;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     *
+     */
+    private $roles;
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        $rolesArr = $this->roles->toArray();
+        $rolesArr[] = new UserDependentRole($this);
+
+        return $rolesArr;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->Dozenten_ID,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->Dozenten_ID,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Dozent
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Dozent
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return Dozent
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Add roles
+     *
+     * @return Dozent
+     */
+    public function addRole(RoleInterface $roles)
+    {
+        $this->roles[] = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     */
+    public function removeRole(RoleInterface $roles)
+    {
+        $this->roles->removeElement($roles);
+    }
+
+    public function getEncoderName()
+    {
+        //always return encoder 'pwenc' defined in security.yml
+        return 'pwenc';
+    }
+
+    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    public function isEnabled()
+    {
+        return $this->isActive;
     }
 }

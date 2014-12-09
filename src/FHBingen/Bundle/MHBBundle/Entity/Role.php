@@ -45,7 +45,7 @@ class Role implements RoleInterface
     private $role;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
+     * @ORM\ManyToMany(targetEntity="Dozent", mappedBy="roles")
      */
     private $users;
 
