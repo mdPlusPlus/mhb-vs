@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks
  */
 
-class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterface
+class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, EncoderAwareInterface
 {
     /*
 	public function __toString()
@@ -89,6 +90,14 @@ class Dozent implements AdvancedUserInterface, \Serializable, EncoderAwareInterf
     public function getDozentenID()
     {
         return $this->Dozenten_ID;
+    }
+
+    public function getId()
+    {
+        /**
+         * nur für Kompabilität mit UserRepository
+         */
+        return $this->getDozentenID();
     }
 
     /**

@@ -9,7 +9,7 @@ security:
 
     providers:
         users:
-            entity: { class: FHBingenMHBBundle:User }
+            entity: { class: FHBingenMHBBundle:Dozent }
 
     firewalls:
         dev:

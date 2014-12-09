@@ -18,7 +18,7 @@ use Doctrine\ORM\NoResultException;
 /*
  * TODO
  * aus \Entity verschieben, ist keine Entity
- * dabei beachten: repositoryClass in User.php bzw Doezent.php korrigieren
+ * dabei beachten: repositoryClass in User.php bzw Dozent.php korrigieren
  */
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
@@ -37,7 +37,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             $user = $q->getSingleResult();
         } catch (NoResultException $e) {
             $message = sprintf(
-                'Unable to find an active admin FHBingenMHBBundle:User object identified by "%s".',
+                'Unable to find an active admin FHBingenMHBBundle:Dozent object identified by "%s".',
                 $username
             );
             throw new UsernameNotFoundException($message, 0, $e);
@@ -59,6 +59,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         }
 
         return $this->find($user->getId());
+        //getID() in Dozent.php behalten
     }
 
     public function supportsClass($class)
