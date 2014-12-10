@@ -27,6 +27,7 @@ use FHBingen\Bundle\MHBBundle\Form\SemesterType;
 use FHBingen\Bundle\MHBBundle\Form\StudiengangType;
 use FHBingen\Bundle\MHBBundle\Form\StudienplanType;
 use FHBingen\Bundle\MHBBundle\Form\VertiefungType;
+use Proxies\__CG__\FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
@@ -258,8 +259,9 @@ class InsertmomoController extends Controller
 
 
     /**
-     * @Route("/creation/semesterplan")
+     * @Route("/creation/semesterp")
      */
+
     public function SemesterplanAction()
     {
         $semesterplan = new Semesterplan();
@@ -284,7 +286,9 @@ class InsertmomoController extends Controller
 
                 $table1 = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
                 $entry1 = $table1->findOneBy(array('Email' => $form->get('lehrender')->getData()));
+                echo "hi";
                 $semesterplan->setLehrender($entry1);//schauen
+
 
                 $table2 = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
                 $entry2 = $table2->findOneBy(array('Name' => $form->get('module')->getData()));
