@@ -24,7 +24,7 @@ class VeranstaltungType extends AbstractType
         $lp=['3' => '3', '6' => '6', '9' => '9', '12' => '12', '15' => '15'];
 
         $builder
-            ->add('erstellt_von', 'entity', array('label' => 'Ersteller: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+            ->add('erstellt_von', 'entity', array('label' => 'Ersteller: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent', 'property' => 'Email'))
             ->add('Status', 'choice', array('label' => 'Status: ', 'required' => true, 'choices' => $state))
             ->add('Kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))
             ->add('Name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true))
@@ -44,7 +44,7 @@ class VeranstaltungType extends AbstractType
             ->add('Leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
             ->add('Voraussetzung_LP', 'textarea', array('label' => 'Voraussetzung für Leistungspunkte: ', 'required' => true))
             ->add('Voraussetzung_inh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true))
-            ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+            ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent', 'property' => 'Email'))
             ->add('reset', 'reset')
             ->add('submit', 'submit');
     }

@@ -469,7 +469,6 @@ class InsertFormController extends Controller
             if($form->isValid())
             {
                 $veranstaltung->setErstellungsdatum(new \DateTime());
-                $veranstaltung->setErstelltVon($form->get('erstellt_von')->getData());
                 $veranstaltung->setVersionsnummerModul(1);
                 $veranstaltung->setStatus($form->get('Status')->getData());
                 $veranstaltung->setKuerzel($form->get('Kuerzel')->getData());
@@ -491,10 +490,13 @@ class InsertFormController extends Controller
                 $veranstaltung->setVoraussetzungLP($form->get('Voraussetzung_LP')->getData());
                 $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
 
-
                 $table = $this->getDoctrine()->getRepository ( 'FHBingenMHBBundle:Dozent' );
-                $entry = $table->findOneBy(array('Email' => $form->get('beauftragter')->getData()));
-                $veranstaltung->setBeauftragter($entry->getEmail());
+
+                $entry1= $table->findOneBy(array('Email' => $form->get('erstellt_von')->getData()));
+                $veranstaltung->setErstelltVon($entry1->getDozentenID());
+
+                $entry2 = $table->findOneBy(array('Email' => $form->get('beauftragter')->getData()));
+                $veranstaltung->setBeauftragter($entry2->getDozentenID());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($veranstaltung);
