@@ -265,6 +265,9 @@ class InsertmomoController extends Controller
     public function SemesterplanAction()
     {
         $semesterplan = new Semesterplan();
+        $dozent = new Dozent();
+        $formData['erstellt'] = $dozent;
+
         $form = $this->createForm(new SemesterplanType(), $semesterplan);
 
         $request = $this->get('request');
@@ -279,21 +282,19 @@ class InsertmomoController extends Controller
                 $semesterplan->setAnzahlUebungsgruppen($form->get('anzahl_uebungsgruppen')->getData());
                 $semesterplan->setGroesseUebungsgruppen($form->get('groesse_uebungsgruppen')->getData());
 
-                $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Semester' );
+                $table =  $this->getDoctrine()->getRepository( 'FHBingenMHBBundle:Semester' );
                 $entry = $table->findOneBy(array('Semester' => $form->get('semester')->getData()));
                 $semesterplan->setSemester($entry);//schauen
 
-                $table1 = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
-                $entry1 = $table1->findOneBy(array('Email' => $form->get('lehrender')->getData()));
-                echo "hi";
-                $semesterplan->setLehrender($entry1);//schauen
+                $table1 =$this->getDoctrine()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+                $entry1 = $table1->findOneBy(array('Email' =>  $dozent->__toString()));
+                $semesterplan->setLehrender($entry1->getDozentenID());//schauen
 
-
-                $table2 = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+                $table2 =$this->getDoctrine()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
                 $entry2 = $table2->findOneBy(array('Name' => $form->get('module')->getData()));
                 $semesterplan->setModule($entry2);//schauen
 
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($semesterplan);
                 $em->flush();
 
