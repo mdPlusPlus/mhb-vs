@@ -18,7 +18,8 @@ class UserDependentRole implements RoleInterface
     public function __toString()
     {
         //TODO noch ändern?
-        $string = $this->getRole();
+        //$string = $this->getRole();
+        $string = $this->getRoles();
 
         return $string;
     }
