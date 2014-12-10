@@ -350,7 +350,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin
      */
-    public function removeModul_admin(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_Admin)
+    public function removeModul_admin(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin)
     {
         $this->modul_admin->removeElement($modul_admin);
     }
