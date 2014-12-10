@@ -58,7 +58,7 @@ class Veranstaltung
     protected $Status;
 
     /**
-     * @ORM\Column(type="string", length=10, nullable=true, unique=true)
+     * @ORM\Column(type="string", length=5)
      * @Assert\Length(
      * min= 3,
      * max= 5,
@@ -69,7 +69,7 @@ class Veranstaltung
     protected $Kuerzel;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=60, nullable=false)
     * @Assert\Length(
      * min= 8,
      * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
@@ -901,13 +901,6 @@ protected $Voraussetzung_inh;
      * @ORM\JoinColumn(name="Modulbeauftragter", referencedColumnName="Dozenten_ID")
      */
     protected $beauftragter;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="modul_erstellt")
-     * @ORM\JoinColumn(name="Erstellt von", referencedColumnName="Dozenten_ID")
-     */
-    protected $erstellt_von;
-
 
     /*Voraussetzung*/
 

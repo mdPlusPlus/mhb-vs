@@ -31,7 +31,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
 
 	public function __toString()
 	{
-		return $this->getEmail();
+		return (string)$this->getTitel().' '.$this->getNachname();
 	}
 
 
@@ -320,10 +320,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     protected $modul_admin;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Veranstaltung", mappedBy="Erstellt_von")
-     */
-    protected $modul_erstellt;
 
     /*Studiengangleiter (Dozent/Studiengang)*/
 

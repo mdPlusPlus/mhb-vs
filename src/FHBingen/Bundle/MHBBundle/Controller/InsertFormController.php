@@ -521,14 +521,8 @@ class InsertFormController extends Controller
     public function VeranstaltungAction()
     {
         $veranstaltung =new Veranstaltung();
-        $dozent_erstell = new Dozent();
-        $dozent_beauftragt = new Dozent();
 
-        $formData['erstellt'] = $dozent_erstell;
-        $formData['beauftragt'] = $dozent_beauftragt;
-
-
-        $form = $this->createForm(new VeranstaltungType(),$formData);
+        $form = $this->createForm(new VeranstaltungType(),$veranstaltung);
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -561,11 +555,7 @@ class InsertFormController extends Controller
 
                 $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
 
-                $entry1= $table->findOneBy(array('Email' => $dozent_erstell->getEmail()->__toString()));
-                $veranstaltung->setErstelltVon($entry1->getDozentenID());
-
-                $entry2 = $table->findOneBy(array('Email' => $dozent_beauftragt->getEmail()->__toString()));
-                $veranstaltung->setBeauftragter($entry2->getDozentenID());
+                $veranstaltung->setBeauftragter($form->get('beauftragter')->getData());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($veranstaltung);
