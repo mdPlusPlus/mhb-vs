@@ -28,12 +28,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, EncoderAwareInterface
 {
-    /*
+
 	public function __toString()
 	{
 		return $this->getEmail();
 	}
-    */
+
 
     /**
      * @ORM\Column(type="integer")
