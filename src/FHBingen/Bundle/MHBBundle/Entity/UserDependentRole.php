@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserDependentRole implements RoleInterface
 {
     private $user;
-
+    /*
     public function __toString()
     {
         //TODO noch ändern?
@@ -23,7 +23,7 @@ class UserDependentRole implements RoleInterface
 
         return $string;
     }
-
+*/
     public function __construct(Dozent $user)
     {
         $this->user = $user;
