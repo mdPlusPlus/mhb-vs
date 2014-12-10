@@ -65,9 +65,9 @@ class VeranstaltungType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('erstellt', new Veranstaltung_ErstellType($builder, $options['erstellt']))
-            ->add('beauftragt', new Veranstaltung_BeautfragtType($builder, $options['beauftragt']))
-            ->add('basic', new Veranstaltung_basicType($builder, $options['basic']))
+            ->add('erstellt', new VeranstaltungErstellType($builder, $options['erstellt']))
+            ->add('beauftragt', new VeranstaltungBeauftragtType($builder, $options['beauftragt']))
+            ->add('basic', new VeranstaltungBasicType($builder, $options['basic']))
             ->add('reset', 'reset')
             ->add('submit', 'submit');
     }

@@ -516,7 +516,7 @@ class InsertFormController extends Controller
      */
     public function VeranstaltungAction()
     {
-
+        $veranstaltung =new Veranstaltung();
         $veranstaltung_basic = new Veranstaltung();
         $dozent_erstell = new Dozent();
         $dozent_beauftragt = new Dozent();
@@ -535,13 +535,15 @@ class InsertFormController extends Controller
         {
             if($form->isValid())
             {
+                $form1=$form->get('basic')->getData();
+
                 $veranstaltung->setErstellungsdatum(new \DateTime());
                 $veranstaltung->setVersionsnummerModul(1);
-                $veranstaltung->setStatus($form->get('Status')->getData());
-                $veranstaltung->setKuerzel($form->get('Kuerzel')->getData());
-                $veranstaltung->setName($form->get('Name')->getData());
-                $veranstaltung->setNameEn($form->get('Name_en')->getData());
-                $veranstaltung->setHaeufigkeit($form->get('Haeufigkeit')->getData());
+                $veranstaltung->setStatus($form1->);
+                $veranstaltung->setKuerzel($form.$veranstaltung_basic->get('Kuerzel')->getData());
+                $veranstaltung->setName($form.$veranstaltung_basic->get('Name')->getData());
+                $veranstaltung->setNameEn($form.$veranstaltung_basic->get('Name_en')->getData());
+                $veranstaltung->setHaeufigkeit($form.$veranstaltung_basic->get('Haeufigkeit')->getData());
                 $veranstaltung->setDauer($form->get('Dauer')->getData());
                 $veranstaltung->setLehrveranstaltungen($form->get('Lehrveranstaltungen')->getData());
                 $veranstaltung->setKontaktzeitVL($form->get('Kontaktzeit_VL')->getData());
@@ -558,10 +560,10 @@ class InsertFormController extends Controller
                 $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
 
                 $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
-                $entry1= $form->get('erstellt_von')->getData();
+                $entry1= $table->findOneBy(array('Email' => $dozent_erstell->getEmail()));
                 $veranstaltung->setErstelltVon($entry1->getDozentenID());
 
-                $entry2 = $table->findOneBy(array('Email' => $form->get('beauftragter')->getData()));
+                $entry2 = $table->findOneBy(array('Email' => $dozent_beauftragt->getEmail()));
                 $veranstaltung->setBeauftragter($entry2->getDozentenID());
 
                 $em = $this->getDoctrine()->getManager();
@@ -571,7 +573,6 @@ class InsertFormController extends Controller
                 return new Response('Daten: ');
 
             }
-            return new Response('Daten: '.$form.'');
             return $this->render('FHBingenMHBBundle:InsertForm:veranstaltung.html.twig', array('form'=>$form->createView()));
         }
         return $this->render('FHBingenMHBBundle:InsertForm:veranstaltung.html.twig', array('form'=>$form->createView()));

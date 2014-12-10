@@ -17,27 +17,27 @@
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
     <table>
-        {{ form_row(form.erstellt_von) }}
-        {{ form_row(form.Status) }}
-        {{ form_row(form.Kuerzel) }}
-        {{ form_row(form.Name) }}
-        {{ form_row(form.Name_en) }}
-        {{ form_row(form.Haeufigkeit) }}
-        {{ form_row(form.Dauer) }}
-        {{ form_row(form.Lehrveranstaltungen) }}
-        {{ form_row(form.Kontaktzeit_VL) }}
-        {{ form_row(form.Kontaktzeit_sonstige) }}
-        {{ form_row(form.Selbststudium) }}
-        {{ form_row(form.Gruppengroesse) }}
-        {{ form_row(form.Lernergebnisse) }}
-        {{ form_row(form.Inhalte) }}
-        {{ form_row(form.Pruefungsformen) }}
-        {{ form_row(form.Sprache) }}
-        {{ form_row(form.Literatur) }}
-        {{ form_row(form.Leistungspunkte) }}
-        {{ form_row(form.Voraussetzung_LP) }}
-        {{ form_row(form.Voraussetzung_inh) }}
-        {{ form_row(form.beauftragter) }}
+        {{ form_row(form.erstellt.email) }}
+        {{ form_row(form.basic.Status) }}
+        {{ form_row(form.basic.Kuerzel) }}
+        {{ form_row(form.basic.Name) }}
+        {{ form_row(form.basic.Name_en) }}
+        {{ form_row(form.basic.Haeufigkeit) }}
+        {{ form_row(form.basic.Dauer) }}
+        {{ form_row(form.basic.Lehrveranstaltungen) }}
+        {{ form_row(form.basic.Kontaktzeit_VL) }}
+        {{ form_row(form.basic.Kontaktzeit_sonstige) }}
+        {{ form_row(form.basic.Selbststudium) }}
+        {{ form_row(form.basic.Gruppengroesse) }}
+        {{ form_row(form.basic.Lernergebnisse) }}
+        {{ form_row(form.basic.Inhalte) }}
+        {{ form_row(form.basic.Pruefungsformen) }}
+        {{ form_row(form.basic.Sprache) }}
+        {{ form_row(form.basic.Literatur) }}
+        {{ form_row(form.basic.Leistungspunkte) }}
+        {{ form_row(form.basic.Voraussetzung_LP) }}
+        {{ form_row(form.basic.Voraussetzung_inh) }}
+        {{ form_row(form.beauftragt.email) }}
     </table>
     {{ form_end(form) }}
 

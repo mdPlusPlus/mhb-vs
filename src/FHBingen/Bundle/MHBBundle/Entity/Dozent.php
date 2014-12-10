@@ -74,10 +74,12 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     protected $Nachname;
 
+//@Assert\Email(
+//message = "Die Email '{{ value }}' ist keine gueltige Email."
+//)
+
     /**
-     * @Assert\Email(
-     *     message = "Die Email '{{ value }}' ist keine gueltige Email."
-     * )
+     *
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      */
     private $Email;

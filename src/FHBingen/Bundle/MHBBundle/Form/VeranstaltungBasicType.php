@@ -10,8 +10,9 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class Veranstaltung_basicType extends AbstractType
+class VeranstaltungBasicType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -43,6 +44,14 @@ class Veranstaltung_basicType extends AbstractType
             ->add('Leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
             ->add('Voraussetzung_LP', 'textarea', array('label' => 'Voraussetzung für Leistungspunkte: ', 'required' => true))
             ->add('Voraussetzung_inh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true));
+    }
+
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Veranstaltung'
+        ));
     }
 
     public function getName()
