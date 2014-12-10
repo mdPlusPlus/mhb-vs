@@ -17,7 +17,7 @@
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
     <table>
-        {{ form_row(form.erstellt_von) }}
+        {{ form_row(form.erstellt.email) }}
         {{ form_row(form.Status) }}
         {{ form_row(form.Kuerzel) }}
         {{ form_row(form.Name) }}
@@ -37,7 +37,7 @@
         {{ form_row(form.Leistungspunkte) }}
         {{ form_row(form.Voraussetzung_LP) }}
         {{ form_row(form.Voraussetzung_inh) }}
-        {{ form_row(form.beauftragter) }}
+        {{ form_row(form.beauftragt.email) }}
     </table>
     {{ form_end(form) }}
 
