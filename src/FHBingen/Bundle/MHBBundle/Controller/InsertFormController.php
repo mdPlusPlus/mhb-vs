@@ -126,11 +126,6 @@ class InsertFormController extends Controller
     public function DozentAction()
     {
         $dozent = new Dozent();
-        $em = $this->getDoctrine()->getManager();
-        $roleArr = $em->getRepository('FHBingenMHBBundle:Role');
-        $result = array($roleArr->findOneBy(array('role' => 'ROLE_DOZENT')),$roleArr->findOneBy(array('role' => 'ROLE_SGL')));
-
-
         $form = $this->createForm(new DozentType(), $dozent);
 
         $request = $this->get('request');
@@ -150,6 +145,7 @@ class InsertFormController extends Controller
 
                 $dozent->setRole($form->get('roles')->getData());
 
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($dozent);
                 $em->flush();
 
@@ -564,10 +560,9 @@ class InsertFormController extends Controller
                 $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
 
                 $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
+
                 $entry1= $table->findOneBy(array('Email' => $dozent_erstell->getEmail()->__toString()));
                 $veranstaltung->setErstelltVon($entry1->getDozentenID());
-
-
 
                 $entry2 = $table->findOneBy(array('Email' => $dozent_beauftragt->getEmail()->__toString()));
                 $veranstaltung->setBeauftragter($entry2->getDozentenID());
