@@ -43,15 +43,6 @@ class Veranstaltung
     protected $Erstellungsdatum;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=false)
-     * @Assert\Length(
-     * min= 3,
-     * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * )
-     */
-    protected $Erstellt_von;
-
-    /**
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -67,7 +58,7 @@ class Veranstaltung
     protected $Status;
 
     /**
-     * @ORM\Column(type="string", length=10, nullable=true, unique=true)
+     * @ORM\Column(type="string", length=5)
      * @Assert\Length(
      * min= 3,
      * max= 5,
@@ -78,7 +69,7 @@ class Veranstaltung
     protected $Kuerzel;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=60, nullable=false)
     * @Assert\Length(
      * min= 8,
      * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
@@ -906,11 +897,10 @@ protected $Voraussetzung_inh;
     /*Modulbeauftragter (Dozent/Modul)*/
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="modul")
+     * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="modul_admin")
      * @ORM\JoinColumn(name="Modulbeauftragter", referencedColumnName="Dozenten_ID")
      */
     protected $beauftragter;
-
 
     /*Voraussetzung*/
 
