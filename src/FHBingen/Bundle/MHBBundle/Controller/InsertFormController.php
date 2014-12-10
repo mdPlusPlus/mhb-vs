@@ -453,13 +453,80 @@ class InsertFormController extends Controller
         return $this->render('FHBingenMHBBundle:InsertForm:studienplan.html.twig', array('form'=>$form->createView()));
     }
 
+//    /**
+//     * @Route("/creation/Modul")
+//     */
+//    public function VeranstaltungAction()
+//    {
+//        $veranstaltung = new Veranstaltung();
+//        $form = $this->createForm(new VeranstaltungType(), $veranstaltung);
+//
+//        $request = $this->get('request');
+//        $form->handleRequest($request);
+//
+//        if($request->getMethod() == 'POST')
+//        {
+//            if($form->isValid())
+//            {
+//                $veranstaltung->setErstellungsdatum(new \DateTime());
+//                $veranstaltung->setVersionsnummerModul(1);
+//                $veranstaltung->setStatus($form->get('Status')->getData());
+//                $veranstaltung->setKuerzel($form->get('Kuerzel')->getData());
+//                $veranstaltung->setName($form->get('Name')->getData());
+//                $veranstaltung->setNameEn($form->get('Name_en')->getData());
+//                $veranstaltung->setHaeufigkeit($form->get('Haeufigkeit')->getData());
+//                $veranstaltung->setDauer($form->get('Dauer')->getData());
+//                $veranstaltung->setLehrveranstaltungen($form->get('Lehrveranstaltungen')->getData());
+//                $veranstaltung->setKontaktzeitVL($form->get('Kontaktzeit_VL')->getData());
+//                $veranstaltung->setKontaktzeitSonstige($form->get('Kontaktzeit_sonstige')->getData());
+//                $veranstaltung->setSelbststudium($form->get('Selbststudium')->getData());
+//                $veranstaltung->setGruppengroesse($form->get('Gruppengroesse')->getData());
+//                $veranstaltung->setLernergebnisse($form->get('Lernergebnisse')->getData());
+//                $veranstaltung->setInhalte($form->get('Inhalte')->getData());
+//                $veranstaltung->setPruefungsformen($form->get('Pruefungsformen')->getData());
+//                $veranstaltung->setSprache($form->get('Sprache')->getData());
+//                $veranstaltung->setLiteratur($form->get('Literatur')->getData());
+//                $veranstaltung->setLeistungspunkte($form->get('Leistungspunkte')->getData());
+//                $veranstaltung->setVoraussetzungLP($form->get('Voraussetzung_LP')->getData());
+//                $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
+//
+//                $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
+//                $entry1= $form->get('erstellt_von')->getData();
+//                $veranstaltung->setErstelltVon($entry1->getDozentenID());
+//
+//                $entry2 = $table->findOneBy(array('Email' => $form->get('beauftragter')->getData()));
+//                $veranstaltung->setBeauftragter($entry2->getDozentenID());
+//
+//                $em = $this->getDoctrine()->getManager();
+//                $em->persist($veranstaltung);
+//                $em->flush();
+//
+//                return new Response('Daten: ');
+//
+//            }
+//            return new Response('Daten: '.$form.'');
+//            return $this->render('FHBingenMHBBundle:InsertForm:veranstaltung.html.twig', array('form'=>$form->createView()));
+//        }
+//        return $this->render('FHBingenMHBBundle:InsertForm:veranstaltung.html.twig', array('form'=>$form->createView()));
+//    }
+
+
     /**
      * @Route("/creation/Modul")
      */
     public function VeranstaltungAction()
     {
-        $veranstaltung = new Veranstaltung();
-        $form = $this->createForm(new VeranstaltungType(), $veranstaltung);
+
+        $veranstaltung_basic = new Veranstaltung();
+        $dozent_erstell = new Dozent();
+        $dozent_beauftragt = new Dozent();
+
+        $formData['erstellt'] = $dozent_erstell;
+        $formData['beauftragt'] = $dozent_beauftragt;
+        $formData['basic'] = $veranstaltung_basic;
+
+
+        $form = $this->createForm(new VeranstaltungType(),$formData);
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -490,9 +557,8 @@ class InsertFormController extends Controller
                 $veranstaltung->setVoraussetzungLP($form->get('Voraussetzung_LP')->getData());
                 $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
 
-                $table = $this->getDoctrine()->getRepository ( 'FHBingenMHBBundle:Dozent' );
-
-                $entry1= $table->findOneBy(array('Email' => $form->get('erstellt_von')->getData()));
+                $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
+                $entry1= $form->get('erstellt_von')->getData();
                 $veranstaltung->setErstelltVon($entry1->getDozentenID());
 
                 $entry2 = $table->findOneBy(array('Email' => $form->get('beauftragter')->getData()));
@@ -502,12 +568,15 @@ class InsertFormController extends Controller
                 $em->persist($veranstaltung);
                 $em->flush();
 
-                return new Response('Modul wurde erfolgreich erstellt');
+                return new Response('Daten: ');
+
             }
+            return new Response('Daten: '.$form.'');
             return $this->render('FHBingenMHBBundle:InsertForm:veranstaltung.html.twig', array('form'=>$form->createView()));
         }
         return $this->render('FHBingenMHBBundle:InsertForm:veranstaltung.html.twig', array('form'=>$form->createView()));
     }
+
 
 
     /**
