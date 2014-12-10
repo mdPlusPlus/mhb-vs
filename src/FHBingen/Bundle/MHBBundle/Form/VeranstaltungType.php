@@ -74,8 +74,7 @@ class VeranstaltungType extends AbstractType
         $lp=['3' => '3', '6' => '6', '9' => '9', '12' => '12', '15' => '15'];
 
         $builder
-            ->add('erstellt', new VeranstaltungErstellType($builder, $options['erstellt']))
-            ->add('beauftragt', new VeranstaltungBeauftragtType($builder, $options['beauftragt']))
+            ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
 
             ->add('Status', 'choice', array('label' => 'Status: ', 'required' => true, 'choices' => $state))
             ->add('Kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))

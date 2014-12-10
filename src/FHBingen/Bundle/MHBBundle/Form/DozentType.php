@@ -24,6 +24,8 @@ class DozentType extends AbstractType
             ->add('name', 'text', array('label' => 'Vorname: ', 'required' => true))
             ->add('nachname', 'text', array('label' => 'Nachname: ', 'required' => true))
             ->add('email', 'email', array('label' => 'Email: ', 'required' => true))
+            ->add('username', 'text', array('label' => 'Username: ', 'required' => true))
+            ->add('roles', 'entity', array('label' => 'Position: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Role'))
             ->add('reset', 'reset')
             ->add('submit', 'submit');
     }
