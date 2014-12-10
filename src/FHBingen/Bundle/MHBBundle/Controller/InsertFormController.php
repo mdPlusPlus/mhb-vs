@@ -139,6 +139,9 @@ class InsertFormController extends Controller
                 $dozent->setName ($form->get('name')->getData());
                 $dozent->setNachname ($form->get('nachname')->getData());
                 $dozent->setEmail ($form->get('email')->getData());
+//                $dozent->setPassword('ABC');
+//                $dozent->setRole(1);
+//                $dozent->setIsActive(1);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($dozent);
@@ -395,7 +398,6 @@ class InsertFormController extends Controller
                 $studiengang->setKuerzel($form->get('kuerzel')->getData());
                 $studiengang->setBeschreibung($form->get('beschreibung')->getData());
 
-
                 $em = $this->getDoctrine()->getManager();
                 $table = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
                 $entry = $table->findOneBy(array('Email' => $form->get('sgl')->getData()));
@@ -561,8 +563,8 @@ class InsertFormController extends Controller
 
 
 
-                $entry2 = $table->findOneBy(array('Email' => $dozent_beauftragt->getEmail()));
-                $veranstaltung->setBeauftragter($entry2);
+                $entry2 = $table->findOneBy(array('Email' => $dozent_beauftragt->getEmail()->__toString()));
+                $veranstaltung->setBeauftragter($entry2->getDozentenID());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($veranstaltung);
