@@ -491,11 +491,12 @@ class InsertFormController extends Controller
                 $veranstaltung->setVoraussetzungLP($form->get('Voraussetzung_LP')->getData());
                 $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
 
-                $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
-                $entry = $table->findOneBy(array('Email' => $form->get('beauftragter')->getData()));
-                $veranstaltung->setBeauftragter($entry->getDozentenID());
 
+                $table = $this->getDoctrine()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+                $entry = $table->findOneBy(array('Email' => $form->get('beauftragter')->getData()));
+                $veranstaltung->setBeauftragter($entry->getEmail());
+
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($veranstaltung);
                 $em->flush();
 
