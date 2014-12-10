@@ -462,6 +462,11 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $this;
     }
 
+    public function setRoles(RoleInterface $role){
+
+        return $this->setRole($role);
+    }
+
     /**
      * @inheritDoc
      */

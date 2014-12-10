@@ -14,6 +14,7 @@ use FHBingen\Bundle\MHBBundle\Entity\Fachgebiet;
 use FHBingen\Bundle\MHBBundle\Entity\Kernfach;
 use FHBingen\Bundle\MHBBundle\Entity\Lehrende;
 use FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch;
+use FHBingen\Bundle\MHBBundle\Entity\Role;
 use FHBingen\Bundle\MHBBundle\Entity\Semester;
 use FHBingen\Bundle\MHBBundle\Entity\Semesterplan;
 use FHBingen\Bundle\MHBBundle\Entity\Studiengang;
@@ -139,9 +140,10 @@ class InsertFormController extends Controller
                 $dozent->setName ($form->get('name')->getData());
                 $dozent->setNachname ($form->get('nachname')->getData());
                 $dozent->setEmail ($form->get('email')->getData());
-//                $dozent->setPassword('ABC');
-//                $dozent->setRole(1);
-//                $dozent->setIsActive(1);
+                $dozent->setUsername($form->get('username')->getData());
+                $dozent->setPassword(password_hash('Test123', PASSWORD_BCRYPT, array('cost' => 12)));
+
+                $dozent->setRole($form->get('roles')->getData());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($dozent);
@@ -149,9 +151,9 @@ class InsertFormController extends Controller
 
                 return new Response('Dozent wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:form.html.twig', array('form'=>$form->createView()));
+            return $this->render('@FHBingenMHB/InsertForm/dozent.html.twig', array('form'=>$form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:form.html.twig', array('form'=>$form->createView()));
+        return $this->render('@FHBingenMHB/InsertForm/dozent.html.twig', array('form'=>$form->createView()));
     }
 
     /**
@@ -558,10 +560,9 @@ class InsertFormController extends Controller
                 $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
 
                 $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
+
                 $entry1= $table->findOneBy(array('Email' => $dozent_erstell->getEmail()->__toString()));
                 $veranstaltung->setErstelltVon($entry1->getDozentenID());
-
-
 
                 $entry2 = $table->findOneBy(array('Email' => $dozent_beauftragt->getEmail()->__toString()));
                 $veranstaltung->setBeauftragter($entry2->getDozentenID());
