@@ -81,19 +81,42 @@ class VeranstaltungType extends AbstractType
             ->add('Name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true))
             ->add('Name_en', 'text', array('label' => 'Modulname (englisch): ', 'required' => false))
             ->add('Haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots: ', 'required' => false, 'choices' => $frequency))
-            ->add('Dauer', 'text', array('label' => 'Dauer: ', 'required' => true))
-            ->add('Lehrveranstaltungen', 'text', array('label' => 'Lehrveranstaltungen: ', 'required' => true))
+            ->add('Dauer', 'text',  array('label' => 'Dauer: ', 'required' => true))
+            ->add('Lehrveranstaltungen', 'choice',  array('label' => 'Lehrveranstaltungen: ','choices'
+            => array('Vorlesung'   => 'Vorlesung',
+                    'Übung' => 'Übung',
+                    'Labor' => 'Labor',
+                    'Seminar' => 'Seminar',
+                    'Praxisprojekt' => 'Praxisprojekt',
+                    'Selbststudium und Konsultationen' => 'Selbststudium und Konsultationen'),
+                'multiple'  => true,
+                'expanded' => true))
             ->add('Kontaktzeit_VL', 'integer', array('label' => 'Kontaktzeit Vorlesung: ', 'required' => true))
             ->add('Kontaktzeit_sonstige', 'integer', array('label' => 'Kontaktzeit sonstige: ', 'required' => true))
             ->add('Selbststudium', 'integer', array('label' => 'Selbststudium: ', 'required' => true))
             ->add('Gruppengroesse', 'integer', array('label' => 'Gruppengröße: ', 'required' => true))
             ->add('Lernergebnisse', 'textarea', array('label' => 'Lernergebisse: ', 'required' => true))
             ->add('Inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => true))
-            ->add('Pruefungsformen', 'text', array('label' => 'Prüfungsform: ', 'required' => true))
+            ->add('Pruefungsformen', 'choice', array('label' => 'Prüfungsform: ','choices'
+            => array('Schriftliche Klausur'   => 'Schriftliche Klausur',
+                     'Mündliche Prüfung' => 'Mündliche Prüfung',
+                     'Vortrag' => 'Vortrag',
+                     'Dokumentation' => 'Dokumentation',
+                     'Durchführung Übung' => 'Durchführung Übung',
+                     'Erfolgreiche Zertifizierung' => 'Erfolgreiche Zertifizierung',
+                     'schriftliche Ausarbeitung' => 'schriftliche Ausarbeitung',
+                     'Projektarbeit' => 'Projektarbeit',
+                     'Kolloquium'   => 'Kolloquium'),
+                     'multiple'  => true,
+                     'expanded' => true))
             ->add('Sprache', 'choice', array('label' => 'Sprache: ', 'required' => true, 'choices' => $lang))
             ->add('Literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => true))
             ->add('Leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
-            ->add('Voraussetzung_LP', 'textarea', array('label' => 'Voraussetzung für Leistungspunkte: ', 'required' => true))
+            ->add('Voraussetzung_LP', 'choice', array('label' => 'Voraussetzung für Leistungspunkte: ','choices'
+            => array('Prüfungsleistung'   => 'Prüfungsleistung',
+                     'Studienleistung' => 'Studienleistung'),
+                     'multiple'  => true,
+                     'expanded' => true))
             ->add('Voraussetzung_inh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true))
 
             ->add('reset', 'reset')
