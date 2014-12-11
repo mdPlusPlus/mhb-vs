@@ -16,8 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
-use FHBingen\Bundle\MHBBundle\Entity\Role;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
+use FHBingen\Bundle\MHBBundle\Entity\Role;
 
 
 class SecurityController extends Controller
