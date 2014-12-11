@@ -552,16 +552,13 @@ class InsertFormController extends Controller
                 $veranstaltung->setLeistungspunkte($form->get('Leistungspunkte')->getData());
                 $veranstaltung->setVoraussetzungLP($form->get('Voraussetzung_LP')->getData());
                 $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
-
-                $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
-
                 $veranstaltung->setBeauftragter($form->get('beauftragter')->getData());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($veranstaltung);
                 $em->flush();
 
-                return new Response('Daten: ');
+                return new Response('Modul erfolgreich erstellt ');
             }
             return $this->render('FHBingenMHBBundle:InsertForm:veranstaltung.html.twig', array('form'=>$form->createView()));
         }
