@@ -131,17 +131,17 @@ class InsertFormController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
-                $dozent->setAnrede ($form->get('anrede')->getData());
-                $dozent->setTitel ($form->get('titel')->getData());
-                $dozent->setName ($form->get('name')->getData());
-                $dozent->setNachname ($form->get('nachname')->getData());
-                $dozent->setEmail ($form->get('email')->getData());
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $dozent->setAnrede($form->get('anrede')->getData());
+                $dozent->setTitel($form->get('titel')->getData());
+                $dozent->setName($form->get('name')->getData());
+                $dozent->setNachname($form->get('nachname')->getData());
+                $dozent->setEmail($form->get('email')->getData());
                 $dozent->setUsername($form->get('username')->getData());
                 $dozent->setPassword(password_hash('Test123', PASSWORD_BCRYPT, array('cost' => 12)));
+                //TODO für 11.12.2014: setUsername() entfernen
+                //TODO für 11.12.2014: setPassword(password_hash(...)) auf setPassword('PASSWORD') ändern
 
                 $dozent->setRole($form->get('roles')->getData());
 
@@ -151,8 +151,10 @@ class InsertFormController extends Controller
 
                 return new Response('Dozent wurde erfolgreich erstellt');
             }
+
             return $this->render('@FHBingenMHB/InsertForm/dozent.html.twig', array('form'=>$form->createView()));
         }
+
         return $this->render('@FHBingenMHB/InsertForm/dozent.html.twig', array('form'=>$form->createView()));
     }
 

@@ -28,6 +28,7 @@ class DozentType extends AbstractType
             ->add('roles', 'entity', array('label' => 'Position: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Role'))
             ->add('reset', 'reset')
             ->add('submit', 'submit');
+        //TODO für 11.12.2014: 'username' entfernen
     }
 
     public function getName()
