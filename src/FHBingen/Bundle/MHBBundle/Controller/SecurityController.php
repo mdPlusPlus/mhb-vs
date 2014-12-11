@@ -8,16 +8,15 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
-
 use Doctrine\ORM\EntityNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-
 use FHBingen\Bundle\MHBBundle\Entity\Role;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use Symfony\Component\Security\Core\Role\RoleInterface;
+
 
 class SecurityController extends Controller
 {
