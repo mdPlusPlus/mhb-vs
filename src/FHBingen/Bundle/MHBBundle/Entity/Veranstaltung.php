@@ -72,7 +72,7 @@ class Veranstaltung
      * @ORM\Column(type="string", length=60, nullable=false)
     * @Assert\Length(
      * min= 8,
-     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen. Blubb"
      * )
      */
     protected $Name;
