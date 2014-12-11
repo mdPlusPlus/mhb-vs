@@ -424,7 +424,6 @@ class InsertFormController extends Controller
                 $veranstaltung->setNameEn($form->get('Name_en')->getData());
                 $veranstaltung->setHaeufigkeit($form->get('Haeufigkeit')->getData());
                 $veranstaltung->setDauer($form->get('Dauer')->getData());
-                $veranstaltung->setLehrveranstaltungen($form->get('Lehrveranstaltungen')->getData());
                 $veranstaltung->setKontaktzeitVL($form->get('Kontaktzeit_VL')->getData());
                 $veranstaltung->setKontaktzeitSonstige($form->get('Kontaktzeit_sonstige')->getData());
                 $veranstaltung->setSelbststudium($form->get('Selbststudium')->getData());
@@ -452,6 +451,14 @@ class InsertFormController extends Controller
                 }
 
                 $veranstaltung->setVoraussetzungLP($string2);
+
+                $string3='';
+                $array = ($form->get('Lehrveranstaltungen')->getData());
+                foreach($array as $entry){
+                    $string3 = $string3.$entry.';;';
+                }
+
+                $veranstaltung->setLehrveranstaltungen($string3);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($veranstaltung);
