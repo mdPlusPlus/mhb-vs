@@ -25,7 +25,8 @@ class Studiengang
 {
     public function __toString()
     {
-        return $this->getTitel();
+        $string = $this->getGrad().' '.$this->getTitel();
+        return $string;
     }
 
     /**
@@ -61,9 +62,9 @@ class Studiengang
      */
     protected $Titel;
     /**
-     * @ORM\Column(type="string", length=10, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=5, nullable=false, unique=true)
      * @Assert\Length(
-     * min= 3,
+     * min= 2,
      * max= 5,
      * minMessage="Ein Studiengangs-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
      * maxMessage="Ein Studiengangs-Kuerzel darf aus maximal {{ limit }} Zeichen bestehen."
