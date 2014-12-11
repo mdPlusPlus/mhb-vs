@@ -8,7 +8,6 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Fachgebiet")
- * @UniqueEntity(fields="Titel", message="Dieses Fachgebiet wurde bereits in die Datenbank eingetragen.")
  * @ORM\HasLifecycleCallbacks
  */
 

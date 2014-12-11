@@ -430,14 +430,28 @@ class InsertFormController extends Controller
                 $veranstaltung->setSelbststudium($form->get('Selbststudium')->getData());
                 $veranstaltung->setGruppengroesse($form->get('Gruppengroesse')->getData());
                 $veranstaltung->setLernergebnisse($form->get('Lernergebnisse')->getData());
-                $veranstaltung->setInhalte($form->get('Inhalte')->getData());
-                $veranstaltung->setPruefungsformen($form->get('Pruefungsformen')->getData());
+                $veranstaltung->setInhalte($form->get('Inhalte')->getData());;
                 $veranstaltung->setSprache($form->get('Sprache')->getData());
                 $veranstaltung->setLiteratur($form->get('Literatur')->getData());
                 $veranstaltung->setLeistungspunkte($form->get('Leistungspunkte')->getData());
-                $veranstaltung->setVoraussetzungLP($form->get('Voraussetzung_LP')->getData());
                 $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
                 $veranstaltung->setBeauftragter($form->get('beauftragter')->getData());
+
+                $string1='';
+                $array = ($form->get('Pruefungsformen')->getData());
+                foreach($array as $entry){
+                    $string1 = $string1.$entry.';;';
+                }
+
+                $veranstaltung->setPruefungsformen($string1);
+
+                $string2='';
+                $array = ($form->get('Voraussetzung_LP')->getData());
+                foreach($array as $entry){
+                    $string2 = $string2.$entry.';;';
+                }
+
+                $veranstaltung->setVoraussetzungLP($string2);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($veranstaltung);
