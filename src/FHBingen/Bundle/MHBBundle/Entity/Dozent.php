@@ -28,12 +28,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, EncoderAwareInterface
 {
-    /*
+
 	public function __toString()
 	{
-		return $this->getEmail();
+		return (string)$this->getTitel().' '.$this->getNachname();
 	}
-    */
+
 
     /**
      * @ORM\Column(type="integer")
@@ -74,10 +74,12 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     protected $Nachname;
 
+//@Assert\Email(
+//message = "Die Email '{{ value }}' ist keine gueltige Email."
+//)
+
     /**
-     * @Assert\Email(
-     *     message = "Die Email '{{ value }}' ist keine gueltige Email."
-     * )
+     *
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      */
     private $Email;
@@ -316,7 +318,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * @ORM\OneToMany(targetEntity="Veranstaltung", mappedBy="beauftragter")
      */
-    protected $modul;
+    protected $modul_admin;
+
 
     /*Studiengangleiter (Dozent/Studiengang)*/
 
@@ -326,36 +329,69 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     protected $studiengang;
 
     /**
-     * Add modul
+     * Add modul_admin
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin
      * @return Dozent
      */
-    public function addModul(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul)
+    public function addModul_admin(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin)
     {
-        $this->modul[] = $modul;
+        $this->modul_admin[] = $modul_admin;
     
         return $this;
     }
 
     /**
-     * Remove modul
+     * Remove modul_admin
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin
      */
-    public function removeModul(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul)
+    public function removeModul_admin(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin)
     {
-        $this->modul->removeElement($modul);
+        $this->modul_admin->removeElement($modul_admin);
     }
 
     /**
-     * Get modul
+     * Get modul_admin
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getModul()
+    public function getModul_admin()
     {
-        return $this->modul;
+        return $this->modul_admin;
+    }
+
+    /**
+     * Add modul_erstellt
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_erstellt
+     * @return Dozent
+     */
+    public function addModul_erstellt(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_erstellt)
+    {
+        $this->modul_erstellt[] = $modul_erstellt;
+
+        return $this;
+    }
+
+    /**
+     * Remove modul_erstellt
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_erstellt
+     */
+    public function removeModul_erstellt(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_erstellt)
+    {
+        $this->modul_erstellt->removeElement($modul_erstellt);
+    }
+
+    /**
+     * Get modul_erstellt
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getModul_erstellt()
+    {
+        return $this->modul_erstellt;
     }
 
     /**
@@ -397,11 +433,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     ///////////////////////////////////
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true, nullable=false)
-     */
-    private $username;
-
-    /**
      * @ORM\Column(type="string", length=64, nullable=false)
      */
     private $password;
@@ -422,12 +453,18 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $this;
     }
 
+    public function setRoles(RoleInterface $role){
+
+        return $this->setRole($role);
+    }
+
     /**
      * @inheritDoc
      */
     public function getUsername()
     {
-        return $this->username;
+        //return $this->username;
+        return $this->Email;
     }
 
     /**
@@ -475,7 +512,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     {
         return serialize(array(
             $this->Dozenten_ID,
-            $this->username,
+            //$this->username,
+            $this->Email,
             $this->password,
             // see section on salt below
             // $this->salt,
@@ -489,7 +527,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     {
         list (
             $this->Dozenten_ID,
-            $this->username,
+            //$this->username,
+            $this->Email,
             $this->password,
             // see section on salt below
             // $this->salt
@@ -504,7 +543,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setUsername($username)
     {
-        $this->username = $username;
+        //$this->username = $username;
+        $this->Email = $username;
 
         return $this;
     }
@@ -517,7 +557,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        //$this->password = $password;
+        $this->password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
         return $this;
     }

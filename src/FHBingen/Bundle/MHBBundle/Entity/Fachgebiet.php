@@ -26,7 +26,7 @@ class Fachgebiet
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string =(string) $this->getTitel();
+        $string = $this->getHat().' '.$this->getTitel();
         return $string;
     }
 
@@ -39,7 +39,7 @@ class Fachgebiet
     protected $Fachgebiets_ID;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=50, nullable=false)
      * @Assert\Length(
      * min= "4",
      * minMessage="Der Fachgebietstitel muss aus mindestens {{ limit }} Zeichen bestehen."

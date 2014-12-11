@@ -19,15 +19,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Role implements RoleInterface
 {
-    /*
+
     public function __toString()
     {
         //TODO noch ändern?
         $string = $this->getRole();
-
         return $string;
     }
-    */
+
 
     /**
      * @ORM\Column(name="id", type="integer")

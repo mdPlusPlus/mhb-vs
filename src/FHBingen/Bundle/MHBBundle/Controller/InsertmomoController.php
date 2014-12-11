@@ -27,6 +27,7 @@ use FHBingen\Bundle\MHBBundle\Form\SemesterType;
 use FHBingen\Bundle\MHBBundle\Form\StudiengangType;
 use FHBingen\Bundle\MHBBundle\Form\StudienplanType;
 use FHBingen\Bundle\MHBBundle\Form\VertiefungType;
+use Proxies\__CG__\FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
@@ -37,7 +38,7 @@ use Symfony\Component\HttpFoundation\Response;
 class InsertmomoController extends Controller
 {
     /**
-     * @Route("/creation/angebot")
+     * @Route("/creation/angeb")
      * TODO überarbeiten
      */
     public function AngebotAction()
@@ -57,23 +58,14 @@ class InsertmomoController extends Controller
                 $angebot->setAbweichenderTitelDE ($form->get('abweichender_Titel_DE')->getData());
                 $angebot->setAbweichenderTitelEN ($form->get('abweichender_Titel_EN')->getData());
 
+                $angebot->setStudiengang($form->get('studiengang')->getData());
+                $angebot->setFachgebiet($form->get('fachgebiet')->getData());
+                $angebot->setMhb($form->get('mhb')->getData());
+                $angebot->setModule($form->get('module')->getData());
+
+
+
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
-                $entry = $table->findOneBy(array('Name' => $form->get('module')->getData()));
-                $angebot->setModule($entry->getModulID());//schauen
-
-                $table1 = $em->getRepository ( 'FHBingenMHBBundle:Modulhandbuch' );
-                $entry1 = $table1->findOneBy(array('Beschreibung' => $form->get('mhb')->getData()));
-                $angebot->setMhb($entry1->getMHBID());//schauen
-
-                $table2 = $em->getRepository ( 'FHBingenMHBBundle:Fachgebiet' );
-                $entry2 = $table2->findOneBy(array('Titel' => $form->get('fachgebiet')->getData()));
-                $angebot->setFachgebiet($entry2->getFachgebietsID());//schauen
-
-                $table3 = $em->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-                $entry3 = $table3->findOneBy(array('Titel' => $form->get('studiengang')->getData()));
-                $angebot->setStudiengang($entry3->getStudiengangID());//schauen
-
                 $em->persist($angebot);
                 $em->flush();
 
@@ -85,7 +77,7 @@ class InsertmomoController extends Controller
     }
 
     /**
-     * @Route("/creation/fachgebiet")
+     * @Route("/creation/fachgeb")
      * TODO überarbeiten
      */
     public function FachgebietAction()
@@ -100,13 +92,10 @@ class InsertmomoController extends Controller
         {
             if($form->isValid())
             {
-                $fachgebiet->setTitel($form->get('Titel')->getData());
+                $fachgebiet->setTitel($form->get('titel')->getData());
+                $fachgebiet->setHat($form->get('hat')->getData());
 
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-                $entry = $table->findOneBy(array('Titel' => $form->get('hat')->getData()));
-                $fachgebiet->setHat($entry->getStudiengang_ID);//schauen
-
                 $em->persist($fachgebiet);
                 $em->flush();
 
@@ -119,7 +108,7 @@ class InsertmomoController extends Controller
 
 
     /**
-     * @Route("/creation/kernfach")
+     * @Route("/creation/kernf")
      */
     public function KernfachAction()
     {
@@ -134,15 +123,9 @@ class InsertmomoController extends Controller
             if($form->isValid())
             {
 
+                $kernfach->setModul($form->get('modul')->getData());
+                $kernfach->setVertiefung($form->get('vertiefung')->getData());
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Vertiefung' );
-                $entry = $table->findOneBy(array('Vertiefungsrichtung' => $form->get('vertiefung')->getData()));
-                $kernfach->setVertiefung($entry);//schauen
-
-                $table1 = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
-                $entry1 = $table1->findOneBy(array('Name' => $form->get('modul')->getData()));
-                $kernfach->setModul($entry1);//schauen
-
                 $em->persist($kernfach);
                 $em->flush();
 
@@ -160,8 +143,8 @@ class InsertmomoController extends Controller
     public function LehrendeAction()
     {
         $lehr = new Lehrende();
-        $form = $this->createForm(new LehrendeType(), $lehr);
 
+        $form = $this->createForm(new LehrendeType(), $lehr);
         $request = $this->get('request');
         $form->handleRequest($request);
 
@@ -169,14 +152,11 @@ class InsertmomoController extends Controller
         {
             if($form->isValid())
             {
-                $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
-                $entry = $table->findOneBy(array('Name' => $form->get('module')->getData()));
-                $lehr->setModule($entry);//schauen
 
-                $table1 = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
-                $entry1 = $table1->findOneBy(array('Email' => $form->get('lehrender')->getData()));
-                $lehr->setLehrender($entry1);//schauen
+                $lehr->setLehrender($form->get('lehrender')->getData());
+                $lehr->setModule($form->get('module')->getData());
+
+                $em = $this->getDoctrine()->getManager();
 
                 $em->persist($lehr);
                 $em->flush();
@@ -208,15 +188,10 @@ class InsertmomoController extends Controller
                 $mhb->setErstellungsdatum(new \DateTime());
                 $mhb->setMHBVersionsnummer(1);
 
+                $mhb->setGehoertZu($form->get('gehoert_zu')->getData());
+                $mhb->setGueltigAb($form->get('gueltig_ab')->getData());
+
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Semester' );
-                $entry = $table->findOneBy(array('Semester' => $form->get('gueltig_ab')->getData()));
-                $mhb->setGueltigAb($entry);//schauen
-
-                $table1 = $em->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-                $entry1 = $table1->findOneBy(array('Titel' => $form->get('gehoert_zu')->getData()));
-                $mhb->setGehoertZu($entry1);//schauen
-
                 $em->persist($mhb);
                 $em->flush();
 
@@ -258,11 +233,15 @@ class InsertmomoController extends Controller
 
 
     /**
-     * @Route("/creation/semesterplan")
+     * @Route("/creation/semesterp")
      */
+
     public function SemesterplanAction()
     {
         $semesterplan = new Semesterplan();
+        $dozent = new Dozent();
+        $formData['erstellt'] = $dozent;
+
         $form = $this->createForm(new SemesterplanType(), $semesterplan);
 
         $request = $this->get('request');
@@ -277,19 +256,11 @@ class InsertmomoController extends Controller
                 $semesterplan->setAnzahlUebungsgruppen($form->get('anzahl_uebungsgruppen')->getData());
                 $semesterplan->setGroesseUebungsgruppen($form->get('groesse_uebungsgruppen')->getData());
 
+                $semesterplan->setSemester($form->get('semester')->getData());
+                $semesterplan->setLehrender($form->get('lehrender')->getData());
+                $semesterplan->setModule($form->get('module')->getData());
+
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Semester' );
-                $entry = $table->findOneBy(array('Semester' => $form->get('semester')->getData()));
-                $semesterplan->setSemester($entry);//schauen
-
-                $table1 = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
-                $entry1 = $table1->findOneBy(array('Email' => $form->get('lehrender')->getData()));
-                $semesterplan->setLehrender($entry1);//schauen
-
-                $table2 = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
-                $entry2 = $table2->findOneBy(array('Name' => $form->get('module')->getData()));
-                $semesterplan->setModule($entry2);//schauen
-
                 $em->persist($semesterplan);
                 $em->flush();
 
@@ -302,9 +273,9 @@ class InsertmomoController extends Controller
 
 
     /**
-     * @Route("/creation/studiengang")
+     * @Route("/creation/studieng")
      */
-    public function StudiengangSemesterplanAction()
+    public function StudiengangAction()
     {
         $studiengang = new Studiengang();
         $form = $this->createForm(new StudiengangType(), $studiengang);
@@ -322,11 +293,9 @@ class InsertmomoController extends Controller
                 $studiengang->setKuerzel($form->get('kuerzel')->getData());
                 $studiengang->setTitel($form->get('titel')->getData());
 
-                $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
-                $entry = $table->findOneBy(array('Email' => $form->get('sgl')->getData()));
-                $studiengang->setSgl($entry);//schauen
+                $studiengang->setSgl($form->get('sgl')->getData());
 
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($studiengang);
                 $em->flush();
 
@@ -339,7 +308,7 @@ class InsertmomoController extends Controller
 
 
     /**
-     * @Route("/creation/studienplan")
+     * @Route("/creation/studienp")
      */
     public function StudienplanAction()
     {
@@ -353,21 +322,13 @@ class InsertmomoController extends Controller
         {
             if($form->isValid())
             {
-                $studienplan->setRegSem($form->get('regalsemester')->getData());
+                $studienplan->setRegSem($form->get('reg_sem')->getData());
+
+                $studienplan->setStartSem($form->get('start_sem_')->getData());
+                $studienplan->setModul($form->get('modul')->getData());
+                $studienplan->setStudiengang($form->get('studiengang')->getData());
 
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Semester' );
-                $entry = $table->findOneBy(array('Semester' => $form->get('start_sem')->getData()));
-                $studienplan->setStartSem($entry);//schauen
-
-                $table1 = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
-                $entry1 = $table1->findOneBy(array('Name' => $form->get('modul')->getData()));
-                $studienplan->setModul($entry1);//schauen
-
-                $table2 = $em->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-                $entry2 = $table2->findOneBy(array('Titel' => $form->get('studiengang')->getData()));
-                $studienplan->setStudiengang($entry2);//schauen
-
                 $em->persist( $studienplan);
                 $em->flush();
 
@@ -380,7 +341,7 @@ class InsertmomoController extends Controller
 
 
     /**
-     * @Route("/creation/vertiefung")
+     * @Route("/creation/vertief")
      */
     public function VertiefungAction()
     {
@@ -396,12 +357,9 @@ class InsertmomoController extends Controller
             {
                 $vertiefung->setVertiefungsrichtung($form->get('vertiefungsrichtung')->getData());
 
+                $vertiefung->setStgang($form->get('stgang')->getData());
+
                 $em = $this->getDoctrine()->getManager();
-
-                $table1 = $em->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-                $entry1 = $table1->findOneBy(array('Titel' => $form->get('stgang')->getData()));
-                $vertiefung->setStgang($entry1);//schauen
-
                 $em->persist( $vertiefung);
                 $em->flush();
 

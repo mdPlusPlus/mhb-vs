@@ -14,15 +14,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserDependentRole implements RoleInterface
 {
     private $user;
-
+    /*
     public function __toString()
     {
         //TODO noch ändern?
-        $string = $this->getRole();
+        //$string = $this->getRole();
+        $string = $this->getRoles();
 
         return $string;
     }
-
+ */
     public function __construct(Dozent $user)
     {
         $this->user = $user;

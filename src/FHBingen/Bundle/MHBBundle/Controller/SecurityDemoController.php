@@ -31,7 +31,7 @@ class SecurityDemoController extends Controller
 
     /**
      * @Route("/sec/login")
-     * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
+     * @Template("FHBingenMHBBundle:SGL:main.html.twig")
      */
     public function loginAction(Request $request)
     {
@@ -91,11 +91,11 @@ class SecurityDemoController extends Controller
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $roleArr = $user->getRoles();
-        $response = 'X';
+
+        $response = '';
         foreach ($roleArr as $role) {
-            $response = $response . ' - ' . (string) $role;
+            $response = $response . (string) $role . '<br />';
         }
-        $response = $response . 'X';
 
         return new Response($response);
     }

@@ -14,6 +14,7 @@ use FHBingen\Bundle\MHBBundle\Entity\Fachgebiet;
 use FHBingen\Bundle\MHBBundle\Entity\Kernfach;
 use FHBingen\Bundle\MHBBundle\Entity\Lehrende;
 use FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch;
+use FHBingen\Bundle\MHBBundle\Entity\Role;
 use FHBingen\Bundle\MHBBundle\Entity\Semester;
 use FHBingen\Bundle\MHBBundle\Entity\Semesterplan;
 use FHBingen\Bundle\MHBBundle\Entity\Studiengang;
@@ -81,21 +82,10 @@ class InsertFormController extends Controller
                 $angebot->setAbweichenderTitelEN($form->get('abweichender_Titel_EN')->getData());
 
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
-                $entry = $table->findOneBy(array('Name' => $form->get('module')->getData()));
-                $angebot->setModule($entry);
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-                $entry = $table->findOneBy(array('Titel' => $form->get('studiengang')->getData()));
-                $angebot->setStudiengang($entry);
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Fachgebiet' );
-                $entry = $table->findOneBy(array('Titel' => $form->get('fachgebiet')->getData()));
-                $angebot->setFachgebiet($entry);
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Modulhandbuch' );
-                $entry = $table->findOneBy(array('MHB_Versionsnummer' => $form->get('mhb')->getData()));
-                $angebot->setMhb($entry);
+                $angebot->setStudiengang($form->get('studiengang')->getData());
+                $angebot->setFachgebiet($form->get('fachgebiet')->getData());
+                $angebot->setMhb($form->get('mhb')->getData());
+                $angebot->setModule($form->get('module')->getData());
 
                 $validator = $this->get('validator');
                 $errors = $validator->validate($angebot);
@@ -130,15 +120,15 @@ class InsertFormController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
-                $dozent->setAnrede ($form->get('anrede')->getData());
-                $dozent->setTitel ($form->get('titel')->getData());
-                $dozent->setName ($form->get('name')->getData());
-                $dozent->setNachname ($form->get('nachname')->getData());
-                $dozent->setEmail ($form->get('email')->getData());
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $dozent->setAnrede($form->get('anrede')->getData());
+                $dozent->setTitel($form->get('titel')->getData());
+                $dozent->setName($form->get('name')->getData());
+                $dozent->setNachname($form->get('nachname')->getData());
+                $dozent->setEmail($form->get('email')->getData());
+                $dozent->setPassword('password');
+                $dozent->setRole($form->get('roles')->getData());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($dozent);
@@ -146,9 +136,11 @@ class InsertFormController extends Controller
 
                 return new Response('Dozent wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:form.html.twig', array('form'=>$form->createView()));
+
+            return $this->render('@FHBingenMHB/InsertForm/dozent.html.twig', array('form'=>$form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:form.html.twig', array('form'=>$form->createView()));
+
+        return $this->render('@FHBingenMHB/InsertForm/dozent.html.twig', array('form'=>$form->createView()));
     }
 
     /**
@@ -168,14 +160,10 @@ class InsertFormController extends Controller
             if($form->isValid())
             {
                 $fachgebiet->setTitel($form->get('titel')->getData());
+                $fachgebiet->setHat($form->get('hat')->getData());
+
 
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-                $entry = $table->findOneBy(array('Titel' => $form->get('hat')->getData()));
-                $fachgebiet->setHat($entry);
-
-
-                $em->validate($fachgebiet);
                 $em->persist($fachgebiet);
                 $em->flush();
 
@@ -202,15 +190,11 @@ class InsertFormController extends Controller
         {
             if($form->isValid())
             {
+
+                $kernfach->setModul($form->get('modul')->getData());
+                $kernfach->setVertiefung($form->get('vertiefung')->getData());
                 $em = $this->getDoctrine()->getManager();
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
-                $entry = $table->findOneBy(array('Name' => $form->get('modul')->getData()));
-                $kernfach->setModul($entry);
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Vertiefung' );
-                $entry = $table->findOneBy(array('Vertiefungsrichtung' => $form->get('vertiefung')->getData()));
-                $kernfach->setVertiefung($entry);
+                $kernfach->setVertiefung($kernfach);
 
 
                 $em->persist($kernfach);
@@ -239,17 +223,10 @@ class InsertFormController extends Controller
         {
             if($form->isValid())
             {
+                $lehrende->setLehrender($form->get('lehrender')->getData());
+                $lehrende->setModule($form->get('module')->getData());
+
                 $em = $this->getDoctrine()->getManager();
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
-                $entry = $table->findOneBy(array('Name' => $form->get('module')->getData()));
-                $lehrende->setModule($entry);
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
-                $entry = $table->findOneBy(array('Email' => $form->get('lehrender')->getData()));
-                $lehrende->setLehrender($entry);
-
-
                 $em->persist($lehrende);
                 $em->flush();
 
@@ -280,22 +257,14 @@ class InsertFormController extends Controller
                 $mhb->setBeschreibung($form->get('beschreibung')->getData());
                 $mhb->setErstellungsdatum(new \DateTime());
                 $mhb->setMHBVersionsnummer(1);
+                $mhb->setGehoertZu($form->get('gehoert_zu')->getData());
+                $mhb->setGueltigAb($form->get('gueltig_ab')->getData());
 
                 $em = $this->getDoctrine()->getManager();
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Semester' );
-                $entry = $table->findOneBy(array('Semester' => $form->get('semester')->getData()));
-                $mhb->setSemester($entry->getSemester());
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-                $entry = $table->findOneBy(array('gehoert_zu' => $form->get('studiengang')->getData()));
-                $mhb->setGehoertZu($entry->getStudiengangID());
-
-
                 $em->persist($mhb);
                 $em->flush();
 
-                return new Response('Dozent wurde erfolgreich erstellt');
+                return new Response('MHB wurde erfolgreich erstellt');
             }
             return $this->render('FHBingenMHBBundle:InsertForm:modulhandbuch.html.twig', array('form'=>$form->createView()));
         }
@@ -350,24 +319,15 @@ class InsertFormController extends Controller
                 $semesterplan->setSwsVorlesung($form->get('sws_vorlesung')->getData());
                 $semesterplan->setSwsUebung($form->get('sws_uebung')->getData());
 
+                $semesterplan->setSemester($form->get('semester')->getData());
+                $semesterplan->setLehrender($form->get('lehrender')->getData());
+                $semesterplan->setModule($form->get('module')->getData());
+
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
-                $entry = $table->findOneBy(array('Email' => $form->get('leherender')->getData()));
-                $semesterplan->setLehrender($entry->getDozentenID());
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Semester' );
-                $entry = $table->findOneBy(array('Semester' => $form->get('semester')->getData()));
-                $semesterplan->setSemester($entry->getSemester());
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
-                $entry = $table->findOneBy(array('Titel' => $form->get('module')->getData()));
-                $semesterplan->setModule($entry->getModulID());
-
-
                 $em->persist($semesterplan);
                 $em->flush();
 
-                return new Response('Dozent wurde erfolgreich erstellt');
+                return new Response('Semesterplan wurde erfolgreich erstellt');
             }
             return $this->render('FHBingenMHBBundle:InsertForm:semesterplan.html.twig', array('form'=>$form->createView()));
         }
@@ -395,13 +355,9 @@ class InsertFormController extends Controller
                 $studiengang->setKuerzel($form->get('kuerzel')->getData());
                 $studiengang->setBeschreibung($form->get('beschreibung')->getData());
 
+                $studiengang->setSgl($form->get('sgl')->getData());
 
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
-                $entry = $table->findOneBy(array('Email' => $form->get('sgl')->getData()));
-                $studiengang->setSgl($entry->getDozentenID());
-
-
                 $em->persist($studiengang);
                 $em->flush();
 
@@ -429,20 +385,11 @@ class InsertFormController extends Controller
             {
                 $studienplan->setRegSem($form->get('reg_sem')->getData());
 
+                $studienplan->setStartSem($form->get('start_sem_')->getData());
+                $studienplan->setModul($form->get('modul')->getData());
+                $studienplan->setStudiengang($form->get('studiengang')->getData());
+
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Semester' );
-                $entry = $table->findOneBy(array('startsem' => $form->get('start_sem_')->getData()));
-                $studienplan->setStartSem($entry->getSemester());
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
-                $entry = $table->findOneBy(array('modul' => $form->get('modul')->getData()));
-                $studienplan->setModule($entry->getModulID());
-
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-                $entry = $table->findOneBy(array('studiengang' => $form->get('studiengang')->getData()));
-                $studienplan->setStudiengang($entry->getStudiengangID());
-
-
                 $em->persist($studienplan);
                 $em->flush();
 
@@ -458,8 +405,9 @@ class InsertFormController extends Controller
      */
     public function VeranstaltungAction()
     {
-        $veranstaltung = new Veranstaltung();
-        $form = $this->createForm(new VeranstaltungType(), $veranstaltung);
+        $veranstaltung =new Veranstaltung();
+
+        $form = $this->createForm(new VeranstaltungType(),$veranstaltung);
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -469,7 +417,6 @@ class InsertFormController extends Controller
             if($form->isValid())
             {
                 $veranstaltung->setErstellungsdatum(new \DateTime());
-                $veranstaltung->setErstelltVon($form->get('erstellt_von')->getData());
                 $veranstaltung->setVersionsnummerModul(1);
                 $veranstaltung->setStatus($form->get('Status')->getData());
                 $veranstaltung->setKuerzel($form->get('Kuerzel')->getData());
@@ -490,21 +437,19 @@ class InsertFormController extends Controller
                 $veranstaltung->setLeistungspunkte($form->get('Leistungspunkte')->getData());
                 $veranstaltung->setVoraussetzungLP($form->get('Voraussetzung_LP')->getData());
                 $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
+                $veranstaltung->setBeauftragter($form->get('beauftragter')->getData());
 
                 $em = $this->getDoctrine()->getManager();
-                $table = $em->getRepository ( 'FHBingenMHBBundle:Dozent' );
-                $entry = $table->findOneBy(array('Email' => $form->get('beauftragter')->getData()));
-                $veranstaltung->setBeauftragter($entry->getDozentenID());
-
                 $em->persist($veranstaltung);
                 $em->flush();
 
-                return new Response('Modul wurde erfolgreich erstellt');
+                return new Response('Modul erfolgreich erstellt ');
             }
             return $this->render('FHBingenMHBBundle:InsertForm:veranstaltung.html.twig', array('form'=>$form->createView()));
         }
         return $this->render('FHBingenMHBBundle:InsertForm:veranstaltung.html.twig', array('form'=>$form->createView()));
     }
+
 
 
     /**
@@ -523,7 +468,7 @@ class InsertFormController extends Controller
         {
             if($form->isValid())
             {
-                $vertiefung->setStgang($form->get('studiengang')->getData());
+                $vertiefung->setStgang($form->get('stgang')->getData());
                 $vertiefung->setVertiefungsrichtung($form->get('vertiefungsrichtung')->getData());
 
                 $em = $this->getDoctrine()->getManager();
