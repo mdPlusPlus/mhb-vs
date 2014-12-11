@@ -13,12 +13,12 @@ _configurator:
 _main:
     resource: routing.yml
 
-# AcmeDemoBundle routes (to be removed)
-_acme_demo:
-    resource: "@AcmeDemoBundle/Resources/config/routing.yml"
-    prefix:   /
-
-# src/Acme/DemoBundle/Resources/config/routing.yml (to be removed)
-random:
-    path:     /random/{limit}
-    defaults: { _controller: AcmeDemoBundle:Random:index }
+## AcmeDemoBundle routes (to be removed)
+#_acme_demo:
+#    resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+#    prefix:   /
+#
+## src/Acme/DemoBundle/Resources/config/routing.yml (to be removed)
+#random:
+#    path:     /random/{limit}
+#    defaults: { _controller: AcmeDemoBundle:Random:index }
