@@ -132,8 +132,9 @@ class SecurityController extends Controller
         $user->setName($vorname);
         $user->setNachname($nachname);
         $user->setEmail($email);
-        $user->setUsername($username);
-        $user->setPassword(password_hash($password, PASSWORD_BCRYPT, array('cost' => 12)));
+        //$user->setUsername($username);
+        //$user->setPassword(password_hash($password, PASSWORD_BCRYPT, array('cost' => 12)));
+        $user->setPassword($password);
 
         $validator = $this->get('validator');
         $errors = $validator->validate($user);
