@@ -11,7 +11,7 @@ built on Symfony 2.5.*
 
 TODO
 ====
-- <script> aus Tempaltes entfernen (google analytics, jquery?, alles unbekannte/nicht benötigte)
+- <script> aus Templates entfernen (google analytics, jquery?, alles unbekannte/nicht benötigte)
 - .gitignore muss vermutlich noch angepasst werden wegen /web/bundles/
 (unter windows lokale kopie, soll auf server nur symlink sein, eventuell auf server löschen und update assets machen)
 (außerdem vllt parameters.yml drauf setzen)
