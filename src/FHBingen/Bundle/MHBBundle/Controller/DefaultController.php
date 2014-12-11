@@ -14,8 +14,18 @@ class DefaultController extends Controller
     * @Route("/test123/{name}")
     * @Template("FHBingenMHBBundle:SGL:main.html.twig")
     */
-    public function indexAction($name)
+    public function testAction($name)
     {
         return array('name' => $name,'pageTitle' => 'STARTSEITE');
     }
+
+    /**
+     * @Route("/")
+     * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
+     */
+    public function indexAction()
+    {
+        return array('pageTitle' => 'Modulhandbuch-Verwaltungssystem', 'headline' => 'Login');
+    }
+
 }

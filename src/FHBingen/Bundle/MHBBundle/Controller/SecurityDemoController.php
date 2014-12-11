@@ -31,7 +31,7 @@ class SecurityDemoController extends Controller
 
     /**
      * @Route("/sec/login")
-     * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
+     * @Template("FHBingenMHBBundle:SGL:main.html.twig")
      */
     public function loginAction(Request $request)
     {
