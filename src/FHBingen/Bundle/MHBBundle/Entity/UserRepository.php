@@ -26,8 +26,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     {
         $q = $this
             ->createQueryBuilder('u')
-            ->where('u.username = :username OR u.Email = :email')
-            ->setParameter('username', $username)
+            //->where('u.username = :username OR u.Email = :email')
+            ->where('u.Email = :email')
+            //->setParameter('username', $username)
             ->setParameter('email', $username)
             ->getQuery();
 
@@ -58,8 +59,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             );
         }
 
-        return $this->find($user->getId());
+
         //getID() in Dozent.php behalten
+        //return $this->find($user->getId());
+        return $this->find($user->getDozentenID());
     }
 
     public function supportsClass($class)

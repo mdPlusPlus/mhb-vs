@@ -433,11 +433,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     ///////////////////////////////////
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true, nullable=false)
-     */
-    private $username;
-
-    /**
      * @ORM\Column(type="string", length=64, nullable=false)
      */
     private $password;
@@ -468,7 +463,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getUsername()
     {
-        return $this->username;
+        //return $this->username;
+        return $this->Email;
     }
 
     /**
@@ -516,7 +512,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     {
         return serialize(array(
             $this->Dozenten_ID,
-            $this->username,
+            //$this->username,
+            $this->Email,
             $this->password,
             // see section on salt below
             // $this->salt,
@@ -530,7 +527,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     {
         list (
             $this->Dozenten_ID,
-            $this->username,
+            //$this->username,
+            $this->Email,
             $this->password,
             // see section on salt below
             // $this->salt
@@ -545,7 +543,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setUsername($username)
     {
-        $this->username = $username;
+        //$this->username = $username;
+        $this->Email = $username;
 
         return $this;
     }
@@ -558,7 +557,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        //$this->password = $password;
+        $this->password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
         return $this;
     }
