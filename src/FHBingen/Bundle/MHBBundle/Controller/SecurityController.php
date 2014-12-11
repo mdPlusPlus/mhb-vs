@@ -70,7 +70,8 @@ class SecurityController extends Controller
         return new Response('<p>'. $roleDozent->getName() .'<br />'. $roleDozent->getRole() .'</p><p>'. $roleSgl->getName() .'<br />'. $roleSgl->getRole() .'</p>');
     }
 
-    private function getRoleDozent(){
+    private function getRoleDozent()
+    {
         $em = $this->getDoctrine()->getManager();
         $roleArr = $em->getRepository('FHBingenMHBBundle:Role');
         $roleDozent = $roleArr->findOneBy(array('role' => 'ROLE_DOZENT'));
@@ -78,7 +79,8 @@ class SecurityController extends Controller
         return $roleDozent;
     }
 
-    private function getRoleSgl(){
+    private function getRoleSgl()
+    {
         $em = $this->getDoctrine()->getManager();
         $roleArr = $em->getRepository('FHBingenMHBBundle:Role');
         $roleSgl = $roleArr->findOneBy(array('role' => 'ROLE_SGL'));
@@ -106,13 +108,15 @@ class SecurityController extends Controller
         return new Response($responseStr);
     }
 
-    public function createDozent($anrede, $titel, $vorname, $nachname, $email, $password){
+    public function createDozent($anrede, $titel, $vorname, $nachname, $email, $password)
+    {
         $roleDozent = $this->getRoleDozent();
 
         return $this->createUser($roleDozent, $anrede, $titel, $vorname, $nachname, $email, $password);
     }
 
-    public function createSgl($anrede, $titel, $vorname, $nachname, $email, $password){
+    public function createSgl($anrede, $titel, $vorname, $nachname, $email, $password)
+    {
         $roleSgl = $this->getRoleSgl();
 
         return $this->createUser($roleSgl, $anrede, $titel, $vorname, $nachname, $email, $password);
