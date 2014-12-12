@@ -31,7 +31,7 @@ class SecurityDemoController extends Controller
 
     /**
      * @Route("/sec/login")
-     * @Template("FHBingenMHBBundle:Dozent:eigeneModule.html.twig")
+     * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
      */
     public function loginAction(Request $request)
     {
@@ -52,15 +52,12 @@ class SecurityDemoController extends Controller
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
 
-        //TODO
-        /*
+
         return array(
             // last username entered by the user
             'last_username' => $lastUsername,
-            'error'         => $error
+            'error'         => $error,
         );
-        */
-        return $this->redirect('/Dozent');
     }
 
     /**
