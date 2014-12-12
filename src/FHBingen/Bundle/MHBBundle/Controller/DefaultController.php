@@ -49,7 +49,7 @@ class DefaultController extends Controller
         $modullehrend =array();
         foreach($entries as $modul)
         {
-            $modullehrend=$em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('module'=> $modul->getModule()));
+            $modullehrend[]=$em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=> $modul->getModule()));
         }
         return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend,'pageTitle' => 'STARTSEITE');
 
