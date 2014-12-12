@@ -20,7 +20,7 @@ use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Role;
 
 
-class SecurityController extends Controller
+class TestUsersController extends Controller
 {
     /**
      * @Route("/create/roles")
