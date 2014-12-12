@@ -1,23 +1,45 @@
-{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+{% extends 'FHBingenMHBBundle:Dozent:Dozent_main.html.twig' %}
 {% block content %}
+
 <div class="table-responsive">
+    <h3>Module als Modulverantwortlicher</h3>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>#</th>
-            <th>Tabellen-Überschrift</th>
-            <th>Tabellen-Überschrift</th>
-            <th>Tabellen-Überschrift</th>
-            <th>Tabellen-Überschrift</th>
-            <th>Tabellen-Überschrift</th>
-            <th>Tabellen-Überschrift</th>
+            <th>Modultitel</th>
+            <th>Kürzel</th>
+            <th>Erstelldatum</th>
+            <th>Häufigkeit</th>
+            <th>Lehrende</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for veranstaltung in modulverantwortung %}
+        <tr>
+            <td>{{veranstaltung.name}}</td>
+            <td>{{ }}</td>
+            <td>Tabellen-Zelle</td>
+            <td>Tabellen-Zelle</td>
+            <td>Tabellen-Zelle</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Module als Lehrender</h3>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Modultitel</th>
+            <th>Kürzel</th>
+            <th>Erstelldatum</th>
+            <th>Häufigkeit</th>
+            <th>Modulverantwortlicher</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td>1</td>
-            <td>Tabellen-Zelle</td>
-            <td>Tabellen-Zelle</td>
             <td>Tabellen-Zelle</td>
             <td>Tabellen-Zelle</td>
             <td>Tabellen-Zelle</td>
@@ -29,13 +51,9 @@
             <td>Tabellen-Zelle</td>
             <td>Tabellen-Zelle</td>
             <td>Tabellen-Zelle</td>
-            <td>Tabellen-Zelle</td>
-            <td>Tabellen-Zelle</td>
         </tr>
         <tr>
             <td>3</td>
-            <td>Tabellen-Zelle</td>
-            <td>Tabellen-Zelle</td>
             <td>Tabellen-Zelle</td>
             <td>Tabellen-Zelle</td>
             <td>Tabellen-Zelle</td>
