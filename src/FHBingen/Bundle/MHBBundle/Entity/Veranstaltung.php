@@ -71,7 +71,7 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=60, nullable=false)
     * @Assert\Length(
-     * min= 8,
+     * min= 5,
      * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen. Blubb"
      * )
      */
@@ -80,7 +80,7 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=60, nullable=true)
      * @Assert\Length(
-     * min= 8,
+     * min= 5,
      * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
