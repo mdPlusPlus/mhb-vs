@@ -73,6 +73,7 @@ class DefaultController extends Controller
         //Filter auf Modul
         //Filter auf Versionsnummer
         //Abfangen falls keine Module vorhanden sind
+        //Email rausnehmen
 
 //        $user = $this->get('security.context')->getToken()->getUser();
 //        $user_mail = $user->getUsername(); $user_mail
