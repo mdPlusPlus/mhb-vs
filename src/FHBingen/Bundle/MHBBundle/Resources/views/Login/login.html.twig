@@ -1,21 +1,30 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block content %}
-    <div class="container">
+    {% if error %}
+        <div>{{ error.message }}</div>
+    {% endif %}
+    <div class="container" style="width: 300px">
+        <form class="form-signin" role="form" action="{{ path('login_check') }}" method="post">
+            <label for="inputEmail" class="sr-only">Email-Adresse:</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email-Addresse" name="_username"
+                   value="{{ last_username }}" required autofocus/>
 
-        <form class="form-signin" role="form" action="{{ '/sec/restricted/login_check' }}">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <label for="inputPssword" class="sr-only">Passwort</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Passwort" name="_password"
+                   required/>
+
+            {#
             <div class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </form>
+            #}
 
-    </div> <!-- /container -->
+            {#<input type="hidden" name="_target_path" value="account" />#}
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </form>
+    </div>
 {% endblock %}

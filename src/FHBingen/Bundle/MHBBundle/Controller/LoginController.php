@@ -20,7 +20,7 @@ class LoginController extends Controller{
 
     /**
      * @Route("/login")
-     * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
+     * @Template("FHBingenMHBBundle:Login:login.html.twig")
      */
     public function loginAction(Request $request)
     {
