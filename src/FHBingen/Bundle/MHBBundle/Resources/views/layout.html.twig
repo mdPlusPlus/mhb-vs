@@ -19,57 +19,148 @@
     <![endif]-->
 
 </head>
-<body>
-    <div id="container">
+<style type="text/css">
+    body {
+        padding-top: 50px;
+        overflow: hidden;
+    }
 
-        <div id="header">
+    #wrapper {
+        min-height: 100%;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0;
+        display: inline-block;
+    }
 
-            <div id="header_logo">
-                <img id="img_logo" src="{{ asset('bundles/fhbingenmhb/images/logo.png') }}" alt="logo" />
-            </div>
+    #main-wrapper {
+        height: 100%;
+        overflow-y: auto;
+        padding: 50px 0 0px 0;
+    }
 
-            <div id="header_title">
-                <h1>Modulhandbuchverwaltung</h1>
-            </div>
+    #main {
+        position: relative;
+        height: 100%;
+        overflow-y: auto;
+        padding: 0 15px;
+    }
 
-            {% block user %}
-            <div id="header_user">
-                Logout+Name
-            </div>
-            {% endblock %}
+    #sidebar-wrapper {
+        height: 100%;
+        padding: 75px 0 0px 0;
+        position: fixed;
+        border-right: 1px solid gray;
+    }
 
-        </div>
+    #sidebar {
+        position: relative;
+        height: 100%;
+        overflow-y: auto;
+    }
 
-        <div id="main">
+    #sidebar .list-group-item {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-top: 0;
+    }
 
-            <div id="sidebar">
-                {% block navi %}
-                <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation" class="active"><a href="#">Navigation</a></li>
-                    <li role="presentation"><a href="#">Modulverwaltung</a></li>
-                    <li role="presentation"><a href="#">Modulplanung</a></li>
-                    <li role="presentation"><a href="#">Hilfen</a></li>
-                </ul>
-                {% endblock %}
-            </div>
+    @media (max-width: 992px) {
+        body {
+            padding-top: 0px;
+        }
+    }
 
-            <div id="functionContent">
-                {% block content %}
-                Functionoutput;
-                {% endblock %}
-            </div>
+    @media (min-width: 992px) {
+        #main-wrapper {
+            float: right;
+        }
+    }
 
-        </div>
+    @media (max-width: 992px) {
+        #main-wrapper {
+            padding-top: 0px;
+        }
+    }
 
-        <div id="footer">
-            this is the footer
-        </div>
+    @media (max-width: 992px) {
+        #sidebar-wrapper {
+            position: static;
+            height: auto;
+            max-height: 300px;
+            border-right: 0;
+        }
+    }
+</style>
+</head>
 
+<!-- HTML code from Bootply.com editor -->
+
+<body style="margin-top:75px">
+
+<div id="header" class="navbar navbar-default navbar-fixed-top" style="min-height:75px">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('bundles/fhbingenmhb/images/logo.png') }}" alt="logo" />
+            <span>Modulhandbuchverwaltung</span>
+        </a>
     </div>
+    <nav class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li class="dropdown">
+                <a href="#" id="nbAcctDD" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Username<i
+                            class="icon-sort-down"></i></a>
+                <ul class="dropdown-menu pull-right">
+                    <li><a href="#">Log Out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div id="wrapper">
+    <div id="sidebar-wrapper" class="col-md-2">
+        <nav id="sidebar">
+            <ul class="nav list-group nav-pills nav-stacked">
+                {% include 'FHBingenMHBBundle:Navigation:rendernavi.html.twig' %}
+
+            </ul>
+        </nav>
+    </div>
+    <div id="main-wrapper" class="col-md-10 pull-right">
+        <div id="main">
+            <div class="page-header">
+                <h3>{{ pageTitle|default }}</h3>
+            </div>
+            {% block content %}
+                Functionoutput;
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+<script type='text/javascript' src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+<!-- JavaScript jQuery code from Bootply.com editor  -->
+
+<script type='text/javascript'>
+
+    $(document).ready(function () {
+
+
+    });
+
+</script>
+
 </body>
 </html>
