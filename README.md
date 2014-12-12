@@ -16,7 +16,6 @@ TODO
 (unter windows lokale kopie, soll auf server nur symlink sein, eventuell auf server löschen und update assets machen)
 (außerdem vllt parameters.yml drauf setzen)
 - MySQL-Konfiguration auf Produktiv-VM anpassen (bzw Anleitung schreiben für Deployment) (gar nicht notwendig!)
-- .htacces relativieren? (.htaccess entfernen!)
 - [mysqld]
   collation-server = utf8_general_ci
   character-set-server = utf8
