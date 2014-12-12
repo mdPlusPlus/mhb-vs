@@ -2,35 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: mdPlusPlus
- * Date: 08.12.2014
- * Time: 12:43
+ * Date: 12.12.2014
+ * Time: 20:10
  */
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 
-class SecurityDemoController extends Controller
-{
-    /**
-     * @Route("/sec/")
-     * @Template("FHBingenMHBBundle:Login:login.html.twig")
-     */
-    public function indexAction()
-    {
-        return array('error' => '', 'last_username' => '');
-    }
+class LoginController extends Controller{
 
     /**
-     * @Route("/sec/login")
+     * @Route("/login")
      * @Template("FHBingenMHBBundle:Login:login.html.twig")
      */
     public function loginAction(Request $request)
@@ -56,15 +45,13 @@ class SecurityDemoController extends Controller
         return array(
             // last username entered by the user
             'last_username' => $lastUsername,
-            'error'         => $error,
+            'error' => $error,
         );
 
-
-        //return $this->redirect($this->generateURL('wurst'));
     }
 
     /**
-     * @Route("/sec/restricted/login_check")
+     * @Route("/restricted/login/check", name="login_check")
      */
     public function securityCheckAction()
     {
@@ -72,35 +59,11 @@ class SecurityDemoController extends Controller
     }
 
     /**
-     * @Route("/sec/restricted/logout")
+     * @Route("/restricted/logout")
      */
     public function logoutAction()
     {
         // The security layer will intercept this request
     }
 
-    /**
-     * @Route("/sec/restricted/res")
-     * @Security("is_granted('ROLE_ROLLO@TEST.COM')")
-     */
-    public function restrictedAction()
-    {
-        return new Response("Congratulations, you accessed the restricted area!");
-    }
-
-    /**
-     * @Route("/sec/restricted/printRoles")
-     */
-    public function printRolesAction()
-    {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $roleArr = $user->getRoles();
-
-        $response = '';
-        foreach ($roleArr as $role) {
-            $response = $response . (string) $role . '<br />';
-        }
-
-        return new Response($response);
-    }
-} 
+}

@@ -16,34 +16,19 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-#        demo_login:
-#            pattern:  ^/demo/secured/login$
-#            security: false
-#
-#        demo_secured_area:
-#            pattern:    ^/demo/secured/
-#            form_login:
-#                check_path: _demo_security_check
-#                login_path: _demo_login
-#            logout:
-#                path:   _demo_logout
-#                target: _demo
+        login:
+            pattern:  ^/restricted/login$
+            security: false
 
-        login_firewall:
-            pattern:   ^/sec/login$
-            anonymous: ~
-        #form_firewall:
-            #pattern:   ^/creation/
-            #anonymous: ~
         secured_area:
-            #pattern:    ^/
-            pattern: ^/sec/restricted/
+            pattern:    ^/restricted/
             form_login:
-                login_path: /sec/login
-                check_path: /sec/restricted/login_check
+                login_path: /login
+                check_path: /restricted/login/check
+                default_target_path: /login #TODO ändern, vllt auf doku
             logout:
-                path:   /sec/restricted/logout
-                target: /sec/
+                path:   /restricted/logout
+                target: /login
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
