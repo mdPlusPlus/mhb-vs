@@ -8,8 +8,6 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
-use Doctrine\ORM\EntityNotFoundException;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,10 +18,10 @@ use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Role;
 
 
-class SecurityController extends Controller
+class TestUsersController extends Controller
 {
     /**
-     * @Route("/security/create/roles")
+     * @Route("/create/roles")
      */
     public function createRolesAction()
     {
@@ -59,7 +57,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/security/test/roles");
+     * @Route("/test/roles");
      *
      * only for testing
      */
@@ -90,15 +88,15 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/security/create/testUsers")
+     * @Route("/create/testUsers")
      */
     public function createTestUsersAction()
     {
         $respArr = array(
-            $this->createDozent('Herr', 'Prof.', 'Max', 'Mustermann', 'm.mustermann@fh-bingen.de', 'testpass'),
-            $this->createSgl('Herr', 'Prof. Dr.', 'Peter', 'Lustig', 'p.lustig@fh-bingen.de', 'testpass'),
-            $this->createDozent('Frau', 'Prof. Dr.', 'Alpha', 'Beta', 'a.beta@fh-bingen.de', 'testpass'),
-            $this->createSgl('Herr', '', 'Rollo', 'Rollo', 'rollo@test.com', 'testpass'),
+            //$this->createDozent('Herr', 'Prof.', 'Max', 'Mustermann', 'm.mustermann@fh-bingen.de', 'testpass'),
+            //$this->createSgl('Herr', 'Prof. Dr.', 'Peter', 'Lustig', 'p.lustig@fh-bingen.de', 'testpass'),
+            //$this->createDozent('Frau', 'Prof. Dr.', 'Alpha', 'Beta', 'a.beta@fh-bingen.de', 'testpass'),
+            $this->createDozent('Herr', '', 'Rollo', 'Rollo', 'rollo@test.com', 'testpass'),
         );
 
         $responseStr = '';
@@ -132,8 +130,6 @@ class SecurityController extends Controller
         $user->setName($vorname);
         $user->setNachname($nachname);
         $user->setEmail($email);
-        //$user->setUsername($username);
-        //$user->setPassword(password_hash($password, PASSWORD_BCRYPT, array('cost' => 12)));
         $user->setPassword($password);
 
         $validator = $this->get('validator');

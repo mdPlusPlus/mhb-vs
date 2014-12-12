@@ -12,8 +12,8 @@ use FHBingen\Bundle\MHBBundle\Entity;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
-     * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
+     * @Route("/sec/restricted/index")
+     * @Template("FHBingenMHBBundle::layout_old.html.twig")
      */
     public function indexAction()
     {
@@ -22,7 +22,7 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/SGL")
+     * @Route("/sec/restricted/SGL")
      * @Template("FHBingenMHBBundle:SGL:eigeneModule.html.twig")
      */
     public function SglMainAction()
@@ -39,19 +39,21 @@ class DefaultController extends Controller
     {
         //Filter auf Status
         //Filter auf Modul
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_mail = $user->getUsername();
+        //Abfangen falls keine Module vorhanden sind
+//        $user = $this->get('security.context')->getToken()->getUser();
+//        $user_mail = $user->getUsername(); $user_mail
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy('Email', $user_mail);
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Email'=> 'schmidt@fh-bingen.de'));
 
-        $modulverantwortung= $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy('beauftragter', $dozent->getDozentenID());
-        $entries= $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy('dozent_id', $dozent->getDozentenID());
-        $modullehrend =array();
-        foreach($entries as $modul)
-        {
-            $modullehrend[]=$em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy('modul_id', $modul->getModule());
-        }
-        return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend,'pageTitle' => 'STARTSEITE');
+        $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID()));
+//        $entries= $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent_id', $dozent->getDozentenID()));
+//        $modullehrend =array();
+//        foreach($entries as $modul)
+//        {
+//            $modullehrend[]=$em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('modul_id', $modul->getModule())); $modullehrend
+//        }
+        return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => '','pageTitle' => 'STARTSEITE');
+
     }
 
 }
