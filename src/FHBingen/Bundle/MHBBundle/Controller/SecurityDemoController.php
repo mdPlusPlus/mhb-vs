@@ -60,7 +60,7 @@ class SecurityDemoController extends Controller
             'error'         => $error
         );
         */
-        return $this->redirect($this->generateUrl('\Dozent'));
+        return $this->redirect('/Dozent');
     }
 
     /**

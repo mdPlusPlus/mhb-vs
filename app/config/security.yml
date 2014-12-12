@@ -32,8 +32,8 @@ security:
             pattern:   ^/sec/login$
             anonymous: ~
         secured_area:
-            #pattern:    ^/
-            pattern: ^/sec/restricted/
+            pattern:    ^/
+            #pattern: ^/sec/restricted/
             form_login:
                 login_path: /sec/login
                 check_path: /sec/restricted/login_check
