@@ -49,7 +49,7 @@ class RestrictedController
 
         $response = '';
         foreach ($roleArr as $role) {
-            $response = $response . (string)$role . '<br />';
+            $response = $response . (string) $role . '<br />';
         }
 
         return new Response($response);

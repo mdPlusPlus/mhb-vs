@@ -61,7 +61,7 @@ class LoginController extends Controller{
     /**
      * @Route("/restricted/logout")
      */
-    function logoutAction()
+    public function logoutAction()
     {
         // The security layer will intercept this request
     }
