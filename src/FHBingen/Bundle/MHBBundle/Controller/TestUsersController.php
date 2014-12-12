@@ -8,8 +8,6 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
-use Doctrine\ORM\EntityNotFoundException;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -132,8 +130,6 @@ class TestUsersController extends Controller
         $user->setName($vorname);
         $user->setNachname($nachname);
         $user->setEmail($email);
-        //$user->setUsername($username);
-        //$user->setPassword(password_hash($password, PASSWORD_BCRYPT, array('cost' => 12)));
         $user->setPassword($password);
 
         $validator = $this->get('validator');

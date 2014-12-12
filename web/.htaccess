@@ -56,8 +56,3 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
-
-AuthName "Projekttest"
-AuthType Basic
-AuthUserFile /home/proj/symfony/web/.htpasswd
-require valid-user
