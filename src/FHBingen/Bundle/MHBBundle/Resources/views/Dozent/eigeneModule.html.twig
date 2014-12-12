@@ -1,4 +1,7 @@
 {% extends 'FHBingenMHBBundle:Dozent:Dozent_main.html.twig' %}
+
+{#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
+
 {% block content %}
 
 <div class="table-responsive">
@@ -14,15 +17,20 @@
         </tr>
         </thead>
         <tbody>
+        {% set count = 0 %}
         {% for veranstaltung in modulverantwortung %}
         <tr>
             <td>{{veranstaltung.name}}</td>
             <td>{{veranstaltung.kuerzel}}</td>
-            {#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
             <td>{{veranstaltung.erstellungsdatum|date('d.m.Y')}}</td>
             <td>{{veranstaltung.haeufigkeit}}</td>
-            <td> </td>
+            <td>
+                {% for name in mLehrende[count] %}
+                    {{ name }}</br>
+                {% endfor %}
+            </td>
         </tr>
+            {% set count = count +1 %}
         {% endfor %}
         </tbody>
     </table>
