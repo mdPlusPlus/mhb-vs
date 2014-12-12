@@ -12,7 +12,7 @@ class DefaultController extends Controller
 {
     /**
     * @Route("/test123/{name}")
-    * @Template("eigeneModule.html.twig")
+    * @Template("FHBingenMHBBundle:SGL:eigeneModule.html.twig")
     */
     public function testAction($name)
     {
