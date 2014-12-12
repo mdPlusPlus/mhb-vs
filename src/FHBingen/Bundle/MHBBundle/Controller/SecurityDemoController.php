@@ -53,11 +53,14 @@ class SecurityDemoController extends Controller
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
 
         //TODO
+        /*
         return array(
             // last username entered by the user
             'last_username' => $lastUsername,
             'error'         => $error
         );
+        */
+        return $this->redirect($this->generateUrl('\Dozent'));
     }
 
     /**
