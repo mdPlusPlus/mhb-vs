@@ -30,12 +30,14 @@ Deployment
 
 Voraussetzungen
 ----------------
+
 - PHP (>5.5 ?)
 - MySQL
 - (?) Composer
 
 MySQL
 -----
+
 - MySQL-Sever verfügbar machen
 in `/etc/mysql/my.cnf`
 `bind-address = 0.0.0.0`
