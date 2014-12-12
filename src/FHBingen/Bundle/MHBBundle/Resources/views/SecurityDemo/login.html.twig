@@ -1,18 +1,21 @@
-{# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
-{% if error %}
-    <div>{{ error.message }}</div>
-{% endif %}
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-<form action="{{ path('login_check') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+{% block content %}
+    {% if error %}
+        <div>{{ error.message }}</div>
+    {% endif %}
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
+    <form action="{{ path('login_check') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
-    {#<input type="hidden" name="_target_path" value="account" />#}
-    <input type="submit" name="login" />
-</form>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password"/>
+
+        {#<input type="hidden" name="_target_path" value="account" />#}
+        <input type="submit" name="login"/>
+    </form>
+{% endblock %}
 
 {#{% extends 'FHBingenMHBBundle::index.html.twig' %}#}
 
