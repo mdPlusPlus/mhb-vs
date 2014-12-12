@@ -44,15 +44,14 @@ class DefaultController extends Controller
 //        $user_mail = $user->getUsername(); $user_mail
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Email'=> 'schmidt@fh-bingen.de'));
-
         $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID()));
-//        $entries= $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent_id', $dozent->getDozentenID()));
-//        $modullehrend =array();
-//        foreach($entries as $modul)
-//        {
-//            $modullehrend[]=$em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('modul_id', $modul->getModule())); $modullehrend
-//        }
-        return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => '','pageTitle' => 'STARTSEITE');
+        $entries= $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('lehrender'=> $dozent->getDozentenID()));
+        $modullehrend =array();
+        foreach($entries as $modul)
+        {
+            $modullehrend=$em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('module'=> $modul->getModule()));
+        }
+        return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend,'pageTitle' => 'STARTSEITE');
 
     }
 
