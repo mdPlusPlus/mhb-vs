@@ -1,27 +1,43 @@
-{% extends 'FHBingenMHBBundle::index.html.twig' %}
+{# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
+{% if error %}
+    <div>{{ error.message }}</div>
+{% endif %}
 
-{% block content %}
+<form action="{{ path('login_check') }}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
-    {#{% if error %}#}
-        {#<div class="error">{{ error.message }}</div>#}
-    {#{% endif %}#}
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="_password" />
 
-    <div class="container" style="width:  300px">
-        <form class="form-signin" role="form" action="{{ '/sec/restricted/login_check' }}" method="post">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            {#<div class="checkbox">#}
-                {#<label>#}
-                    {#<input type="checkbox" value="remember-me"> Remember me#}
-                {#</label>#}
-            {#</div>#}
+    {#<input type="hidden" name="_target_path" value="account" />#}
+    <input type="submit" name="login" />
+</form>
 
-            {#<input type="hidden" name="/Dozent" value="account" />#}
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </form>
-    </div>
+{#{% extends 'FHBingenMHBBundle::index.html.twig' %}#}
 
-{% endblock %}
+{#{% block content %}#}
+
+    {#&#123;&#35;{% if error %}&#35;&#125;#}
+        {#&#123;&#35;<div class="error">{{ error.message }}</div>&#35;&#125;#}
+    {#&#123;&#35;{% endif %}&#35;&#125;#}
+
+    {#<div class="container" style="width:  300px">#}
+        {#<form class="form-signin" role="form" action="{{ '/sec/restricted/login_check' }}" method="post">#}
+            {#<h2 class="form-signin-heading">Please sign in</h2>#}
+            {#<label for="inputEmail" class="sr-only">Email address</label>#}
+            {#<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>#}
+            {#<label for="inputPassword" class="sr-only">Password</label>#}
+            {#<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>#}
+            {#&#123;&#35;<div class="checkbox">&#35;&#125;#}
+                {#&#123;&#35;<label>&#35;&#125;#}
+                    {#&#123;&#35;<input type="checkbox" value="remember-me"> Remember me&#35;&#125;#}
+                {#&#123;&#35;</label>&#35;&#125;#}
+            {#&#123;&#35;</div>&#35;&#125;#}
+
+            {#&#123;&#35;<input type="hidden" name="/Dozent" value="account" />&#35;&#125;#}
+            {#<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>#}
+        {#</form>#}
+    {#</div>#}
+
+{#{% endblock %}#}

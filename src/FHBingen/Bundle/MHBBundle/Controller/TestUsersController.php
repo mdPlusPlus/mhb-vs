@@ -23,7 +23,7 @@ use FHBingen\Bundle\MHBBundle\Entity\Role;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/security/create/roles")
+     * @Route("/create/roles")
      */
     public function createRolesAction()
     {
@@ -59,7 +59,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/security/test/roles");
+     * @Route("/test/roles");
      *
      * only for testing
      */
@@ -90,7 +90,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/security/create/testUsers")
+     * @Route("/create/testUsers")
      */
     public function createTestUsersAction()
     {
