@@ -25,10 +25,10 @@ security:
             form_login:
                 login_path: /login
                 check_path: /restricted/login/check
-                #default_target_path: default_security_target
+                default_target_path: /login #TODO ändern, vllt auf doku
             logout:
                 path:   /restricted/logout
-                target: /
+                target: /login
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
