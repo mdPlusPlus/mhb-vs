@@ -191,7 +191,7 @@ protected $Voraussetzung_inh;
     /**
      * Get Erstellungsdatum
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getErstellungsdatum()
     {

@@ -18,8 +18,9 @@
         <tr>
             <td>{{veranstaltung.name}}</td>
             <td>{{veranstaltung.kuerzel}}</td>
-            <td>{{veranstaltung.erstelldatum}}</td>
-            <td>{{veranstaltung.haufigkeit}}</td>
+            {#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
+            <td>{{veranstaltung.erstellungsdatum|date('d.m.Y')}}</td>
+            <td>{{veranstaltung.haeufigkeit}}</td>
             <td> </td>
         </tr>
         {% endfor %}
