@@ -1,9 +1,57 @@
-{# src/FHBingen/Bundle/MHBBundle/Resources/views/SGL/SGL_main.html.twig #}
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-{% block body %}
-    <div>
-        Hallo {{ name }}!
-        <img src="{{ asset('bundles/fhbingenmhb/images/logo.png') }}" alt="logo" />
-    </div>
+{% block navbar %}
+    <li role="presentation" class="active">
+        <a href="" >Dozent</a>
+    </li>
+    <li role="presentation">
+        <a href="">Modulansicht(verwaltbare)</a>
+    </li>
+    <li role="presentation">
+        <a href="">Modulplanung</a>
+    </li>
+
+    <li role="presentation" class="active">
+        <a href="" >Studiengangleiter</a>
+    </li>
+
+    <li role="presentation">
+        <a href="">Modulansicht(alle)</a>
+    </li>
+
+    <li role="presentation">
+        <a href="">Modulcodeanpassung</a>
+    </li>
+
+    <li role="presentation">
+        <a href="">Modulhandbuchübersicht</a>
+    </li>
+
+    <li role="presentation">
+        <a href="">Modulhandbucherstellung</a>
+    </li>
+
+    <li role="presentation" class="active">
+        <a href="">Administration</a>
+    </li>
+
+    <li role="presentation">
+        <a href="">Benutzerverwaltung</a>
+    </li>
+
+    <li role="presentation">
+        <a href="">Moduldeaktivierung</a>
+    </li>
+
+    <li role="presentation">
+        <a href="">Studiengangverwaltung</a>
+    </li>
+
+    <li role="presentation" class="active">
+        <a href="" >Hilfen</a>
+    </li>
+
+    <li role="presentation">
+        <a href="">Benutzerdoku</a>
+    </li>
 {% endblock %}
