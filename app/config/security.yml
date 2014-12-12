@@ -32,12 +32,12 @@ security:
         login_firewall:
             pattern:   ^/sec/login$
             anonymous: ~
-        form_firewall:
-            pattern:   ^/creation/
-            anonymous: ~
+        #form_firewall:
+            #pattern:   ^/creation/
+            #anonymous: ~
         secured_area:
-            pattern:    ^/
-            #pattern: ^/sec/restricted/
+            #pattern:    ^/
+            pattern: ^/sec/restricted/
             form_login:
                 login_path: /sec/login
                 check_path: /sec/restricted/login_check

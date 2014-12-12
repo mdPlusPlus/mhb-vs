@@ -22,7 +22,7 @@ class SecurityDemoController extends Controller
 {
     /**
      * @Route("/sec/")
-     * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
+     * @Template("FHBingenMHBBundle:Login:login.html.twig")
      */
     public function indexAction()
     {
@@ -31,7 +31,7 @@ class SecurityDemoController extends Controller
 
     /**
      * @Route("/sec/login")
-     * @Template("FHBingenMHBBundle:SecurityDemo:login.html.twig")
+     * @Template("FHBingenMHBBundle:Login:login.html.twig")
      */
     public function loginAction(Request $request)
     {
@@ -58,6 +58,9 @@ class SecurityDemoController extends Controller
             'last_username' => $lastUsername,
             'error'         => $error,
         );
+
+
+        //return $this->redirect($this->generateURL('wurst'));
     }
 
     /**

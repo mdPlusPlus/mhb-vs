@@ -95,10 +95,10 @@ class SecurityController extends Controller
     public function createTestUsersAction()
     {
         $respArr = array(
-            $this->createDozent('Herr', 'Prof.', 'Max', 'Mustermann', 'm.mustermann@fh-bingen.de', 'testpass'),
-            $this->createSgl('Herr', 'Prof. Dr.', 'Peter', 'Lustig', 'p.lustig@fh-bingen.de', 'testpass'),
-            $this->createDozent('Frau', 'Prof. Dr.', 'Alpha', 'Beta', 'a.beta@fh-bingen.de', 'testpass'),
-            $this->createSgl('Herr', '', 'Rollo', 'Rollo', 'rollo@test.com', 'testpass'),
+            //$this->createDozent('Herr', 'Prof.', 'Max', 'Mustermann', 'm.mustermann@fh-bingen.de', 'testpass'),
+            //$this->createSgl('Herr', 'Prof. Dr.', 'Peter', 'Lustig', 'p.lustig@fh-bingen.de', 'testpass'),
+            //$this->createDozent('Frau', 'Prof. Dr.', 'Alpha', 'Beta', 'a.beta@fh-bingen.de', 'testpass'),
+            $this->createDozent('Herr', '', 'Rollo', 'Rollo', 'rollo@test.com', 'testpass'),
         );
 
         $responseStr = '';
