@@ -17,10 +17,10 @@
         {% for veranstaltung in modulverantwortung %}
         <tr>
             <td>{{veranstaltung.name}}</td>
-            <td>{{ }}</td>
-            <td>Tabellen-Zelle</td>
-            <td>Tabellen-Zelle</td>
-            <td>Tabellen-Zelle</td>
+            <td>{{veranstaltung.kuerzel}}</td>
+            <td>{{veranstaltung.erstelldatum}}</td>
+            <td>{{veranstaltung.haufigkeit}}</td>
+            <td> </td>
         </tr>
         {% endfor %}
         </tbody>
