@@ -11,15 +11,6 @@ use FHBingen\Bundle\MHBBundle\Entity;
 //TODO löschen/ändern
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/sec/restricted/index")
-     * @Template("FHBingenMHBBundle::layout_old.html.twig")
-     */
-    public function indexAction()
-    {
-        return array('pageTitle' => 'Modulhandbuch-Verwaltungssystem', 'headline' => 'Login');
-    }
-
 
     /**
      * @Route("/sec/restricted/SGL")

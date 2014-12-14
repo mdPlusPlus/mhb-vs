@@ -20,7 +20,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class RestrictedController extends Controller
 {
-
     /**
      * @Route("/restricted/role_check")
      */
@@ -77,11 +76,12 @@ class RestrictedController extends Controller
     public function printRolesAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
+        $username = $user->getUsername();
         $roleArr = $user->getRoles();
 
-        $response = '';
+        $response = 'Username: ' . $username . '<br />Roles:<br />';
         foreach ($roleArr as $role) {
-            $response = $response . (string) $role . '<br />';
+            $response = $response . (string)$role . '<br />';
         }
 
         return new Response($response);

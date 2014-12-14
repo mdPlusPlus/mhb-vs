@@ -19,6 +19,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class LoginController extends Controller{
 
     /**
+     * @Route("/")
      * @Route("/login")
      * @Template("FHBingenMHBBundle:Login:login.html.twig")
      */
@@ -51,7 +52,7 @@ class LoginController extends Controller{
     }
 
     /**
-     * @Route("/restricted/login/check", name="login_check")
+     * @Route("/restricted/login/check")
      */
     public function securityCheckAction()
     {
