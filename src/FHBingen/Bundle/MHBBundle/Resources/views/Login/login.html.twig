@@ -15,14 +15,16 @@
                    required/>
 
             {#
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
+            <label for="remember_me">Keep me logged in</label>
+            <input type="checkbox" id="remember_me" name="_remember_me" checked />
+            #}
+            {#
+            benötigt 'remember_me:' config in firewall (security.yml)
+            http://symfony.com/doc/2.5/cookbook/security/remember_me.html
             #}
 
-            {#<input type="hidden" name="_target_path" value="account" />#}
+
+            <input type="hidden" name="_target_path" value="/restricted/role_check"/>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
         </form>

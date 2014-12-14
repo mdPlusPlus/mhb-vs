@@ -15,10 +15,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 class RestrictedController extends Controller
 {
+
+    /**
+     * @Route("/restricted/role_check")
+     */
+    public function roleCheckAction()
+    {
+        if ($this->get('security.context')->isGranted('ROLE_SGL')) {
+            //render SGL
+            return $this->redirect($this->generateUrl('fhbingen_mhb_restricted_restrictedsgl'));
+        } else {
+            if ($this->get('security.context')->isGranted('ROLE_DOZENT')) {
+                //render Dozent
+                return $this->redirect($this->generateUrl('fhbingen_mhb_restricted_restricteddozent'));
+            } else {
+                return new AccessDeniedException('Rolle nicht erkannt.');
+            }
+        }
+    }
 
     /**
      * @Route("/restricted/dozent")
