@@ -38,11 +38,11 @@
         <tbody>
         {% for str in Titel %}
             <tr>
-        {% for s in str %}
-        <td>{{ s }}</td>
+            {% for s in str %}
+                <td>{{ s }}</td>
             {% endfor %}
             </tr>
-            {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 
