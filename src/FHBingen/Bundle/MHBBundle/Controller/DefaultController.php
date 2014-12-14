@@ -112,7 +112,7 @@ class DefaultController extends Controller
     public function MHBMainAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
+       //$qb = $em->createQueryBuilder();
        /* $qb = $em->createQueryBuilder();
         $qb->select('s.Titel', 'a.mhb_id' ,'a.modul_id','v.Name','v.Name_EN' ,
             'v.Kuerzel','a.Code',
@@ -128,19 +128,19 @@ class DefaultController extends Controller
           ->where('a.mhb_id = 1');*/
 
 
-        $repository = $this->getDoctrine()
-            ->getRepository(Entity::Studiengang);
+        //$repository = $em->getRepository(Entity::Studiengang);
+        $repository = $em->getRepository('FHBingenMHBBundle:Studiengang');
 
         $query = $repository->createQueryBuilder('s')
             ->select('s.Titel')
-            ->where('s.studiengang_id = 2')
+            //->where('s.Studiengang_ID = 2')
             ->getQuery();
 
-        $products = $query->getResult();
+        $result = $query->getResult();
 
 
 
-        return array('query' => $qb,'pageTitle' => 'STARTSEITE');
+        return array('Titel' => $result,'pageTitle' => 'STARTSEITE');
     }
 
 }
