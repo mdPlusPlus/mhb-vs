@@ -112,33 +112,17 @@ class DefaultController extends Controller
     public function MHBMainAction()
     {
         $em = $this->getDoctrine()->getManager();
-       //$qb = $em->createQueryBuilder();
-       /* $qb = $em->createQueryBuilder();
-        $qb->select('s.Titel', 'a.mhb_id' ,'a.modul_id','v.Name','v.Name_EN' ,
-            'v.Kuerzel','a.Code',
-            'a.Angebotsart', 'v.Haeufigkeit' , 'v.Dauer' , 'v.Lehrveranstaltungen' ,
-            'v.Kontaktzeit_VL' , 'v.Kontaktzeit_Sonstige' , 'v.Selbststudium' , 'v.Gruppengroesse' ,
-            'v.Lernergebnisse' , 'v.Inhalte' , 'v.Pruefungsformen' , 'v.Sprache' ,
-            'v.Literatur' , 'v.Leistungspunkte' , 'v.Voraussetzung_LP' ,
-            'v.Voraussetzung_inh' , 'd.Nachname' , 'v.Erstellungsdatum')
-          ->FROM('Angebot','a')
-          ->Join('a','Veranstaltung','v', 'a.modul_id = v.modul_id')
-          ->Join('a','Studiengang','s', 'a.studiengang_id = s.studiengang_id')
-          ->Join('a','Dozent','d', 'a.Modulbeauftragter = d.Dozenten_ID')
-          ->where('a.mhb_id = 1');*/
-
-
-        //$repository = $em->getRepository(Entity::Studiengang);
-        $repository = $em->getRepository('FHBingenMHBBundle:Studiengang');
-
-        $query = $repository->createQueryBuilder('s')
-            ->select('s.Titel')
-            //->where('s.Studiengang_ID = 2')
-            ->getQuery();
-
-        $result = $query->getResult();
-
-
+        $query = $em->createQuery('SELECT  s.Titel,v.Modul_ID, v.Name , v.Name_EN, v.Kuerzel ,
+                                  v.Haeufigkeit , v.Dauer , v.Lehrveranstaltungen , v.Kontaktzeit_VL,
+                                  v.Kontaktzeit_Sonstige , v.Selbststudium, v.Gruppengroesse , v.Lernergebnisse ,
+                                  v.Inhalte , v.Pruefungsformen , v.Sprache , v.Literatur , v.Leistungspunkte ,
+                                  v.Voraussetzung_LP , v.Voraussetzung_inh
+                                  FROM  FHBingenMHBBundle:Angebot a
+                                  JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.module =  v.Modul_ID
+                                  JOIN  FHBingenMHBBundle:Studiengang s WITH  a.studiengang =  s.Studiengang_ID
+                                  JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
+                                  AND a.mhb =1');
+        $result =$query->getResult();
 
         return array('Titel' => $result,'pageTitle' => 'STARTSEITE');
     }
