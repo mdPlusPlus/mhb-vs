@@ -22,7 +22,6 @@ class RestrictedController extends Controller
 
     /**
      * @Route("/restricted/dozent")
-     * @Security("is_granted('ROLE_DOZENT')")
      */
     public function restrictedDozentAction()
     {
@@ -31,11 +30,26 @@ class RestrictedController extends Controller
 
     /**
      * @Route("/restricted/sgl")
-     * @Security("is_granted('ROLE_SGL')")
      */
     public function restrictedSglAction()
     {
-        return new Response("Congratulations, you accessed the restricted areafor SGL!");
+        return new Response("Congratulations, you accessed the restricted area for SGL!");
+    }
+
+    /**
+     * @Route("/restricted/dozent/test")
+     */
+    public function restrictedDozentTestAction()
+    {
+        return new Response("Congratulations, you accessed the restricted area for Dozent!");
+    }
+
+    /**
+     * @Route("/restricted/sgl/test")
+     */
+    public function restrictedSglTestAction()
+    {
+        return new Response("Congratulations, you accessed the restricted area for SGL!");
     }
 
     /**
