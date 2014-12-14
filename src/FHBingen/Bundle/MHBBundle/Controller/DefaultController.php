@@ -111,11 +111,11 @@ class DefaultController extends Controller
     public function MHBMainAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT  s.Titel,v.Modul_ID, v.Name , v.Name_EN, v.Kuerzel ,
+        $query = $em->createQuery('SELECT  s.Titel,v.Modul_ID, v.Name , v.Name_EN, v.Kuerzel ,a.Code, a.Angebotsart,
                                   v.Haeufigkeit , v.Dauer , v.Lehrveranstaltungen , v.Kontaktzeit_VL,
                                   v.Kontaktzeit_Sonstige , v.Selbststudium, v.Gruppengroesse , v.Lernergebnisse ,
                                   v.Inhalte , v.Pruefungsformen , v.Sprache , v.Literatur , v.Leistungspunkte ,
-                                  v.Voraussetzung_LP , v.Voraussetzung_inh
+                                  v.Voraussetzung_LP , v.Voraussetzung_inh, d.Nachname
                                   FROM  FHBingenMHBBundle:Angebot a
                                   JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.module =  v.Modul_ID
                                   JOIN  FHBingenMHBBundle:Studiengang s WITH  a.studiengang =  s.Studiengang_ID
