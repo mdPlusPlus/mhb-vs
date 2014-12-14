@@ -5,6 +5,7 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 use FHBingen\Bundle\MHBBundle\Entity;
 
@@ -21,7 +22,26 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/sec/restricted/SGL")
+     * @Route("/restricted/dozent/password")
+     */
+    public function ResetAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dozenten= $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
+
+        foreach($dozenten as $doz)
+        {
+            $doz->setPassword('testpass');
+            $em->persist($doz);
+            $em->flush();
+        }
+
+        return new Response('Passwörter wurden zurückgesetzt');
+    }
+
+
+    /**
+     * @Route("/restricted/sgl/main")
      * @Template("FHBingenMHBBundle:SGL:eigeneModule.html.twig")
      */
     public function SglMainAction()
@@ -32,10 +52,10 @@ class DefaultController extends Controller
         //Abfangen falls keine Module vorhanden sind
         //Email anpassen
 
-//        $user = $this->get('security.context')->getToken()->getUser();
-//        $user_mail = $user->getUsername(); $user_mail
+        $user = $this->get('security.context')->getToken()->getUser();
+        $user_mail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Email'=> 'schmidt@fh-bingen.de'));
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Email'=> $user_mail));
         $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID()));
 
         $mLehrende=array();
@@ -63,7 +83,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/Dozent")
+     * @Route("/restricted/Dozent")
      * @Template("FHBingenMHBBundle:Dozent:eigeneModule.html.twig")
      */
     public function DozentMainAction()
@@ -74,10 +94,10 @@ class DefaultController extends Controller
         //Abfangen falls keine Module vorhanden sind
         //Email rausnehmen
 
-//        $user = $this->get('security.context')->getToken()->getUser();
-//        $user_mail = $user->getUsername(); $user_mail
+        $user = $this->get('security.context')->getToken()->getUser();
+        $user_mail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Email'=> 'schmidt@fh-bingen.de'));
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Email'=> $user_mail));
         $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID()));
 
         $mLehrende=array();
