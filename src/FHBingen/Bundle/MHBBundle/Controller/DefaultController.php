@@ -105,4 +105,42 @@ class DefaultController extends Controller
         return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende,'pageTitle' => 'STARTSEITE');
     }
 
+    /**
+     * @Route("/MHB")
+     * @Template("FHBingenMHBBundle:MHB:MHB_Modul_Uebersicht.html.twig")
+     */
+    public function MHBMainAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+       /* $qb = $em->createQueryBuilder();
+        $qb->select('s.Titel', 'a.mhb_id' ,'a.modul_id','v.Name','v.Name_EN' ,
+            'v.Kuerzel','a.Code',
+            'a.Angebotsart', 'v.Haeufigkeit' , 'v.Dauer' , 'v.Lehrveranstaltungen' ,
+            'v.Kontaktzeit_VL' , 'v.Kontaktzeit_Sonstige' , 'v.Selbststudium' , 'v.Gruppengroesse' ,
+            'v.Lernergebnisse' , 'v.Inhalte' , 'v.Pruefungsformen' , 'v.Sprache' ,
+            'v.Literatur' , 'v.Leistungspunkte' , 'v.Voraussetzung_LP' ,
+            'v.Voraussetzung_inh' , 'd.Nachname' , 'v.Erstellungsdatum')
+          ->FROM('Angebot','a')
+          ->Join('a','Veranstaltung','v', 'a.modul_id = v.modul_id')
+          ->Join('a','Studiengang','s', 'a.studiengang_id = s.studiengang_id')
+          ->Join('a','Dozent','d', 'a.Modulbeauftragter = d.Dozenten_ID')
+          ->where('a.mhb_id = 1');*/
+
+
+        $repository = $this->getDoctrine()
+            ->getRepository(Entity::Studiengang);
+
+        $query = $repository->createQueryBuilder('s')
+            ->select('s.Titel')
+            ->where('s.studiengang_id = 2')
+            ->getQuery();
+
+        $products = $query->getResult();
+
+
+
+        return array('query' => $qb,'pageTitle' => 'STARTSEITE');
+    }
+
 }
