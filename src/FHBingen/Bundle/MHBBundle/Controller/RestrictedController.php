@@ -9,11 +9,8 @@
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -81,7 +78,7 @@ class RestrictedController extends Controller
 
         $response = 'Username: ' . $username . '<br />Roles:<br />';
         foreach ($roleArr as $role) {
-            $response = $response . (string)$role . '<br />';
+            $response = $response . (string) $role . '<br />';
         }
 
         return new Response($response);
