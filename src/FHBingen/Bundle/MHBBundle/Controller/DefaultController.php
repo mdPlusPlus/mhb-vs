@@ -111,17 +111,9 @@ class DefaultController extends Controller
      */
     public function MHBMainAction()
     {
-
-
         $em = $this->getDoctrine()->getManager();
-        /*
-        //$Studiengan sollen alle StudiengangIDs stehen mit der id iher zb. 2
-        $Studiengan = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID'=> 2));
-        //$Angebote  gefilter auf die StudiengangID aus $Studiengan
-        $Angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $Studiengan->getStudiengangID()));
-        */
-
         $qb = $em->createQueryBuilder();
+       /* $qb = $em->createQueryBuilder();
         $qb->select('s.Titel', 'a.mhb_id' ,'a.modul_id','v.Name','v.Name_EN' ,
             'v.Kuerzel','a.Code',
             'a.Angebotsart', 'v.Haeufigkeit' , 'v.Dauer' , 'v.Lehrveranstaltungen' ,
@@ -133,7 +125,21 @@ class DefaultController extends Controller
           ->Join('a','Veranstaltung','v', 'a.modul_id = v.modul_id')
           ->Join('a','Studiengang','s', 'a.studiengang_id = s.studiengang_id')
           ->Join('a','Dozent','d', 'a.Modulbeauftragter = d.Dozenten_ID')
-          ->where('a.mhb_id = 1');
+          ->where('a.mhb_id = 1');*/
+
+
+        $repository = $this->getDoctrine()
+            ->getRepository(Entity::Studiengang);
+
+        $query = $repository->createQueryBuilder('s')
+            ->select('s.Titel')
+            ->where('s.studiengang_id = 2')
+            ->getQuery();
+
+        $products = $query->getResult();
+
+
+
         return array('query' => $qb,'pageTitle' => 'STARTSEITE');
     }
 
