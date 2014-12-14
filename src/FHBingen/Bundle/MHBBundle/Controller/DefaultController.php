@@ -11,6 +11,14 @@ use FHBingen\Bundle\MHBBundle\Entity;
 //TODO löschen/ändern
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/")
+     * @Route("/index")
+     */
+    public function indexAction()
+    {
+        return $this->redirect($this->generateUrl('fhbingen_mhb_login_login'));
+    }
 
     /**
      * @Route("/sec/restricted/SGL")
