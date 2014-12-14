@@ -32,3 +32,5 @@ security:
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/restricted/sgl$, roles: ROLE_SGL }        # /restricted/sgl + /restricted/sgl/*
+        - { path: ^/restricted/dozent$, roles: ROLE_DOZENT }  # /restricted/dozent + restricted/dozent/*
