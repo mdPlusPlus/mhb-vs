@@ -10,7 +10,6 @@
         <thead>
         <tr>
             <th>Titel</th>
-            <th>MHB ID</th>
             <th>Modul ID</th>
             <th>Name</th>
             <th>Name EN</th>
@@ -37,13 +36,15 @@
         </tr>
         </thead>
         <tbody>
-
+        {% for str in Titel %}
+            <tr>
+        {% for s in str %}
+        <td>{{ s }}</td>
+            {% endfor %}
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
-    {% for str in Titel %}
-        {% for s in str %}
-            <p>{{ s }}</p>
-        {% endfor %}
-    {% endfor %}
+
 </div>
 {% endblock %}

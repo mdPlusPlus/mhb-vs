@@ -112,7 +112,7 @@ class DefaultController extends Controller
     public function MHBMainAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT  s.Titel,v.Modul_ID , v.Name , v.Name_EN, v.Kuerzel ,
+        $query = $em->createQuery('SELECT  s.Titel,v.Modul_ID, v.Name , v.Name_EN, v.Kuerzel ,
                                   v.Haeufigkeit , v.Dauer , v.Lehrveranstaltungen , v.Kontaktzeit_VL,
                                   v.Kontaktzeit_Sonstige , v.Selbststudium, v.Gruppengroesse , v.Lernergebnisse ,
                                   v.Inhalte , v.Pruefungsformen , v.Sprache , v.Literatur , v.Leistungspunkte ,
