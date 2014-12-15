@@ -82,7 +82,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/restricted/Dozent")
+     * @Route("/restricted/dozent/main")
      * @Template("FHBingenMHBBundle:Dozent:eigeneModule.html.twig")
      */
     public function DozentMainAction()
