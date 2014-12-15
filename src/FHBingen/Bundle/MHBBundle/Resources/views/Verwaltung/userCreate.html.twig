@@ -1,0 +1,28 @@
+{% extends 'FHBingenMHBBundle:SGL:SGL_main.html.twig' %}
+
+{% form_theme form _self %}
+
+    {% block form_row %}
+        <tr class="form_row">
+            <td>{{ form_label(form) }}</td>
+            <td>{{ form_widget(form) }}</td>
+            <td>{{ form_errors(form) }}</td>
+        </tr>
+    {% endblock form_row %}
+
+{% block content %}
+        <h3>Neuen User anlegen</h3>
+
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        <table>
+            {{ form_row(form.anrede) }}
+            {{ form_row(form.titel) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.nachname) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.password) }}
+            {{ form_row(form.roles) }}
+        </table>
+        {{ form_end(form) }}
+
+{% endblock %}
