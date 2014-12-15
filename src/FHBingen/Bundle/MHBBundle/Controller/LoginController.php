@@ -46,7 +46,6 @@ class LoginController extends Controller{
             // last username entered by the user
             'last_username' => $lastUsername,
             'error' => $error,
-            'username' => 'wurst',
         );
 
     }
