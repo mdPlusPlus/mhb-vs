@@ -14,11 +14,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
 use FHBingen\Bundle\MHBBundle\Entity;
-
+use FHBingen\Bundle\MHBBundle\Form;
 class VerwaltungsController extends Controller
 {
     /**
-     * @Route("/restricted/sgl/useranzeige")
+     * @Route("/restricted/sgl/showUsers")
      * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
      */
     public function SglShowUsersAction()
@@ -46,5 +46,50 @@ class VerwaltungsController extends Controller
             }
         }
         return array('sgl' => $sgl, 'dozent' => $dozent, 'pageTitle' => 'Nutzerverwaltung');
+    }
+
+
+    /**
+     * @Route("/restricted/sgl/createUsers")
+     *
+     */
+    public function SglCreateUserAction()
+    {
+        $dozent = new Entity\Dozent();
+        $form = $this->createForm(new Form\DozentType(), $dozent);
+
+        $request = $this->get('request');
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $dozent->setAnrede($form->get('anrede')->getData());
+                $dozent->setTitel($form->get('titel')->getData());
+                $dozent->setName($form->get('name')->getData());
+                $dozent->setNachname($form->get('nachname')->getData());
+                $dozent->setEmail($form->get('email')->getData());
+                $dozent->setPassword('password');
+                $dozent->setRole($form->get('roles')->getData());
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($dozent);
+                $em->flush();
+            }
+
+            return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
+        }
+
+        return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
+    }
+
+
+
+    /**
+     * @Route("/restricted/sgl/updateUsers")
+     * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
+     */
+    public function SglUpdateUserAction()
+    {
+
     }
 }
