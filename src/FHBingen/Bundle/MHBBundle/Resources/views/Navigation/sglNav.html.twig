@@ -1,27 +1,27 @@
 {% if app.user %}
     {% if is_granted('ROLE_SGL') %}
         <li role="presentation" class="active">
-            <a href="">Studiengangleiter</a>
+            <a>Studiengangleiter</a>
         </li>
 
         <li role="presentation">
-            <a href="">Modulansicht(alle)</a>
+            <a href="{{ path('alleModule') }}">Modulansicht(alle)</a>
         </li>
 
         <li role="presentation">
-            <a href="">Modulcodeanpassung</a>
+            <a href="{{ path('modulcode') }}">Modulcodeanpassung</a>
         </li>
 
         <li role="presentation">
-            <a href="">Modulhandbuchübersicht</a>
+            <a href="{{ path('mhbUebersicht') }}">Modulhandbuchübersicht</a>
         </li>
 
         <li role="presentation">
-            <a href="">Modulhandbucherstellung</a>
+            <a href="{{ path('mhbErstellung') }}">Modulhandbucherstellung</a>
         </li>
 
         <li role="presentation">
-            <a href="">Moduldeaktivierung</a>
+            <a href="{{ path('moduldeaktivierung') }}">Moduldeaktivierung</a>
         </li>
     {% endif %}
 {% endif %}

@@ -18,24 +18,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class RestrictedController extends Controller
 {
     /**
-     * @Route("/restricted/role_check")
-     */
-    public function roleCheckAction()
-    {
-        if ($this->get('security.context')->isGranted('ROLE_SGL')) {
-            //render SGL
-            return $this->redirect($this->generateUrl('fhbingen_mhb_default_sglmain'));
-        } else {
-            if ($this->get('security.context')->isGranted('ROLE_DOZENT')) {
-                //render Dozent
-                return $this->redirect($this->generateUrl('fhbingen_mhb_default_dozentmain'));
-            } else {
-                return new AccessDeniedException('Rolle nicht erkannt.');
-            }
-        }
-    }
-
-    /**
      * @Route("/restricted/printRoles")
      */
     public function printRolesAction()

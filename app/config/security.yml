@@ -25,7 +25,7 @@ security:
             form_login:
                 login_path: /login
                 check_path: /restricted/login/check
-                default_target_path: /login #TODO ändern, vllt auf doku
+                default_target_path: eigeneModule
             logout:
                 path:   /restricted/logout
                 target: /login

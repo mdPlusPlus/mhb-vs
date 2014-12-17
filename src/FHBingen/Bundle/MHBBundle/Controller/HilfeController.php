@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: mdPlusPlus
  * Date: 17.12.2014
- * Time: 03:00
+ * Time: 19:59
  */
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
@@ -13,21 +13,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class AdminController extends Controller
+class HilfeController extends Controller
 {
-    /**
-     * @Route("/restricted/sgl/benutzerverwaltung", name="benutzerverwaltung")
+    /*
+     * TODO
+     * Alle Doku-Funktionen hier rein
      */
-    public function benutzerverwaltungAction()
-    {
-
-    }
-
     /**
-     * @Route("/restricted/sgl/studiengangverwaltung", name="studiengangverwaltung")
+     * @Route("/doku", name="doku")
      */
-    public function studiengangverwaltungAction()
-    {
+    public function dokuAction(){
 
     }
 }
