@@ -15,6 +15,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class AdminController extends Controller
 {
+    /*
+     * TODO
+     * Alle Admin-Funktionen hier rein
+     */
     /**
      * @Route("/restricted/sgl/benutzerverwaltung", name="benutzerverwaltung")
      */
