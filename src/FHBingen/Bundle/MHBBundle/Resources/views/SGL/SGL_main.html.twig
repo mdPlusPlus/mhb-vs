@@ -1,11 +1,12 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
+{#
 {% block navbar %}
     <li role="presentation" class="active">
         <a href="" >Dozent</a>
     </li>
     <li role="presentation">
-        <a href="">Modulansicht(verwaltbare)</a>
+        <a href="{{ path('fhbingen_mhb_default_sglmain') }}">Modulansicht(verwaltbare)</a>
     </li>
     <li role="presentation">
         <a href="">Modulplanung</a>
@@ -36,7 +37,7 @@
     </li>
 
     <li role="presentation">
-        <a href="">Benutzerverwaltung</a>
+        <a href="{{ path('fhbingen_mhb_verwaltungs_sglshowusers') }}">Benutzerverwaltung</a>
     </li>
 
     <li role="presentation">
@@ -55,3 +56,4 @@
         <a href="">Benutzerdoku</a>
     </li>
 {% endblock %}
+#}

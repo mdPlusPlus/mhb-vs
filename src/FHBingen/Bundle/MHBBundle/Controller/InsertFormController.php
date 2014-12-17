@@ -109,41 +109,6 @@ class InsertFormController extends Controller
     }
 
     /**
-     * @Route("/creation/Dozent")
-     */
-
-    public function DozentAction()
-    {
-        $dozent = new Dozent();
-        $form = $this->createForm(new DozentType(), $dozent);
-
-        $request = $this->get('request');
-        $form->handleRequest($request);
-
-        if ($request->getMethod() == 'POST') {
-            if ($form->isValid()) {
-                $dozent->setAnrede($form->get('anrede')->getData());
-                $dozent->setTitel($form->get('titel')->getData());
-                $dozent->setName($form->get('name')->getData());
-                $dozent->setNachname($form->get('nachname')->getData());
-                $dozent->setEmail($form->get('email')->getData());
-                $dozent->setPassword('password');
-                $dozent->setRole($form->get('roles')->getData());
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($dozent);
-                $em->flush();
-
-                return new Response('Dozent wurde erfolgreich erstellt');
-            }
-
-            return $this->render('@FHBingenMHB/InsertForm/dozent.html.twig', array('form'=>$form->createView()));
-        }
-
-        return $this->render('@FHBingenMHB/InsertForm/dozent.html.twig', array('form'=>$form->createView()));
-    }
-
-    /**
  * @Route("/creation/Fachgebiet")
  */
 

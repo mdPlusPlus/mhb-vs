@@ -1,0 +1,27 @@
+{% if app.user %}
+    {% if is_granted('ROLE_SGL') %}
+        <li role="presentation" class="active">
+            <a href="">Studiengangleiter</a>
+        </li>
+
+        <li role="presentation">
+            <a href="">Modulansicht(alle)</a>
+        </li>
+
+        <li role="presentation">
+            <a href="">Modulcodeanpassung</a>
+        </li>
+
+        <li role="presentation">
+            <a href="">Modulhandbuchübersicht</a>
+        </li>
+
+        <li role="presentation">
+            <a href="">Modulhandbucherstellung</a>
+        </li>
+
+        <li role="presentation">
+            <a href="">Moduldeaktivierung</a>
+        </li>
+    {% endif %}
+{% endif %}

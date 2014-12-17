@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MHB-Test</title>
+    <title>MHB-VS</title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('bundles/fhbingenmhb/css/bootstrap.css') }}" rel="stylesheet">
@@ -96,40 +96,42 @@
     }
 </style>
 </head>
-
 <!-- HTML code from Bootply.com editor -->
 
 <body style="margin-top:75px">
 
 <div id="header" class="navbar navbar-default navbar-fixed-top navbar-brand" style="min-height:75px">
     <div class="navbar-header">
-            <img src="{{ asset('bundles/fhbingenmhb/images/logo.png') }}" alt="logo" />
-            <span>Modulhandbuchverwaltung</span>
+        <img src="{{ asset('bundles/fhbingenmhb/images/logo.png') }}" alt="logo"/>
+        <span>Modulhandbuch-Verwaltungssystem</span>
     </div>
-    <nav class="collapse navbar-collapse">
-        <ul class="nav navbar-nav pull-right">
-            <li class="dropdown">
-                <a href="#" id="nbAcctDD" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Username<i
-                            class="icon-sort-down"></i></a>
-                <ul class="dropdown-menu pull-right">
-                    <li><a href="#">Log Out</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+    {# wird von Login-Template überschrieben #}
+    {% block userLogout %}
+        <nav class="collapse navbar-collapse">
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown">
+                    <a href="#" id="nbAcctDD" class="dropdown-toggle" data-toggle="dropdown">
+                        {{ app.user.username }}
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            {# /restricted/logout #}
+                            <a href="{{ path('fhbingen_mhb_login_logout') }}">Abmelden</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    {% endblock %}
 </div>
 <div id="wrapper">
     <div id="sidebar-wrapper" class="col-md-2">
         <nav id="sidebar">
             <ul class="nav list-group nav-pills nav-stacked">
-                {% block navbar %}
-                    <li role="presentation" class="active">
-                        <a href="" >Hilfen</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="">Benutzerdoku</a>
-                    </li>
-                {% endblock %}
+                {% include 'FHBingenMHBBundle:Navigation:dozentNav.html.twig' %}
+                {% include 'FHBingenMHBBundle:Navigation:sglNav.html.twig' %}
+                {% include 'FHBingenMHBBundle:Navigation:adminNav.html.twig' %}
+                {% include 'FHBingenMHBBundle:Navigation:generalNav.html.twig' %}
             </ul>
         </nav>
     </div>
@@ -138,8 +140,8 @@
             <div class="page-header">
                 <h3>{{ pageTitle|default }}</h3>
             </div>
+            {# wird von anderen Templates überschrieben #}
             {% block content %}
-                Functionoutput;
             {% endblock %}
         </div>
     </div>

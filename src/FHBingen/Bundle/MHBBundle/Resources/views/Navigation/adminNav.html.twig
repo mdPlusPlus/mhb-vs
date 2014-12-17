@@ -1,0 +1,14 @@
+{% if app.user %}
+    {% if is_granted('ROLE_SGL') %}
+        <li role="presentation" class="active">
+            <a href="">Administration</a>
+        </li>
+
+        <li role="presentation">
+            <a href="{{ path('fhbingen_mhb_verwaltungs_sglshowusers') }}">Benutzerverwaltung</a>
+        </li>
+        <li role="presentation">
+            <a href="">Studiengangverwaltung</a>
+        </li>
+    {% endif %}
+{% endif %}

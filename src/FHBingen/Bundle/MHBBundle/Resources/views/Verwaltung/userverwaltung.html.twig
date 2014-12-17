@@ -1,0 +1,25 @@
+{% extends 'FHBingenMHBBundle:SGL:SGL_main.html.twig' %}
+
+{% block content %}
+
+    <div class="table-responsive">
+        <h3>Studiengangleiter</h3>
+        <ul>
+            {% for person in sgl %}
+                <li>
+                    <a href="">{{person}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h3>Dozenten</h3>
+        <ul>
+            {% for person in dozent %}
+                <li>
+                    <a href="">{{person}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
