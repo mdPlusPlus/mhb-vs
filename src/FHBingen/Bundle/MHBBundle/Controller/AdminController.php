@@ -11,7 +11,8 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class AdminController extends Controller{
+class AdminController extends Controller
+{
     /*
      * TODO
      * Alle Admin-Funktionen hier rein

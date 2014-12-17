@@ -11,7 +11,8 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class SglController extends Controller{
+class SglController extends Controller
+{
     /*
      * TODO
      * Alle SGL-Funktionen hier rein

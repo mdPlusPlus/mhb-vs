@@ -11,7 +11,8 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DozentController extends Controller{
+class DozentController extends Controller
+{
 /*
  * TODO
  * Alle Dozenten-Funktionen hier rein
