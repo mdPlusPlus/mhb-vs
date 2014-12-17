@@ -1,0 +1,13 @@
+{% if app.user %}
+    {% if is_granted('ROLE_DOZENT') %}
+        <li role="presentation" class="active">
+            <a href="#">Dozent</a>
+        </li>
+        <li role="presentation">
+            <a href="#">Modulansicht(verwaltbare)</a>
+        </li>
+        <li role="presentation">
+            <a href="#">Modulplanung</a>
+        </li>
+    {% endif %}
+{% endif %}

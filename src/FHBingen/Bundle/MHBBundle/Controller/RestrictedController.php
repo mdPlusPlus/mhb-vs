@@ -24,48 +24,48 @@ class RestrictedController extends Controller
     {
         if ($this->get('security.context')->isGranted('ROLE_SGL')) {
             //render SGL
-            return $this->redirect($this->generateUrl('fhbingen_mhb_restricted_restrictedsgl'));
+            return $this->redirect($this->generateUrl('fhbingen_mhb_default_sglmain'));
         } else {
             if ($this->get('security.context')->isGranted('ROLE_DOZENT')) {
                 //render Dozent
-                return $this->redirect($this->generateUrl('fhbingen_mhb_restricted_restricteddozent'));
+                return $this->redirect($this->generateUrl('fhbingen_mhb_default_dozentmain'));
             } else {
                 return new AccessDeniedException('Rolle nicht erkannt.');
             }
         }
     }
 
-    /**
-     * @Route("/restricted/dozent")
-     */
-    public function restrictedDozentAction()
-    {
-        return new Response("Congratulations, you accessed the restricted area for Dozent!");
-    }
-
-    /**
-     * @Route("/restricted/sgl")
-     */
-    public function restrictedSglAction()
-    {
-        return new Response("Congratulations, you accessed the restricted area for SGL!");
-    }
-
-    /**
-     * @Route("/restricted/dozent/test")
-     */
-    public function restrictedDozentTestAction()
-    {
-        return new Response("Congratulations, you accessed the restricted area for Dozent!");
-    }
-
-    /**
-     * @Route("/restricted/sgl/test")
-     */
-    public function restrictedSglTestAction()
-    {
-        return new Response("Congratulations, you accessed the restricted area for SGL!");
-    }
+//    /**
+//     * @Route("/restricted/dozent")
+//     */
+//    public function restrictedDozentAction()
+//    {
+//        return new Response("Congratulations, you accessed the restricted area for Dozent!");
+//    }
+//
+//    /**
+//     * @Route("/restricted/sgl")
+//     */
+//    public function restrictedSglAction()
+//    {
+//        return new Response("Congratulations, you accessed the restricted area for SGL!");
+//    }
+//
+//    /**
+//     * @Route("/restricted/dozent/test")
+//     */
+//    public function restrictedDozentTestAction()
+//    {
+//        return new Response("Congratulations, you accessed the restricted area for Dozent!");
+//    }
+//
+//    /**
+//     * @Route("/restricted/sgl/test")
+//     */
+//    public function restrictedSglTestAction()
+//    {
+//        return new Response("Congratulations, you accessed the restricted area for SGL!");
+//    }
 
     /**
      * @Route("/restricted/printRoles")

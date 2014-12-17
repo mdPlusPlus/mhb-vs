@@ -128,14 +128,10 @@
     <div id="sidebar-wrapper" class="col-md-2">
         <nav id="sidebar">
             <ul class="nav list-group nav-pills nav-stacked">
-                {% block navbar %}
-                    <li role="presentation" class="active">
-                        <a href="">Hilfen</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="">Benutzerdoku</a>
-                    </li>
-                {% endblock %}
+                {% include 'FHBingenMHBBundle:Navigation:dozentNav.html.twig' %}
+                {% include 'FHBingenMHBBundle:Navigation:sglNav.html.twig' %}
+                {% include 'FHBingenMHBBundle:Navigation:adminNav.html.twig' %}
+                {% include 'FHBingenMHBBundle:Navigation:generalNav.html.twig' %}
             </ul>
         </nav>
     </div>
