@@ -88,8 +88,33 @@ class VerwaltungsController extends Controller
      * @Route("/restricted/sgl/updateUsers")
      * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
      */
-    public function SglUpdateUserAction()
+    public function SglUpdateUserAction($userid)
     {
+        $em = $this->getDoctrine()->getManager();
 
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID'=>$userid));
+        $form = $this->createForm(new Form\DozentType(), $dozent);
+
+        $request = $this->get('request');
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $dozent->setAnrede($form->get('anrede')->getData());
+                $dozent->setTitel($form->get('titel')->getData());
+                $dozent->setName($form->get('name')->getData());
+                $dozent->setNachname($form->get('nachname')->getData());
+                $dozent->setEmail($form->get('email')->getData());
+                $dozent->setPassword('password');
+                $dozent->setRole($form->get('roles')->getData());
+
+                $em->persist($dozent);
+                $em->flush();
+            }
+
+            return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
+        }
+
+        return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
     }
 }

@@ -26,10 +26,7 @@
                     <td>{{veranstaltung.kuerzel}}</td>
                     <td>{{veranstaltung.erstellungsdatum|date('d.m.Y')}}</td>
                     <td>{{veranstaltung.haeufigkeit}}</td>
-                    <td>
-                        {% for name in mLehrende[count] %}
-                            {{ name }}</br>
-                        {% endfor %}
+                    <td>{% for name in mLehrende[count] %}{{name}}</br>{% endfor %}
                     </td>
                 </tr>
                 {% set count = count +1 %}
