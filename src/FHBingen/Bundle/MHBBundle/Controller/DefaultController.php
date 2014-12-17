@@ -82,7 +82,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/restricted/Dozent")
+     * @Route("/restricted/dozent/main")
      * @Template("FHBingenMHBBundle:Dozent:eigeneModule.html.twig")
      */
     public function DozentMainAction()
@@ -123,7 +123,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/MHB")
+     * @Route("/restricted/sgl/MHB")
      * @Template("FHBingenMHBBundle:MHB:MHB_Modul_Uebersicht.html.twig")
      */
     public function MHBMainAction()
@@ -142,6 +142,34 @@ class DefaultController extends Controller
         $result =$query->getResult();
 
         return array('Titel' => $result,'pageTitle' => 'STARTSEITE');
+    }
+
+    /**
+     * @Route("/restricted/sgl/Veranstaltung")
+     * @Template("FHBingenMHBBundle:Veranstaltung:Veranstaltung_Uebersicht.html.twig")
+     */
+    public function VeranstaltungMainAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT v.Modul_ID,v.Kuerzel,v.Name,v.Name_EN,v.Versionsnummer_Modul,v.Status,v.Haeufigkeit,v.Dauer,
+                                   v.Lehrveranstaltungen,v.Kontaktzeit_VL,v.Kontaktzeit_Sonstige,v.Selbststudium,v.Gruppengroesse,v.Lernergebnisse,v.Inhalte,
+                                   v.Sprache,v.Pruefungsformen,v.Literatur,v.Leistungspunkte,v.Voraussetzung_inh,
+                                   v.Voraussetzung_LP
+                                   FROM FHBingenMHBBundle:Veranstaltung v
+                                   WHERE v.Modul_ID=1');
+        $result =$query->getSingleResult();
+
+        return array('Titel' => $result,'pageTitle' => 'STARTSEITE');
+    }
+
+    /**
+     * @Route("/Test123/{Name}")
+     * @Template("FHBingenMHBBundle:MHB:MHB_Modul_Uebersicht.html.twig")
+     */
+    public function Test($Name)
+    {
+        $d=$Name;
+        return array('Titel'=> $d,'pageTitle' => 'STARTSEITE');
     }
 
 }
