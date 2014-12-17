@@ -18,6 +18,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        //'login' ist hier route alias von /login
         return $this->redirect($this->generateUrl('login'));
     }
 
