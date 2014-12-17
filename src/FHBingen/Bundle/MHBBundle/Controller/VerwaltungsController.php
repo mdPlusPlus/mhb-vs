@@ -85,7 +85,7 @@ class VerwaltungsController extends Controller
 
 
     /**
-     * @Route("/restricted/sgl/updateUsers")
+     * @Route("/restricted/sgl/updateUsers/{userid}")
      * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
      */
     public function SglUpdateUserAction($userid)
@@ -105,7 +105,6 @@ class VerwaltungsController extends Controller
                 $dozent->setName($form->get('name')->getData());
                 $dozent->setNachname($form->get('nachname')->getData());
                 $dozent->setEmail($form->get('email')->getData());
-                $dozent->setPassword('password');
                 $dozent->setRole($form->get('roles')->getData());
 
                 $em->persist($dozent);

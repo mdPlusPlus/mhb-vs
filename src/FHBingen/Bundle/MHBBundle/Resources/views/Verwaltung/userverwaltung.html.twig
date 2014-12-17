@@ -7,7 +7,7 @@
         <ul>
             {% for person in sgl %}
                 <li>
-                    <a href="">{{person}}</a>
+                    <a href="{{'/restricted/sgl/updateUsers/'~person.getDozentenID() }}">{{person}}</a>
                 </li>
             {% endfor %}
         </ul>
@@ -16,7 +16,7 @@
         <ul>
             {% for person in dozent %}
                 <li>
-                    <a href="">{{person}}</a>
+                    <a href="{{'/restricted/sgl/updateUsers/'~person.getDozentenID() }}">{{person}}</a>
                 </li>
             {% endfor %}
         </ul>
