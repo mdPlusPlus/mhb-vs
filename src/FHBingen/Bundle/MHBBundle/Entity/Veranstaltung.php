@@ -96,7 +96,7 @@ class Veranstaltung
     protected $Haeufigkeit;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $Dauer;
 

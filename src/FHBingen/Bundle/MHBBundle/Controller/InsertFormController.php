@@ -159,8 +159,6 @@ class InsertFormController extends Controller
                 $kernfach->setModul($form->get('modul')->getData());
                 $kernfach->setVertiefung($form->get('vertiefung')->getData());
                 $em = $this->getDoctrine()->getManager();
-                $kernfach->setVertiefung($kernfach);
-
 
                 $em->persist($kernfach);
                 $em->flush();

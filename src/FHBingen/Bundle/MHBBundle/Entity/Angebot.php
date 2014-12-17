@@ -78,12 +78,12 @@ class Angebot
     protected	$Code;
 
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=40, nullable=true)
      */
     protected	$Abweichender_Titel_DE;
 
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=40, nullable=true)
      */
     protected	$Abweichender_Titel_EN;
 
