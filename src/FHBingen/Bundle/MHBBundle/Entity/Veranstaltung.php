@@ -105,20 +105,20 @@ class Veranstaltung
  */
 protected $Lehrveranstaltungen;
 
-///**
-// * @ORM\Column(type="integer", nullable=true)
-// */
-//protected $Kontaktzeit_VL;
-//
-///**
-// * @ORM\Column(type="integer", nullable=true)
-// */
-//protected $Kontaktzeit_Sonstige;
-//
-///**
-// * @ORM\Column(type="integer", nullable=true)
-// */
-//protected $Selbststudium;
+/**
+ * @ORM\Column(type="integer", nullable=true)
+ */
+protected $Kontaktzeit_VL;
+
+/**
+ * @ORM\Column(type="integer", nullable=true)
+ */
+protected $Kontaktzeit_Sonstige;
+
+/**
+ * @ORM\Column(type="integer", nullable=true)
+ */
+protected $Selbststudium;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
