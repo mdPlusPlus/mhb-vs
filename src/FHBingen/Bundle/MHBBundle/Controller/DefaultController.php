@@ -18,7 +18,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('fhbingen_mhb_login_login'));
+        return $this->redirect($this->generateUrl('login'));
     }
 
     /**
