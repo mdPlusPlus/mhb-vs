@@ -23,12 +23,12 @@ security:
         secured_area:
             pattern:    ^/restricted/
             form_login:
-                login_path: /login
-                check_path: /restricted/login/check
+                login_path: login
+                check_path: loginCheck
                 default_target_path: eigeneModule
             logout:
-                path:   /restricted/logout
-                target: /login
+                path:   logout
+                target: login
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
