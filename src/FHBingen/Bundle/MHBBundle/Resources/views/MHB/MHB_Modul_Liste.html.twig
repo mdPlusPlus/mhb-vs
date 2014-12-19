@@ -12,16 +12,15 @@
                 <th>Modulhandbuch</th>
                 <th>Gültig ab</th>
                 <th>Erstellungsdatum</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for entity in mhb %}
                 <tr>
-
-                        <td><a href="{{'/restricted/sgl/mhbModulListe/'~entity.getMHBID() }}">{{ entity.Beschreibung }}</td>
-                        <td>{{ entity.getGueltigAb() }}</td>
-                        <td>{{ entity.getErstellungsdatum()|date('d.m.Y') }}</td>
-
+                        <td>{{ entity['Titel'] }}</td>
+                        <td>{{ entity['Name'] }}</td>
+                        <td>{{ entity['Name_EN'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>

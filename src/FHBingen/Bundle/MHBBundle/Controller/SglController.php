@@ -37,8 +37,20 @@ class SglController extends Controller
      */
     public function mhbUebersichtAction()
     {
+    $em = $this->getDoctrine()->getManager();
+    $MHB = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
+
+    return array('MHB' => $MHB,'pageTitle' => 'STARTSEITE');
+    }
+    /**
+     * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
+     * @Template("FHBingenMHBBundle:MHB:MHB_Modul_Liste.html.twig")
+     */
+    public function mhbModulListe($id)
+    {
+
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT  s.Titel,v.Modul_ID, v.Name , v.Name_EN, v.Kuerzel ,a.Code, a.Angebotsart,
+        $mhb = $em->createQuery('SELECT  s.Titel,v.Modul_ID, v.Name , v.Name_EN, v.Kuerzel ,a.Code, a.Angebotsart,
                                   v.Haeufigkeit , v.Dauer , v.Lehrveranstaltungen , v.Kontaktzeit_VL,
                                   v.Kontaktzeit_Sonstige , v.Selbststudium, v.Gruppengroesse , v.Lernergebnisse ,
                                   v.Inhalte , v.Pruefungsformen , v.Sprache , v.Literatur , v.Leistungspunkte ,
@@ -47,11 +59,12 @@ class SglController extends Controller
                                   JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.module =  v.Modul_ID
                                   JOIN  FHBingenMHBBundle:Studiengang s WITH  a.studiengang =  s.Studiengang_ID
                                   JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
-                                  AND a.mhb =1');
-        $result =$query->getResult();
+                                  AND a.mhb ='.$id);
+        $result =$mhb->getResult();
 
-        return array('Titel' => $result,'pageTitle' => 'STARTSEITE');
+        return array('mhb' => $mhb,'pageTitle' => 'STARTSEITE');
     }
+
 
     /**
      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
@@ -65,8 +78,8 @@ class SglController extends Controller
      * @Route("/restricted/sgl/moduldeaktivierung", name="moduldeaktivierung")
      */
     public function modulDeaktivierungAction()
-    {
+{
 
-    }
+}
 
 }
