@@ -12,9 +12,10 @@
 
 {% block content %}
         <h3>Neuen User anlegen</h3>
-
+    <div class="table-responsive">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-        <table>
+        <table class="table table-bordered">
+            {{ form_errors(form) }}
             {{ form_row(form.anrede) }}
             {{ form_row(form.titel) }}
             {{ form_row(form.name) }}
@@ -24,5 +25,6 @@
             {{ form_row(form.roles) }}
         </table>
         {{ form_end(form) }}
+    </div>
 
 {% endblock %}
