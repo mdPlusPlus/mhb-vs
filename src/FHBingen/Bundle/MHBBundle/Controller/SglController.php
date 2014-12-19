@@ -38,9 +38,9 @@ class SglController extends Controller
     public function mhbUebersichtAction()
     {
     $em = $this->getDoctrine()->getManager();
-    $MHB = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
+    $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
 
-    return array('MHB' => $MHB,'pageTitle' => 'STARTSEITE');
+    return array('mhb' => $mhb,'pageTitle' => 'STARTSEITE');
     }
     /**
      * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
@@ -50,19 +50,16 @@ class SglController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $mhb = $em->createQuery('SELECT  s.Titel,v.Modul_ID, v.Name , v.Name_EN, v.Kuerzel ,a.Code, a.Angebotsart,
-                                  v.Haeufigkeit , v.Dauer , v.Lehrveranstaltungen , v.Kontaktzeit_VL,
-                                  v.Kontaktzeit_Sonstige , v.Selbststudium, v.Gruppengroesse , v.Lernergebnisse ,
-                                  v.Inhalte , v.Pruefungsformen , v.Sprache , v.Literatur , v.Leistungspunkte ,
-                                  v.Voraussetzung_LP , v.Voraussetzung_inh, d.Nachname
+        $mhb = $em->createQuery('SELECT  v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer_Modul , d.Nachname
                                   FROM  FHBingenMHBBundle:Angebot a
                                   JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.module =  v.Modul_ID
-                                  JOIN  FHBingenMHBBundle:Studiengang s WITH  a.studiengang =  s.Studiengang_ID
                                   JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
                                   AND a.mhb ='.$id);
+
+
         $result =$mhb->getResult();
 
-        return array('mhb' => $mhb,'pageTitle' => 'STARTSEITE');
+        return array('mhb' => $result,'pageTitle' => 'STARTSEITE');
     }
 
 

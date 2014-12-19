@@ -9,22 +9,28 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Modulhandbuch</th>
-                <th>Gültig ab</th>
-                <th>Erstellungsdatum</th>
-                <th></th>
+                <th>Modul</th>
+                <th>Kürzel</th>
+                <th>Regelsemester</th>
+                <th>Version</th>
+                <th>Modulverantwortlicher</th>
             </tr>
             </thead>
             <tbody>
             {% for entity in mhb %}
                 <tr>
-                        <td>{{ entity['Titel'] }}</td>
                         <td>{{ entity['Name'] }}</td>
-                        <td>{{ entity['Name_EN'] }}</td>
+                        <td>{{ entity['Kuerzel'] }}</td>
+                        <td>{{ entity['Code'] }}</td>
+                        <td>{{ entity['Versionsnummer_Modul'] }}</td>
+                        <td>{{ entity['Nachname'] }}</td>
+
+            </tbody>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+
 
     </div>
 {% endblock %}
