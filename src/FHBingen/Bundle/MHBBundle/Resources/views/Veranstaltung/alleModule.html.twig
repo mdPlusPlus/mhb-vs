@@ -19,7 +19,7 @@
         <tbody>
         {% for veranstaltung in module %}
             <tr>
-                <td><a href="{{'/restricted/dozent/modulplanung/'~veranstaltung.getModulID()}}">{{veranstaltung.name}}</a></td>
+                <td><a href="{{'/restricted/dozent/modulbearbeiten/'~veranstaltung.getModulID()}}">{{veranstaltung.name}}</a></td>
                 <td>{{veranstaltung.kuerzel}}</td>
                 <td>{{veranstaltung.erstellungsdatum|date('d.m.Y')}}</td>
                 <td>{{veranstaltung.haeufigkeit}}</td>

@@ -57,8 +57,8 @@ class DozentController extends Controller
     }
 
     /**
-     * @Route("/restricted/dozent/modulplanung/{id}", name="modulplanung")
-     * @Template("FHBingenMHBBundle:Veranstaltung:modulplanung.html.twig")
+     * @Route("/restricted/dozent/modulbearbeiten/{id}", name="modulbearbeiten")
+     * @Template("FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig")
      */
     public function modulplanungAction($id)
     {
@@ -95,11 +95,11 @@ class DozentController extends Controller
                 $em->flush();
             }
 
-            return $this->render('FHBingenMHBBundle:Veranstaltung:modulplanung.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Modul Planung'));
+            return $this->render('FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Modul Planung'));
 
         }
 
-        return $this->render('FHBingenMHBBundle:Veranstaltung:modulplanung.html.twig', array('form'=>$form->createView(),'pageTitle' => 'Modul Planung'));
+        return $this->render('FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig', array('form'=>$form->createView(),'pageTitle' => 'Modul Planung'));
 
 
     }
