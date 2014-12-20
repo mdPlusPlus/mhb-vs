@@ -17,10 +17,14 @@ class SglController extends Controller
 {
     /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
+     * * @Template("FHBingenMHBBundle:Veranstaltung:alleModule.html.twig")
      */
     public function alleModuleAction()
     {
+        $em = $this->getDoctrine()->getManager();
+        $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
 
+        return array('module' => $module,'pageTitle' => 'STARTSEITE');
     }
 
     /**
@@ -28,6 +32,7 @@ class SglController extends Controller
      */
     public function modulCodeAction()
     {
+
 
     }
 
@@ -50,7 +55,7 @@ class SglController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $mhb = $em->createQuery('SELECT  v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer_Modul , d.Nachname
+        $mhb = $em->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer_Modul , d.Nachname
                                   FROM  FHBingenMHBBundle:Angebot a
                                   JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.module =  v.Modul_ID
                                   JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID

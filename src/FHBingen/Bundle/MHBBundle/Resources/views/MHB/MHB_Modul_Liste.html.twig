@@ -19,7 +19,7 @@
             <tbody>
             {% for entity in mhb %}
                 <tr>
-                        <td>{{ entity['Name'] }}</td>
+                        <td><a href="{{'/restricted/dozent/modulplanung/'~entity['Modul_ID']}}">{{ entity['Name'] }}</td>
                         <td>{{ entity['Kuerzel'] }}</td>
                         <td>{{ entity['Code'] }}</td>
                         <td>{{ entity['Versionsnummer_Modul'] }}</td>

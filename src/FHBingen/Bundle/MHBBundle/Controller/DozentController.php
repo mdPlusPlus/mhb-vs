@@ -13,6 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use FHBingen\Bundle\MHBBundle\Entity;
+use FHBingen\Bundle\MHBBundle\Form;
+
 class DozentController extends Controller
 {
     /**
@@ -54,9 +57,50 @@ class DozentController extends Controller
     }
 
     /**
-     * @Route("/restricted/dozent/modulplanung", name="modulplanung")
+     * @Route("/restricted/dozent/modulplanung/{id}", name="modulplanung")
+     * @Template("FHBingenMHBBundle:Veranstaltung:modulplanung.html.twig")
      */
-    public function modulplanungAction(){
+    public function modulplanungAction($id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('Modul_ID'=>$id));
+        $form = $this->createForm(new Form\VeranstaltungType(), $modul);
+
+         $request = $this->get('request');
+         $form->handleRequest($request);
+
+          if ($request->getMethod() == 'POST') {
+              if ($form->isValid()) {
+                  $modul->setStatus($form->get('Status')->getData());
+                  $modul->setKuerzel($form->get('Kuerzel')->getData());
+                  $modul->setName($form->get('Name')->getData());
+                  $modul->setNameEn($form->get('Name_en')->getData());
+                  $modul->setHaeufigkeit($form->get('Haeufigkeit')->getData());
+                  //$modul->setDauer($form->get('Lehrveranstaltungen')->getData());
+                  $modul->setDauer($form->get('Kontaktzeit_VL')->getData());
+                  $modul->setDauer($form->get('Kontaktzeit_sonstige')->getData());
+                  $modul->setDauer($form->get('Selbststudium')->getData());
+                  $modul->setDauer($form->get('Gruppengroesse')->getData());
+                  $modul->setDauer($form->get('Lernergebnisse')->getData());
+                  $modul->setDauer($form->get('Inhalte')->getData());
+                  //$modul->setDauer($form->get('Pruefungsformen')->getData());
+                  $modul->setDauer($form->get('Sprache')->getData());
+                  $modul->setDauer($form->get('Literatur')->getData());
+                  $modul->setDauer($form->get('Leistungspunkte')->getData());
+                  //$modul->setDauer($form->get('Voraussetzung_LP')->getData());
+                  $modul->setDauer($form->get('Voraussetzung_inh')->getData());
+
+                $em->persist($modul);
+                $em->flush();
+            }
+
+            return $this->render('FHBingenMHBBundle:Veranstaltung:modulplanung.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Modul Planung'));
+
+        }
+
+        return $this->render('FHBingenMHBBundle:Veranstaltung:modulplanung.html.twig', array('form'=>$form->createView(),'pageTitle' => 'Modul Planung'));
+
 
     }
 }
