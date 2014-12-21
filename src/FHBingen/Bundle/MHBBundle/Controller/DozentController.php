@@ -12,6 +12,7 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
@@ -67,40 +68,38 @@ class DozentController extends Controller
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('Modul_ID'=>$id));
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 
-         $request = $this->get('request');
-         $form->handleRequest($request);
+                 $request = $this->get('request');
+                 $form->handleRequest($request);
 
-          if ($request->getMethod() == 'POST') {
-              if ($form->isValid()) {
-                  $modul->setStatus($form->get('Status')->getData());
-                  $modul->setKuerzel($form->get('Kuerzel')->getData());
-                  $modul->setName($form->get('Name')->getData());
-                  $modul->setNameEn($form->get('Name_en')->getData());
-                  $modul->setHaeufigkeit($form->get('Haeufigkeit')->getData());
-                  //$modul->setDauer($form->get('Lehrveranstaltungen')->getData());
-                  $modul->setDauer($form->get('Kontaktzeit_VL')->getData());
-                  $modul->setDauer($form->get('Kontaktzeit_sonstige')->getData());
-                  $modul->setDauer($form->get('Selbststudium')->getData());
-                  $modul->setDauer($form->get('Gruppengroesse')->getData());
-                  $modul->setDauer($form->get('Lernergebnisse')->getData());
-                  $modul->setDauer($form->get('Inhalte')->getData());
-                  //$modul->setDauer($form->get('Pruefungsformen')->getData());
-                  $modul->setDauer($form->get('Sprache')->getData());
-                  $modul->setDauer($form->get('Literatur')->getData());
-                  $modul->setDauer($form->get('Leistungspunkte')->getData());
-                  //$modul->setDauer($form->get('Voraussetzung_LP')->getData());
-                  $modul->setDauer($form->get('Voraussetzung_inh')->getData());
+                  if ($request->getMethod() == 'POST') {
+                      if ($form->isValid()) {
+                          $modul->setStatus($form->get('Status')->getData());
+                          $modul->setKuerzel($form->get('Kuerzel')->getData());
+                          $modul->setName($form->get('Name')->getData());
+                          $modul->setNameEn($form->get('Name_en')->getData());
+                          $modul->setHaeufigkeit($form->get('Haeufigkeit')->getData());
+                          //$modul->setDauer($form->get('Lehrveranstaltungen')->getData());
+                          $modul->setDauer($form->get('Kontaktzeit_VL')->getData());
+                          $modul->setDauer($form->get('Kontaktzeit_sonstige')->getData());
+                          $modul->setDauer($form->get('Selbststudium')->getData());
+                          $modul->setDauer($form->get('Gruppengroesse')->getData());
+                          $modul->setDauer($form->get('Lernergebnisse')->getData());
+                          $modul->setDauer($form->get('Inhalte')->getData());
+                          //$modul->setDauer($form->get('Pruefungsformen')->getData());
+                          $modul->setDauer($form->get('Sprache')->getData());
+                          $modul->setDauer($form->get('Literatur')->getData());
+                          $modul->setDauer($form->get('Leistungspunkte')->getData());
+                          //$modul->setDauer($form->get('Voraussetzung_LP')->getData());
+                          $modul->setDauer($form->get('Voraussetzung_inh')->getData());
 
-                $em->persist($modul);
-                $em->flush();
-            }
+                        $em->persist($modul);
+                        $em->flush();
+                    }
 
-            return $this->render('FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Modul Planung'));
+                    return $this->render('FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Modul Planung'));
 
-        }
+                }
 
-        return $this->render('FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig', array('form'=>$form->createView(),'pageTitle' => 'Modul Planung'));
-
-
-    }
+                return $this->render('FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig', array('form'=>$form->createView(),'pageTitle' => 'Modul Planung'));
+         }
 }

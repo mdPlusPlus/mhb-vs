@@ -5,10 +5,12 @@
  * Date: 08.12.2014
  * Time: 13:40
  */
+
 namespace FHBingen\Bundle\MHBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+
 
 class VeranstaltungType extends AbstractType
 {
