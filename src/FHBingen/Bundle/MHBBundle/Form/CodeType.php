@@ -9,7 +9,7 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CodeType extends AbstractType
 {
@@ -20,6 +20,16 @@ class CodeType extends AbstractType
             ->add('code', 'text', array('label' => 'Code: ', 'required' => true))
             ->add('reset', 'reset')
             ->add('submit', 'submit');
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Angebot'
+        ));
     }
 
     public function getName()
