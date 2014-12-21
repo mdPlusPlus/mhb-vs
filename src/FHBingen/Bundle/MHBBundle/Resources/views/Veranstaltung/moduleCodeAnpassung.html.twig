@@ -1,0 +1,64 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
+
+{% block content %}
+
+    <div class="table-responsive">
+        <h3>Module aus Studiengang</h3>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Modultitel</th>
+                <th style="min-width: 100px; width: 7%">Kürzel</th>
+                <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+                <th style="min-width: 150px; width: 15%">Häufigkeit</th>
+                <th style="min-width: 220px; width: 23%">Lehrende</th>
+            </tr>
+            </thead>
+            <tbody>
+            {# count festsetzen für das hochzählen des mLehrende[] #}
+            {# zweite for gibt jeweils Lehrende mit Namen in neue Zeilen aus #}
+            {% set count = 0 %}
+            {% for veranstaltung in modulverantwortung %}
+                <tr>
+                    <td>{{veranstaltung.name}}</td>
+                    <td>{{veranstaltung.kuerzel}}</td>
+                    <td>{{veranstaltung.erstellungsdatum|date('d.m.Y')}}</td>
+                    <td>{{veranstaltung.haeufigkeit}}</td>
+                    <td>
+                        {% for name in mLehrende[count] %}
+                            {{name}}</br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% set count = count +1 %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 style="margin-top: 50px">Module als Lehrender</h3>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Modultitel</th>
+                <th style="min-width: 100px; width: 7%">Kürzel</th>
+                <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+                <th style="min-width: 150px; width: 15%">Häufigkeit</th>
+                <th style="min-width: 220px; width: 23%">Modulverantwortlicher</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for veranstaltung in modullehrend %}
+                <tr>
+                    <td>{{veranstaltung.name}}</td>
+                    <td>{{veranstaltung.kuerzel}}</td>
+                    <td>{{veranstaltung.erstellungsdatum|date('d.m.Y')}}</td>
+                    <td>{{veranstaltung.haeufigkeit}}</td>
+                    <td>{{veranstaltung.beauftragter}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

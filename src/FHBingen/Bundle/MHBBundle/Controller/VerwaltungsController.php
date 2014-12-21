@@ -8,6 +8,7 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
+
 class VerwaltungsController extends Controller
 {
     /**
@@ -55,6 +57,7 @@ class VerwaltungsController extends Controller
      */
     public function SglCreateUserAction()
     {
+
         $dozent = new Entity\Dozent();
         $form = $this->createForm(new Form\DozentType(), $dozent);
 
@@ -91,7 +94,6 @@ class VerwaltungsController extends Controller
     public function SglUpdateUserAction($userid)
     {
         $em = $this->getDoctrine()->getManager();
-
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID'=>$userid));
         $form = $this->createForm(new Form\DozentType(), $dozent);
 
