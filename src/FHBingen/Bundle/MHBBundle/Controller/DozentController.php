@@ -64,7 +64,7 @@ class DozentController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('Modul_ID'=>$id));
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>$id));
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 
          $request = $this->get('request');
