@@ -37,8 +37,8 @@
         <a href="" id="add-another-vertiefung">Vertiefung hinzufügen</a>
 
         <h4 style="font-weight: bold">Fachgebiete</h4>
-        <ul id="fachgebiet-fields-list" data-prototype="{{ form_widget(form.stgang_fach.vars.prototype)|e }}">
-            {% for fachgebietField in form.stgang_fach %}
+        <ul id="fachgebiet-fields-list" data-prototype="{{ form_widget(form.fachgebiete.vars.prototype)|e }}">
+            {% for fachgebietField in form.fachgebiete %}
                 <li>
                     {{ form_errors(fachgebietField) }}
                     {{ form_widget(fachgebietField) }}
@@ -54,7 +54,7 @@
     <script type="text/javascript">
         // keep track of how many email fields have been rendered
         var richtungCount = '{{ form.richtung|length }}';
-        var formCount = '{{ form.stgang_fach|length }}';
+        var fachCount = '{{ form.fachgebiete|length }}';
 
         jQuery(document).ready(function() {
             jQuery('#add-another-fachgebiet').click(function(e) {

@@ -23,28 +23,28 @@ class StudiengangType extends AbstractType
             ->add('fachbereich', 'choice', array('label' => 'Fachbereich: ', 'required' => true, 'choices' => $faculty))
             ->add('grad', 'choice', array('label' => 'Grad: ', 'required' => true, 'choices' => $level))
             ->add('titel', 'text', array('label' => 'Titel: ', 'required' => true))
-            ->add('kuerzel', 'text', array('label' => 'Kuerzel: ', 'required' => true))
+            ->add('kuerzel', 'text', array('label' => 'Kürzel: ', 'required' => true))
             ->add('beschreibung', 'text', array('label' => 'Beschreibung: ', 'required' => true))
             ->add('sgl', 'entity', array('label' => 'Studiengangleiter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
 
             //Ab hier neuer Merge mit VertiefungType und FachgebietType
 
-            ->add('richtung', 'collection', array('label' => 'Vertiefungsrichtung hinzufügen', 'type' => new VertiefungType(),
+            ->add('richtung', 'collection', array('label' => false, 'type' => new VertiefungType(),
                 'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
                 'options' => array(
                     'required' => false,
                     'attr' => array(
-                        'class' => 'inline Vertiefung'
+                        'class' => 'Vertiefung'
                     )
                     )
             ))
 
-            ->add('stgang_fach', 'collection', array('label' => false, 'type' => new FachgebietType(),
+            ->add('fachgebiete', 'collection', array('label' => false, 'type' => new FachgebietType(),
                 'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
                 'options' => array(
                     'required' => true,
                     'attr' => array(
-                        'class' => 'inline Fachgebiet'
+                        'class' => 'Fachgebiet'
                     ),
                     )
             ))

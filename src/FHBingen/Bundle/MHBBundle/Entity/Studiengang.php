@@ -283,7 +283,7 @@ class Studiengang
     /**
      * @ORM\OneToMany(targetEntity="Fachgebiet", mappedBy="hat")
      */
-    protected $stgang_fach;
+    protected $fachgebiete;
 
 
     /**
@@ -376,36 +376,36 @@ class Studiengang
     }
 
     /**
-     * Add stgang_fach
+     * Add fachgebiete
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $stgangFach
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
      * @return Studiengang
      */
-    public function addStgangFach(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $stgangFach)
+    public function addFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
     {
-        $this->stgang_fach[] = $stgangFach;
+        $this->fachgebiete[] = $fachgebiet;
     
         return $this;
     }
 
     /**
-     * Remove stgang_fach
+     * Remove fachgebiet
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $stgangFach
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
      */
-    public function removeStgangFach(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $stgangFach)
+    public function removeFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
     {
-        $this->stgang_fach->removeElement($stgangFach);
+        $this->fachgebiete->removeElement($fachgebiet);
     }
 
     /**
-     * Get stgang_fach
+     * Get fachgebiete
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getStgangFach()
+    public function getFachgebiete()
     {
-        return $this->stgang_fach;
+        return $this->fachgebiete;
     }
 
     /*Studienplan*/
