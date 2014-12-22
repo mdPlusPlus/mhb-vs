@@ -10,6 +10,7 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class VertiefungType extends AbstractType
 {
@@ -22,6 +23,17 @@ class VertiefungType extends AbstractType
             /*->add('reset', 'reset')
             ->add('submit', 'submit');*/
     }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Vertiefung'
+        ));
+    }
+
 
     public function getName()
     {

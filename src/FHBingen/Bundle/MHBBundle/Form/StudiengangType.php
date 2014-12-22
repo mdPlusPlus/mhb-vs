@@ -29,24 +29,24 @@ class StudiengangType extends AbstractType
 
             //Ab hier neuer Merge mit VertiefungType und FachgebietType
 
-            ->add('richtung', 'collection', array('label' => false, 'type' => new VertiefungType(),
+            ->add('richtung', 'collection', array('label' => 'Vertiefungsrichtung hinzufügen', 'type' => new VertiefungType(),
                 'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
                 'options' => array(
                     'required' => false,
                     'attr' => array(
                         'class' => 'inline Vertiefung'
-                    ),
-                    'label' => 'Vertiefung hinzufügen')
+                    )
+                    )
             ))
 
-            ->add('hat', 'collection', array('label' => false, 'type' => new FachgebietType(),
+            ->add('stgang_fach', 'collection', array('label' => false, 'type' => new FachgebietType(),
                 'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
                 'options' => array(
                     'required' => true,
                     'attr' => array(
                         'class' => 'inline Fachgebiet'
                     ),
-                    'label' => 'Fachgebiet hinzufügen')
+                    )
             ))
 
             ->add('reset', 'reset')
