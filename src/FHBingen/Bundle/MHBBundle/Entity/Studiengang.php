@@ -151,7 +151,7 @@ class Studiengang
      *
      * @return string 
      */
-    public function getTitel()
+        public function getTitel()
     {
         return $this->Titel;
     }

@@ -1,0 +1,46 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
+
+{% block content %}
+
+    <div class="table-responsive">
+        <h3>Module mit DUMMY Modulcode</h3>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Modultitel</th>
+                <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dummy in dummyAngebote %}
+                <tr>
+                    <td><a href="{{'/restricted/sgl/modulCodeErstellung/'~dummy.getModule().getModulID()}}">{{dummy.getModule()}}</a></td>
+                   <td>{{dummy.getModule().getErstellungsdatum()|date('d.m.Y')}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+       <h3 style="margin-top: 50px">Module mit Modulcode</h3>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Modultitel</th>
+                <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for normal in angebote %}
+                <tr>
+                    <td><a href="{{'/restricted/sgl/modulCodeErstellung/'~normal.getModule().getModulID()}}">{{ normal.getModule() }}</a></td>
+                   <td>{{ normal.getModule().getErstellungsdatum()|date('d.m.Y') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
