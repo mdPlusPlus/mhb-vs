@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
+use Symfony\Component\HttpFoundation\Response;
 
 class SglController extends Controller
 {
@@ -21,55 +22,49 @@ class SglController extends Controller
      * @Route("/restricted/sgl/alleModule", name="alleModule")
      * * @Template("FHBingenMHBBundle:Veranstaltung:alleModule.html.twig")
      */
-    public function alleModuleAction()
+    public function alleModuleAction()//Sortierung? nach Studiengang?
     {
         $em = $this->getDoctrine()->getManager();
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
-
         return array('module' => $module,'pageTitle' => 'STARTSEITE');
     }
 
     /**
-     * @Route("/restricted/sgl/moduleCodeAnpassung", name="modulCodeAnpassung")
-     * @Template("FHBingenMHBBundle:Veranstaltung:moduleCodeAnpassung.html.twig")
+     * @Route("/restricted/sgl/modulCodeUebersicht", name="modulCodeUebersicht")
+     * @Template("FHBingenMHBBundle:Veranstaltung:modulCodeUebersicht.html.twig")
      */
-    public function modulCodeAnpasungAction()
+    public function modulCodeUebersichtAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Email'=> $userMail));
-        $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID()));
+        $studiengang= $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl'=>$dozent->getDozentenID()));
 
-        $mLehrende = array();
-        foreach ($modulverantwortung as $m) {
-            $name=array();
-            $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('module' => $m->getModulID()));
-
-            foreach ($tmp as $lehrend) {
-                $name[]=(string) $lehrend->getLehrender();
-            }
-            $mLehrende[]=$name;
+        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY'));
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
+        $angeboteOhneDummy=array();
+        foreach($angebote as $value)
+        {
+                if($value->getCode()!='DUMMY' && $value->getStudiengang()->getStudiengangID()==$studiengang->getStudiengangID())
+                {
+                    $angeboteOhneDummy[]=$value;
+                }
         }
 
-        $entries= $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('lehrender'=> $dozent->getDozentenID()));
-
-        $modullehrend =array();
-        foreach ($entries as $modul) {
-            $modullehrend[]=$em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=> $modul->getModule()));
-        }
-
-        return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende,'pageTitle' => 'STARTSEITE');
+        return array('angebote'=>$angeboteOhneDummy, 'dummyAngebote'  => $dummyAngebote, 'pageTitle' => 'STARTSEITE');
     }
 
     /**
-     * @Route("/restricted/sgl/modulcode", name="modulcode")
-     * @Template("FHBingenMHBBundle:Veranstaltung:modulCode.html.twig")
+     * @Route("/restricted/sgl/modulCodeErstellung/{id}", name="modulCodeErstellung")
+     * @Template("FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig")
      */
-    public function modulCodeAction()
+    public function modulCodeErstellungAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('module'=>122));
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('module'=>$id));
+        $modul=$angebot->getModule();
+
         $form = $this->createForm(new Form\CodeType(), $angebot);
 
         $request = $this->get('request');
@@ -77,18 +72,16 @@ class SglController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $angebot->setModule($form->get('module')->getData());
                 $angebot->setCode($form->get('code')->getData());
-
                 $em->persist($angebot);
                 $em->flush();
             }
 
-            return $this->render('FHBingenMHBBundle:Veranstaltung:modulCode.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
+            return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form'=>$form->createView(),'modul'=>$modul, 'pageTitle' => 'Modulcodeerstellung'));
 
         }
 
-        return $this->render('FHBingenMHBBundle:Veranstaltung:modulCode.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
+        return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form'=>$form->createView(),'modul'=>$modul, 'pageTitle' => 'Modulcodeerstellung'));
     }
 
 
