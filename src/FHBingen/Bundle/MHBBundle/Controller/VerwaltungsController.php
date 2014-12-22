@@ -20,7 +20,7 @@ use FHBingen\Bundle\MHBBundle\Form;
 class VerwaltungsController extends Controller
 {
     /**
-     * @Route("/restricted/sgl/showUsers")
+     * @Route("/restricted/sgl/showUsers", name="benutzerverwaltung")
      * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
      */
     public function SglShowUsersAction()
@@ -53,7 +53,7 @@ class VerwaltungsController extends Controller
 
     /**
      * @Route("/restricted/sgl/createUsers")
-     *
+     * @Template("FHBingenMHBBundle:Verwaltung:userCreate.html.twig")
      */
     public function SglCreateUserAction()
     {
@@ -119,4 +119,15 @@ class VerwaltungsController extends Controller
 
         return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
     }
+
+
+    /**
+     * @Route("/restricted/sgl/showCourse", name="studiengangverwaltung")
+     * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
+     */
+    public function SglShowCourseAction()
+    {
+
+    }
+
 }

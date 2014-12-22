@@ -10,6 +10,7 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class StudiengangType extends AbstractType
 {
@@ -25,8 +26,41 @@ class StudiengangType extends AbstractType
             ->add('kuerzel', 'text', array('label' => 'Kuerzel: ', 'required' => true))
             ->add('beschreibung', 'text', array('label' => 'Beschreibung: ', 'required' => true))
             ->add('sgl', 'entity', array('label' => 'Studiengangleiter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+
+            //Ab hier neuer Merge mit VertiefungType und FachgebietType
+
+            ->add('richtung', 'collection', array('label' => false, 'type' => new VertiefungType(),
+                'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+                'options' => array(
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'inline Vertiefung'
+                    ),
+                    'label' => 'Vertiefung hinzufügen')
+            ))
+
+            ->add('hat', 'collection', array('label' => false, 'type' => new FachgebietType(),
+                'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+                'options' => array(
+                    'required' => true,
+                    'attr' => array(
+                        'class' => 'inline Fachgebiet'
+                    ),
+                    'label' => 'Fachgebiet hinzufügen')
+            ))
+
             ->add('reset', 'reset')
             ->add('submit', 'submit');
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Studiengang'
+        ));
     }
 
     public function getName()
