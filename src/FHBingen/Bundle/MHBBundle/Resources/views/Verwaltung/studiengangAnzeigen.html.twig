@@ -1,0 +1,96 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% form_theme form _self %}
+
+    {% block form_row %}
+        <tr class="form_row">
+            <td>{{ form_label(form) }}</td>
+            <td>{{ form_widget(form) }}</td>
+        </tr>
+    {% endblock form_row %}
+
+
+
+{% block content %}
+    <h4 style="font-weight: bold">Studiengang einpflegen</h4>
+    <div class="table-responsive">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        <table class="table table-bordered">
+            {{ form_errors(form) }}
+            {{ form_row(form.fachbereich) }}
+            {{ form_row(form.grad) }}
+            {{ form_row(form.titel) }}
+            {{ form_row(form.kuerzel) }}
+            {{ form_row(form.beschreibung) }}
+            {{ form_row(form.sgl) }}
+        </table>
+
+        <h4 style="font-weight: bold">Vertiefungsrichtungen</h4>
+        <ul id="richtung-fields-list" data-prototype="{{ form_widget(form.richtung.vars.prototype)|e }}">
+            {% for richtungField in form.richtung %}
+                <li>
+                    {{ form_errors(richtungField) }}
+                    {{ form_widget(richtungField) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="" id="add-another-vertiefung">Vertiefung hinzufügen</a>
+
+        <h4 style="font-weight: bold">Fachgebiete</h4>
+        <ul id="fachgebiet-fields-list" data-prototype="{{ form_widget(form.stgang_fach.vars.prototype)|e }}">
+            {% for fachgebietField in form.stgang_fach %}
+                <li>
+                    {{ form_errors(fachgebietField) }}
+                    {{ form_widget(fachgebietField) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="" id="add-another-fachgebiet">Fachgebiet hinzufügen</a>
+
+        {{ form_end(form) }}
+    </div>
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+        // keep track of how many email fields have been rendered
+        var richtungCount = '{{ form.richtung|length }}';
+        var formCount = '{{ form.stgang_fach|length }}';
+
+        jQuery(document).ready(function() {
+            jQuery('#add-another-fachgebiet').click(function(e) {
+                e.preventDefault();
+
+                var fachList = jQuery('#fachgebiet-fields-list');
+
+                // grab the prototype template
+                var newWidget = fachList.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/__name__/g, fachCount);
+                fachCount++;
+
+                // create a new list element and add it to the list
+                var newLi = jQuery('<li></li>').html(newWidget);
+                newLi.appendTo(fachList);
+            });
+            jQuery('#add-another-vertiefung').click(function(e) {
+                e.preventDefault();
+
+                var richtungList = jQuery('#richtung-fields-list');
+
+                // grab the prototype template
+                var newWidget = richtungList.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/__name__/g, richtungCount);
+                richtungCount++;
+
+                // create a new list element and add it to the list
+                var newLi = jQuery('<li></li>').html(newWidget);
+                newLi.appendTo(richtungList);
+            });
+        })
+    </script>
+{% endblock %}
