@@ -84,9 +84,6 @@ class SglController extends Controller
         return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form'=>$form->createView(),'modul'=>$modul, 'pageTitle' => 'Modulcodeerstellung'));
     }
 
-
-
-
     /**
      * @Route("/restricted/sgl/mhbUebersicht", name="mhbUebersicht")
      * @Template("FHBingenMHBBundle:MHB:MHB_Modul_Uebersicht.html.twig")
@@ -106,11 +103,12 @@ class SglController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $mhb = $em->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer_Modul , d.Nachname
-                                  FROM  FHBingenMHBBundle:Angebot a
-                                  JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.module =  v.Modul_ID
-                                  JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
-                                  AND a.mhb ='.$id);
+        $mhb = $em->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer_Modul,
+                                 d.Titel, d.Nachname
+                                 FROM  FHBingenMHBBundle:Angebot a
+                                 JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.module =  v.Modul_ID
+                                 JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
+                                 AND a.mhb ='.$id);
 
 
         $result =$mhb->getResult();
@@ -121,13 +119,14 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
+     *
      */
     public function mhbErstellungAction()
     {
 
     }
 
-    /**
+   /**
      * @Route("/restricted/sgl/moduldeaktivierung", name="moduldeaktivierung")
      */
     public function modulDeaktivierungAction()
