@@ -33,20 +33,16 @@ class VerwaltungsController extends Controller
         $dozent=array();
         $sgl=array();
 
-        foreach($entries as $e)
-        {
-            if($e->getRoles()[0]== 'ROLE_SGL')
-            {
+        foreach ($entries as $e) {
+            if ($e->getRoles()[0]== 'ROLE_SGL') {
                 $sgl[]=$e;
-            }
-            else
-            {
-                if($e->getRoles()[0]== 'ROLE_DOZENT')
-                {
+            } else {
+                if ($e->getRoles()[0]== 'ROLE_DOZENT') {
                     $dozent[]=$e;
                 }
             }
         }
+
         return array('sgl' => $sgl, 'dozent' => $dozent, 'pageTitle' => 'Nutzerverwaltung');
     }
 
@@ -57,7 +53,6 @@ class VerwaltungsController extends Controller
      */
     public function SglCreateUserAction()
     {
-
         $dozent = new Entity\Dozent();
         $form = $this->createForm(new Form\DozentType(), $dozent);
 
