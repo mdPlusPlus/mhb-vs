@@ -381,7 +381,7 @@ class Studiengang
      * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
      * @return Studiengang
      */
-    public function addFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
+    public function addFachgebiete(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
     {
         $this->fachgebiete[] = $fachgebiet;
     
@@ -393,7 +393,7 @@ class Studiengang
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
      */
-    public function removeFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
+    public function removeFachgebiete(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
     {
         $this->fachgebiete->removeElement($fachgebiet);
     }
