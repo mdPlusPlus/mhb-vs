@@ -123,8 +123,8 @@ class VerwaltungsController extends Controller
     public function SglShowCourseAction()
     {
         $em = $this->getDoctrine()->getManager();
-//        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID'=>2));
-        $studiengang = new Entity\Studiengang();
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID'=>10));
+        //$studiengang = new Entity\Studiengang();
         $form = $this->createForm(new Form\StudiengangType(), $studiengang);
 
         $request = $this->get('request');
@@ -151,10 +151,12 @@ class VerwaltungsController extends Controller
                     $fachgebiet->setHat($studiengang);
                     $em->persist($fachgebiet);
                 }
+
                 $em->persist($studiengang);
                 $em->flush();
             }
         }
+
 
         return $this->render('FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Studiengangverwaltung'));
     }
