@@ -78,8 +78,6 @@ class VerwaltungsController extends Controller
                 $em->persist($dozent);
                 $em->flush();
             }
-
-            return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
         }
 
         return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
@@ -112,9 +110,6 @@ class VerwaltungsController extends Controller
                 $em->persist($dozent);
                 $em->flush();
             }
-
-            return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
-
         }
 
         return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
@@ -140,8 +135,6 @@ class VerwaltungsController extends Controller
             if ($form->isValid()) {
 
             }
-
-            return $this->render('FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Studiengangverwaltung'));
         }
 
         return $this->render('FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Studiengangverwaltung'));
