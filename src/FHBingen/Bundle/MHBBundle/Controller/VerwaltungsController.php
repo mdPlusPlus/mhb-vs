@@ -122,8 +122,7 @@ class VerwaltungsController extends Controller
      */
     public function SglShowCourseAction()
     {
-//
-//        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 //        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID'=>2));
         $studiengang = new Entity\Studiengang();
         $form = $this->createForm(new Form\StudiengangType(), $studiengang);
@@ -133,7 +132,27 @@ class VerwaltungsController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
+                $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice
+                $studiengang->setGrad($form->get('grad')->getData());                   //choice
+                $studiengang->setTitel($form->get('titel')->getData());                 //text
+                $studiengang->setKuerzel($form->get('kuerzel')->getData());             //text
+                $studiengang->setBeschreibung($form->get('beschreibung')->getData());   //text
+                $studiengang->setSgl($form->get('sgl')->getData());                     //entity
 
+                $vertiefungCollection = $form->get('richtung')->getData();      //collection
+                foreach ($vertiefungCollection as $vertiefungEntry) {
+                    $studiengang->addRichtung($vertiefungEntry);
+                    $vertiefungEntry->setStgang($studiengang);
+                    $em->persist($vertiefungEntry);
+                }
+                $fachgebietCollection = $form->get('fachgebiete')->getData();   //collection
+                foreach ($fachgebietCollection as $fachgebietEntry) {
+                    $studiengang->addFachgebiete($fachgebietEntry);
+                    $fachgebietEntry->setHat($studiengang);
+                    $em->persist($fachgebietEntry);
+                }
+                $em->persist($studiengang);
+                $em->flush();
             }
         }
 
