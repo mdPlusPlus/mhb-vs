@@ -2,16 +2,68 @@
 
 {% form_theme form _self %}
 
-    {% block form_row %}
-        <tr class="form_row">
-            <td>{{ form_label(form) }}</td>
-            <td>{{ form_widget(form) }}</td>
-        </tr>
-    {% endblock form_row %}
-
-
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+    </tr>
+{% endblock form_row %}
 
 {% block content %}
+    <script type="text/javascript">
+        // keep track of how many email fields have been rendered
+        var vertiefungCount = '{{ form.richtung|length }}';
+        var fachgebietCount = '{{ form.fachgebiete|length }}';
+
+        jQuery(document).ready(function () {
+            jQuery('#add-another-vertiefung').click(function (e) {
+                e.preventDefault();
+
+                var richtungList = jQuery('#vertiefung-fields-list');
+
+                // grab the prototype template
+                var newWidget = richtungList.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/__name__/g, vertiefungCount);
+                vertiefungCount++;
+
+                // create a new list element and add it to the list
+                var newLi = jQuery('<li></li>').html(newWidget);
+                newLi.appendTo(richtungList);
+            });
+            jQuery('#add-another-fachgebiet').click(function (e) {
+                e.preventDefault();
+
+                var fachList = jQuery('#fachgebiet-fields-list');
+
+                // grab the prototype template
+                var newWidget = fachList.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/__name__/g, fachgebietCount);
+                fachgebietCount++;
+
+                // create a new list element and add it to the list
+                var newLi = jQuery('<li></li>').html(newWidget);
+                newLi.appendTo(fachList);
+            });
+        });
+        function removeLastVertiefung(){
+            $('#vertiefung-fields-list li:last').remove();
+            //decrement count variable if you want to overwrite old indizes when adding new elements
+            vertiefungCount--;
+
+        };
+        function removeLastFachgebiet(){
+            $('#fachgebiet-fields-list li:last').remove();
+            //decrement count variable if you want to overwrite old indizes when adding new elements
+            fachgebietCount--;
+        };
+    </script>
+
     <h4 style="font-weight: bold">Studiengang einpflegen</h4>
     <div class="table-responsive">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
@@ -26,15 +78,16 @@
         </table>
 
         <h4 style="font-weight: bold">Vertiefungsrichtungen</h4>
-        <ul id="richtung-fields-list" data-prototype="{{ form_widget(form.richtung.vars.prototype)|e }}">
-            {% for richtungField in form.richtung %}
+        <ul id="vertiefung-fields-list" data-prototype="{{ form_widget(form.richtung.vars.prototype)|e }}">
+            {% for vertiefungField in form.richtung %}
                 <li>
-                    {{ form_errors(richtungField) }}
-                    {{ form_widget(richtungField) }}
+                    {{ form_errors(vertiefungField) }}
+                    {{ form_widget(vertiefungField) }}
                 </li>
             {% endfor %}
         </ul>
-        <a href="" id="add-another-vertiefung">Vertiefung hinzufügen</a>
+        <a id="add-another-vertiefung">Vertiefung hinzufügen</a>
+        <a id="remove-one-vertiefung" onclick="removeLastVertiefung()">Vertiefung entfernen</a>
 
         <h4 style="font-weight: bold">Fachgebiete</h4>
         <ul id="fachgebiet-fields-list" data-prototype="{{ form_widget(form.fachgebiete.vars.prototype)|e }}">
@@ -45,52 +98,9 @@
                 </li>
             {% endfor %}
         </ul>
-        <a href="" id="add-another-fachgebiet">Fachgebiet hinzufügen</a>
+        <a id="add-another-fachgebiet">Fachgebiet hinzufügen</a>
+        <a id="remove-one-fachgebiet" onclick="removeLastFachgebiet()">Fachgebiet entfernen</a>
 
         {{ form_end(form) }}
     </div>
-
-
-    <script type="text/javascript">
-        // keep track of how many email fields have been rendered
-        var richtungCount = '{{ form.richtung|length }}';
-        var fachCount = '{{ form.fachgebiete|length }}';
-
-        jQuery(document).ready(function() {
-            jQuery('#add-another-fachgebiet').click(function(e) {
-                e.preventDefault();
-
-                var fachList = jQuery('#fachgebiet-fields-list');
-
-                // grab the prototype template
-                var newWidget = fachList.attr('data-prototype');
-                // replace the "__name__" used in the id and name of the prototype
-                // with a number that's unique to your emails
-                // end name attribute looks like name="contact[emails][2]"
-                newWidget = newWidget.replace(/__name__/g, fachCount);
-                fachCount++;
-
-                // create a new list element and add it to the list
-                var newLi = jQuery('<li></li>').html(newWidget);
-                newLi.appendTo(fachList);
-            });
-            jQuery('#add-another-vertiefung').click(function(e) {
-                e.preventDefault();
-
-                var richtungList = jQuery('#richtung-fields-list');
-
-                // grab the prototype template
-                var newWidget = richtungList.attr('data-prototype');
-                // replace the "__name__" used in the id and name of the prototype
-                // with a number that's unique to your emails
-                // end name attribute looks like name="contact[emails][2]"
-                newWidget = newWidget.replace(/__name__/g, richtungCount);
-                richtungCount++;
-
-                // create a new list element and add it to the list
-                var newLi = jQuery('<li></li>').html(newWidget);
-                newLi.appendTo(richtungList);
-            });
-        })
-    </script>
 {% endblock %}
