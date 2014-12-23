@@ -140,16 +140,16 @@ class VerwaltungsController extends Controller
                 $studiengang->setSgl($form->get('sgl')->getData());                     //entity
 
                 $vertiefungCollection = $form->get('richtung')->getData();      //collection
-                foreach ($vertiefungCollection as $vertiefungEntry) {
-                    $studiengang->addRichtung($vertiefungEntry);
-                    $vertiefungEntry->setStgang($studiengang);
-                    $em->persist($vertiefungEntry);
+                foreach ($vertiefungCollection as $vertiefung) {
+                    $studiengang->addRichtung($vertiefung);
+                    $vertiefung->setStgang($studiengang);
+                    $em->persist($vertiefung);
                 }
                 $fachgebietCollection = $form->get('fachgebiete')->getData();   //collection
-                foreach ($fachgebietCollection as $fachgebietEntry) {
-                    $studiengang->addFachgebiete($fachgebietEntry);
-                    $fachgebietEntry->setHat($studiengang);
-                    $em->persist($fachgebietEntry);
+                foreach ($fachgebietCollection as $fachgebiet) {
+                    $studiengang->addFachgebiete($fachgebiet);
+                    $fachgebiet->setHat($studiengang);
+                    $em->persist($fachgebiet);
                 }
                 $em->persist($studiengang);
                 $em->flush();
