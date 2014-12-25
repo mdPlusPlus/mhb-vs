@@ -28,10 +28,9 @@ class DefaultController extends Controller
     public function ResetAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $dozenten= $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
+        $dozenten = $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
 
-        foreach($dozenten as $doz)
-        {
+        foreach ($dozenten as $doz) {
             $doz->setPassword('testpass');
             $em->persist($doz);
             $em->flush();
@@ -53,8 +52,8 @@ class DefaultController extends Controller
                                    v.Voraussetzung_LP
                                    FROM FHBingenMHBBundle:Veranstaltung v
                                    WHERE v.Modul_ID=1');
-        $result =$query->getSingleResult();
+        $result = $query->getSingleResult();
 
-        return array('Titel' => $result,'pageTitle' => 'STARTSEITE');
+        return array('Titel' => $result, 'pageTitle' => 'STARTSEITE');
     }
 }

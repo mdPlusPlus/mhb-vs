@@ -30,15 +30,15 @@ class VerwaltungsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entries = $em->getRepository('FHBingenMHBBundle:Dozent')->findALL();
 
-        $dozent=array();
-        $sgl=array();
+        $dozent = array();
+        $sgl = array();
 
         foreach ($entries as $e) {
-            if ($e->getRoles()[0]== 'ROLE_SGL') {
-                $sgl[]=$e;
+            if ($e->getRoles()[0] == 'ROLE_SGL') {
+                $sgl[] = $e;
             } else {
-                if ($e->getRoles()[0]== 'ROLE_DOZENT') {
-                    $dozent[]=$e;
+                if ($e->getRoles()[0] == 'ROLE_DOZENT') {
+                    $dozent[] = $e;
                 }
             }
         }
@@ -75,9 +75,8 @@ class VerwaltungsController extends Controller
             }
         }
 
-        return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
+        return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
     }
-
 
 
     /**
@@ -87,7 +86,7 @@ class VerwaltungsController extends Controller
     public function SglUpdateUserAction($userid)
     {
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID'=>$userid));
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $userid));
         $form = $this->createForm(new Form\DozentType(), $dozent);
 
         $request = $this->get('request');
@@ -107,7 +106,7 @@ class VerwaltungsController extends Controller
             }
         }
 
-        return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
+        return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
     }
 
 
@@ -119,7 +118,7 @@ class VerwaltungsController extends Controller
     {
         //TODO: das ist NICHT die studiengangverwaltung (übersicht)
         $em = $this->getDoctrine()->getManager();
-        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID'=>10));
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID' => 10));
         //$studiengang = new Entity\Studiengang();
         $form = $this->createForm(new Form\StudiengangType(), $studiengang);
 
@@ -153,8 +152,7 @@ class VerwaltungsController extends Controller
             }
         }
 
-
-        return $this->render('FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig', array('form'=>$form->createView(), 'pageTitle' => 'Studiengangverwaltung'));
+        return $this->render('FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Studiengangverwaltung'));
     }
 
 }

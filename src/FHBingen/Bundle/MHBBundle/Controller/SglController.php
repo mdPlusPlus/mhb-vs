@@ -26,7 +26,7 @@ class SglController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
-        return array('module' => $module,'pageTitle' => 'STARTSEITE');
+        return array('module' => $module, 'pageTitle' => 'STARTSEITE');
     }
 
     /**
@@ -38,21 +38,19 @@ class SglController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email'=> $userMail));
-        $studiengang= $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl'=>$dozent->getDozentenID()));
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
 
         $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('code' => 'DUMMY'));
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
-        $angeboteOhneDummy=array();
-        foreach($angebote as $value)
-        {
-                if($value->getCode()!='DUMMY' && $value->getStudiengang()->getStudiengangID()==$studiengang->getStudiengangID())
-                {
-                    $angeboteOhneDummy[]=$value;
-                }
+        $angeboteOhneDummy = array();
+        foreach ($angebote as $value) {
+            if ($value->getCode() != 'DUMMY' && $value->getStudiengang()->getStudiengangID() == $studiengang->getStudiengangID()) {
+                $angeboteOhneDummy[] = $value;
+            }
         }
 
-        return array('angebote'=>$angeboteOhneDummy, 'dummyAngebote'  => $dummyAngebote, 'pageTitle' => 'STARTSEITE');
+        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote, 'pageTitle' => 'STARTSEITE');
     }
 
     /**
@@ -62,8 +60,8 @@ class SglController extends Controller
     public function modulCodeErstellungAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('veranstaltung'=>$id));
-        $modul=$angebot->getVeranstaltung();
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('veranstaltung' => $id));
+        $modul = $angebot->getVeranstaltung();
 
         $form = $this->createForm(new Form\CodeType(), $angebot);
 
@@ -77,11 +75,11 @@ class SglController extends Controller
                 $em->flush();
             }
 
-            return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form'=>$form->createView(),'modul'=>$modul, 'pageTitle' => 'Modulcodeerstellung'));
+            return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung'));
 
         }
 
-        return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form'=>$form->createView(),'modul'=>$modul, 'pageTitle' => 'Modulcodeerstellung'));
+        return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung'));
     }
 
     /**
@@ -90,11 +88,12 @@ class SglController extends Controller
      */
     public function mhbUebersichtAction()
     {
-    $em = $this->getDoctrine()->getManager();
-    $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
 
-    return array('mhb' => $mhb,'pageTitle' => 'STARTSEITE');
+        return array('mhb' => $mhb, 'pageTitle' => 'STARTSEITE');
     }
+
     /**
      * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
      * @Template("FHBingenMHBBundle:MHB:MHB_Modul_Liste.html.twig")
@@ -108,12 +107,12 @@ class SglController extends Controller
                                  FROM  FHBingenMHBBundle:Angebot a
                                  JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung =  v.Modul_ID
                                  JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
-                                 AND a.mhb ='.$id);
+                                 AND a.mhb =' . $id);
 
 
-        $result =$mhb->getResult();
+        $result = $mhb->getResult();
 
-        return array('mhb' => $result,'pageTitle' => 'STARTSEITE');
+        return array('mhb' => $result, 'pageTitle' => 'STARTSEITE');
     }
 
 
@@ -126,12 +125,12 @@ class SglController extends Controller
 
     }
 
-   /**
+    /**
      * @Route("/restricted/sgl/moduldeaktivierung", name="moduldeaktivierung")
      */
     public function modulDeaktivierungAction()
-{
+    {
 
-}
+    }
 
 }

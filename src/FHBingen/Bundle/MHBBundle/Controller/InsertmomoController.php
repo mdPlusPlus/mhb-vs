@@ -49,20 +49,17 @@ class InsertmomoController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
-                $angebot->setAngebotsart ($form->get('angebotsart')->getData());
-                $angebot->setCode ($form->get('code')->getData());
-                $angebot->setTitelDE ($form->get('abweichender_Titel_DE')->getData());
-                $angebot->setTitelEN ($form->get('abweichender_Titel_EN')->getData());
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $angebot->setAngebotsart($form->get('angebotsart')->getData());
+                $angebot->setCode($form->get('code')->getData());
+                $angebot->setTitelDE($form->get('abweichender_Titel_DE')->getData());
+                $angebot->setTitelEN($form->get('abweichender_Titel_EN')->getData());
 
                 $angebot->setStudiengang($form->get('studiengang')->getData());
                 $angebot->setFachgebiet($form->get('fachgebiet')->getData());
                 $angebot->setMhb($form->get('mhb')->getData());
                 $angebot->setVeranstaltung($form->get('module')->getData());
-
 
 
                 $em = $this->getDoctrine()->getManager();
@@ -71,9 +68,9 @@ class InsertmomoController extends Controller
 
                 return new Response('Angebot wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:angebot.html.twig', array('form'=>$form->createView()));
+            return $this->render('FHBingenMHBBundle:InsertForm:angebot.html.twig', array('form' => $form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:angebot.html.twig', array('form'=>$form->createView()));
+        return $this->render('FHBingenMHBBundle:InsertForm:angebot.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -88,10 +85,8 @@ class InsertmomoController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
                 $fachgebiet->setTitel($form->get('titel')->getData());
                 $fachgebiet->setStudiengang($form->get('hat')->getData());
 
@@ -101,9 +96,9 @@ class InsertmomoController extends Controller
 
                 return new Response('Fachgebiet wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:Fachgebiet.html.twig', array('form'=>$form->createView()));
+            return $this->render('FHBingenMHBBundle:InsertForm:Fachgebiet.html.twig', array('form' => $form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:Fachgebiet.html.twig', array('form'=>$form->createView()));
+        return $this->render('FHBingenMHBBundle:InsertForm:Fachgebiet.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -118,10 +113,8 @@ class InsertmomoController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
 
                 $kernfach->setVeranstaltung($form->get('modul')->getData());
                 $kernfach->setVertiefung($form->get('vertiefung')->getData());
@@ -131,9 +124,9 @@ class InsertmomoController extends Controller
 
                 return new Response('Kernfach wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:kernfach.html.twig', array('form'=>$form->createView()));
+            return $this->render('FHBingenMHBBundle:InsertForm:kernfach.html.twig', array('form' => $form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:kernfach.html.twig', array('form'=>$form->createView()));
+        return $this->render('FHBingenMHBBundle:InsertForm:kernfach.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -148,10 +141,8 @@ class InsertmomoController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
 
                 $lehr->setDozent($form->get('lehrender')->getData());
                 $lehr->setVeranstaltung($form->get('module')->getData());
@@ -163,9 +154,9 @@ class InsertmomoController extends Controller
 
                 return new Response('Lehrender wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:lehrender.html.twig', array('form'=>$form->createView()));
+            return $this->render('FHBingenMHBBundle:InsertForm:lehrender.html.twig', array('form' => $form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:lehrender.html.twig', array('form'=>$form->createView()));
+        return $this->render('FHBingenMHBBundle:InsertForm:lehrender.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -180,10 +171,8 @@ class InsertmomoController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
                 $mhb->setBeschreibung($form->get('beschreibung')->getData());
                 $mhb->setErstellungsdatum(new \DateTime());
                 $mhb->setVersionsnummer(1);
@@ -197,9 +186,9 @@ class InsertmomoController extends Controller
 
                 return new Response('MHB wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:modulhandbuch.html.twig', array('form'=>$form->createView()));
+            return $this->render('FHBingenMHBBundle:InsertForm:modulhandbuch.html.twig', array('form' => $form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:modulhandbuch.html.twig', array('form'=>$form->createView()));
+        return $this->render('FHBingenMHBBundle:InsertForm:modulhandbuch.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -214,10 +203,8 @@ class InsertmomoController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
                 $semester->setSemester($form->get('semester')->getData());
 
                 $em = $this->getDoctrine()->getManager();
@@ -226,9 +213,9 @@ class InsertmomoController extends Controller
 
                 return new Response('Semester wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:semester.html.twig', array('form'=>$form->createView()));
+            return $this->render('FHBingenMHBBundle:InsertForm:semester.html.twig', array('form' => $form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:semester.html.twig', array('form'=>$form->createView()));
+        return $this->render('FHBingenMHBBundle:InsertForm:semester.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -247,10 +234,8 @@ class InsertmomoController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
                 $semesterplan->setSwsUebungen($form->get('sws_uebung')->getData());
                 $semesterplan->setSwsVorlesung($form->get('sws_vorlesung')->getData());
                 $semesterplan->setAnzahlUebungsgruppen($form->get('anzahl_uebungsgruppen')->getData());
@@ -266,9 +251,9 @@ class InsertmomoController extends Controller
 
                 return new Response('Semesterplan wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:semesterplan.html.twig', array('form'=>$form->createView()));
+            return $this->render('FHBingenMHBBundle:InsertForm:semesterplan.html.twig', array('form' => $form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:semesterplan.html.twig', array('form'=>$form->createView()));
+        return $this->render('FHBingenMHBBundle:InsertForm:semesterplan.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -283,10 +268,8 @@ class InsertmomoController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
                 $studiengang->setFachbereich($form->get('fachbereich')->getData());
                 $studiengang->setBeschreibung($form->get('beschreibung')->getData());
                 $studiengang->setGrad($form->get('grad')->getData());
@@ -301,9 +284,9 @@ class InsertmomoController extends Controller
 
                 return new Response('Studiengang wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:studiengang.html.twig', array('form'=>$form->createView()));
+            return $this->render('FHBingenMHBBundle:InsertForm:studiengang.html.twig', array('form' => $form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:studiengang.html.twig', array('form'=>$form->createView()));
+        return $this->render('FHBingenMHBBundle:InsertForm:studiengang.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -318,10 +301,8 @@ class InsertmomoController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
                 $studienplan->setRegelSemester($form->get('reg_sem')->getData());
 
                 $studienplan->setStartSemester($form->get('start_sem_')->getData());
@@ -329,14 +310,14 @@ class InsertmomoController extends Controller
                 $studienplan->setStudiengang($form->get('studiengang')->getData());
 
                 $em = $this->getDoctrine()->getManager();
-                $em->persist( $studienplan);
+                $em->persist($studienplan);
                 $em->flush();
 
                 return new Response('Studienplan wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:studienplan.html.twig', array('form'=>$form->createView()));
+            return $this->render('FHBingenMHBBundle:InsertForm:studienplan.html.twig', array('form' => $form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:studienplan.html.twig', array('form'=>$form->createView()));
+        return $this->render('FHBingenMHBBundle:InsertForm:studienplan.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -351,23 +332,21 @@ class InsertmomoController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        if($request->getMethod() == 'POST')
-        {
-            if($form->isValid())
-            {
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
                 $vertiefung->setVertiefungsrichtung($form->get('vertiefungsrichtung')->getData());
 
                 $vertiefung->setStudiengang($form->get('stgang')->getData());
 
                 $em = $this->getDoctrine()->getManager();
-                $em->persist( $vertiefung);
+                $em->persist($vertiefung);
                 $em->flush();
 
                 return new Response('Vertiefung wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:vertiefung.html.twig', array('form'=>$form->createView()));
+            return $this->render('FHBingenMHBBundle:InsertForm:vertiefung.html.twig', array('form' => $form->createView()));
         }
-        return $this->render('FHBingenMHBBundle:InsertForm:vertiefung.html.twig', array('form'=>$form->createView()));
+        return $this->render('FHBingenMHBBundle:InsertForm:vertiefung.html.twig', array('form' => $form->createView()));
     }
 
 } 

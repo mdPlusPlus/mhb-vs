@@ -19,459 +19,36 @@ use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Semester;
 use FHBingen\Bundle\MHBBundle\Entity\Studiengang;
 
-class InsertController extends Controller {
-	
-	/**
-	 * @Route("/input")
-	 */
-	public function assertAction() {
-		/*
-		 * TODO
-		 * �berpr�fen ob bereits in der Datenbank, siehe findAllAction()
-		 */
-		$em = $this->getDoctrine ()->getManager ();
+class InsertController extends Controller
+{
+    public function semesterCreate()
+    {
+        // legt die Semester-Objekte an und gibt sie als Array zur�ck
+        //TODO: In Oberfäche integieren ?
+        $semester0 = new Semester();
+        $semester0->setSemester('WS14');
 
+        $semester1 = new Semester();
+        $semester1->setSemester('SS15');
 
+        $semester2 = new Semester();
+        $semester2->setSemester('WS15');
 
-		
-//		$dozentArr = $this->dozentCreate ();
-//
-//		foreach ( $dozentArr as $dozent ) {
-//			$resultArr = $this->assertObject ( $dozent );
-//			/**
-//			 * $resultArr[0] = $isValid (boolean)
-//			 * $resultArr[1] = $errorsString (string)
-//			 */
-//
-//			if ($resultArr [0]) {
-//				$em->persist ( $dozent );
-//			} else {
-//				return new Response ( /*( string ) $dozent . ': ' .*/ $resultArr [1] );
-//			}
-//
-//		}
-//
-//        $em->flush ();
+        $semester3 = new Semester();
+        $semester3->setSemester('SS16');
 
-//		$semesterArr = $this->semesterCreate ();
-//
-//		foreach ( $semesterArr as $semester ) {
-//			$resultArr = $this->assertObject ( $semester );
-//			/**
-//			 * $resultArr[0] = $isValid (boolean)
-//			 * $resultArr[1] = $errorsString (string)
-//			 */
-//			if ($resultArr [0]) {
-//				$em->persist ( $semester );
-//                $em->flush ();
-//			} else {
-//				return new Response ( /*( string ) $semester . ': ' .*/ $resultArr [1] );
-//				// $semester kann nicht ausgegeben werden, weil das feld nicht gesetzt wird, wenn die assert fehlschl�gt
-//				// L�sung? ignorieren?
-//			}
-//		}
-
-//        $stgangArr = $this->studiengangCreate();
-//
-//        foreach ( $stgangArr as $stgang ) {
-//            $resultArr = $this->assertObject ( $stgang );
-//            /**
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $stgang );
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-
-//        $vertArr = $this->vertiefungCreate();
-//
-//        foreach ( $vertArr as $vert ) {
-//            $resultArr = $this->assertObject ( $vert );
-//            /**
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $vert );
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-
-//        $fachArr = $this->fachCreate();
-//
-//        foreach ( $fachArr as $fach ) {
-//            $resultArr = $this->assertObject ( $fach );
-//            /**
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $fach );
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-//
-//        $veranstaltungArr = $this->veranstaltungCreate();
-//
-//        foreach ( $veranstaltungArr as $veranstaltung ) {
-//            $resultArr = $this->assertObject ( $veranstaltung );
-//            /**
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $veranstaltung );
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-
-        $modulArr = $this->showAction(11);
-
-        foreach($modulArr as $modul){
-            return new Response($modul);
-        }
-
-//         $lehrArr = $this->lehrCreate();
-//
-//        foreach ( $lehrArr as $lehrende ) {
-//            $resultArr = $this->assertObject ( $lehrende );
-//            /**
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $lehrende );
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-
-//        $semesterplanArr = $this->semesterplanCreate();
-//
-//        foreach ( $semesterplanArr as $semesterplan ) {
-//            $resultArr = $this->assertObject ( $semesterplan );
-//            /**
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $semesterplan );
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-
-//        $kernfachArr = $this->kernfachCreate();
-//
-//        foreach ( $kernfachArr as $kernfach ) {
-//            $resultArr = $this->assertObject ( $kernfach );
-//            /**
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $kernfach );
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-
-//         $mhbArr = $this->mhbCreate();
-//
-//        foreach ( $mhbArr as $mhb ) {
-//            $resultArr = $this->assertObject ( $mhb );
-//            /**
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $mhb );
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-
-//        $stuplanArr = $this->stuplanCreate();
-//
-//        foreach ( $stuplanArr as $stuplan ) {
-//            $resultArr = $this->assertObject ( $stuplan );
-//            /**
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $stuplan );
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-
-
-//        $vorausArr = $this->voraussetzungCreate();
-//
-//        foreach ( $vorausArr as $voraus ) {
-//            $resultArr = $this->assertObject ( $voraus );
-//            /**
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $voraus );
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-
-//        $angebotArr = $this->angebotCreate();
-//
-//        foreach ( $angebotArr as $angebot ) {
-//            $resultArr = $this->assertObject ( $angebot );
-
-//             * $resultArr[0] = $isValid (boolean)
-//             * $resultArr[1] = $errorsString (string)
-//             */
-//
-//            if ($resultArr [0]) {
-//                $em->persist ( $angebot);
-//                $em->flush ();
-//            } else {
-//                return new Response ( /*( string ) $stgang . ': ' .*/ $resultArr [1] );
-//            }
-//        }
-
-		return new Response ( "Studiengang, Dozenten und Semester eingepflegt!" );
-	}
-
-	/**
-	 * @Route("/findAll")
-	 */
-	public function findAllAction() {
-		// NUR EIN TEST
-		
-		/**
-		 * $obj = $this->getDoctrine()->getRepository('AcmeStoreBundle:Product')->find($id);
-		 *
-		 * if (!$obj) {
-		 * throw $this->createNotFoundException('No object found for id '.$id);
-		 * }
-		 */
-		$table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
-		$entryArr = $table->findAll ();
-		
-		$response = '<response>';
-		foreach ( $entryArr as $entry ) {
-			$response = $response . ' ' . ( string ) $entry;
-		}
-		$response = $response . '</response>';
-		
-		return new Response ( $response );
-	}
-
-
-	public function dozentCreate() {
-		// legt die Dozenten-Objekte an und gibt sie als Array zur�ck
-		$dozent0 = new Dozent ();
-		$dozent0->setAnrede ( 'Herr' );
-		$dozent0->setTitel ( 'Prof. Dr.' );
-		$dozent0->setName ( 'Lucky' );
-		$dozent0->setNachname ( 'Luke' );
-		$dozent0->setEmail ( 'lucky@luke.com' );
-		
-//		$dozent1 = new Dozent ();
-//		$dozent1->setAnrede ( 'Frau' );
-//		$dozent1->setTitel ( 'Prof. Dr.' );
-//		$dozent1->setName ( 'Rot' );
-//		$dozent1->setNachname ( 'Kaeppchen' );
-//		$dozent1->setEmail ( 'rot@kaeppchen.com' );
-//
-//		$dozent2 = new Dozent ();
-//		$dozent2->setAnrede ( 'Frau' );
-//		$dozent2->setName ( 'Andrea' );
-//		$dozent2->setNachname ( 'Stasche' );
-//		$dozent2->setEmail ( 'stasche@sprechart.com' );
-//
-//		$dozent3 = new Dozent ();
-//		$dozent3->setAnrede ( 'Herr' );
-//		$dozent3->setTitel ( 'Dipl. Inf.' );
-//		$dozent3->setName ( 'Max' );
-//		$dozent3->setNachname ( 'Raabe' );
-//		$dozent3->setEmail ( 'raabe@fh-bingen.de' );
-//
-//		$dozent4 = new Dozent ();
-//		$dozent4->setAnrede ( 'Herr' );
-//		$dozent4->setTitel ( 'Prof. Dr.' );
-//		$dozent4->setName ( 'Peter' );
-//		$dozent4->setNachname ( 'Lustig' );
-//		$dozent4->setEmail ( 'lustig@fh-bingen.de' );
-		
-		$dozentArr = array (
-				$dozent0
-//				$dozent1,
-//				$dozent2,
-//				$dozent3,
-//				$dozent4
-		);
-		
-		return $dozentArr;
-	}
-
-
-	public function semesterCreate() {
-		// legt die Semester-Objekte an und gibt sie als Array zur�ck
-		$semester0 = new Semester ();
-		$semester0->setSemester ( 'WS14' );
-
-		$semester1 = new Semester ();
-		$semester1->setSemester ( 'SS15' );
-
-		$semester2 = new Semester ();
-		$semester2->setSemester ( 'WS15' );
-
-		$semester3 = new Semester ();
-		$semester3->setSemester ( 'SS16' );
-
-		$semesterArr = array (
-				$semester0,
-				$semester1,
-				$semester2,
-				$semester3
-		);
-
-		return $semesterArr;
-	}
-
-
-    public function studiengangCreate() {
-        // legt die Studiengang-Objekte an und gibt sie als Array zurueck
-        $stgang0 =new Studiengang();
-        $stgang0->setFachbereich(1);
-        $stgang0->setGrad("Bachelor");
-        $stgang0->setTitel("Bionformatik");
-        $stgang0->setKuerzel("BIO");
-        $stgang0->setBeschreibung("Bio-Computer science");
-
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
-        $entry = $table->find(35);
-
-        $stgang0->setSgl($entry);
-
-//        $stgang1 =new Studiengang();
-//        $stgang1->setFachbereich(1);
-//        $stgang1->setGrad("Bachelor");
-//        $stgang1->setTitel("Informatik");
-//        $stgang1->setKuerzel("BINF");
-//        $stgang1->setBeschreibung("Computer science");
-//
-//        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
-//        $entry = $table->find(47);
-//
-//        $stgang1->setSgl($entry);
-//
-//
-//        $stgang2 =new Studiengang();
-//        $stgang2->setFachbereich(1);
-//        $stgang2->setGrad("Bachelor");
-//        $stgang2->setTitel("Mobile Computing");
-//        $stgang2->setKuerzel("MOCO");
-//        $stgang2->setBeschreibung("Handy science");
-//
-//        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
-//        $entry = $table->find(48);
-//
-//        $stgang2->setSgl($entry);
-//
-//
-//        $stgang3 =new Studiengang();
-//        $stgang3->setFachbereich(2);
-//        $stgang3->setGrad("Master");
-//        $stgang3->setTitel("Informationssysteme");
-//        $stgang3->setKuerzel("MINF");
-//        $stgang3->setBeschreibung("Info science");
-//
-//        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
-//        $entry = $table->find(49);
-//
-//        $stgang3->setSgl($entry);
-
-
-        $stgangArr = array (
-            $stgang0
-//            $stgang1,
-//            $stgang2,
-//            $stgang3
+        $semesterArr = array(
+            $semester0,
+            $semester1,
+            $semester2,
+            $semester3
         );
 
-        return $stgangArr;
+        return $semesterArr;
     }
 
-
-    public function vertiefungCreate() {
-        // legt die Vertiefungsrichtung-Objekte an und gibt sie als Array zurueck
-        $vert0 = new Vertiefung();
-        $vert0->setVertiefungsrichtung("PeterLustig");
-
-
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-        $entry = $table->find(34);
-
-        $vert0->setStudiengang($entry);
-
-        $vertArr = array (
-            $vert0
-//            $vert1,
-//            $vert2,
-//            $vert3
-        );
-
-        return $vertArr;
-    }
-
-
-    public function fachCreate() {
-        // legt die Fachgebiets-Objekte an und gibt sie als Array zurueck
-        $fach0 = new Fachgebiet();
-        $fach0->setTitel("ABCD");
-
-
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
-        $entry = $table->find(34);
-
-        $fach0->setStudiengang($entry);
-
-        $fachArr = array (
-            $fach0
-        );
-
-        return $fachArr;
-    }
-
-    public function veranstaltungCreate() {
+    public function veranstaltungCreate()
+    {
         // legt die Veranstaltungs-Objekte an und gibt sie als Array zurueck
         $veranstaltung0 = new Veranstaltung();
         $veranstaltung0->setErstellungsdatum(new \DateTime());
@@ -498,8 +75,7 @@ class InsertController extends Controller {
         $veranstaltung0->setVoraussetzungInh("Schulmathematik");
 
 
-
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
         $entry = $table->find(35);
 
         $veranstaltung0->setBeauftragter($entry);
@@ -529,13 +105,12 @@ class InsertController extends Controller {
         $veranstaltung1->setVoraussetzungInh("Schulmathematik");
 
 
-
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
         $entry = $table->find(35);
 
         $veranstaltung0->setBeauftragter($entry);
 
-        $veranstaltungArr = array (
+        $veranstaltungArr = array(
             $veranstaltung0,
             $veranstaltung1
         );
@@ -543,21 +118,22 @@ class InsertController extends Controller {
         return $veranstaltungArr;
     }
 
-    public function lehrCreate() {
+    public function lehrCreate()
+    {
         // legt die Lehrende-Objekte an und gibt sie als Array zurueck
         $lehr0 = new Lehrende();
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Veranstaltung');
         $entry = $table->find(1);
 
         $lehr0->setVeranstaltung($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
         $entry = $table->find(35);
 
         $lehr0->setDozent($entry);
 
-        $fachArr = array (
+        $fachArr = array(
             $lehr0
         );
 
@@ -565,21 +141,22 @@ class InsertController extends Controller {
     }
 
 
-    public function semesterplanCreate() {
+    public function semesterplanCreate()
+    {
         // legt die Semesterplan-Objekte an und gibt sie als Array zurueck
         $semplan0 = new Semesterplan();
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Veranstaltung');
         $entry = $table->find(1);
 
         $semplan0->setVeranstaltung($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Dozent');
         $entry = $table->find(35);
 
         $semplan0->setDozent($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Semester');
         $entry = $table->find("WS15");
 
         $semplan0->setSemester($entry);
@@ -591,45 +168,46 @@ class InsertController extends Controller {
         $semplan0->setGroesseUebungsgruppen(10);
 
 
-
-        $semplanArr = array (
+        $semplanArr = array(
             $semplan0
         );
 
         return $semplanArr;
     }
 
-    public function kernfachCreate() {
+    public function kernfachCreate()
+    {
         // legt die Kernfach-Objekte an und gibt sie als Array zurueck
         $kern0 = new Kernfach();
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Veranstaltung');
         $entry = $table->find(1);
 
         $kern0->setVeranstaltung($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Vertiefung' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Vertiefung');
         $entry = $table->find(5);
 
         $kern0->setVertiefung($entry);
 
-       $kernfachArr = array (
+        $kernfachArr = array(
             $kern0
         );
 
         return $kernfachArr;
     }
 
-    public function mhbCreate() {
+    public function mhbCreate()
+    {
         // legt die MHB-Objekte an und gibt sie als Array zurueck
         $mhb0 = new Modulhandbuch();
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Semester');
         $entry = $table->find("WS15");
 
         $mhb0->setGueltigAb($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Studiengang');
         $entry = $table->find(34);
 
         $mhb0->setGehoertZu($entry);
@@ -638,61 +216,63 @@ class InsertController extends Controller {
         $mhb0->setErstellungsdatum(new \DateTime());
         $mhb0->setBeschreibung("MHB ABC");
 
-        $mhbArr = array (
+        $mhbArr = array(
             $mhb0
         );
 
         return $mhbArr;
     }
 
-    public function stuplanCreate() {
+    public function stuplanCreate()
+    {
         // legt die Studienplan-Objekte an und gibt sie als Array zurueck
         $stuplan0 = new Studienplan();
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Semester');
         $entry = $table->find("WS15");
 
         $stuplan0->setStartSemester($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Semester');
         $entry = $table->find("SS15");
 
         $stuplan0->setRegelSemester($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Veranstaltung');
         $entry = $table->find(1);
 
         $stuplan0->setVeranstaltung($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Studiengang');
         $entry = $table->find(34);
 
         $stuplan0->setStudiengang($entry);
 
 
-        $stuplanArr = array (
+        $stuplanArr = array(
             $stuplan0
         );
 
         return $stuplanArr;
     }
 
-    public function voraussetzungCreate() {
+    public function voraussetzungCreate()
+    {
         // legt die Voraussetzung-Objekte an und gibt sie als Array zurueck
         $voraus0 = new Veranstaltung();
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Veranstaltung');
         $entry = $table->find(1);
 
         $voraus0->addModulVoraussetzung($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Veranstaltung');
         $entry = $table->find(3);
 
         $voraus0->addModulVoraussetzung($entry);
 
 
-        $vorausArr = array (
+        $vorausArr = array(
             $voraus0
         );
 
@@ -700,26 +280,27 @@ class InsertController extends Controller {
     }
 
 
-    public function angebotCreate() {
+    public function angebotCreate()
+    {
         // legt die Voraussetzung-Objekte an und gibt sie als Array zurueck
         $angebot0 = new Angebot();
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Veranstaltung');
         $entry = $table->find(1);
 
         $angebot0->setVeranstaltung($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Modulhandbuch' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Modulhandbuch');
         $entry = $table->find(1);
 
         $angebot0->setMhb($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Fachgebiet' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Fachgebiet');
         $entry = $table->find(1);
 
         $angebot0->setFachgebiet($entry);
 
-        $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
+        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Studiengang');
         $entry = $table->find(34);
 
         $angebot0->setStudiengang($entry);
@@ -730,7 +311,7 @@ class InsertController extends Controller {
         $angebot0->setTitelEN("Lustig");
 
 
-        $angebotArr = array (
+        $angebotArr = array(
             $angebot0
         );
 
@@ -744,34 +325,35 @@ class InsertController extends Controller {
 
         if (!$modul) {
             throw $this->createNotFoundException(
-                'No product found for id '.$id
+                'No product found for id ' . $id
             );
         }
 
-        $modulArr = array (
+        $modulArr = array(
             $modul
         );
 
         return $modulArr;
     }
 
-	public function assertObject($obj) {
-		$isValid = true;
-		$errorsString = 'no errors';
-		
-		$validator = $this->get ( 'validator' );
-		$errors = $validator->validate ( $obj );
-		
-		if (count ( $errors ) > 0) {
-			$isValid = false;
-			$errorsString = ( string ) $errors;
-		}
-		
-		$resultArr = array (
-				$isValid,
-				$errorsString 
-		);
-		
-		return $resultArr;
-	}
+    public function assertObject($obj)
+    {
+        $isValid = true;
+        $errorsString = 'no errors';
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($obj);
+
+        if (count($errors) > 0) {
+            $isValid = false;
+            $errorsString = (string) $errors;
+        }
+
+        $resultArr = array(
+            $isValid,
+            $errorsString
+        );
+
+        return $resultArr;
+    }
 }

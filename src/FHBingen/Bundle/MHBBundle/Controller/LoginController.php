@@ -16,7 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 
-class LoginController extends Controller{
+class LoginController extends Controller
+{
 
     /**
      * @Route("/login", name="login")
