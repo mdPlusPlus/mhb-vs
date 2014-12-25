@@ -9,6 +9,7 @@
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -127,6 +128,11 @@ class VerwaltungsController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
+                /*
+                 * TODO:
+                 * - Menge von Vertiefungsrichtungen und Fachgebieten mit DB vergleichen
+                 * - alle DB-Einträge, die in neuem Set nicht mehr enthalten sind dereferenzieren und löschen
+                 */
                 $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice
                 $studiengang->setGrad($form->get('grad')->getData());                   //choice
                 $studiengang->setTitel($form->get('titel')->getData());                 //text
@@ -140,6 +146,13 @@ class VerwaltungsController extends Controller
                     $vertiefung->setStgang($studiengang);
                     $em->persist($vertiefung);
                 }
+                $allRichtungen = $studiengang->getRichtung();
+                foreach ($allRichtungen as $dbEntry) {
+                    if (!$vertiefungCollection->contains($dbEntry)) {
+                        $em->remove($dbEntry);
+                    }
+                }
+
                 $fachgebietCollection = $form->get('fachgebiete')->getData();   //collection
                 foreach ($fachgebietCollection as $fachgebiet) {
                     $studiengang->addFachgebiete($fachgebiet);

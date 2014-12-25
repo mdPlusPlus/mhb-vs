@@ -520,7 +520,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         list (
             $this->Dozenten_ID,
             //$this->username,
-            $this->Email,
+            $this->email,
             $this->password,
             // see section on salt below
             // $this->salt
