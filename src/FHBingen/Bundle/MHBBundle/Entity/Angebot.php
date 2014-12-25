@@ -25,7 +25,7 @@ class Angebot
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string = (string)$this->$module;
+        $string = (string)$this->$veranstaltung;
         return $string;
     }
 
@@ -41,7 +41,7 @@ class Angebot
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="angebot")
      * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID")
      * */
-    protected $module;
+    protected $veranstaltung;
 
 
     /**
@@ -70,22 +70,22 @@ class Angebot
      * message = "Bitte geben Sie eine korrekte Angebotsart an!"
      * )
      */
-    protected	$Angebotsart;
+    protected	$angebotsart;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
      */
-    protected	$Code;
+    protected	$code;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
      */
-    protected	$Abweichender_Titel_DE;
+    protected	$titelDE;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
      */
-    protected	$Abweichender_Titel_EN;
+    protected	$titelEN;
 
     /**
      * Get id
@@ -103,9 +103,9 @@ class Angebot
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
      * @return Angebot
      */
-    public function setModule(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
+    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
     {
-        $this->module = $module;
+        $this->veranstaltung = $module;
     
         return $this;
     }
@@ -115,9 +115,9 @@ class Angebot
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
      */
-    public function getModule()
+    public function getVeranstaltung()
     {
-        return $this->module;
+        return $this->veranstaltung;
     }
 
     /**
@@ -197,7 +197,7 @@ class Angebot
      */
     public function setAngebotsart($angebotsart)
     {
-        $this->Angebotsart = $angebotsart;
+        $this->angebotsart = $angebotsart;
     
         return $this;
     }
@@ -209,7 +209,7 @@ class Angebot
      */
     public function getAngebotsart()
     {
-        return $this->Angebotsart;
+        return $this->angebotsart;
     }
 
     /**
@@ -220,7 +220,7 @@ class Angebot
      */
     public function setCode($code)
     {
-        $this->Code = $code;
+        $this->code = $code;
     
         return $this;
     }
@@ -232,7 +232,7 @@ class Angebot
      */
     public function getCode()
     {
-        return $this->Code;
+        return $this->code;
     }
 
     /**
@@ -241,9 +241,9 @@ class Angebot
      * @param string $abweichenderTitelDE
      * @return Angebot
      */
-    public function setAbweichenderTitelDE($abweichenderTitelDE)
+    public function setTitelDE($abweichenderTitelDE)
     {
-        $this->Abweichender_Titel_DE = $abweichenderTitelDE;
+        $this->titelDE = $abweichenderTitelDE;
     
         return $this;
     }
@@ -253,9 +253,9 @@ class Angebot
      *
      * @return string 
      */
-    public function getAbweichenderTitelDE()
+    public function getTitelDE()
     {
-        return $this->Abweichender_Titel_DE;
+        return $this->titelDE;
     }
 
     /**
@@ -264,9 +264,9 @@ class Angebot
      * @param string $abweichenderTitelEN
      * @return Angebot
      */
-    public function setAbweichenderTitelEN($abweichenderTitelEN)
+    public function setTitelEN($abweichenderTitelEN)
     {
-        $this->Abweichender_Titel_EN = $abweichenderTitelEN;
+        $this->titelEN = $abweichenderTitelEN;
     
         return $this;
     }
@@ -276,8 +276,8 @@ class Angebot
      *
      * @return string 
      */
-    public function getAbweichenderTitelEN()
+    public function getTitelEN()
     {
-        return $this->Abweichender_Titel_EN;
+        return $this->titelEN;
     }
 }

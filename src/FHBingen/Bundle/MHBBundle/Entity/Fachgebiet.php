@@ -24,7 +24,7 @@ class Fachgebiet
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string = $this->getHat().' '.$this->getTitel();
+        $string = $this->getStudiengang().' '.$this->getTitel();
         return $string;
     }
 
@@ -43,7 +43,7 @@ class Fachgebiet
      * minMessage="Der Fachgebietstitel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $Titel;
+    protected $titel;
 
     /**
      * Get Fachgebiets_ID
@@ -63,7 +63,7 @@ class Fachgebiet
      */
     public function setTitel($titel)
     {
-        $this->Titel = $titel;
+        $this->titel = $titel;
     
         return $this;
     }
@@ -75,7 +75,7 @@ class Fachgebiet
      */
     public function getTitel()
     {
-        return $this->Titel;
+        return $this->titel;
     }
 
 
@@ -135,17 +135,17 @@ class Fachgebiet
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="fachgebiete")
      * @ORM\JoinColumn(name="Studiengang_ID", referencedColumnName="Studiengang_ID")
      */
-    protected $hat;
+    protected $studiengang;
 
     /**
-     * Set hat
+     * Set studiengang
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $hat
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
      * @return Fachgebiet
      */
-    public function setHat(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $hat = null)
+    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null)
     {
-        $this->hat = $hat;
+        $this->studiengang = $studiengang;
     
         return $this;
     }
@@ -155,8 +155,8 @@ class Fachgebiet
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Studiengang 
      */
-    public function getHat()
+    public function getStudiengang()
     {
-        return $this->hat;
+        return $this->studiengang;
     }
 }

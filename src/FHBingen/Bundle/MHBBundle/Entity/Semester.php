@@ -39,7 +39,7 @@ class Semester
      * maxMessage="Ein Semester darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $Semester;
+    protected $semester;
 
     /**
      * Set Semester
@@ -49,7 +49,7 @@ class Semester
      */
     public function setSemester($semester)
     {
-        $this->Semester = $semester;
+        $this->semester = $semester;
     
         return $this;
     }
@@ -61,7 +61,7 @@ class Semester
      */
     public function getSemester()
     {
-        return $this->Semester;
+        return $this->semester;
     }
 
 
@@ -118,9 +118,9 @@ class Semester
     /*Modulhandbuch/Semester*/
 
     /**
-     * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gueltig_ab")
+     * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gueltigAb")
      */
-    protected $sem;
+    protected $gueltigAbSemester;
 
     /**
      * Add sem
@@ -128,9 +128,9 @@ class Semester
      * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $sem
      * @return Semester
      */
-    public function addSem(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $sem)
+    public function addGueltigAbSemester(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $sem)
     {
-        $this->sem[] = $sem;
+        $this->gueltigAbSemester[] = $sem;
     
         return $this;
     }
@@ -142,7 +142,7 @@ class Semester
      */
     public function removeSem(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $sem)
     {
-        $this->sem->removeElement($sem);
+        $this->gueltigAbSemester->removeElement($sem);
     }
 
     /**
@@ -150,9 +150,9 @@ class Semester
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getSem()
+    public function getGueltigAbSemester()
     {
-        return $this->sem;
+        return $this->gueltigAbSemester;
     }
 
     /**
@@ -192,9 +192,9 @@ class Semester
     /*Studienplan*/
     /*Startsemester*/
     /**
-     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="start_sem", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="startSemester", cascade={"all"})
      * */
-    protected $startsem;
+    protected $startSemester;
 
 
     /**
@@ -215,7 +215,7 @@ class Semester
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem
      */
-    public function removeRegelsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem)
+    public function removeRegelSemester(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem)
     {
         $this->regelsem->removeElement($regelsem);
     }
@@ -225,7 +225,7 @@ class Semester
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getRegelsem()
+    public function getRegelSemester()
     {
         return $this->regelsem;
     }
@@ -236,9 +236,9 @@ class Semester
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem
      * @return Semester
      */
-    public function addStartsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem)
+    public function addStartSemester(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem)
     {
-        $this->startsem[] = $startsem;
+        $this->startSemester[] = $startsem;
     
         return $this;
     }
@@ -248,9 +248,9 @@ class Semester
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem
      */
-    public function removeStartsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem)
+    public function removeStartSemester(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem)
     {
-        $this->startsem->removeElement($startsem);
+        $this->startSemester->removeElement($startsem);
     }
 
     /**
@@ -258,8 +258,8 @@ class Semester
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getStartsem()
+    public function getStartSemester()
     {
-        return $this->startsem;
+        return $this->startSemester;
     }
 }

@@ -440,7 +440,7 @@ class InsertController extends Controller {
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
         $entry = $table->find(34);
 
-        $vert0->setStgang($entry);
+        $vert0->setStudiengang($entry);
 
         $vertArr = array (
             $vert0
@@ -462,7 +462,7 @@ class InsertController extends Controller {
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
         $entry = $table->find(34);
 
-        $fach0->setHat($entry);
+        $fach0->setStudiengang($entry);
 
         $fachArr = array (
             $fach0
@@ -476,7 +476,7 @@ class InsertController extends Controller {
         $veranstaltung0 = new Veranstaltung();
         $veranstaltung0->setErstellungsdatum(new \DateTime());
         $veranstaltung0->setErstelltVon("HCR");
-        $veranstaltung0->setVersionsnummerModul(1);
+        $veranstaltung0->setVersionsnummer(1);
         $veranstaltung0->setStatus("freigegeben");
         $veranstaltung0->setKuerzel("ABC");
         $veranstaltung0->setName("Die Katze raucht den Schnee");
@@ -507,7 +507,7 @@ class InsertController extends Controller {
         $veranstaltung1 = new Veranstaltung();
         $veranstaltung1->setErstellungsdatum(new \DateTime());
         $veranstaltung1->setErstelltVon("PCR");
-        $veranstaltung1->setVersionsnummerModul(1);
+        $veranstaltung1->setVersionsnummer(1);
         $veranstaltung1->setStatus("freigegeben");
         $veranstaltung1->setKuerzel("DEF");
         $veranstaltung1->setName("Blubbksadjökajsf");
@@ -550,12 +550,12 @@ class InsertController extends Controller {
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
         $entry = $table->find(1);
 
-        $lehr0->setmodule($entry);
+        $lehr0->setVeranstaltung($entry);
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
         $entry = $table->find(35);
 
-        $lehr0->setLehrender($entry);
+        $lehr0->setDozent($entry);
 
         $fachArr = array (
             $lehr0
@@ -572,12 +572,12 @@ class InsertController extends Controller {
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
         $entry = $table->find(1);
 
-        $semplan0->setmodule($entry);
+        $semplan0->setVeranstaltung($entry);
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Dozent' );
         $entry = $table->find(35);
 
-        $semplan0->setLehrender($entry);
+        $semplan0->setDozent($entry);
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
         $entry = $table->find("WS15");
@@ -585,7 +585,7 @@ class InsertController extends Controller {
         $semplan0->setSemester($entry);
 
         $semplan0->setAnzahlUebungsgruppen(3);
-        $semplan0->setSwsUebung(5);
+        $semplan0->setSwsUebungen(5);
         $semplan0->setSwsVorlesung(5);
         $semplan0->setAnzahlUebungsgruppen(5);
         $semplan0->setGroesseUebungsgruppen(10);
@@ -606,7 +606,7 @@ class InsertController extends Controller {
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
         $entry = $table->find(1);
 
-        $kern0->setmodul($entry);
+        $kern0->setVeranstaltung($entry);
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Vertiefung' );
         $entry = $table->find(5);
@@ -634,7 +634,7 @@ class InsertController extends Controller {
 
         $mhb0->setGehoertZu($entry);
 
-        $mhb0->setMHBVersionsnummer(1);
+        $mhb0->setVersionsnummer(1);
         $mhb0->setErstellungsdatum(new \DateTime());
         $mhb0->setBeschreibung("MHB ABC");
 
@@ -652,17 +652,17 @@ class InsertController extends Controller {
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
         $entry = $table->find("WS15");
 
-        $stuplan0->setStartSem($entry);
+        $stuplan0->setStartSemester($entry);
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Semester' );
         $entry = $table->find("SS15");
 
-        $stuplan0->setRegSem($entry);
+        $stuplan0->setRegelSemester($entry);
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
         $entry = $table->find(1);
 
-        $stuplan0->setModul($entry);
+        $stuplan0->setVeranstaltung($entry);
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Studiengang' );
         $entry = $table->find(34);
@@ -707,7 +707,7 @@ class InsertController extends Controller {
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Veranstaltung' );
         $entry = $table->find(1);
 
-        $angebot0->setModule($entry);
+        $angebot0->setVeranstaltung($entry);
 
         $table = $this->getDoctrine ()->getRepository ( 'FHBingenMHBBundle:Modulhandbuch' );
         $entry = $table->find(1);
@@ -726,8 +726,8 @@ class InsertController extends Controller {
 
         $angebot0->setAngebotsart("Pflichtfach");
         $angebot0->setCode("BINF-000");
-        $angebot0->setAbweichenderTitelDE("Peter");
-        $angebot0->setAbweichenderTitelEN("Lustig");
+        $angebot0->setTitelDE("Peter");
+        $angebot0->setTitelEN("Lustig");
 
 
         $angebotArr = array (

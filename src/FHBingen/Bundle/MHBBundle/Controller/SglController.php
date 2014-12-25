@@ -103,10 +103,10 @@ class SglController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $mhb = $em->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer_Modul,
-                                 d.Titel, d.Nachname
+        $mhb = $em->createQuery('SELECT v.Modul_ID, v.name , v.kuerzel ,a.code, v.haeufigkeit, v.versionsnummer,
+                                 d.titel, d.nachname
                                  FROM  FHBingenMHBBundle:Angebot a
-                                 JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.module =  v.Modul_ID
+                                 JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung =  v.Modul_ID
                                  JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
                                  AND a.mhb ='.$id);
 

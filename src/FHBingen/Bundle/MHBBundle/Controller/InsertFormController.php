@@ -78,14 +78,14 @@ class InsertFormController extends Controller
             {
                 $angebot->setAngebotsart($form->get('angebotsart')->getData());
                 $angebot->setCode($form->get('code')->getData());
-                $angebot->setAbweichenderTitelDE($form->get('abweichender_Titel_DE')->getData());
-                $angebot->setAbweichenderTitelEN($form->get('abweichender_Titel_EN')->getData());
+                $angebot->setTitelDE($form->get('abweichender_Titel_DE')->getData());
+                $angebot->setTitelEN($form->get('abweichender_Titel_EN')->getData());
 
                 $em = $this->getDoctrine()->getManager();
                 $angebot->setStudiengang($form->get('studiengang')->getData());
                 $angebot->setFachgebiet($form->get('fachgebiet')->getData());
                 $angebot->setMhb($form->get('mhb')->getData());
-                $angebot->setModule($form->get('module')->getData());
+                $angebot->setVeranstaltung($form->get('module')->getData());
 
                 $validator = $this->get('validator');
                 $errors = $validator->validate($angebot);
@@ -125,7 +125,7 @@ class InsertFormController extends Controller
             if($form->isValid())
             {
                 $fachgebiet->setTitel($form->get('titel')->getData());
-                $fachgebiet->setHat($form->get('hat')->getData());
+                $fachgebiet->setStudiengang($form->get('hat')->getData());
 
 
                 $em = $this->getDoctrine()->getManager();
@@ -156,7 +156,7 @@ class InsertFormController extends Controller
             if($form->isValid())
             {
 
-                $kernfach->setModul($form->get('modul')->getData());
+                $kernfach->setVeranstaltung($form->get('modul')->getData());
                 $kernfach->setVertiefung($form->get('vertiefung')->getData());
                 $em = $this->getDoctrine()->getManager();
 
@@ -186,8 +186,8 @@ class InsertFormController extends Controller
         {
             if($form->isValid())
             {
-                $lehrende->setLehrender($form->get('lehrender')->getData());
-                $lehrende->setModule($form->get('module')->getData());
+                $lehrende->setDozent($form->get('lehrender')->getData());
+                $lehrende->setVeranstaltung($form->get('module')->getData());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($lehrende);
@@ -219,7 +219,7 @@ class InsertFormController extends Controller
 
                 $mhb->setBeschreibung($form->get('beschreibung')->getData());
                 $mhb->setErstellungsdatum(new \DateTime());
-                $mhb->setMHBVersionsnummer(1);
+                $mhb->setVersionsnummer(1);
                 $mhb->setGehoertZu($form->get('gehoert_zu')->getData());
                 $mhb->setGueltigAb($form->get('gueltig_ab')->getData());
 
@@ -280,11 +280,11 @@ class InsertFormController extends Controller
                 $semesterplan->setGroesseUebungsgruppen($form->get('groesse_uebungsgruppen')->getData());
                 $semesterplan->setAnzahlUebungsgruppen($form->get('anzahl_uebungsgruppen')->getData());
                 $semesterplan->setSwsVorlesung($form->get('sws_vorlesung')->getData());
-                $semesterplan->setSwsUebung($form->get('sws_uebung')->getData());
+                $semesterplan->setSwsUebungen($form->get('sws_uebung')->getData());
 
                 $semesterplan->setSemester($form->get('semester')->getData());
-                $semesterplan->setLehrender($form->get('lehrender')->getData());
-                $semesterplan->setModule($form->get('module')->getData());
+                $semesterplan->setDozent($form->get('lehrender')->getData());
+                $semesterplan->setVeranstaltung($form->get('module')->getData());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($semesterplan);
@@ -346,10 +346,10 @@ class InsertFormController extends Controller
         {
             if($form->isValid())
             {
-                $studienplan->setRegSem($form->get('reg_sem')->getData());
+                $studienplan->setRegelSemester($form->get('reg_sem')->getData());
 
-                $studienplan->setStartSem($form->get('start_sem_')->getData());
-                $studienplan->setModul($form->get('modul')->getData());
+                $studienplan->setStartSemester($form->get('start_sem_')->getData());
+                $studienplan->setVeranstaltung($form->get('modul')->getData());
                 $studienplan->setStudiengang($form->get('studiengang')->getData());
 
                 $em = $this->getDoctrine()->getManager();
@@ -380,7 +380,7 @@ class InsertFormController extends Controller
             if($form->isValid())
             {
                 $veranstaltung->setErstellungsdatum(new \DateTime());
-                $veranstaltung->setVersionsnummerModul(1);
+                $veranstaltung->setVersionsnummer(1);
                 $veranstaltung->setStatus($form->get('Status')->getData());
                 $veranstaltung->setKuerzel($form->get('Kuerzel')->getData());
                 $veranstaltung->setName($form->get('Name')->getData());
@@ -452,7 +452,7 @@ class InsertFormController extends Controller
         {
             if($form->isValid())
             {
-                $vertiefung->setStgang($form->get('stgang')->getData());
+                $vertiefung->setStudiengang($form->get('stgang')->getData());
                 $vertiefung->setVertiefungsrichtung($form->get('vertiefungsrichtung')->getData());
 
                 $em = $this->getDoctrine()->getManager();

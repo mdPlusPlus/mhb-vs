@@ -43,7 +43,7 @@ class Semesterplan
      * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
      * )
      */
-    protected $SWS_Uebung;
+    protected $swsUebungen;
 
     /**
      * @ORM\Column(type="integer")
@@ -54,7 +54,7 @@ class Semesterplan
      * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
      * )
      */
-    protected $SWS_Vorlesung;
+    protected $swsVorlesung;
 
     /**
      * @ORM\Column(type="integer")
@@ -65,7 +65,7 @@ class Semesterplan
      * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
      * )
      */
-    protected $Anzahl_Uebungsgruppen;
+    protected $anzahlUebungsgruppen;
 
     /**
      * @ORM\Column(type="integer")
@@ -76,7 +76,7 @@ class Semesterplan
      * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
      * )
      */
-    protected $Groesse_Uebungsgruppen;
+    protected $groesseUebungsgruppen;
 
     /**
      * Abhaengigkeiten
@@ -86,14 +86,14 @@ class Semesterplan
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="semesterplan")
      * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID")
      * */
-    protected $module;
+    protected $veranstaltung;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="semesterplan")
      * @ORM\JoinColumn(name="dozent_id", referencedColumnName="Dozenten_ID")
      * */
-    protected $lehrender;
+    protected $dozent;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="semesterplan")
@@ -117,9 +117,9 @@ class Semesterplan
      * @param integer $swsUebung
      * @return Semesterplan
      */
-    public function setSwsUebung($swsUebung)
+    public function setSwsUebungen($swsUebung)
     {
-        $this->SWS_Uebung = $swsUebung;
+        $this->swsUebungen = $swsUebung;
     
         return $this;
     }
@@ -129,9 +129,9 @@ class Semesterplan
      *
      * @return integer 
      */
-    public function getSwsUebung()
+    public function getSwsUebungen()
     {
-        return $this->SWS_Uebung;
+        return $this->swsUebungen;
     }
 
     /**
@@ -142,7 +142,7 @@ class Semesterplan
      */
     public function setSwsVorlesung($swsVorlesung)
     {
-        $this->SWS_Vorlesung = $swsVorlesung;
+        $this->swsVorlesung = $swsVorlesung;
     
         return $this;
     }
@@ -154,7 +154,7 @@ class Semesterplan
      */
     public function getSwsVorlesung()
     {
-        return $this->SWS_Vorlesung;
+        return $this->swsVorlesung;
     }
 
     /**
@@ -165,7 +165,7 @@ class Semesterplan
      */
     public function setAnzahlUebungsgruppen($anzahlUebungsgruppen)
     {
-        $this->Anzahl_Uebungsgruppen = $anzahlUebungsgruppen;
+        $this->anzahlUebungsgruppen = $anzahlUebungsgruppen;
     
         return $this;
     }
@@ -177,7 +177,7 @@ class Semesterplan
      */
     public function getAnzahlUebungsgruppen()
     {
-        return $this->Anzahl_Uebungsgruppen;
+        return $this->anzahlUebungsgruppen;
     }
 
     /**
@@ -188,7 +188,7 @@ class Semesterplan
      */
     public function setGroesseUebungsgruppen($groesseUebungsgruppen)
     {
-        $this->Groesse_Uebungsgruppen = $groesseUebungsgruppen;
+        $this->groesseUebungsgruppen = $groesseUebungsgruppen;
     
         return $this;
     }
@@ -200,7 +200,7 @@ class Semesterplan
      */
     public function getGroesseUebungsgruppen()
     {
-        return $this->Groesse_Uebungsgruppen;
+        return $this->groesseUebungsgruppen;
     }
 
     /**
@@ -209,9 +209,9 @@ class Semesterplan
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
      * @return Semesterplan
      */
-    public function setModule(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
+    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
     {
-        $this->module = $module;
+        $this->veranstaltung = $module;
     
         return $this;
     }
@@ -221,9 +221,9 @@ class Semesterplan
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
      */
-    public function getModule()
+    public function getVeranstaltung()
     {
-        return $this->module;
+        return $this->veranstaltung;
     }
 
     /**
@@ -232,9 +232,9 @@ class Semesterplan
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender
      * @return Semesterplan
      */
-    public function setLehrender(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender = null)
+    public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender = null)
     {
-        $this->lehrender = $lehrender;
+        $this->dozent = $lehrender;
     
         return $this;
     }
@@ -244,9 +244,9 @@ class Semesterplan
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Dozent 
      */
-    public function getLehrender()
+    public function getDozent()
     {
-        return $this->lehrender;
+        return $this->dozent;
     }
 
     /**

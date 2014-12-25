@@ -41,14 +41,14 @@ class Lehrende
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="modul")
      * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID")
      * */
-    protected $module;
+    protected $veranstaltung;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="lehrende")
      * @ORM\JoinColumn(name="dozent_id", referencedColumnName="Dozenten_ID")
      * */
-    protected $lehrender;
+    protected $dozent;
 
     /**
      * Get id
@@ -66,9 +66,9 @@ class Lehrende
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
      * @return Lehrende
      */
-    public function setModule(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
+    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
     {
-        $this->module = $module;
+        $this->veranstaltung = $module;
     
         return $this;
     }
@@ -78,9 +78,9 @@ class Lehrende
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
      */
-    public function getModule()
+    public function getVeranstaltung()
     {
-        return $this->module;
+        return $this->veranstaltung;
     }
 
     /**
@@ -89,9 +89,9 @@ class Lehrende
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender
      * @return Lehrende
      */
-    public function setLehrender(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender = null)
+    public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender = null)
     {
-        $this->lehrender = $lehrender;
+        $this->dozent = $lehrender;
     
         return $this;
     }
@@ -101,8 +101,8 @@ class Lehrende
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Dozent 
      */
-    public function getLehrender()
+    public function getDozent()
     {
-        return $this->lehrender;
+        return $this->dozent;
     }
 }

@@ -25,7 +25,7 @@ class Modulhandbuch
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string =(string) $this->getGehoertZu().' '.$this->getMHBVersionsnummer();
+        $string =(string) $this->getGehoertZu().' '.$this->getVersionsnummer();
         return $string;
     }
 
@@ -40,18 +40,18 @@ class Modulhandbuch
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $MHB_Versionsnummer;
+    protected $versionsnummer;
 
     /**
      * @ORM\Column(type="date", nullable=false)
      * @Assert\Date()
      */
-    protected $Erstellungsdatum;
+    protected $erstellungsdatum;
 
     /**
      * @ORM\Column(type="text", nullable=false)
      */
-    protected $Beschreibung;
+    protected $beschreibung;
 
     /**
      * Get MHB_ID
@@ -69,9 +69,9 @@ class Modulhandbuch
      * @param integer $mHBVersionsnummer
      * @return Modulhandbuch
      */
-    public function setMHBVersionsnummer($mHBVersionsnummer)
+    public function setVersionsnummer($mHBVersionsnummer)
     {
-        $this->MHB_Versionsnummer = $mHBVersionsnummer;
+        $this->versionsnummer = $mHBVersionsnummer;
     
         return $this;
     }
@@ -81,9 +81,9 @@ class Modulhandbuch
      *
      * @return integer 
      */
-    public function getMHBVersionsnummer()
+    public function getVersionsnummer()
     {
-        return $this->MHB_Versionsnummer;
+        return $this->versionsnummer;
     }
 
     /**
@@ -94,7 +94,7 @@ class Modulhandbuch
      */
     public function setErstellungsdatum($erstellungsdatum)
     {
-        $this->Erstellungsdatum = $erstellungsdatum;
+        $this->erstellungsdatum = $erstellungsdatum;
     
         return $this;
     }
@@ -106,7 +106,7 @@ class Modulhandbuch
      */
     public function getErstellungsdatum()
     {
-        return $this->Erstellungsdatum;
+        return $this->erstellungsdatum;
     }
 
     /**
@@ -117,7 +117,7 @@ class Modulhandbuch
      */
     public function setBeschreibung($beschreibung)
     {
-        $this->Beschreibung = $beschreibung;
+        $this->beschreibung = $beschreibung;
     
         return $this;
     }
@@ -129,7 +129,7 @@ class Modulhandbuch
      */
     public function getBeschreibung()
     {
-        return $this->Beschreibung;
+        return $this->beschreibung;
     }
 
 
@@ -186,10 +186,10 @@ class Modulhandbuch
     /*Modulhandbuch/Semester*/
 
     /**
-     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="sem")
+     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="gueltigAbSemester")
      * @ORM\JoinColumn(name="gueltig_ab", referencedColumnName="Semester")
      */
-    protected $gueltig_ab;
+    protected $gueltigAb;
 
     /*Modulhandbuch/Studiengang*/
 
@@ -197,7 +197,7 @@ class Modulhandbuch
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studiengang")
      * @ORM\JoinColumn(name="gehoert_zu", referencedColumnName="Studiengang_ID")
      */
-    protected $gehoert_zu;
+    protected $gehoertZu;
 
     /**
      * Set gueltig_ab
@@ -207,7 +207,7 @@ class Modulhandbuch
      */
     public function setGueltigAb(\FHBingen\Bundle\MHBBundle\Entity\Semester $gueltigAb = null)
     {
-        $this->gueltig_ab = $gueltigAb;
+        $this->gueltigAb = $gueltigAb;
     
         return $this;
     }
@@ -219,7 +219,7 @@ class Modulhandbuch
      */
     public function getGueltigAb()
     {
-        return $this->gueltig_ab;
+        return $this->gueltigAb;
     }
 
     /**
@@ -230,7 +230,7 @@ class Modulhandbuch
      */
     public function setGehoertZu(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $gehoertZu = null)
     {
-        $this->gehoert_zu = $gehoertZu;
+        $this->gehoertZu = $gehoertZu;
     
         return $this;
     }
@@ -242,6 +242,6 @@ class Modulhandbuch
      */
     public function getGehoertZu()
     {
-        return $this->gehoert_zu;
+        return $this->gehoertZu;
     }
 }

@@ -37,7 +37,7 @@ class Kernfach
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="kernfach")
      * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID")
      * */
-    protected $modul;
+    protected $veranstaltung;
 
 
 
@@ -65,9 +65,9 @@ class Kernfach
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul
      * @return Kernfach
      */
-    public function setModul(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul = null)
+    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul = null)
     {
-        $this->modul = $modul;
+        $this->veranstaltung = $modul;
     
         return $this;
     }
@@ -77,9 +77,9 @@ class Kernfach
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
      */
-    public function getModul()
+    public function getVeranstaltung()
     {
-        return $this->modul;
+        return $this->veranstaltung;
     }
 
     /**

@@ -26,7 +26,7 @@ class Studienplan
     public function __toString()
     {
         //TODO $Semester richtig? getter?
-        $string = (string)$this->getRegSem();
+        $string = (string)$this->getRegelSemester();
         return $string;
     }
     /**
@@ -41,22 +41,22 @@ class Studienplan
     /**
      * @ORM\Column(type="string"), nullable=false
      * */
-    protected $Reg_Sem;
+    protected $regelSemester;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="startsem")
+     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="startSemester")
      * @ORM\JoinColumn(name="Startsemester", referencedColumnName="Semester")
      * */
-    protected $start_sem;
+    protected $startSemester;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="studienplan_modul")
+     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="studienplanModul")
      * @ORM\JoinColumn(name="Modul_ID", referencedColumnName="Modul_ID")
      * */
-    protected $modul;
+    protected $veranstaltung;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studienplan_stgang")
+     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studienplanZuStudienplan")
      * @ORM\JoinColumn(name="Studiengang_ID", referencedColumnName="Studiengang_ID")
      * */
     protected $studiengang;
@@ -77,9 +77,9 @@ class Studienplan
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $regSem
      * @return Studienplan
      */
-    public function setRegSem($regSem = null)
+    public function setRegelSemester($regSem = null)
     {
-        $this->Reg_Sem = $regSem;
+        $this->regelSemester = $regSem;
     
         return $this;
     }
@@ -89,9 +89,9 @@ class Studienplan
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Semester 
      */
-    public function getRegSem()
+    public function getRegelSemester()
     {
-        return $this->Reg_Sem;
+        return $this->regelSemester;
     }
 
     /**
@@ -100,9 +100,9 @@ class Studienplan
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $startSem
      * @return Studienplan
      */
-    public function setStartSem(\FHBingen\Bundle\MHBBundle\Entity\Semester $startSem = null)
+    public function setStartSemester(\FHBingen\Bundle\MHBBundle\Entity\Semester $startSem = null)
     {
-        $this->start_sem = $startSem;
+        $this->startSemester = $startSem;
     
         return $this;
     }
@@ -112,9 +112,9 @@ class Studienplan
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Semester 
      */
-    public function getStartSem()
+    public function getStartSemester()
     {
-        return $this->start_sem;
+        return $this->startSemester;
     }
 
     /**
@@ -123,9 +123,9 @@ class Studienplan
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul
      * @return Studienplan
      */
-    public function setModul(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul = null)
+    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul = null)
     {
-        $this->modul = $modul;
+        $this->veranstaltung = $modul;
     
         return $this;
     }
@@ -135,9 +135,9 @@ class Studienplan
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
      */
-    public function getModul()
+    public function getVeranstaltung()
     {
-        return $this->modul;
+        return $this->veranstaltung;
     }
 
     /**

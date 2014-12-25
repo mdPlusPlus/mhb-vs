@@ -40,13 +40,13 @@ class Veranstaltung
      * @ORM\Column(type="date", nullable=false)
      * @Assert\Date()
      */
-    protected $Erstellungsdatum;
+    protected $erstellungsdatum;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $Versionsnummer_Modul;
+    protected $versionsnummer;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
@@ -55,7 +55,7 @@ class Veranstaltung
      * message = "Bitte geben Sie einen korrekten Status an!"
      * )
      */
-    protected $Status;
+    protected $status;
 
     /**
      * @ORM\Column(type="string", length=5)
@@ -66,7 +66,7 @@ class Veranstaltung
      * maxMessage="Ein Modul-Kuerzel muss aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $Kuerzel;
+    protected $kuerzel;
 
     /**
      * @ORM\Column(type="string", length=60, nullable=false)
@@ -75,7 +75,7 @@ class Veranstaltung
      * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen. Blubb"
      * )
      */
-    protected $Name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=60, nullable=true)
@@ -84,7 +84,7 @@ class Veranstaltung
      * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $Name_EN;
+    protected $nameEN;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
@@ -93,77 +93,77 @@ class Veranstaltung
      * message = "Bitte geben Sie eine korrekte Haeufigkeit an!"
      * )
      */
-    protected $Haeufigkeit;
+    protected $haeufigkeit;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $Dauer;
+    protected $dauer;
 
 /**
  * @ORM\Column(type="text", nullable=true)
  */
-protected $Lehrveranstaltungen;
+protected $lehrveranstaltungen;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
  */
-protected $Kontaktzeit_VL;
+protected $kontaktzeitVL;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
  */
-protected $Kontaktzeit_Sonstige;
+protected $kontaktzeitSonstige;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
  */
-protected $Selbststudium;
+protected $selbststudium;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
  */
-protected $Gruppengroesse;
+protected $gruppengroesse;
 
 /**
  * @ORM\Column(type="text", nullable=true)
  */
-protected $Lernergebnisse;
+protected $lernergebnisse;
 
 /**
  * @ORM\Column(type="text", nullable=true)
  */
-protected $Inhalte;
+protected $inhalte;
 
 /**
  * @ORM\Column(type="text", nullable=true)
  */
-protected $Pruefungsformen;
+protected $pruefungsformen;
 
 /**
  * @ORM\Column(type="string", length=20, nullable=true)
  */
-protected $Sprache;
+protected $sprache;
 
 /**
  * @ORM\Column(type="text", nullable=true)
  */
-protected $Literatur;
+protected $literatur;
 
 /**
  * @ORM\Column(type="integer", nullable=true)
  */
-protected $Leistungspunkte;
+protected $leistungspunkte;
 
 /**
  * @ORM\Column(type="text", nullable=true)
  */
-protected $Voraussetzung_LP;
+protected $voraussetzungLP;
 
 /**
  * @ORM\Column(type="text", nullable=true)
  */
-protected $Voraussetzung_inh;
+protected $voraussetzungInh;
 
     /**
      * Get Modul_ID
@@ -183,7 +183,7 @@ protected $Voraussetzung_inh;
      */
     public function setErstellungsdatum($erstellungsdatum)
     {
-        $this->Erstellungsdatum = $erstellungsdatum;
+        $this->erstellungsdatum = $erstellungsdatum;
     
         return $this;
     }
@@ -195,7 +195,7 @@ protected $Voraussetzung_inh;
      */
     public function getErstellungsdatum()
     {
-        return $this->Erstellungsdatum;
+        return $this->erstellungsdatum;
     }
 
     /**
@@ -227,9 +227,9 @@ protected $Voraussetzung_inh;
      * @param integer $versionsnummerModul
      * @return Veranstaltung
      */
-    public function setVersionsnummerModul($versionsnummerModul)
+    public function setVersionsnummer($versionsnummerModul)
     {
-        $this->Versionsnummer_Modul = $versionsnummerModul;
+        $this->versionsnummer = $versionsnummerModul;
     
         return $this;
     }
@@ -239,9 +239,9 @@ protected $Voraussetzung_inh;
      *
      * @return integer 
      */
-    public function getVersionsnummerModul()
+    public function getVersionsnummer()
     {
-        return $this->Versionsnummer_Modul;
+        return $this->versionsnummer;
     }
 
     /**
@@ -252,7 +252,7 @@ protected $Voraussetzung_inh;
      */
     public function setStatus($status)
     {
-        $this->Status = $status;
+        $this->status = $status;
     
         return $this;
     }
@@ -264,7 +264,7 @@ protected $Voraussetzung_inh;
      */
     public function getStatus()
     {
-        return $this->Status;
+        return $this->status;
     }
 
     /**
@@ -275,7 +275,7 @@ protected $Voraussetzung_inh;
      */
     public function setKuerzel($kuerzel)
     {
-        $this->Kuerzel = $kuerzel;
+        $this->kuerzel = $kuerzel;
     
         return $this;
     }
@@ -287,7 +287,7 @@ protected $Voraussetzung_inh;
      */
     public function getKuerzel()
     {
-        return $this->Kuerzel;
+        return $this->kuerzel;
     }
 
     /**
@@ -298,7 +298,7 @@ protected $Voraussetzung_inh;
      */
     public function setName($name)
     {
-        $this->Name = $name;
+        $this->name = $name;
     
         return $this;
     }
@@ -310,7 +310,7 @@ protected $Voraussetzung_inh;
      */
     public function getName()
     {
-        return $this->Name;
+        return $this->name;
     }
 
     /**
@@ -321,7 +321,7 @@ protected $Voraussetzung_inh;
      */
     public function setNameEn($nameEn)
     {
-        $this->Name_EN = $nameEn;
+        $this->nameEN = $nameEn;
     
         return $this;
     }
@@ -333,7 +333,7 @@ protected $Voraussetzung_inh;
      */
     public function getNameEn()
     {
-        return $this->Name_EN;
+        return $this->nameEN;
     }
 
     /**
@@ -344,7 +344,7 @@ protected $Voraussetzung_inh;
      */
     public function setHaeufigkeit($haeufigkeit)
     {
-        $this->Haeufigkeit = $haeufigkeit;
+        $this->haeufigkeit = $haeufigkeit;
     
         return $this;
     }
@@ -356,7 +356,7 @@ protected $Voraussetzung_inh;
      */
     public function getHaeufigkeit()
     {
-        return $this->Haeufigkeit;
+        return $this->haeufigkeit;
     }
 
     /**
@@ -367,7 +367,7 @@ protected $Voraussetzung_inh;
      */
     public function setDauer($dauer)
     {
-        $this->Dauer = $dauer;
+        $this->dauer = $dauer;
     
         return $this;
     }
@@ -379,7 +379,7 @@ protected $Voraussetzung_inh;
      */
     public function getDauer()
     {
-        return $this->Dauer;
+        return $this->dauer;
     }
 
     /**
@@ -390,7 +390,7 @@ protected $Voraussetzung_inh;
      */
     public function setLehrveranstaltungen($lehrveranstaltungen)
     {
-        $this->Lehrveranstaltungen = $lehrveranstaltungen;
+        $this->lehrveranstaltungen = $lehrveranstaltungen;
     
         return $this;
     }
@@ -402,7 +402,7 @@ protected $Voraussetzung_inh;
      */
     public function getLehrveranstaltungen()
     {
-        return $this->Lehrveranstaltungen;
+        return $this->lehrveranstaltungen;
     }
 
     /**
@@ -413,7 +413,7 @@ protected $Voraussetzung_inh;
      */
     public function setKontaktzeitVL($kontaktzeitVL)
     {
-        $this->Kontaktzeit_VL = $kontaktzeitVL;
+        $this->kontaktzeitVL = $kontaktzeitVL;
     
         return $this;
     }
@@ -425,7 +425,7 @@ protected $Voraussetzung_inh;
      */
     public function getKontaktzeitVL()
     {
-        return $this->Kontaktzeit_VL;
+        return $this->kontaktzeitVL;
     }
 
     /**
@@ -436,7 +436,7 @@ protected $Voraussetzung_inh;
      */
     public function setKontaktzeitSonstige($kontaktzeitSonstige)
     {
-        $this->Kontaktzeit_Sonstige = $kontaktzeitSonstige;
+        $this->kontaktzeitSonstige = $kontaktzeitSonstige;
     
         return $this;
     }
@@ -448,7 +448,7 @@ protected $Voraussetzung_inh;
      */
     public function getKontaktzeitSonstige()
     {
-        return $this->Kontaktzeit_Sonstige;
+        return $this->kontaktzeitSonstige;
     }
 
     /**
@@ -459,7 +459,7 @@ protected $Voraussetzung_inh;
      */
     public function setSelbststudium($selbststudium)
     {
-        $this->Selbststudium = $selbststudium;
+        $this->selbststudium = $selbststudium;
     
         return $this;
     }
@@ -471,7 +471,7 @@ protected $Voraussetzung_inh;
      */
     public function getSelbststudium()
     {
-        return $this->Selbststudium;
+        return $this->selbststudium;
     }
 
     /**
@@ -482,7 +482,7 @@ protected $Voraussetzung_inh;
      */
     public function setGruppengroesse($gruppengroesse)
     {
-        $this->Gruppengroesse = $gruppengroesse;
+        $this->gruppengroesse = $gruppengroesse;
     
         return $this;
     }
@@ -494,7 +494,7 @@ protected $Voraussetzung_inh;
      */
     public function getGruppengroesse()
     {
-        return $this->Gruppengroesse;
+        return $this->gruppengroesse;
     }
 
     /**
@@ -505,7 +505,7 @@ protected $Voraussetzung_inh;
      */
     public function setLernergebnisse($lernergebnisse)
     {
-        $this->Lernergebnisse = $lernergebnisse;
+        $this->lernergebnisse = $lernergebnisse;
     
         return $this;
     }
@@ -517,7 +517,7 @@ protected $Voraussetzung_inh;
      */
     public function getLernergebnisse()
     {
-        return $this->Lernergebnisse;
+        return $this->lernergebnisse;
     }
 
     /**
@@ -528,7 +528,7 @@ protected $Voraussetzung_inh;
      */
     public function setInhalte($inhalte)
     {
-        $this->Inhalte = $inhalte;
+        $this->inhalte = $inhalte;
     
         return $this;
     }
@@ -540,7 +540,7 @@ protected $Voraussetzung_inh;
      */
     public function getInhalte()
     {
-        return $this->Inhalte;
+        return $this->inhalte;
     }
 
     /**
@@ -551,7 +551,7 @@ protected $Voraussetzung_inh;
      */
     public function setPruefungsformen($pruefungsformen)
     {
-        $this->Pruefungsformen = $pruefungsformen;
+        $this->pruefungsformen = $pruefungsformen;
     
         return $this;
     }
@@ -563,7 +563,7 @@ protected $Voraussetzung_inh;
      */
     public function getPruefungsformen()
     {
-        return $this->Pruefungsformen;
+        return $this->pruefungsformen;
     }
 
     /**
@@ -574,7 +574,7 @@ protected $Voraussetzung_inh;
      */
     public function setSprache($sprache)
     {
-        $this->Sprache = $sprache;
+        $this->sprache = $sprache;
     
         return $this;
     }
@@ -586,7 +586,7 @@ protected $Voraussetzung_inh;
      */
     public function getSprache()
     {
-        return $this->Sprache;
+        return $this->sprache;
     }
 
     /**
@@ -597,7 +597,7 @@ protected $Voraussetzung_inh;
      */
     public function setLiteratur($literatur)
     {
-        $this->Literatur = $literatur;
+        $this->literatur = $literatur;
     
         return $this;
     }
@@ -609,7 +609,7 @@ protected $Voraussetzung_inh;
      */
     public function getLiteratur()
     {
-        return $this->Literatur;
+        return $this->literatur;
     }
 
     /**
@@ -620,7 +620,7 @@ protected $Voraussetzung_inh;
      */
     public function setLeistungspunkte($leistungspunkte)
     {
-        $this->Leistungspunkte = $leistungspunkte;
+        $this->leistungspunkte = $leistungspunkte;
     
         return $this;
     }
@@ -632,7 +632,7 @@ protected $Voraussetzung_inh;
      */
     public function getLeistungspunkte()
     {
-        return $this->Leistungspunkte;
+        return $this->leistungspunkte;
     }
 
     /**
@@ -643,7 +643,7 @@ protected $Voraussetzung_inh;
      */
     public function setVoraussetzungLP($voraussetzungLP)
     {
-        $this->Voraussetzung_LP = $voraussetzungLP;
+        $this->voraussetzungLP = $voraussetzungLP;
     
         return $this;
     }
@@ -655,7 +655,7 @@ protected $Voraussetzung_inh;
      */
     public function getVoraussetzungLP()
     {
-        return $this->Voraussetzung_LP;
+        return $this->voraussetzungLP;
     }
 
     /**
@@ -666,7 +666,7 @@ protected $Voraussetzung_inh;
      */
     public function setVoraussetzungInh($voraussetzungInh)
     {
-        $this->Voraussetzung_inh = $voraussetzungInh;
+        $this->voraussetzungInh = $voraussetzungInh;
     
         return $this;
     }
@@ -678,7 +678,7 @@ protected $Voraussetzung_inh;
      */
     public function getVoraussetzungInh()
     {
-        return $this->Voraussetzung_inh;
+        return $this->voraussetzungInh;
     }
 
 
@@ -874,21 +874,21 @@ protected $Voraussetzung_inh;
     /*Semesterplan*/
 
     /**
-     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="module", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="veranstaltung", cascade={"all"})
      * */
     protected $semesterplan;
 
     /*Angebot*/
 
     /**
-     * @ORM\OneToMany(targetEntity="Angebot", mappedBy="module", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Angebot", mappedBy="veranstaltung", cascade={"all"})
      * */
     protected $angebot;
 
     /* Lehrende*/
 
     /**
-     * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="module", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="veranstaltung", cascade={"all"})
      * */
     protected  $modul;
 
@@ -897,7 +897,7 @@ protected $Voraussetzung_inh;
     /*Modulbeauftragter (Dozent/Modul)*/
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="modul_admin")
+     * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="modulbeauftragter")
      * @ORM\JoinColumn(name="Modulbeauftragter", referencedColumnName="Dozenten_ID")
      */
     protected $beauftragter;
@@ -907,10 +907,10 @@ protected $Voraussetzung_inh;
     /**
      * @ORM\ManyToMany(targetEntity="Veranstaltung", mappedBy="modul_")
      **/
-    private $modul_voraussetzung;
+    private $modulVoraussetzung;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Veranstaltung", inversedBy="modul_voraussetzung")
+     * @ORM\ManyToMany(targetEntity="Veranstaltung", inversedBy="modulVoraussetzung")
      * @ORM\JoinTable(name="Voraussetzungen",
      *      joinColumns={@ORM\JoinColumn(name="Modul", referencedColumnName="Modul_ID")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="Modul_Voraussetzung", referencedColumnName="Modul_ID")}
@@ -919,7 +919,7 @@ protected $Voraussetzung_inh;
     private $modul_;
 
     public function __construct_vor() {
-        $this->modul_voraussetzung = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->modulVoraussetzung = new \Doctrine\Common\Collections\ArrayCollection();
         $this->modul_ = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -957,7 +957,7 @@ protected $Voraussetzung_inh;
      */
     public function addModulVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
     {
-        $this->modul_voraussetzung[] = $modulVoraussetzung;
+        $this->modulVoraussetzung[] = $modulVoraussetzung;
     
         return $this;
     }
@@ -969,7 +969,7 @@ protected $Voraussetzung_inh;
      */
     public function removeModulVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
     {
-        $this->modul_voraussetzung->removeElement($modulVoraussetzung);
+        $this->modulVoraussetzung->removeElement($modulVoraussetzung);
     }
 
     /**
@@ -979,18 +979,18 @@ protected $Voraussetzung_inh;
      */
     public function getModulVoraussetzung()
     {
-        return $this->modul_voraussetzung;
+        return $this->modulVoraussetzung;
     }
 
     /*Studienplan*/
     /**
-     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="modul", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="veranstaltung", cascade={"all"})
      * */
-    protected $studienplan_modul;
+    protected $studienplanModul;
 
     /*Kernfach*/
     /**
-     * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="modul", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="veranstaltung", cascade={"all"})
      * */
     protected $kernfach;
 
@@ -1002,7 +1002,7 @@ protected $Voraussetzung_inh;
      */
     public function addStudienplanModul(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul)
     {
-        $this->studienplan_modul[] = $studienplanModul;
+        $this->studienplanModul[] = $studienplanModul;
     
         return $this;
     }
@@ -1014,7 +1014,7 @@ protected $Voraussetzung_inh;
      */
     public function removeStudienplanModul(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul)
     {
-        $this->studienplan_modul->removeElement($studienplanModul);
+        $this->studienplanModul->removeElement($studienplanModul);
     }
 
     /**
@@ -1024,7 +1024,7 @@ protected $Voraussetzung_inh;
      */
     public function getStudienplanModul()
     {
-        return $this->studienplan_modul;
+        return $this->studienplanModul;
     }
 
     /**

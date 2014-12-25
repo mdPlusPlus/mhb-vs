@@ -45,7 +45,7 @@ class Vertiefung
      * minMessage="Ein Vertiefungsrichtungstitel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $Vertiefungsrichtung;
+    protected $vertiefungsrichtung;
 
     /**
      * Get Vertiefungs_ID
@@ -65,7 +65,7 @@ class Vertiefung
      */
     public function setVertiefungsrichtung($vertiefungsrichtung)
     {
-        $this->Vertiefungsrichtung = $vertiefungsrichtung;
+        $this->vertiefungsrichtung = $vertiefungsrichtung;
     
         return $this;
     }
@@ -77,7 +77,7 @@ class Vertiefung
      */
     public function getVertiefungsrichtung()
     {
-        return $this->Vertiefungsrichtung;
+        return $this->vertiefungsrichtung;
     }
 
 
@@ -139,7 +139,7 @@ class Vertiefung
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="richtung")
      * @ORM\JoinColumn(name="studiengang_id", referencedColumnName="Studiengang_ID")
      */
-    protected $stgang;
+    protected $studiengang;
 
     /**
      * Set stgang
@@ -147,9 +147,9 @@ class Vertiefung
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $stgang
      * @return Vertiefung
      */
-    public function setStgang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $stgang = null)
+    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $stgang = null)
     {
-        $this->stgang = $stgang;
+        $this->studiengang = $stgang;
     
         return $this;
     }
@@ -159,8 +159,8 @@ class Vertiefung
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Studiengang 
      */
-    public function getStgang()
+    public function getStudiengang()
     {
-        return $this->stgang;
+        return $this->studiengang;
     }
 }

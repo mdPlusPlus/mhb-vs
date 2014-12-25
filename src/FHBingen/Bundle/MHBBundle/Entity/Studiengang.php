@@ -45,13 +45,13 @@ class Studiengang
      * maxMessage = "Fachbereich {{ limit }} ist Maximum"
      * )
      */
-    protected $Fachbereich;
+    protected $fachbereich;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
      * @Assert\Choice(choices = {"Bachelor", "Master"}, message = "Waehlen Sie einen gueltigen Bildungsgrad")
      */
-    protected $Grad;
+    protected $grad;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=false, unique=true)
@@ -60,7 +60,7 @@ class Studiengang
      * minMessage="Ein Studiengang-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $Titel;
+    protected $titel;
     /**
      * @ORM\Column(type="string", length=5, nullable=false, unique=true)
      * @Assert\Length(
@@ -70,12 +70,12 @@ class Studiengang
      * maxMessage="Ein Studiengangs-Kuerzel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $Kuerzel;
+    protected $kuerzel;
 
     /**
      * @ORM\Column(type="text", nullable=false)
      */
-    protected $Beschreibung;
+    protected $beschreibung;
 
     /**
      * Get Studiengang_ID
@@ -95,7 +95,7 @@ class Studiengang
      */
     public function setFachbereich($fachbereich)
     {
-        $this->Fachbereich = $fachbereich;
+        $this->fachbereich = $fachbereich;
     
         return $this;
     }
@@ -107,7 +107,7 @@ class Studiengang
      */
     public function getFachbereich()
     {
-        return $this->Fachbereich;
+        return $this->fachbereich;
     }
 
     /**
@@ -118,7 +118,7 @@ class Studiengang
      */
     public function setGrad($grad)
     {
-        $this->Grad = $grad;
+        $this->grad = $grad;
     
         return $this;
     }
@@ -130,7 +130,7 @@ class Studiengang
      */
     public function getGrad()
     {
-        return $this->Grad;
+        return $this->grad;
     }
 
     /**
@@ -141,7 +141,7 @@ class Studiengang
      */
     public function setTitel($titel)
     {
-        $this->Titel = $titel;
+        $this->titel = $titel;
     
         return $this;
     }
@@ -153,7 +153,7 @@ class Studiengang
      */
         public function getTitel()
     {
-        return $this->Titel;
+        return $this->titel;
     }
 
     /**
@@ -164,7 +164,7 @@ class Studiengang
      */
     public function setKuerzel($kuerzel)
     {
-        $this->Kuerzel = $kuerzel;
+        $this->kuerzel = $kuerzel;
     
         return $this;
     }
@@ -176,7 +176,7 @@ class Studiengang
      */
     public function getKuerzel()
     {
-        return $this->Kuerzel;
+        return $this->kuerzel;
     }
 
     /**
@@ -187,7 +187,7 @@ class Studiengang
      */
     public function setBeschreibung($beschreibung)
     {
-        $this->Beschreibung = $beschreibung;
+        $this->beschreibung = $beschreibung;
     
         return $this;
     }
@@ -199,7 +199,7 @@ class Studiengang
      */
     public function getBeschreibung()
     {
-        return $this->Beschreibung;
+        return $this->beschreibung;
     }
 
 
@@ -258,7 +258,7 @@ class Studiengang
     /*Vertiefungsrichtung*/
 
     /**
-     * @ORM\OneToMany(targetEntity="Vertiefung", mappedBy="stgang")
+     * @ORM\OneToMany(targetEntity="Vertiefung", mappedBy="studiengang")
      */
     protected $richtung;
 
@@ -273,7 +273,7 @@ class Studiengang
     /*Modulhandbuch/Studiengang*/
 
     /**
-     * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gehoert_zu")
+     * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gehoertZu")
      */
     protected $studiengang;
 
@@ -281,7 +281,7 @@ class Studiengang
     /*Fachgebiet/Studiengang*/
 
     /**
-     * @ORM\OneToMany(targetEntity="Fachgebiet", mappedBy="hat")
+     * @ORM\OneToMany(targetEntity="Fachgebiet", mappedBy="studiengang")
      */
     protected $fachgebiete;
 
@@ -412,7 +412,7 @@ class Studiengang
     /**
      * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="studiengang", cascade={"all"})
      * */
-    protected $studienplan_stgang;
+    protected $studienplanZuStudienplan;
 
     /**
      * Add studienplan_stgang
@@ -420,9 +420,9 @@ class Studiengang
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang
      * @return Studiengang
      */
-    public function addStudienplanStgang(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang)
+    public function addStudienplanZuStudienplan(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang)
     {
-        $this->studienplan_stgang[] = $studienplanStgang;
+        $this->studienplanZuStudienplan[] = $studienplanStgang;
     
         return $this;
     }
@@ -432,9 +432,9 @@ class Studiengang
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang
      */
-    public function removeStudienplanStgang(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang)
+    public function removeStudienplanZuStudienplan(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang)
     {
-        $this->studienplan_stgang->removeElement($studienplanStgang);
+        $this->studienplanZuStudienplan->removeElement($studienplanStgang);
     }
 
     /**
@@ -442,8 +442,8 @@ class Studiengang
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getStudienplanStgang()
+    public function getStudienplanZuStudienplan()
     {
-        return $this->studienplan_stgang;
+        return $this->studienplanZuStudienplan;
     }
 }

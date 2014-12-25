@@ -49,12 +49,12 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * message = "Bitte geben Sie eine korrekte Anrede an!"
      * )
      */
-    protected $Anrede;
+    protected $anrede;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected $Titel;
+    protected $titel;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
@@ -63,7 +63,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * minMessage="Ein Dozenten-Vorname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $Name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=false)
@@ -72,7 +72,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * minMessage="Ein Dozenten-Nachname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $Nachname;
+    protected $nachname;
 
 //@Assert\Email(
 //message = "Die Email '{{ value }}' ist keine gueltige Email."
@@ -82,7 +82,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      *
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
      */
-    private $Email;
+    private $email;
 
 
     /**
@@ -95,14 +95,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $this->Dozenten_ID;
     }
 
-    public function getId()
-    {
-        /**
-         * nur für Kompabilität mit UserRepository
-         */
-        return $this->getDozentenID();
-    }
-
     /**
      * Set Anrede
      *
@@ -111,7 +103,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setAnrede($anrede)
     {
-        $this->Anrede = $anrede;
+        $this->anrede = $anrede;
     
         return $this;
     }
@@ -123,7 +115,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getAnrede()
     {
-        return $this->Anrede;
+        return $this->anrede;
     }
 
     /**
@@ -134,7 +126,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setTitel($titel)
     {
-        $this->Titel = $titel;
+        $this->titel = $titel;
     
         return $this;
     }
@@ -146,7 +138,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getTitel()
     {
-        return $this->Titel;
+        return $this->titel;
     }
 
     /**
@@ -157,7 +149,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setName($name)
     {
-        $this->Name = $name;
+        $this->name = $name;
     
         return $this;
     }
@@ -169,7 +161,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getName()
     {
-        return $this->Name;
+        return $this->name;
     }
 
     /**
@@ -180,7 +172,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setNachname($nachname)
     {
-        $this->Nachname = $nachname;
+        $this->nachname = $nachname;
     
         return $this;
     }
@@ -192,7 +184,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getNachname()
     {
-        return $this->Nachname;
+        return $this->nachname;
     }
 
     /**
@@ -214,7 +206,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setEmail($email)
     {
-        $this->Email = $email;
+        $this->email = $email;
     
         return $this;
     }
@@ -226,7 +218,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getEmail()
     {
-        return $this->Email;
+        return $this->email;
     }
 
     /**
@@ -301,7 +293,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /*Lehrender*/
 
     /**
-     * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="lehrender", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="dozent", cascade={"all"})
      * */
     protected   $lehrende;
 
@@ -309,7 +301,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /*Semesterplan*/
 
     /**
-     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="lehrender", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="dozent", cascade={"all"})
      * */
     protected $semesterplan;
 
@@ -318,7 +310,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * @ORM\OneToMany(targetEntity="Veranstaltung", mappedBy="beauftragter")
      */
-    protected $modul_admin;
+    protected $modulbeauftragter;
 
 
     /*Studiengangleiter (Dozent/Studiengang)*/
@@ -334,9 +326,9 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin
      * @return Dozent
      */
-    public function addModul_admin(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin)
+    public function addModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin)
     {
-        $this->modul_admin[] = $modul_admin;
+        $this->modulbeauftragter[] = $modul_admin;
     
         return $this;
     }
@@ -346,9 +338,9 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin
      */
-    public function removeModul_admin(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin)
+    public function removeModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin)
     {
-        $this->modul_admin->removeElement($modul_admin);
+        $this->modulbeauftragter->removeElement($modul_admin);
     }
 
     /**
@@ -356,20 +348,20 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getModul_admin()
+    public function getModulbeauftragter()
     {
-        return $this->modul_admin;
+        return $this->modulbeauftragter;
     }
 
     /**
      * Add modul_erstellt
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_erstellt
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulErstellt
      * @return Dozent
      */
-    public function addModul_erstellt(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_erstellt)
+    public function addModulErstellt(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulErstellt)
     {
-        $this->modul_erstellt[] = $modul_erstellt;
+        $this->modul_erstellt[] = $modulErstellt;
 
         return $this;
     }
@@ -377,11 +369,11 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * Remove modul_erstellt
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_erstellt
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulErstellt
      */
-    public function removeModul_erstellt(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_erstellt)
+    public function removeModulErstellt(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulErstellt)
     {
-        $this->modul_erstellt->removeElement($modul_erstellt);
+        $this->modul_erstellt->removeElement($modulErstellt);
     }
 
     /**
@@ -389,7 +381,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getModul_erstellt()
+    public function getModulErstellt()
     {
         return $this->modul_erstellt;
     }
@@ -464,7 +456,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function getUsername()
     {
         //return $this->username;
-        return $this->Email;
+        return $this->email;
     }
 
     /**
@@ -513,7 +505,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return serialize(array(
             $this->Dozenten_ID,
             //$this->username,
-            $this->Email,
+            $this->email,
             $this->password,
             // see section on salt below
             // $this->salt,
@@ -544,7 +536,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function setUsername($username)
     {
         //$this->username = $username;
-        $this->Email = $username;
+        $this->email = $username;
 
         return $this;
     }
