@@ -81,13 +81,22 @@
             {{ form_row(form.sgl) }}
         </table>
 
+        {% macro vertiefungPrototype(formData) %}
+                {{ form_errors(formData) }}
+                {{ form_widget(formData) }}
+                <a href="#" id="remove-vertiefung-__name__">__name__</a>
+        {% endmacro %}
+
         <h4 style="font-weight: bold">Vertiefungsrichtungen</h4>
-        <ul id="vertiefung-fields-list" data-prototype="{{ form_widget(form.richtung.vars.prototype)|e }}">
+        <ul id="vertiefung-fields-list" data-prototype="{{ _self.vertiefungPrototype(form.richtung.vars.prototype)|e }} {#{{ form_widget(form.richtung.vars.prototype)|e }}#}">
+            {% set __name__ = 0 %}
             {% for vertiefungField in form.richtung %}
                 <li>
                     {{ form_errors(vertiefungField) }}
                     {{ form_widget(vertiefungField) }}
+                    <a href="#" id="remove-vertiefung-{{ __name__ }}">{{ __name__ }}</a>
                 </li>
+                {% set __name__ = __name__ + 1 %}
             {% endfor %}
         </ul>
         <a id="add-another-vertiefung">Vertiefung hinzufügen</a>
