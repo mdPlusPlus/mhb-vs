@@ -38,10 +38,10 @@ class SglController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Email'=> $userMail));
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email'=> $userMail));
         $studiengang= $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl'=>$dozent->getDozentenID()));
 
-        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY'));
+        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('code' => 'DUMMY'));
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
         $angeboteOhneDummy=array();
         foreach($angebote as $value)
@@ -62,8 +62,8 @@ class SglController extends Controller
     public function modulCodeErstellungAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('module'=>$id));
-        $modul=$angebot->getModule();
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('veranstaltung'=>$id));
+        $modul=$angebot->getVeranstaltung();
 
         $form = $this->createForm(new Form\CodeType(), $angebot);
 

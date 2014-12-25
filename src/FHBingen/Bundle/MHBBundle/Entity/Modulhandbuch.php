@@ -187,7 +187,7 @@ class Modulhandbuch
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="gueltigAbSemester")
-     * @ORM\JoinColumn(name="gueltig_ab", referencedColumnName="Semester")
+     * @ORM\JoinColumn(name="gueltig_ab", referencedColumnName="semester")
      */
     protected $gueltigAb;
 

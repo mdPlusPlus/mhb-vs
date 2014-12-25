@@ -19,11 +19,11 @@
             <tbody>
             {% for entity in mhb %}
                 <tr>
-                        <td><a href="{{'/restricted/dozent/modulbearbeiten/'~entity['Modul_ID']}}">{{ entity['Name'] }}</td>
-                        <td>{{ entity['Kuerzel'] }}</td>
-                        <td>{{ entity['Code'] }}</td>
-                        <td>{{ entity['Versionsnummer_Modul'] }}</td>
-                        <td>{{ entity['Titel']~' '~entity['Nachname'] }}</td>
+                        <td><a href="{{'/restricted/dozent/modulbearbeiten/'~entity['Modul_ID']}}">{{ entity['name'] }}</td>
+                        <td>{{ entity['kuerzel'] }}</td>
+                        <td>{{ entity['code'] }}</td>
+                        <td>{{ entity['versionsnummer'] }}</td>
+                        <td>{{ entity['titel']~' '~entity['nachname'] }}</td>
 
             </tbody>
                 </tr>

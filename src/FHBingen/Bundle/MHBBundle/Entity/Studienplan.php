@@ -45,7 +45,7 @@ class Studienplan
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="startSemester")
-     * @ORM\JoinColumn(name="Startsemester", referencedColumnName="Semester")
+     * @ORM\JoinColumn(name="Startsemester", referencedColumnName="semester")
      * */
     protected $startSemester;
 

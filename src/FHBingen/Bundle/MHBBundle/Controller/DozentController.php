@@ -33,25 +33,25 @@ class DozentController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Email'=> $userMail));
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email'=> $userMail));
         $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID()));
 
         $mLehrende = array();
         foreach ($modulverantwortung as $m) {
             $name=array();
-            $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('module' => $m->getModulID()));
+            $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $m->getModulID()));
 
             foreach ($tmp as $lehrend) {
-                $name[]=(string) $lehrend->getLehrender();
+                $name[]=(string) $lehrend->getDozent();
             }
             $mLehrende[]=$name;
         }
 
-        $entries= $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('lehrender'=> $dozent->getDozentenID()));
+        $entries= $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent'=> $dozent->getDozentenID()));
 
         $modullehrend =array();
         foreach ($entries as $modul) {
-            $modullehrend[]=$em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=> $modul->getModule()));
+            $modullehrend[]=$em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=> $modul->getVeranstaltung()));
         }
 
         return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende,'pageTitle' => 'STARTSEITE');
@@ -73,24 +73,24 @@ class DozentController extends Controller
 
                   if ($request->getMethod() == 'POST') {
                       if ($form->isValid()) {
-                          $modul->setStatus($form->get('Status')->getData());
-                          $modul->setKuerzel($form->get('Kuerzel')->getData());
-                          $modul->setName($form->get('Name')->getData());
-                          $modul->setNameEn($form->get('Name_en')->getData());
-                          $modul->setHaeufigkeit($form->get('Haeufigkeit')->getData());
-                          //$modul->setDauer($form->get('Lehrveranstaltungen')->getData());
-                          $modul->setDauer($form->get('Kontaktzeit_VL')->getData());
-                          $modul->setDauer($form->get('Kontaktzeit_sonstige')->getData());
-                          $modul->setDauer($form->get('Selbststudium')->getData());
-                          $modul->setDauer($form->get('Gruppengroesse')->getData());
-                          $modul->setDauer($form->get('Lernergebnisse')->getData());
-                          $modul->setDauer($form->get('Inhalte')->getData());
-                          //$modul->setDauer($form->get('Pruefungsformen')->getData());
-                          $modul->setDauer($form->get('Sprache')->getData());
-                          $modul->setDauer($form->get('Literatur')->getData());
-                          $modul->setDauer($form->get('Leistungspunkte')->getData());
-                          //$modul->setDauer($form->get('Voraussetzung_LP')->getData());
-                          $modul->setDauer($form->get('Voraussetzung_inh')->getData());
+                          $modul->setStatus($form->get('status')->getData());
+                          $modul->setKuerzel($form->get('kuerzel')->getData());
+                          $modul->setName($form->get('name')->getData());
+                          $modul->setNameEn($form->get('nameEN')->getData());
+                          $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
+                          //$modul->setDauer($form->get('lehrveranstaltungen')->getData());
+                          $modul->setDauer($form->get('kontaktzeitVL')->getData());
+                          $modul->setDauer($form->get('kontaktzeitSonstige')->getData());
+                          $modul->setDauer($form->get('selbststudium')->getData());
+                          $modul->setDauer($form->get('gruppengroesse')->getData());
+                          $modul->setDauer($form->get('lernergebnisse')->getData());
+                          $modul->setDauer($form->get('inhalte')->getData());
+                          //$modul->setDauer($form->get('pruefungsformen')->getData());
+                          $modul->setDauer($form->get('sprache')->getData());
+                          $modul->setDauer($form->get('literatur')->getData());
+                          $modul->setDauer($form->get('leistungspunkte')->getData());
+                          //$modul->setDauer($form->get('voraussetzungLP')->getData());
+                          $modul->setDauer($form->get('voraussetzungInh')->getData());
 
                         $em->persist($modul);
                         $em->flush();

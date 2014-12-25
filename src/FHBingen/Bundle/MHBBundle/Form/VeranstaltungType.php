@@ -27,12 +27,12 @@ class VeranstaltungType extends AbstractType
 
         $builder
             ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
-            ->add('Status', 'choice', array('label' => 'Status: ', 'required' => true, 'choices' => $state))
-            ->add('Kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))
-            ->add('Name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true))
-            ->add('Name_en', 'text', array('label' => 'Modulname (englisch): ', 'required' => false))
-            ->add('Haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots: ', 'required' => false, 'choices' => $frequency))
-            ->add('Dauer', 'text',  array('label' => 'Dauer: ', 'required' => true))
+            ->add('status', 'choice', array('label' => 'Status: ', 'required' => true, 'choices' => $state))
+            ->add('kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))
+            ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true))
+            ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => false))
+            ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots: ', 'required' => false, 'choices' => $frequency))
+            ->add('dauer', 'text',  array('label' => 'Dauer: ', 'required' => true))
 //            ->add('Lehrveranstaltungen', 'choice',  array('label' => 'Lehrveranstaltungen: ','choices'
 //            => array('Vorlesung'   => 'Vorlesung',
 //                    'Übung' => 'Übung',
@@ -42,12 +42,12 @@ class VeranstaltungType extends AbstractType
 //                    'Selbststudium und Konsultationen' => 'Selbststudium und Konsultationen'),
 //                'multiple'  => true,
 //                'expanded' => true))
-            ->add('Kontaktzeit_VL', 'integer', array('label' => 'Kontaktzeit Vorlesung: ', 'required' => true))
-            ->add('Kontaktzeit_sonstige', 'integer', array('label' => 'Kontaktzeit sonstige: ', 'required' => true))
-            ->add('Selbststudium', 'integer', array('label' => 'Selbststudium: ', 'required' => true))
-            ->add('Gruppengroesse', 'integer', array('label' => 'Gruppengröße: ', 'required' => true))
-            ->add('Lernergebnisse', 'textarea', array('label' => 'Lernergebisse: ', 'required' => true))
-            ->add('Inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => true))
+            ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung: ', 'required' => true))
+            ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige: ', 'required' => true))
+            ->add('selbststudium', 'integer', array('label' => 'Selbststudium: ', 'required' => true))
+            ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße: ', 'required' => true))
+            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse: ', 'required' => true))
+            ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => true))
 //            ->add('Pruefungsformen', 'choice', array('label' => 'Prüfungsform: ','choices'
 //            => array('Schriftliche Klausur'   => 'Schriftliche Klausur',
 //                     'Mündliche Prüfung' => 'Mündliche Prüfung',
@@ -60,15 +60,15 @@ class VeranstaltungType extends AbstractType
 //                     'Kolloquium'   => 'Kolloquium'),
 //                     'multiple'  => true,
 //                     'expanded' => true))
-            ->add('Sprache', 'choice', array('label' => 'Sprache: ', 'required' => true, 'choices' => $lang))
-            ->add('Literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => true))
-            ->add('Leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
-//            ->add('Voraussetzung_LP', 'choice', array('label' => 'Voraussetzung für Leistungspunkte: ','choices'
+            ->add('sprache', 'choice', array('label' => 'Sprache: ', 'required' => true, 'choices' => $lang))
+            ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => true))
+            ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
+//            ->add('voraussetzungLP', 'choice', array('label' => 'Voraussetzung für Leistungspunkte: ','choices'
 //            => array('Prüfungsleistung'   => 'Prüfungsleistung',
 //                     'Studienleistung' => 'Studienleistung'),
 //                     'multiple'  => true,
 //                     'expanded' => true))
-            ->add('Voraussetzung_inh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true))
+            ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true))
 
             ->add('reset', 'reset')
             ->add('submit', 'submit');
