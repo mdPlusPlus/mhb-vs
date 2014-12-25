@@ -134,6 +134,7 @@ class VerwaltungsController extends Controller
                  * TODO:
                  * - überprüfen ob Vertiefungsrichtung oder Fachgebeiet doppelt in Feldern steht
                  * - wenn sowohl gelöscht, als auch hinzugefügt wird, werden x Einträge nur umbenannt statt neu angelegt
+                 * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
                  */
                 $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice
                 $studiengang->setGrad($form->get('grad')->getData());                   //choice
@@ -161,34 +162,25 @@ class VerwaltungsController extends Controller
                 $em->persist($studiengang);
                 $em->flush();
 
-                //$dbVertiefungArr = $studiengang->getRichtung()->toArray();
                 //$studiengang->getRichtung() holt sich die infos NICHT aus der db....
                 //also:
                 $vertiefungRepository = $em->getRepository('FHBingenMHBBundle:Vertiefung');
-                $vertiefungsrichtungenStudiengang = $vertiefungRepository->findby(array('studiengang' => $studiengangID));
-                $dbVertiefungArr = $vertiefungsrichtungenStudiengang;
+                $dbVertiefungArr = $vertiefungRepository->findby(array('studiengang' => $studiengangID));
 
-                /*
-                $response = '';
-                foreach ($vertiefungArr as $entry) {
-                    $response = $response . ' ' . (string) $entry;
-                }
-                $response = $response . '<br />';
-                foreach ($dbVertiefungArr as $entry) {
-                    $response = $response . ' ' . (string) $entry;
-                }
-                return new Response($response);
-                */
+                $fachgebietRepository = $em->getRepository('FHBingenMHBBundle:Fachgebiet');
+                $dbFachgebietArr = $fachgebietRepository->findby(array('studiengang' => $studiengangID));
 
-                $count = 0;
                 foreach ($dbVertiefungArr as $dbEntry) {
                     if (!in_array($dbEntry, $vertiefungArr)) {
                         $em->remove($dbEntry);
-                        $count++;
+                    }
+                }
+                foreach ($dbFachgebietArr as $dbEntry) {
+                    if (!in_array($dbEntry, $fachgebietArr)) {
+                        $em->remove($dbEntry);
                     }
                 }
                 $em->flush();
-                return new Response($count);
             }
         }
 
