@@ -117,9 +117,11 @@ class VerwaltungsController extends Controller
      */
     public function SglShowCourseAction()
     {
+
         //TODO: das ist NICHT die studiengangverwaltung (übersicht)
         $em = $this->getDoctrine()->getManager();
-        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID' => 10));
+        $studiengangID = 10;
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID' => $studiengangID));
         //$studiengang = new Entity\Studiengang();
         $form = $this->createForm(new Form\StudiengangType(), $studiengang);
 
@@ -130,10 +132,8 @@ class VerwaltungsController extends Controller
             if ($form->isValid()) {
                 /*
                  * TODO:
-                 * - Menge von Vertiefungsrichtungen und Fachgebieten mit DB vergleichen
-                 * - alle DB-Einträge, die in neuem Set nicht mehr enthalten sind dereferenzieren und löschen
-                 *
                  * - überprüfen ob Vertiefungsrichtung oder Fachgebeiet doppelt in Feldern steht
+                 * - wenn sowohl gelöscht, als auch hinzugefügt wird, werden x Einträge nur umbenannt statt neu angelegt
                  */
                 $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice
                 $studiengang->setGrad($form->get('grad')->getData());                   //choice
@@ -161,9 +161,14 @@ class VerwaltungsController extends Controller
                 $em->persist($studiengang);
                 $em->flush();
 
-                //TODO FIX: $studiengang->getRichtung() holt sich die infos NICHT aus der db....
-                $dbVertiefungArr = $studiengang->getRichtung()->toArray();
+                //$dbVertiefungArr = $studiengang->getRichtung()->toArray();
+                //$studiengang->getRichtung() holt sich die infos NICHT aus der db....
+                //also:
+                $vertiefungRepository = $em->getRepository('FHBingenMHBBundle:Vertiefung');
+                $vertiefungsrichtungenStudiengang = $vertiefungRepository->findby(array('studiengang' => $studiengangID));
+                $dbVertiefungArr = $vertiefungsrichtungenStudiengang;
 
+                /*
                 $response = '';
                 foreach ($vertiefungArr as $entry) {
                     $response = $response . ' ' . (string) $entry;
@@ -173,6 +178,17 @@ class VerwaltungsController extends Controller
                     $response = $response . ' ' . (string) $entry;
                 }
                 return new Response($response);
+                */
+
+                $count = 0;
+                foreach ($dbVertiefungArr as $dbEntry) {
+                    if (!in_array($dbEntry, $vertiefungArr)) {
+                        $em->remove($dbEntry);
+                        $count++;
+                    }
+                }
+                $em->flush();
+                return new Response($count);
             }
         }
 
