@@ -75,13 +75,13 @@ class VerwaltungsController extends Controller
             }
         }
 
-        return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
+        return array('form' => $form->createView(), 'pageTitle' => 'Nutzerverwaltung');
     }
 
 
     /**
      * @Route("/restricted/sgl/updateUsers/{userid}")
-     * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
+     * @Template("FHBingenMHBBundle:Verwaltung:userCreate.html.twig")
      */
     public function SglUpdateUserAction($userid)
     {
@@ -106,13 +106,13 @@ class VerwaltungsController extends Controller
             }
         }
 
-        return $this->render('FHBingenMHBBundle:Verwaltung:userCreate.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Nutzerverwaltung'));
+        return array('form' => $form->createView(), 'pageTitle' => 'Nutzerverwaltung');
     }
 
 
     /**
      * @Route("/restricted/sgl/showCourse", name="studiengangverwaltung")
-     * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
+     * @Template("FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig")
      */
     public function SglShowCourseAction()
     {
@@ -152,7 +152,7 @@ class VerwaltungsController extends Controller
             }
         }
 
-        return $this->render('FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Studiengangverwaltung'));
+        return array('form' => $form->createView(), 'pageTitle' => 'Studiengangverwaltung');
     }
 
 }
