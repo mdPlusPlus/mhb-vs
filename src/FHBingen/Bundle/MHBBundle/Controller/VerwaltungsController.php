@@ -117,6 +117,7 @@ class VerwaltungsController extends Controller
      */
     public function SglShowCourseAction()
     {
+        //TODO: das ist NICHT die studiengangverwaltung (übersicht)
         $em = $this->getDoctrine()->getManager();
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID'=>10));
         //$studiengang = new Entity\Studiengang();
