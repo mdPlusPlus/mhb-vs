@@ -132,6 +132,8 @@ class VerwaltungsController extends Controller
                  * TODO:
                  * - Menge von Vertiefungsrichtungen und Fachgebieten mit DB vergleichen
                  * - alle DB-Einträge, die in neuem Set nicht mehr enthalten sind dereferenzieren und löschen
+                 *
+                 * - überprüfen ob Vertiefungsrichtung oder Fachgebeiet doppelt in Feldern steht
                  */
                 $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice
                 $studiengang->setGrad($form->get('grad')->getData());                   //choice
@@ -140,32 +142,42 @@ class VerwaltungsController extends Controller
                 $studiengang->setBeschreibung($form->get('beschreibung')->getData());   //text
                 $studiengang->setSgl($form->get('sgl')->getData());                     //entity
 
-                $vertiefungCollection = $form->get('richtung')->getData();      //collection
-                foreach ($vertiefungCollection as $vertiefung) {
+                //ohne ->toArray() gibt sizeof das doppelte aus O.o
+                $vertiefungArr = $form->get('richtung')->getData()->toArray();
+                foreach ($vertiefungArr as $vertiefung) {
                     $studiengang->addRichtung($vertiefung);
-                    $vertiefung->setStgang($studiengang);
+                    $vertiefung->setStudiengang($studiengang);
                     $em->persist($vertiefung);
                 }
-                $allRichtungen = $studiengang->getRichtung();
-                foreach ($allRichtungen as $dbEntry) {
-                    if (!$vertiefungCollection->contains($dbEntry)) {
-                        $em->remove($dbEntry);
-                    }
-                }
 
-                $fachgebietCollection = $form->get('fachgebiete')->getData();   //collection
-                foreach ($fachgebietCollection as $fachgebiet) {
+                //ohne ->toArray() gibt sizeof das doppelte aus O.o
+                $fachgebietArr = $form->get('fachgebiete')->getData();
+                foreach ($fachgebietArr as $fachgebiet) {
                     $studiengang->addFachgebiete($fachgebiet);
-                    $fachgebiet->setHat($studiengang);
+                    $fachgebiet->setStudiengang($studiengang);
                     $em->persist($fachgebiet);
                 }
 
                 $em->persist($studiengang);
                 $em->flush();
+
+                //TODO FIX: $studiengang->getRichtung() holt sich die infos NICHT aus der db....
+                $dbVertiefungArr = $studiengang->getRichtung()->toArray();
+
+                $response = '';
+                foreach ($vertiefungArr as $entry) {
+                    $response = $response . ' ' . (string) $entry;
+                }
+                $response = $response . '<br />';
+                foreach ($dbVertiefungArr as $entry) {
+                    $response = $response . ' ' . (string) $entry;
+                }
+                return new Response($response);
             }
         }
 
         return array('form' => $form->createView(), 'pageTitle' => 'Studiengangverwaltung');
+
     }
 
 }
