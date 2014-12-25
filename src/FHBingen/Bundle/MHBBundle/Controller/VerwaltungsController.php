@@ -133,7 +133,6 @@ class VerwaltungsController extends Controller
                 /*
                  * TODO:
                  * - überprüfen ob Vertiefungsrichtung oder Fachgebeiet doppelt in Feldern steht
-                 * - wenn sowohl gelöscht, als auch hinzugefügt wird, werden x Einträge nur umbenannt statt neu angelegt
                  * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
                  */
                 $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice
@@ -152,7 +151,7 @@ class VerwaltungsController extends Controller
                 }
 
                 //ohne ->toArray() gibt sizeof das doppelte aus O.o
-                $fachgebietArr = $form->get('fachgebiete')->getData();
+                $fachgebietArr = $form->get('fachgebiete')->getData()->toArray();
                 foreach ($fachgebietArr as $fachgebiet) {
                     $studiengang->addFachgebiete($fachgebiet);
                     $fachgebiet->setStudiengang($studiengang);
@@ -161,6 +160,7 @@ class VerwaltungsController extends Controller
 
                 $em->persist($studiengang);
                 $em->flush();
+                //flush() hier vermutlich notwendig, hab' vergessen warum... eventuell mal ohne testen?
 
                 //$studiengang->getRichtung() holt sich die infos NICHT aus der db....
                 //also:
