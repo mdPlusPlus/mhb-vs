@@ -118,11 +118,24 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
-     *
+     * @Template("FHBingenMHBBundle:MHB:mhbErstellung.html.twig")
      */
     public function mhbErstellungAction()
     {
-
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $userMail = $user->getUsername();
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
+        $angeboteNachStudiengang = $em->getRepository('FHBingenMHBBundle:Angebot')
+            ->findBy(array('studiengang' => $studiengang->getStudiengangID()));
+        $angeboteOhneMHB = array();
+        foreach ($angeboteNachStudiengang as $value) {
+            if ($value->getMhb() == null) {
+                $angeboteOhneMHB[] = $value;
+            }
+        }
+        return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'STARTSEITE');
     }
 
     /**

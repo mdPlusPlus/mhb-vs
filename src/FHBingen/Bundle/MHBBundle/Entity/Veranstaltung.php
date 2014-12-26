@@ -354,7 +354,7 @@ protected $voraussetzungInh;
      *
      * @return string 
      */
-    public function getHaeufigkeit()
+        public function getHaeufigkeit()
     {
         return $this->haeufigkeit;
     }
