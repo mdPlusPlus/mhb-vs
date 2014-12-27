@@ -57,6 +57,7 @@ class DozentController extends Controller
         return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende, 'pageTitle' => 'STARTSEITE');
     }
 
+
     /**
      * @Route("/restricted/dozent/modulbearbeiten/{id}", name="modulbearbeiten")
      * @Template("FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig")
@@ -66,6 +67,10 @@ class DozentController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id));
+        //$choices = $modul->getPruefungsformen();
+        //zerteilen;
+        //Array[] formen;
+        // if contains
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 
         $request = $this->get('request');
@@ -95,11 +100,9 @@ class DozentController extends Controller
                 $em->persist($modul);
                 $em->flush();
             }
-
-            return $this->render('FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Modul Planung'));
-
         }
 
         return $this->render('FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Modul Planung'));
     }
+
 }

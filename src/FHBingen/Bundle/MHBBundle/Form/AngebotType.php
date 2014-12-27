@@ -17,7 +17,7 @@ class AngebotType extends AbstractType
         $type_of_offer = ['Wahlpflichtfach' => 'Wahlpflichtfach', 'Pflichtfach' => 'Pflichtfach'];
 
         $builder
-            ->add('module', 'entity', array('label' => 'ModulName: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
+            ->add('veranstaltung', 'entity', array('label' => 'ModulName: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
             ->add('mhb', 'entity', array('label' => 'MHB_beschreibung: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Modulhandbuch'))
             ->add('fachgebiet', 'entity', array('label' => 'FachgebietTitel: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Fachgebiet'))
             ->add('studiengang', 'entity', array('label' => 'StudiengangTitel: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
@@ -25,7 +25,7 @@ class AngebotType extends AbstractType
             ->add('code', 'text', array('label' => 'Code: ', 'required' => true))
             ->add('titelDE', 'text', array('label' => 'abweichender_Titel(Deutsch): ', 'required' => false))
             ->add('titelEN', 'text', array('label' => 'abweichender_Titel(Englisch): ', 'required' => false))
-            ->add('reset', 'reset')
+             ->add('reset', 'reset')
             ->add('submit', 'submit');
     }
 

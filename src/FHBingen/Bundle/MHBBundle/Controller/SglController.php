@@ -26,7 +26,17 @@ class SglController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
-        return array('module' => $module, 'pageTitle' => 'STARTSEITE');
+        $nichtInPlanung = array();
+        foreach ($module as $value) {
+            if ($value->getStatus() != 'in Planung'&& $value->getStatus()!='expired') {
+                $nichtInPlanung[] = $value;
+            }
+        }
+
+
+
+
+        return array('module' => $nichtInPlanung, 'pageTitle' => 'STARTSEITE');
     }
 
     /**

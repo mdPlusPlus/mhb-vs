@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Symfony\Component\HttpFoundation\Response;
 
 use FHBingen\Bundle\MHBBundle\Entity;
@@ -73,9 +74,12 @@ class VerwaltungsController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($dozent);
                 $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'Der neue Nutzer wurde erfolgreich angelegt.');
+
+                return $this->redirect($this->generateUrl('benutzerverwaltung'));
             }
         }
-
         return array('form' => $form->createView(), 'pageTitle' => 'Nutzerverwaltung');
     }
 
@@ -104,6 +108,10 @@ class VerwaltungsController extends Controller
 
                 $em->persist($dozent);
                 $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'Der Nutzer wurde erfolgreich bearbeitet.');
+
+                return $this->redirect($this->generateUrl('benutzerverwaltung'));
             }
         }
 
