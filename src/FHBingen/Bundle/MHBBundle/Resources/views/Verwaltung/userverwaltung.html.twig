@@ -1,7 +1,6 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block content %}
-
     <div class="table-responsive">
         <h3>Studiengangleiter</h3>
         <ul>
@@ -29,5 +28,13 @@
             <li><a href="{{'/restricted/sgl/createUsers'}}">User anlegen</a></li>
         </ul>
     </div>
-
+    {% for type, messages in app.session.flashBag.all %}
+        {% for message in messages %}
+            {%if type == 'info'%}
+                <script>
+                    alert('{{ message|raw }}');
+                </script>
+            {%endif%}
+        {% endfor %}
+    {% endfor %}
 {% endblock %}
