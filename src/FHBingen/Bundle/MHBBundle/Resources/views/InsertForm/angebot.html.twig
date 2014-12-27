@@ -17,14 +17,14 @@
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
     <table>
-        {{ form_row(form.module) }}
+        {{ form_row(form.veranstaltung) }}
         {{ form_row(form.mhb) }}
         {{ form_row(form.fachgebiet) }}
         {{ form_row(form.studiengang) }}
         {{ form_row(form.angebotsart) }}
         {{ form_row(form.code) }}
-        {{ form_row(form.abweichender_Titel_DE) }}
-        {{ form_row(form.abweichender_Titel_EN) }}
+        {{ form_row(form.titelDE) }}
+        {{ form_row(form.titelEN) }}
     </table>
     {{ form_end(form) }}
 
