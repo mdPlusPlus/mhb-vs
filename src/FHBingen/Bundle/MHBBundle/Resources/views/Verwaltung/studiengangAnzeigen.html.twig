@@ -45,11 +45,19 @@
             // with a number that's unique to your emails
             // end name attribute looks like name="contact[emails][2]"
             newWidget = newWidget.replace(/__name__/g, vertiefungCount);
-            vertiefungCount++;
 
             // create a new list element and add it to the list
             var newLi = jQuery('<li></li>').html(newWidget);
+
+            var link = jQuery('<a href="#" >Vertiefungsrichtung entfernen</a>');
+            link.click(function(e){
+                e.preventDefault();
+                newLi.remove();
+            });
+
+            newLi.append(link);
             newLi.appendTo(richtungList);
+            vertiefungCount++;
         }
 
         function addAnotherFachgebiet(){
@@ -65,7 +73,7 @@
             // create a new list element and add it to the list
             var newLi = jQuery('<li></li>').html(newWidget);
 
-            var link = jQuery('<a href="#" >' + fachgebietCount + '</a>');
+            var link = jQuery('<a href="#" >Fachgebiet entfernen</a>');
             link.click(function(e){
                 e.preventDefault();
                 newLi.remove();
@@ -75,21 +83,6 @@
             newLi.appendTo(fachList);
             fachgebietCount++;
         }
-
-        //TODO löschen hinter jedem Eintrag anzeigen
-        function removeLastVertiefung(){
-            $('#vertiefung-fields-list li:last').remove();
-            //decrement count variable if you want to overwrite old indizes when adding new elements
-            //vertiefungCount--;
-            //wollen wir nicht, sonst wird beim löschen + hinzufügen nur das alte umbenannt!
-
-        };
-        function removeLastFachgebiet(){
-            $('#fachgebiet-fields-list li:last').remove();
-            //decrement count variable if you want to overwrite old indizes when adding new elements
-            //fachgebietCount--;
-            //wollen wir nicht, sonst wird beim löschen + hinzufügen nur das alte umbenannt!
-        };
     </script>
 
     <h4 style="font-weight: bold">Studiengang einpflegen</h4>
@@ -112,18 +105,15 @@
                 {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.richtung.vars.prototype } %}
             {% endfilter %}">
 
-            {% set __name__ = 0 %}
             {% for vertiefungField in form.richtung %}
                 <li>
                     {{ form_errors(vertiefungField) }}
                     {{ form_widget(vertiefungField) }}
-                    <a href="#">{{ __name__ }}</a>
+                    <a href="#" onclick="jQuery(this).parent().remove()">Vertiefungsrichtung entfernen</a>
                 </li>
-                {% set __name__ = __name__ + 1 %}
             {% endfor %}
         </ul>
         <a id="add-another-vertiefung">Vertiefung hinzufügen</a>
-        <a id="remove-one-vertiefung" onclick="removeLastVertiefung()">Vertiefung entfernen</a>
 
         <h4 style="font-weight: bold">Fachgebiete</h4>
         <ul id="fachgebiet-fields-list" data-prototype=
@@ -131,18 +121,15 @@
                 {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.fachgebiete.vars.prototype } %}
             {% endfilter %}">
 
-            {% set __name__ = 0 %}
             {% for fachgebiet in form.fachgebiete %}
                 <li>
                     {{ form_errors(fachgebiet) }}
                     {{ form_widget(fachgebiet) }}
-                    <a href="#">{{ __name__ }}</a>
+                    <a href="#" onclick="jQuery(this).parent().remove()">Fachgebiet entfernen</a>
                 </li>
-                {% set __name__ = __name__ + 1 %}
             {% endfor %}
         </ul>
         <a id="add-another-fachgebiet">Fachgebiet hinzufügen</a>
-        <a id="remove-one-fachgebiet" onclick="removeLastFachgebiet()">Fachgebiet entfernen</a>
 
         {{ form_end(form) }}
     </div>
