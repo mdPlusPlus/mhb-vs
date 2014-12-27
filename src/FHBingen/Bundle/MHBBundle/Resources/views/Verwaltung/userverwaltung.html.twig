@@ -1,12 +1,13 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
+{#
 {% block content %}
     <div class="table-responsive">
         <h3>Studiengangleiter</h3>
         <ul>
             {% for person in sgl %}
                 <li>
-                    {# TODO route alias#}
+                    &#123;&#35; TODO route alias&#35;&#125;
                     <a href="{{'/restricted/sgl/updateUsers/'~person.getDozentenID() }}">{{person}}</a>
                 </li>
             {% endfor %}
@@ -16,7 +17,7 @@
         <ul>
             {% for person in dozent %}
                 <li>
-                    {# TODO route alias#}
+                    &#123;&#35; TODO route alias&#35;&#125;
                     <a href="{{'/restricted/sgl/updateUsers/'~person.getDozentenID() }}">{{person}}</a>
                 </li>
             {% endfor %}
@@ -37,4 +38,55 @@
             {%endif%}
         {% endfor %}
     {% endfor %}
+{% endblock %}#}
+
+{% block content %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <th>Dozenten</th>
+                <th>Studiengangleiter</th>
+                <th>neuer Nutzer</th>
+            </tr>
+
+            <tr>
+                <td>
+                    <ul>
+                        {% for person in dozent %}
+                            <li>
+                                {# TODO route alias#}
+                                <a href="{{'/restricted/sgl/updateUsers/'~person.getDozentenID() }}">{{person}}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for person in sgl %}
+                            <li>
+                                {# TODO route alias#}
+                                <a href="{{'/restricted/sgl/updateUsers/'~person.getDozentenID() }}">{{person}}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li><a href="{{'/restricted/sgl/createUsers'}}">Nutzer anlegen</a></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    {% for type, messages in app.session.flashBag.all %}
+        {% for message in messages %}
+            {%if type == 'info'%}
+                <script>
+                    alert('{{ message|raw }}');
+                </script>
+            {%endif%}
+        {% endfor %}
+    {% endfor %}
+
 {% endblock %}
