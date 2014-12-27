@@ -17,7 +17,7 @@ class VeranstaltungType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $state =['in Planung' => 'in Planung', 'Freigegeben' => 'Freigegeben', 'expired' => 'expired'];
+//        $state =['in Planung' => 'in Planung', 'Freigegeben' => 'Freigegeben', 'expired' => 'expired'];
 
         $frequency=['Sommersemester' => 'Sommersemester', 'Wintersemester' => 'Wintersemester', 'wechselnd' => 'wechselnd', 'jedes Semester' => 'jedes Semester'];
 
@@ -27,7 +27,7 @@ class VeranstaltungType extends AbstractType
 
         $builder
             ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
-            ->add('status', 'choice', array('label' => 'Status: ', 'required' => true, 'choices' => $state))
+//            ->add('status', 'choice', array('label' => 'Status: ', 'required' => true, 'choices' => $state))
             ->add('kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))
             ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true))
             ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => false))

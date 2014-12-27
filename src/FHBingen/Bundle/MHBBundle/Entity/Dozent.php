@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity(repositoryClass="FHBingen\Bundle\MHBBundle\Entity\UserRepository")
  * @ORM\Table(name="Dozent")
- * @UniqueEntity(fields="Email", message="Unter dieser EMail ist bereits ein Dozent eingetragen.")
+ * @UniqueEntity(fields="email", message="Unter dieser EMail ist bereits ein Dozent eingetragen.")
  * @ORM\HasLifecycleCallbacks
  */
 
