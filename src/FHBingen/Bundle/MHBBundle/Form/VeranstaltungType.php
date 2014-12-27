@@ -33,7 +33,7 @@ class VeranstaltungType extends AbstractType
             ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => false))
             ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots: ', 'required' => false, 'choices' => $frequency))
             ->add('dauer', 'text',  array('label' => 'Dauer: ', 'required' => true))
-//            ->add('Lehrveranstaltungen', 'choice',  array('label' => 'Lehrveranstaltungen: ','choices'
+//            ->add('lehrveranstaltungen', 'choice',  array('label' => 'Lehrveranstaltungen: ','choices'
 //            => array('Vorlesung'   => 'Vorlesung',
 //                    'Übung' => 'Übung',
 //                    'Labor' => 'Labor',
@@ -48,7 +48,7 @@ class VeranstaltungType extends AbstractType
             ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße: ', 'required' => true))
             ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse: ', 'required' => true))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => true))
-//            ->add('Pruefungsformen', 'choice', array('label' => 'Prüfungsform: ','choices'
+//            ->add('pruefungsformen', 'choice', array('label' => 'Prüfungsform: ','choices'
 //            => array('Schriftliche Klausur'   => 'Schriftliche Klausur',
 //                     'Mündliche Prüfung' => 'Mündliche Prüfung',
 //                     'Vortrag' => 'Vortrag',
