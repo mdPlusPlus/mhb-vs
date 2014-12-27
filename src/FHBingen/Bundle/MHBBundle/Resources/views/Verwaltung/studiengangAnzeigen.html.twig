@@ -6,8 +6,18 @@
     <tr class="form_row">
         <td>{{ form_label(form) }}</td>
         <td>{{ form_widget(form) }}</td>
+        {# <td>{{ form_errors(form) }}</td> #}
     </tr>
 {% endblock form_row %}
+
+{% block form_widget_compound -%}
+    {# notwending, damit es keine divs gibt #}
+    {%- if form.parent is empty -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+{%- endblock form_widget_compound %}
 
 {% block content %}
     <script type="text/javascript">
@@ -18,39 +28,54 @@
         jQuery(document).ready(function () {
             jQuery('#add-another-vertiefung').click(function (e) {
                 e.preventDefault();
-
-                var richtungList = jQuery('#vertiefung-fields-list');
-
-                // grab the prototype template
-                var newWidget = richtungList.attr('data-prototype');
-                // replace the "__name__" used in the id and name of the prototype
-                // with a number that's unique to your emails
-                // end name attribute looks like name="contact[emails][2]"
-                newWidget = newWidget.replace(/__name__/g, vertiefungCount);
-                vertiefungCount++;
-
-                // create a new list element and add it to the list
-                var newLi = jQuery('<li></li>').html(newWidget);
-                newLi.appendTo(richtungList);
+                return addAnotherVertiefungsrichtung();
             });
             jQuery('#add-another-fachgebiet').click(function (e) {
                 e.preventDefault();
-
-                var fachList = jQuery('#fachgebiet-fields-list');
-
-                // grab the prototype template
-                var newWidget = fachList.attr('data-prototype');
-                // replace the "__name__" used in the id and name of the prototype
-                // with a number that's unique to your emails
-                // end name attribute looks like name="contact[emails][2]"
-                newWidget = newWidget.replace(/__name__/g, fachgebietCount);
-                fachgebietCount++;
-
-                // create a new list element and add it to the list
-                var newLi = jQuery('<li></li>').html(newWidget);
-                newLi.appendTo(fachList);
+                return addAnotherFachgebiet();
             });
         });
+
+        function addAnotherVertiefungsrichtung(){
+            var richtungList = jQuery('#vertiefung-fields-list');
+
+            // grab the prototype template
+            var newWidget = richtungList.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, vertiefungCount);
+            vertiefungCount++;
+
+            // create a new list element and add it to the list
+            var newLi = jQuery('<li></li>').html(newWidget);
+            newLi.appendTo(richtungList);
+        }
+
+        function addAnotherFachgebiet(){
+            var fachList = jQuery('#fachgebiet-fields-list');
+
+            // grab the prototype template
+            var newWidget = fachList.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, fachgebietCount);
+
+            // create a new list element and add it to the list
+            var newLi = jQuery('<li></li>').html(newWidget);
+
+            var link = jQuery('<a href="#" >' + fachgebietCount + '</a>');
+            link.click(function(e){
+                e.preventDefault();
+                newLi.remove();
+            });
+
+            newLi.append(link);
+            newLi.appendTo(fachList);
+            fachgebietCount++;
+        }
+
         //TODO löschen hinter jedem Eintrag anzeigen
         function removeLastVertiefung(){
             $('#vertiefung-fields-list li:last').remove();
@@ -81,20 +106,18 @@
             {{ form_row(form.sgl) }}
         </table>
 
-        {% macro vertiefungPrototype(formData) %}
-                {{ form_errors(formData) }}
-                {{ form_widget(formData) }}
-                <a href="#" id="remove-vertiefung-__name__">__name__</a>
-        {% endmacro %}
-
         <h4 style="font-weight: bold">Vertiefungsrichtungen</h4>
-        <ul id="vertiefung-fields-list" data-prototype="{{ _self.vertiefungPrototype(form.richtung.vars.prototype)|e }} {#{{ form_widget(form.richtung.vars.prototype)|e }}#}">
+        <ul id="vertiefung-fields-list" data-prototype=
+            "{% filter escape %}
+                {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.richtung.vars.prototype } %}
+            {% endfilter %}">
+
             {% set __name__ = 0 %}
             {% for vertiefungField in form.richtung %}
                 <li>
                     {{ form_errors(vertiefungField) }}
                     {{ form_widget(vertiefungField) }}
-                    <a href="#" id="remove-vertiefung-{{ __name__ }}">{{ __name__ }}</a>
+                    <a href="#">{{ __name__ }}</a>
                 </li>
                 {% set __name__ = __name__ + 1 %}
             {% endfor %}
@@ -103,12 +126,19 @@
         <a id="remove-one-vertiefung" onclick="removeLastVertiefung()">Vertiefung entfernen</a>
 
         <h4 style="font-weight: bold">Fachgebiete</h4>
-        <ul id="fachgebiet-fields-list" data-prototype="{{ form_widget(form.fachgebiete.vars.prototype)|e }}">
-            {% for fachgebietField in form.fachgebiete %}
+        <ul id="fachgebiet-fields-list" data-prototype=
+            "{% filter escape %}
+                {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.fachgebiete.vars.prototype } %}
+            {% endfilter %}">
+
+            {% set __name__ = 0 %}
+            {% for fachgebiet in form.fachgebiete %}
                 <li>
-                    {{ form_errors(fachgebietField) }}
-                    {{ form_widget(fachgebietField) }}
+                    {{ form_errors(fachgebiet) }}
+                    {{ form_widget(fachgebiet) }}
+                    <a href="#">{{ __name__ }}</a>
                 </li>
+                {% set __name__ = __name__ + 1 %}
             {% endfor %}
         </ul>
         <a id="add-another-fachgebiet">Fachgebiet hinzufügen</a>

@@ -1,0 +1,7 @@
+{% for item in items %}
+    {#<li>#}
+        {{ form_errors(item) }}
+        {{ form_label(item) }}
+        {{ form_widget(item) }}
+    {#</li>#}
+{% endfor %}
