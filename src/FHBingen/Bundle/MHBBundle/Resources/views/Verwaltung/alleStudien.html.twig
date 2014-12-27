@@ -1,0 +1,40 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <h4 style="font-weight: bold">Studiengangübersicht</h4>
+    <div class="table-responsive">
+
+        <ul>
+            <li><a href="{{'/restricted/sgl/createCourse'}}">Neuen Studiengang anlegen</a></li>
+        </ul>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="">Studiengang</th>
+                <th style="">Abschluss</th>
+                <th style="">Studiengangleiter</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for gang in courses %}
+                <tr>
+                    <td><a href="{{'/restricted/sgl/updateCourse/'~gang.getStudiengangID()}}">{{gang.getTitel()}}</a></td>
+                    <td>{{gang.getGrad()}}</td>
+                    <td>{{gang.getSgl()}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% for type, messages in app.session.flashBag.all %}
+        {% for message in messages %}
+            {%if type == 'info'%}
+                <script>
+                    alert('{{ message|raw }}');
+                </script>
+            {%endif%}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
