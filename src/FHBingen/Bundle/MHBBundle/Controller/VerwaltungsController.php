@@ -177,27 +177,6 @@ class VerwaltungsController extends Controller
 
                 $em->persist($studiengang);
                 $em->flush();
-                //flush() hier vermutlich notwendig, hab' vergessen warum... eventuell mal ohne testen?
-
-                //$studiengang->getRichtung() holt sich die infos NICHT aus der db....
-                //also:
-                $vertiefungRepository = $em->getRepository('FHBingenMHBBundle:Vertiefung');
-                $dbVertiefungArr = $vertiefungRepository->findby(array('studiengang' => $courseID));
-
-                $fachgebietRepository = $em->getRepository('FHBingenMHBBundle:Fachgebiet');
-                $dbFachgebietArr = $fachgebietRepository->findby(array('studiengang' => $courseID));
-
-                foreach ($dbVertiefungArr as $dbEntry) {
-                    if (!in_array($dbEntry, $vertiefungArr)) {
-                        $em->remove($dbEntry);
-                    }
-                }
-                foreach ($dbFachgebietArr as $dbEntry) {
-                    if (!in_array($dbEntry, $fachgebietArr)) {
-                        $em->remove($dbEntry);
-                    }
-                }
-                $em->flush();
 
                 $this->get('session')->getFlashBag()->add('info', 'Der Studiengang wurde erfolgreich angelegt.');
 
