@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
+use Symfony\Component\Validator\Constraints\Null;
 
 class DozentController extends Controller
 {
@@ -75,7 +76,7 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/planungErstellen", name="planungErstellen")
-     * @Template("FHBingenMHBBundle:Veranstaltung:")
+     * @Template("FHBingenMHBBundle:Veranstaltung:planungErstellen.html.twig")
      */
     public function planungErstellenAction()
     {
@@ -92,30 +93,29 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $modul->setStatus($form->get('status')->getData());
-                $modul->setKuerzel($form->get('kuerzel')->getData());
+                $modul->setStatus('in Planung');
+                $modul->setErstellungsdatum(new \DateTime());
+                $modul->setVersionsnummer(0);
+
+                if($form->get('kuerzel')->getData()!=''){
+                    $modul->setKuerzel($form->get('kuerzel')->getData());
+                }
+
                 $modul->setName($form->get('name')->getData());
-                $modul->setNameEn($form->get('nameEN')->getData());
-                $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
-                //$modul->setDauer($form->get('lehrveranstaltungen')->getData());
-                $modul->setDauer($form->get('kontaktzeitVL')->getData());
-                $modul->setDauer($form->get('kontaktzeitSonstige')->getData());
-                $modul->setDauer($form->get('selbststudium')->getData());
-                $modul->setDauer($form->get('gruppengroesse')->getData());
-                $modul->setDauer($form->get('lernergebnisse')->getData());
-                $modul->setDauer($form->get('inhalte')->getData());
-                //$modul->setDauer($form->get('pruefungsformen')->getData());
-                $modul->setDauer($form->get('sprache')->getData());
-                $modul->setDauer($form->get('literatur')->getData());
-                $modul->setDauer($form->get('leistungspunkte')->getData());
-                //$modul->setDauer($form->get('voraussetzungLP')->getData());
-                $modul->setDauer($form->get('voraussetzungInh')->getData());
+
+                if($form->get('nameEN')->getData()!=''){
+                    $modul->setKuerzel($form->get('nameEN')->getData());
+                }
+
+                if($form->get('haeufigkeit')->getData()!=''){
+                    $modul->setKuerzel($form->get('haeufigkeit')->getData());
+                }
 
                 $em->persist($modul);
                 $em->flush();
             }
         }
-        return $this->render('FHBingenMHBBundle:Veranstaltung:', array('form' => $form->createView(), 'pageTitle' => 'Planungserstellung'));
+        return $this->render('FHBingenMHBBundle:Veranstaltung:planungErstellen.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Planungserstellung'));
     }
 
 
