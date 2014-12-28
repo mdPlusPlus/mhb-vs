@@ -75,6 +75,23 @@ class DozentController extends Controller
 
 
     /**
+     * @Route("/restricted/dozent/planungLoeschen/{id}", name="planungLoeschen")
+     * @Template("FHBingenMHBBundle:Veranstaltung:planungsUebersicht.html.twig")
+     */
+    public function planungLoeschenAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dbEntry = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id));
+
+        $em->remove($dbEntry);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('info', 'Die Planung wurde erfolgreich gelöscht.');
+
+        return $this->redirect($this->generateUrl('planungAnzeigen'));
+    }
+
+    /**
      * @Route("/restricted/dozent/planungErstellen", name="planungErstellen")
      * @Template("FHBingenMHBBundle:Veranstaltung:planungErstellen.html.twig")
      */
