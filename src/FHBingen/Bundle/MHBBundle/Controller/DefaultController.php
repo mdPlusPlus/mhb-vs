@@ -22,23 +22,6 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('login'));
     }
 
-    /**
-     * @Route("/restricted/dozent/password")
-     */
-    public function resetAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $dozenten = $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
-
-        foreach ($dozenten as $doz) {
-            $doz->setPassword('testpass');
-            $em->persist($doz);
-            $em->flush();
-        }
-
-        return new Response('Passwörter wurden zurückgesetzt');
-    }
-
 //TODO Was ist das und braucht man das noch + entfernen von twig
     /**
      * @Route("/restricted/sgl/Veranstaltung")

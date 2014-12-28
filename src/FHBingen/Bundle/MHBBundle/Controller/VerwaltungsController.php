@@ -50,6 +50,27 @@ class VerwaltungsController extends Controller
 
 
     /**
+     * @Route("/restricted/sgl/passwordReset", name="passwdReset")
+     * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
+     */
+    public function resetAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dozenten = $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
+
+        foreach ($dozenten as $doz) {
+            $doz->setPassword('testpass');
+            $em->persist($doz);
+            $em->flush();
+        }
+
+        $this->get('session')->getFlashBag()->add('info', 'Alle Passwörter wurden zurückgesetzt.');
+
+        return $this->redirect($this->generateUrl('benutzerverwaltung'));
+    }
+
+
+    /**
      * @Route("/restricted/sgl/createUsers")
      * @Template("FHBingenMHBBundle:Verwaltung:userCreate.html.twig")
      */
