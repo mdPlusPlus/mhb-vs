@@ -25,7 +25,7 @@ class DefaultController extends Controller
     /**
      * @Route("/restricted/dozent/password")
      */
-    public function ResetAction()
+    public function resetAction()
     {
         $em = $this->getDoctrine()->getManager();
         $dozenten = $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
@@ -39,6 +39,7 @@ class DefaultController extends Controller
         return new Response('Passwörter wurden zurückgesetzt');
     }
 
+//TODO Was ist das und braucht man das noch + entfernen von twig
     /**
      * @Route("/restricted/sgl/Veranstaltung")
      * @Template("FHBingenMHBBundle:Veranstaltung:Veranstaltung_Uebersicht.html.twig")

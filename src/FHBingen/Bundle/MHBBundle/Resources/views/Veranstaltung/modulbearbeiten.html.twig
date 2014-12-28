@@ -11,11 +11,10 @@
     {% endblock form_row %}
 
 {% block content %}
-    <h3>Modul Bearbeiten</h3>
+    <h3>Modulplanung</h3>
     <div class="table-responsive">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <table class="table table-bordered">
-            {{ form_errors(form) }}
             {{ form_row(form.status) }}
             {{ form_row(form.leistungspunkte) }}
             {{ form_row(form.kuerzel) }}

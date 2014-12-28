@@ -1,0 +1,29 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="table-responsive">
+        <ul>
+            <li><a href="">Neue Planung erstellen</a></li>
+        </ul>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Modultitel</th>
+                <th>letzte Änderung</th>
+                <th>freigeben</th>
+                <th>löschen</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for planung in planungen %}
+                <tr>
+                    <td><a href="">{{planung.getName()}}</a></td>
+                    <td>{{planung.getErstellungsdatum()|date('d.m.Y')}}</td>
+                    <td><a href="">freigeben</a></td>
+                    <td><a href="">löschen</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

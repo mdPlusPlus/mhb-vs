@@ -25,16 +25,15 @@ class DozentController extends Controller
      */
     public function eigeneModuleAction()
     {
-        //Filter auf Status
-        //Filter auf Modul
-        //Filter auf Versionsnummer
-        //Abfangen falls keine Module vorhanden sind
+        //TODO: Filter auf gleiche Module in beiden Tabellen
+        //TODO: Filter auf Versionsnummer
+        //TODO: Abfangen falls keine Module vorhanden sind
 
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID()));
+        $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'status' => 'Freigegeben'));
 
         $mLehrende = array();
         foreach ($modulverantwortung as $m) {
@@ -59,18 +58,31 @@ class DozentController extends Controller
 
 
     /**
+     * @Route("/restricted/dozent/planungAnzeigen", name="planungAnzeigen")
+     * @Template("FHBingenMHBBundle:Veranstaltung:planungsUebersicht.html.twig")
+     */
+    public function planungAnzeigenAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $userMail = $user->getUsername();
+        $em = $this->getDoctrine()->getManager();
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
+        $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'status' => 'in Planung'));
+
+        return array('planungen' => $module, 'pageTitle' => 'Modulplanung');
+    }
+
+
+    /**
      * @Route("/restricted/dozent/modulbearbeiten/{id}", name="modulbearbeiten")
      * @Template("FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig")
      */
     public function modulplanungAction($id)
     {
-
+//TODO: Wird abgeschafft und neu gebaut
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id));
-        //$choices = $modul->getPruefungsformen();
-        //zerteilen;
-        //Array[] formen;
-        // if contains
+
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 
         $request = $this->get('request');

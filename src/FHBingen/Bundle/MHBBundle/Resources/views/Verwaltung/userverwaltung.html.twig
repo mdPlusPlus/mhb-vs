@@ -1,45 +1,5 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-{#
-{% block content %}
-    <div class="table-responsive">
-        <h3>Studiengangleiter</h3>
-        <ul>
-            {% for person in sgl %}
-                <li>
-                    &#123;&#35; TODO route alias&#35;&#125;
-                    <a href="{{'/restricted/sgl/updateUsers/'~person.getDozentenID() }}">{{person}}</a>
-                </li>
-            {% endfor %}
-        </ul>
-
-        <h3>Dozenten</h3>
-        <ul>
-            {% for person in dozent %}
-                <li>
-                    &#123;&#35; TODO route alias&#35;&#125;
-                    <a href="{{'/restricted/sgl/updateUsers/'~person.getDozentenID() }}">{{person}}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div>
-        <h3>Neuen User anlegen</h3>
-        <ul>
-            <li><a href="{{'/restricted/sgl/createUsers'}}">User anlegen</a></li>
-        </ul>
-    </div>
-    {% for type, messages in app.session.flashBag.all %}
-        {% for message in messages %}
-            {%if type == 'info'%}
-                <script>
-                    alert('{{ message|raw }}');
-                </script>
-            {%endif%}
-        {% endfor %}
-    {% endfor %}
-{% endblock %}#}
-
 {% block content %}
     <div class="table-responsive">
         <table class="table table-bordered">
