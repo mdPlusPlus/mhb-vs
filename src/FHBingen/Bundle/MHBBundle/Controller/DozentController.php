@@ -113,6 +113,10 @@ class DozentController extends Controller
 
                 $em->persist($modul);
                 $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'Die Planung wurde erfolgreich angelegt.');
+
+                return $this->redirect($this->generateUrl('planungAnzeigen'));
             }
         }
         return $this->render('FHBingenMHBBundle:Veranstaltung:planungErstellen.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Planungserstellung'));
