@@ -4,9 +4,17 @@
 
 {% block content %}
 
+    <script type="text/javascript">
+        $(document).ready(function()
+                {
+                    $("#modulverantwortlicher").tablesorter();
+                    $("#lehrender").tablesorter();
+                }
+        );
+    </script>
     <div class="table-responsive">
         <h3>Module als Modulverantwortlicher</h3>
-        <table class="table table-bordered">
+        <table id="modulverantwortlicher" class="table table-bordered tablesorter">
             <thead>
             <tr>
                 <th>Modultitel</th>
@@ -28,7 +36,7 @@
                     <td>{{veranstaltung.haeufigkeit}}</td>
                     <td>
                         {% for name in mLehrende[count] %}
-                            {{name}}</br>
+                            {{name}}<br />
                         {% endfor %}
                     </td>
                 </tr>
@@ -38,7 +46,7 @@
         </table>
 
         <h3 style="margin-top: 50px">Module als Lehrender</h3>
-        <table class="table table-bordered">
+        <table id="lehrender" class="table table-bordered tablesorter">
             <thead>
             <tr>
                 <th>Modultitel</th>
