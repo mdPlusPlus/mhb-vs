@@ -132,6 +132,9 @@ class DozentController extends Controller
                 $modul->setLiteratur($form->get('literatur')->getData());
                 $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
+                $modul->setVoraussetzungLP($form->get('voraussetzungLP')->getData());
+                $modul->setPruefungsformen($form->get('pruefungsformen')->getData());
+                $modul->setLehrveranstaltungen($form->get('lehrveranstaltungen')->getData());
 
                 $em->persist($modul);
                 $em->flush();
