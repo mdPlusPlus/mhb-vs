@@ -84,7 +84,7 @@ class DozentController extends Controller
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        //$dozent->getDozentenID()
+
         $modul = new Entity\Veranstaltung();
         $form = $this->createForm(new Form\PlanungType(), $modul);
 
@@ -93,23 +93,28 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
+                //notwendige Einträge
                 $modul->setStatus('in Planung');
                 $modul->setErstellungsdatum(new \DateTime());
                 $modul->setVersionsnummer(0);
-
-                if($form->get('kuerzel')->getData()!=''){
-                    $modul->setKuerzel($form->get('kuerzel')->getData());
-                }
-
+                $modul->setBeauftragter($dozent);
+                $modul->setKuerzel($form->get('kuerzel')->getData());
                 $modul->setName($form->get('name')->getData());
 
-                if($form->get('nameEN')->getData()!=''){
-                    $modul->setKuerzel($form->get('nameEN')->getData());
-                }
-
-                if($form->get('haeufigkeit')->getData()!=''){
-                    $modul->setKuerzel($form->get('haeufigkeit')->getData());
-                }
+                //optionale Einträge
+                $modul->setNameEn($form->get('nameEN')->getData());
+                $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
+                $modul->setDauer($form->get('dauer')->getData());
+                $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
+                $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
+                $modul->setSelbststudium($form->get('selbststudium')->getData());
+                $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
+                $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
+                $modul->setInhalte($form->get('inhalte')->getData());
+                $modul->setSprache($form->get('sprache')->getData());
+                $modul->setLiteratur($form->get('literatur')->getData());
+                $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
+                $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
 
                 $em->persist($modul);
                 $em->flush();

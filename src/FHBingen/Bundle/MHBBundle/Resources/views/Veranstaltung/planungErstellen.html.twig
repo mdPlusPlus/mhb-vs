@@ -15,10 +15,21 @@
     <div class="table-responsive">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <table class="table table-bordered">
-            {{ form_row(form.kuerzel) }}
             {{ form_row(form.name) }}
             {{ form_row(form.nameEN) }}
+            {{ form_row(form.kuerzel) }}
             {{ form_row(form.haeufigkeit) }}
+            {{ form_row(form.dauer) }}
+            {{ form_row(form.leistungspunkte) }}
+            {{ form_row(form.kontaktzeitVL) }}
+            {{ form_row(form.kontaktzeitSonstige) }}
+            {{ form_row(form.selbststudium) }}
+            {{ form_row(form.gruppengroesse) }}
+            {{ form_row(form.lernergebnisse) }}
+            {{ form_row(form.inhalte) }}
+            {{ form_row(form.sprache) }}
+            {{ form_row(form.literatur) }}
+            {{ form_row(form.voraussetzungInh) }}
         </table>
         {{ form_end(form) }}
     </div>
