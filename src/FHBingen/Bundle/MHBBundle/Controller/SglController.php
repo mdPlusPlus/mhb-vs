@@ -20,7 +20,7 @@ class SglController extends Controller
 {
     /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
-     * * @Template("FHBingenMHBBundle:Veranstaltung:alleModule.html.twig")
+     * @Template("FHBingenMHBBundle:Veranstaltung:alleModule.html.twig")
      */
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
@@ -33,7 +33,7 @@ class SglController extends Controller
             }
         }
 
-        return array('module' => $nichtInPlanung, 'pageTitle' => 'STARTSEITE');
+        return array('module' => $nichtInPlanung, 'pageTitle' => 'Alle Module');
     }
 
 
@@ -58,7 +58,7 @@ class SglController extends Controller
             }
         }
 
-        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote, 'pageTitle' => 'STARTSEITE');
+        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote, 'pageTitle' => 'Modulcodes');
     }
 
     /**
@@ -89,7 +89,7 @@ class SglController extends Controller
 
         }
 
-        return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung'));
+        return array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung');
     }
 
 
@@ -102,7 +102,7 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
 
-        return array('mhb' => $mhb, 'pageTitle' => 'STARTSEITE');
+        return array('mhb' => $mhb, 'pageTitle' => 'Modulhandbücher');
     }
 
 
@@ -123,7 +123,7 @@ class SglController extends Controller
 
         $result = $mhb->getResult();
 
-        return array('mhb' => $result, 'pageTitle' => 'STARTSEITE');
+        return array('mhb' => $result, 'pageTitle' => 'Module des MHB');
     }
 
 
@@ -146,7 +146,8 @@ class SglController extends Controller
                 $angeboteOhneMHB[] = $value;
             }
         }
-        return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'STARTSEITE');
+
+        return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'Modulhandbucherstellung');
     }
 
 
