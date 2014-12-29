@@ -1,20 +1,22 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-{#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
-
 {% block content %}
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").tablesorter();
+        });
+    </script>
     <div class="table-responsive">
         <h3>Modulhanderstellung</h3>
-        <table class="table table-bordered">
+        <table id="table" class="table table-bordered tablesorter">
             <thead>
-            <tr>
-                <th>Modul</th>
-                <th>Kürzel</th>
-                <th>Version</th>
-                <th>Regelsemester</th>
-                <th>Modulverantwortlicher</th>
-            </tr>
+                <tr>
+                    <th>Modul</th>
+                    <th>Kürzel</th>
+                    <th>Version</th>
+                    <th>Regelsemester</th>
+                    <th>Modulverantwortlicher</th>
+                </tr>
             </thead>
             <tbody>
             {% for entity in angebote %}
@@ -22,10 +24,9 @@
                     <td><a href="{{'/restricted/dozent/modulbearbeiten/'~entity.getVeranstaltung().getModulID }}">{{ entity.getVeranstaltung().getName() }}</td>
                     <td>{{ entity.getVeranstaltung().getKuerzel() }}</td>
                     <td>{{ entity.getVeranstaltung().getVersionsnummer() }}</td>
-                    <td>{{ entity.getVeranstaltung.getHaeufigkeit() }}</td>
+                    <td>{{ entity.getVeranstaltung().getHaeufigkeit() }}</td>
+                    {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                     <td>{{ entity.getVeranstaltung().getErstellungsdatum()|date('d.m.Y') }}</td>
-
-            </tbody>
                 </tr>
             {% endfor %}
             </tbody>
