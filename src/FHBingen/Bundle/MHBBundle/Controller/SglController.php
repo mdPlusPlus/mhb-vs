@@ -33,11 +33,9 @@ class SglController extends Controller
             }
         }
 
-
-
-
         return array('module' => $nichtInPlanung, 'pageTitle' => 'STARTSEITE');
     }
+
 
     /**
      * @Route("/restricted/sgl/modulCodeUebersicht", name="modulCodeUebersicht")
@@ -85,12 +83,11 @@ class SglController extends Controller
                 $em->flush();
             }
 
-            return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung'));
-
         }
 
         return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung'));
     }
+
 
     /**
      * @Route("/restricted/sgl/mhbUebersicht", name="mhbUebersicht")
@@ -103,6 +100,7 @@ class SglController extends Controller
 
         return array('mhb' => $mhb, 'pageTitle' => 'STARTSEITE');
     }
+
 
     /**
      * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
@@ -118,7 +116,6 @@ class SglController extends Controller
                                  JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung =  v.Modul_ID
                                  JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
                                  AND a.mhb =' . $id);
-
 
         $result = $mhb->getResult();
 
@@ -147,6 +144,7 @@ class SglController extends Controller
         }
         return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'STARTSEITE');
     }
+
 
     /**
      * @Route("/restricted/sgl/moduldeaktivierung", name="moduldeaktivierung")
