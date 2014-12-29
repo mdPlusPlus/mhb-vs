@@ -1,9 +1,6 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-{#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
-
 {% block content %}
-
     <script type="text/javascript">
         $(document).ready(function()
                 {
@@ -32,6 +29,7 @@
                 <tr>
                     <td>{{veranstaltung.name}}</td>
                     <td>{{veranstaltung.kuerzel}}</td>
+                    {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                     <td>{{veranstaltung.erstellungsdatum|date('d.m.Y')}}</td>
                     <td>{{veranstaltung.haeufigkeit}}</td>
                     <td>
