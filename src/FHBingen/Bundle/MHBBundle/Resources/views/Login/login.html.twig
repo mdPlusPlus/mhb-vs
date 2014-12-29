@@ -4,9 +4,6 @@
 {% endblock %}
 
 {% block content %}
-    {% if error %}
-        <div>{{ error.message }}</div>
-    {% endif %}
     <div class="container" style="width: 300px">
         <form class="form-signin" role="form" action="{{ path('loginCheck') }}" method="post">
             <label for="inputEmail" class="sr-only">Email-Adresse:</label>
@@ -33,4 +30,9 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
         </form>
     </div>
+    {% if error %}
+        <script>
+            alert('{{ error.message }}');
+        </script>
+    {% endif %}
 {% endblock %}
