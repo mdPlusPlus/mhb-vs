@@ -1,11 +1,16 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").tablesorter();
+        });
+    </script>
     <div class="table-responsive">
         <ul>
             <li><a href="{{ path('planungErstellen') }}">Neue Planung erstellen</a></li>
         </ul>
-        <table class="table table-bordered">
+        <table id="table" class="table table-bordered tablesorter">
             <thead>
                 <tr>
                     <th>Modultitel</th>
