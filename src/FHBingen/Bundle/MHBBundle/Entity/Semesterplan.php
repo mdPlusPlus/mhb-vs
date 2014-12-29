@@ -84,20 +84,20 @@ class Semesterplan
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID")
+     * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID", nullable=false)
      * */
     protected $veranstaltung;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="dozent_id", referencedColumnName="Dozenten_ID")
+     * @ORM\JoinColumn(name="dozent_id", referencedColumnName="Dozenten_ID", nullable=false)
      * */
     protected $dozent;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="semester", referencedColumnName="semester")
+     * @ORM\JoinColumn(name="semester", referencedColumnName="semester", nullable=false)
      * */
     protected $semester;
 

@@ -45,19 +45,19 @@ class Studienplan
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="startSemester")
-     * @ORM\JoinColumn(name="Startsemester", referencedColumnName="semester")
+     * @ORM\JoinColumn(name="Startsemester", referencedColumnName="semester", nullable=false)
      * */
     protected $startSemester;
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="studienplanModul")
-     * @ORM\JoinColumn(name="Modul_ID", referencedColumnName="Modul_ID")
+     * @ORM\JoinColumn(name="Modul_ID", referencedColumnName="Modul_ID", nullable=false)
      * */
     protected $veranstaltung;
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studienplanZuStudienplan")
-     * @ORM\JoinColumn(name="Studiengang_ID", referencedColumnName="Studiengang_ID")
+     * @ORM\JoinColumn(name="Studiengang_ID", referencedColumnName="Studiengang_ID", nullable=false)
      * */
     protected $studiengang;
 

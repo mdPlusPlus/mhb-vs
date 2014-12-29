@@ -133,7 +133,7 @@ class Fachgebiet
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="fachgebiete")
-     * @ORM\JoinColumn(name="Studiengang_ID", referencedColumnName="Studiengang_ID")
+     * @ORM\JoinColumn(name="Studiengang_ID", referencedColumnName="Studiengang_ID", nullable=false)
      */
     protected $studiengang;
 

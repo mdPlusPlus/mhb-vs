@@ -266,7 +266,7 @@ class Studiengang
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="studiengang")
-     * @ORM\JoinColumn(name="SGL", referencedColumnName="Dozenten_ID")
+     * @ORM\JoinColumn(name="SGL", referencedColumnName="Dozenten_ID", nullable=false)
      */
     protected $sgl;
 

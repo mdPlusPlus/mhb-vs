@@ -39,26 +39,26 @@ class Angebot
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="angebot")
-     * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID")
+     * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID", nullable=false)
      * */
     protected $veranstaltung;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Modulhandbuch", inversedBy="angebot")
-     * @ORM\JoinColumn(name="mhb_id", referencedColumnName="MHB_ID")
+     * @ORM\JoinColumn(name="mhb_id", referencedColumnName="MHB_ID", nullable=false)
      * */
     protected $mhb;
 
     /**
      * @ORM\ManyToOne(targetEntity="Fachgebiet", inversedBy="angebot")
-     * @ORM\JoinColumn(name="fachgebiet_id", referencedColumnName="Fachgebiets_ID")
+     * @ORM\JoinColumn(name="fachgebiet_id", referencedColumnName="Fachgebiets_ID", nullable=false)
      * */
     protected $fachgebiet;
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="angebot")
-     * @ORM\JoinColumn(name="studiengang_id", referencedColumnName="Studiengang_ID")
+     * @ORM\JoinColumn(name="studiengang_id", referencedColumnName="Studiengang_ID", nullable=false)
      * */
     protected $studiengang;
 

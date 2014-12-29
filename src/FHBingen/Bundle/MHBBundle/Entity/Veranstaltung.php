@@ -58,7 +58,7 @@ class Veranstaltung
     protected $status;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=5, nullable=true)
      * @Assert\Length(
      * min= 3,
      * max= 5,
@@ -898,7 +898,7 @@ protected $voraussetzungInh;
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="modulbeauftragter")
-     * @ORM\JoinColumn(name="Modulbeauftragter", referencedColumnName="Dozenten_ID")
+     * @ORM\JoinColumn(name="Modulbeauftragter", referencedColumnName="Dozenten_ID", nullable=false)
      */
     protected $beauftragter;
 

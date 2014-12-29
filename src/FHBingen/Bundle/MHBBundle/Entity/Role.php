@@ -47,7 +47,7 @@ class Role implements RoleInterface
 
     /**
      * @ORM\OneToMany(targetEntity="Dozent", mappedBy="roles")
-     * @ORM\JoinColumn(name="dozenten_id", referencedColumnName="Dozenten_ID")
+     * @ORM\JoinColumn(name="roles_id", referencedColumnName="id")
      */
     private $users;
 

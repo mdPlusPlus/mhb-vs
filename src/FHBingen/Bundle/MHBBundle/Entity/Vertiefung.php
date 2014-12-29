@@ -137,7 +137,7 @@ class Vertiefung
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="richtung")
-     * @ORM\JoinColumn(name="studiengang_id", referencedColumnName="Studiengang_ID")
+     * @ORM\JoinColumn(name="studiengang_id", referencedColumnName="Studiengang_ID", nullable=false)
      */
     protected $studiengang;
 
