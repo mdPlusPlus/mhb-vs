@@ -44,9 +44,6 @@ class SglController extends Controller
                }
             $stgZuModul[] = $name;
         }
-
-
-
         return array('module' => $nichtInPlanung,'stgZuModul' => $stgZuModul, 'pageTitle' => 'STARTSEITE');
     }
 
