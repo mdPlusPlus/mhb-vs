@@ -24,6 +24,7 @@ class SglController extends Controller
      */
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
+        //TODO: zugehörigen Studiengang in Template anzeigen lassen
         $em = $this->getDoctrine()->getManager();
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
         $nichtInPlanung = array();
