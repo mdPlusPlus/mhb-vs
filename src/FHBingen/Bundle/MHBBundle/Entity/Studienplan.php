@@ -39,24 +39,27 @@ class Studienplan
 
     /**
      * @ORM\Column(type="string"), nullable=false
+     * @ORM\OrderBy({"regelSemester" = "ASC"})
      * */
     protected $regelSemester;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="startSemester")
-     * @ORM\JoinColumn(name="Startsemester", referencedColumnName="semester")
+     * @ORM\JoinColumn(name="Startsemester", referencedColumnName="semester", nullable=false)
      * */
     protected $startSemester;
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="studienplanModul")
-     * @ORM\JoinColumn(name="Modul_ID", referencedColumnName="Modul_ID")
+     * @ORM\JoinColumn(name="Modul_ID", referencedColumnName="Modul_ID", nullable=false)
+     * @ORM\OrderBy({"name" = "ASC"})
      * */
     protected $veranstaltung;
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studienplanZuStudienplan")
-     * @ORM\JoinColumn(name="Studiengang_ID", referencedColumnName="Studiengang_ID")
+     * @ORM\JoinColumn(name="Studiengang_ID", referencedColumnName="Studiengang_ID", nullable=false)
+     * @ORM\OrderBy({"titel" = "ASC"})
      * */
     protected $studiengang;
 

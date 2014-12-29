@@ -57,7 +57,7 @@ class Veranstaltung
     protected $status;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=5, nullable=true)
      * @Assert\Length(
      * min= 3,
      * max= 5,
@@ -73,6 +73,7 @@ class Veranstaltung
      * min= 5,
      * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen. Blubb"
      * )
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     protected $name;
 
@@ -897,7 +898,7 @@ protected $voraussetzungInh;
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="modulbeauftragter")
-     * @ORM\JoinColumn(name="Modulbeauftragter", referencedColumnName="Dozenten_ID")
+     * @ORM\JoinColumn(name="Modulbeauftragter", referencedColumnName="Dozenten_ID", nullable=false)
      */
     protected $beauftragter;
 

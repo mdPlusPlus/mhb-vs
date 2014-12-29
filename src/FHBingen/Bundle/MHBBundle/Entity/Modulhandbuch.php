@@ -187,7 +187,8 @@ class Modulhandbuch
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="gueltigAbSemester")
-     * @ORM\JoinColumn(name="gueltig_ab", referencedColumnName="semester")
+     * @ORM\JoinColumn(name="gueltig_ab", referencedColumnName="semester", nullable=false)
+     * @ORM\OrderBy({"semester" = "ASC"})
      */
     protected $gueltigAb;
 
@@ -195,7 +196,8 @@ class Modulhandbuch
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studiengang")
-     * @ORM\JoinColumn(name="gehoert_zu", referencedColumnName="Studiengang_ID")
+     * @ORM\JoinColumn(name="gehoert_zu", referencedColumnName="Studiengang_ID", nullable=false)
+     * @ORM\OrderBy({"titel" = "ASC"})
      */
     protected $gehoertZu;
 

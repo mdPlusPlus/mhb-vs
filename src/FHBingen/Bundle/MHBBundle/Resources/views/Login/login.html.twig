@@ -1,6 +1,7 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block userLogout %}
+    {# überschreibt den userLogout-block des base-templates mit leerem Inhalt, weil noch kein User verfügbar #}
 {% endblock %}
 
 {% block content %}
@@ -31,8 +32,15 @@
         </form>
     </div>
     {% if error %}
-        <script>
+        <script type="text/javascript">
             alert('{{ error.message }}');
         </script>
     {% endif %}
+    {#
+    {% if logoutMessage %}
+        <script type="text/javascript">
+            alert('Sie haben sich erfolgreich ausgeloggt.');
+        </script>
+    {% endif %}
+    #}
 {% endblock %}

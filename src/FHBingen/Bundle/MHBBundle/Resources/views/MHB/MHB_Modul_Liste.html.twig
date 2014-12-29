@@ -1,36 +1,34 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-{#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
-
 {% block content %}
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").tablesorter();
+        });
+    </script>
     <div class="table-responsive">
-        <h3>Modulhandbücher</h3>
-        <table class="table table-bordered">
+        {# <h3>Modulhandbücher</h3> #}
+        <table id="table" class="table table-bordered tablesorter">
             <thead>
-            <tr>
-                <th>Modul</th>
-                <th>Kürzel</th>
-                <th>Regelsemester</th>
-                <th>Version</th>
-                <th>Modulverantwortlicher</th>
-            </tr>
+                <tr>
+                    <th>Modul</th>
+                    <th>Kürzel</th>
+                    <th>Regelsemester</th>
+                    <th>Version</th>
+                    <th>Modulverantwortlicher</th>
+                </tr>
             </thead>
             <tbody>
             {% for entity in mhb %}
                 <tr>
-                        <td><a href="{{'/restricted/dozent/modulbearbeiten/'~entity['Modul_ID']}}">{{ entity['name'] }}</td>
-                        <td>{{ entity['kuerzel'] }}</td>
-                        <td>{{ entity['code'] }}</td>
-                        <td>{{ entity['versionsnummer'] }}</td>
-                        <td>{{ entity['titel']~' '~entity['nachname'] }}</td>
-
-            </tbody>
+                    <td><a href="{{ '/restricted/dozent/modulbearbeiten/'~entity['Modul_ID'] }}">{{ entity['name'] }}</td>
+                    <td>{{ entity['kuerzel'] }}</td>
+                    <td>{{ entity['code'] }}</td>
+                    <td>{{ entity['versionsnummer'] }}</td>
+                    <td>{{ entity['titel']~' '~entity['nachname'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-
-
     </div>
 {% endblock %}

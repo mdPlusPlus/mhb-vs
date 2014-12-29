@@ -39,8 +39,8 @@ class Semesterplan
      * @Assert\Range(
      * min = 1,
      * max = 50,
-     * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * minMessage = "Ein Modul braucht mindestens {{ limit }}SWS Übung",
+     * maxMessage = "Ein Modul darf nicht mehr als {{ limit }}SWS Übung haben"
      * )
      */
     protected $swsUebungen;
@@ -50,8 +50,8 @@ class Semesterplan
      * @Assert\Range(
      * min = 1,
      * max = 50,
-     * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * minMessage = "Ein Modul braucht mindestens {{ limit }}SWS Vorlesung",
+     * maxMessage = "Ein Modul darf nicht mehr als {{ limit }}SWS Vorlesung haben"
      * )
      */
     protected $swsVorlesung;
@@ -59,10 +59,10 @@ class Semesterplan
     /**
      * @ORM\Column(type="integer")
      * @Assert\Range(
-     * min = 1,
-     * max = 50,
-     * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * min = 0,
+     * max = 5,
+     * minMessage = "Ein Modul braucht mindestens {{ limit }} Übungsgruppen",
+     * maxMessage = "Ein Modul darf nicht mehr als {{ limit }} Übungsgruppen haben"
      * )
      */
     protected $anzahlUebungsgruppen;
@@ -70,10 +70,10 @@ class Semesterplan
     /**
      * @ORM\Column(type="integer")
      * @Assert\Range(
-     * min = 1,
-     * max = 50,
-     * minMessage = "You must be at least {{ limit }}cm tall to enter",
-     * maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     * min = 5,
+     * max = 30,
+     * minMessage = "Eine Übungsgruppe muss aus mindestens {{ limit }} Studenten bestehen",
+     * maxMessage = "Eine Übungsgruppe darf aus nicht mehr als {{ limit }} Studenten bestehen"
      * )
      */
     protected $groesseUebungsgruppen;
@@ -84,20 +84,22 @@ class Semesterplan
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID")
+     * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID", nullable=false)
+     * @ORM\OrderBy({"titel" = "ASC"})
      * */
     protected $veranstaltung;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="dozent_id", referencedColumnName="Dozenten_ID")
+     * @ORM\JoinColumn(name="dozent_id", referencedColumnName="Dozenten_ID", nullable=false)
+     * @ORM\OrderBy({"nachname" = "ASC"})
      * */
     protected $dozent;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="semester", referencedColumnName="semester")
+     * @ORM\JoinColumn(name="semester", referencedColumnName="semester", nullable=false)
      * */
     protected $semester;
 

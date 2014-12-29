@@ -1,29 +1,30 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-{#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
-
 {% block content %}
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").tablesorter();
+        });
+    </script>
     <div class="table-responsive">
-        <h3>Modulhandbücher</h3>
-        <table class="table table-bordered">
+        {# <h3>Modulhandbücher</h3> #}
+        <table id="table" class="table table-bordered tablesorter">
             <thead>
-            <tr>
-                <th>Modulhandbuch</th>
-                <th>Gültig ab</th>
-                <th>Version</th>
-                <th>Erstellungsdatum</th>
-            </tr>
+                <tr>
+                    <th>Modulhandbuch</th>
+                    <th>Gültig ab</th>
+                    <th>Version</th>
+                    <th>Erstellungsdatum</th>
+                </tr>
             </thead>
             <tbody>
             {% for entity in mhb %}
                 <tr>
-
-                        <td><a href="{{'/restricted/sgl/mhbModulListe/'~entity.getMHBID() }}">{{ entity.Beschreibung }}</td>
-                        <td>{{ entity.getGueltigAb() }}</td>
-                        <td>{{ entity.getVersionsnummer() }}</td>
-                        <td>{{ entity.getErstellungsdatum()|date('d.m.Y') }}</td>
-
+                    <td><a href="{{ '/restricted/sgl/mhbModulListe/'~entity.getMHBID() }}">{{ entity.Beschreibung }}</td>
+                    <td>{{ entity.getGueltigAb() }}</td>
+                    <td>{{ entity.getVersionsnummer() }}</td>
+                    {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                    <td>{{ entity.getErstellungsdatum()|date('d.m.Y') }}</td>
                 </tr>
             {% endfor %}
             </tbody>
