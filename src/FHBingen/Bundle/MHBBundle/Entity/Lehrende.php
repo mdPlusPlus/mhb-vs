@@ -39,6 +39,7 @@ class Lehrende
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="modul")
      * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID", nullable=false)
+     * @ORM\OrderBy({"titel" = "ASC"})
      * */
     protected $veranstaltung;
 
@@ -46,6 +47,7 @@ class Lehrende
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="lehrende")
      * @ORM\JoinColumn(name="dozent_id", referencedColumnName="Dozenten_ID", nullable=false)
+     * @ORM\OrderBy({"nachname" = "ASC"})
      * */
     protected $dozent;
 

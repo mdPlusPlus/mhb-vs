@@ -73,6 +73,7 @@ class Veranstaltung
      * min= 5,
      * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen. Blubb"
      * )
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     protected $name;
 

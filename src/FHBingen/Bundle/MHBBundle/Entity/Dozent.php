@@ -439,6 +439,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
      * @ORM\JoinColumn(name="roles_id", referencedColumnName="id", nullable=false)
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     private $roles;
 

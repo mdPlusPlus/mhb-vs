@@ -137,6 +137,7 @@ class Vertiefung
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="richtung")
      * @ORM\JoinColumn(name="studiengang_id", referencedColumnName="Studiengang_ID", nullable=false)
+     * @ORM\OrderBy({"titel" = "ASC"})
      */
     protected $studiengang;
 
