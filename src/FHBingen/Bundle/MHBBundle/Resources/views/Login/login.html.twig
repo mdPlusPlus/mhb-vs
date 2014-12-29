@@ -1,10 +1,10 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block userLogout %}
+    {# überschreibt den userLogout-block des base-templates mit leerem Inhalt, weil noch kein User verfügbar #}
 {% endblock %}
 
 {% block content %}
-
     <div class="container" style="width: 300px">
         <form class="form-signin" role="form" action="{{ path('loginCheck') }}" method="post">
             <label for="inputEmail" class="sr-only">Email-Adresse:</label>
