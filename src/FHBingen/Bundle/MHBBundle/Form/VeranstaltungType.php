@@ -27,6 +27,7 @@ class VeranstaltungType extends AbstractType
 
         $builder
             ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+            //TODO: Status wieder mit aufnehmen
 //            ->add('status', 'choice', array('label' => 'Status: ', 'required' => true, 'choices' => $state))
             ->add('kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))
             ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true))
