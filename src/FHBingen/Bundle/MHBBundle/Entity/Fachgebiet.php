@@ -23,8 +23,7 @@ class Fachgebiet
 
     public function __toString()
     {
-        //TODO $Semester richtig? getter?
-        $string = $this->getStudiengang().' '.$this->getTitel();
+        $string = $this->getTitel();
         return $string;
     }
 
