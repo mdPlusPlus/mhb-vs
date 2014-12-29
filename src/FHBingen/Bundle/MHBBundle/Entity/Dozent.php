@@ -17,6 +17,8 @@ use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use FHBingen\Bundle\MHBBundle\PHP\UserDependentRole;
+
 /**
  * Class Dozent
  * @package FHBingen\Bundle\MHBBundle\Entity

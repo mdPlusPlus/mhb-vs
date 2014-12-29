@@ -10,6 +10,8 @@ namespace FHBingen\Bundle\MHBBundle\PHP;
 
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
+use FHBingen\Bundle\MHBBundle\Entity\Dozent;
+
 class UserDependentRole implements RoleInterface
 {
     private $user;
