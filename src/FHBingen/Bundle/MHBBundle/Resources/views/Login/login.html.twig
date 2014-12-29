@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block content %}
+
     <div class="container" style="width: 300px">
         <form class="form-signin" role="form" action="{{ path('loginCheck') }}" method="post">
             <label for="inputEmail" class="sr-only">Email-Adresse:</label>
@@ -31,8 +32,15 @@
         </form>
     </div>
     {% if error %}
-        <script>
+        <script type="text/javascript">
             alert('{{ error.message }}');
         </script>
     {% endif %}
+    {#
+    {% if logoutMessage %}
+        <script type="text/javascript">
+            alert('Sie haben sich erfolgreich ausgeloggt.');
+        </script>
+    {% endif %}
+    #}
 {% endblock %}

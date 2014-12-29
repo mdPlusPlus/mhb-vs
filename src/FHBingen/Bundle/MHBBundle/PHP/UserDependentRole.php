@@ -6,10 +6,9 @@
  * Time: 11:47
  */
 
-namespace FHBingen\Bundle\MHBBundle\Entity;
+namespace FHBingen\Bundle\MHBBundle\PHP;
 
 use Symfony\Component\Security\Core\Role\RoleInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserDependentRole implements RoleInterface
 {
@@ -27,7 +26,6 @@ class UserDependentRole implements RoleInterface
 
     public function getRole()
     {
-        //return 'ROLE_' . strtoupper($this->user->getUsername());
         return 'ROLE_' . strtoupper($this->user->getEmail());
     }
 }

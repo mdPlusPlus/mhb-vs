@@ -6,7 +6,7 @@
  * Time: 15:08
  */
 
-namespace FHBingen\Bundle\MHBBundle\Entity;
+namespace FHBingen\Bundle\MHBBundle\PHP;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
