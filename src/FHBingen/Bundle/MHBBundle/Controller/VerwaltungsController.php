@@ -110,6 +110,7 @@ class VerwaltungsController extends Controller
      */
     public function SglUpdateUserAction($userid)
     {
+        //TODO: userCreate und updateUsers zusammenführen
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $userid));
         $form = $this->createForm(new Form\DozentType(), $dozent);
@@ -124,6 +125,7 @@ class VerwaltungsController extends Controller
                 $dozent->setName($form->get('name')->getData());
                 $dozent->setNachname($form->get('nachname')->getData());
                 $dozent->setEmail($form->get('email')->getData());
+                //TODO: $dozent->setPassword('password'); wieder aufnehmen?
                 $dozent->setRole($form->get('roles')->getData());
 
                 $em->persist($dozent);
