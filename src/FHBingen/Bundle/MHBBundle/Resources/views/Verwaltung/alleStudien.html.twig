@@ -1,21 +1,24 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block content %}
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").tablesorter();
+        });
+    </script>
     <h4 style="font-weight: bold">Studiengangübersicht</h4>
     <div class="table-responsive">
-
         <ul>
             <li><a href="{{'/restricted/sgl/createCourse'}}">Neuen Studiengang anlegen</a></li>
         </ul>
 
-        <table class="table table-bordered">
+        <table id="table" class="table table-bordered tablesorter">
             <thead>
-            <tr>
-                <th style="">Studiengang</th>
-                <th style="">Abschluss</th>
-                <th style="">Studiengangleiter</th>
-            </tr>
+                <tr>
+                    <th style="">Studiengang</th>
+                    <th style="">Abschluss</th>
+                    <th style="">Studiengangleiter</th>
+                </tr>
             </thead>
             <tbody>
             {% for gang in courses %}
@@ -28,6 +31,7 @@
             </tbody>
         </table>
     </div>
+
     {% for type, messages in app.session.flashBag.all %}
         {% for message in messages %}
             {%if type == 'info'%}
@@ -37,4 +41,5 @@
             {%endif%}
         {% endfor %}
     {% endfor %}
+
 {% endblock %}
