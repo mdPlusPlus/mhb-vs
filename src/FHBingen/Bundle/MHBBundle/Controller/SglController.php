@@ -22,7 +22,7 @@ class SglController extends Controller
      * @Route("/restricted/sgl/alleModule", name="alleModule")
      * @Template("FHBingenMHBBundle:Veranstaltung:alleModule.html.twig")
      */
-    public function alleModuleAction()//Sortierung? nach Studiengang?
+    public function alleModuleAction()
     {
         //TODO: zugehörigen Studiengang in Template anzeigen lassen
         $em = $this->getDoctrine()->getManager();
