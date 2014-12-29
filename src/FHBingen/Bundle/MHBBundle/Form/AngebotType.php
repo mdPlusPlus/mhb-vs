@@ -9,6 +9,7 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Doctrine\ORM\EntityRepository;
 
 class AngebotType extends AbstractType
 {
@@ -25,7 +26,7 @@ class AngebotType extends AbstractType
             ->add('code', 'text', array('label' => 'Code: ', 'required' => true))
             ->add('titelDE', 'text', array('label' => 'abweichender_Titel(Deutsch): ', 'required' => false))
             ->add('titelEN', 'text', array('label' => 'abweichender_Titel(Englisch): ', 'required' => false))
-             ->add('reset', 'reset')
+            ->add('reset', 'reset')
             ->add('submit', 'submit');
     }
 
