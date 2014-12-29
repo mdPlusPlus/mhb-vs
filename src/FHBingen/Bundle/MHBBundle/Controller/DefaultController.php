@@ -7,9 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
-use FHBingen\Bundle\MHBBundle\Entity;
 
-//TODO löschen/ändern
 class DefaultController extends Controller
 {
     /**
@@ -22,22 +20,4 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('login'));
     }
 
-//TODO Was ist das und braucht man das noch + entfernen von twig
-    /**
-     * @Route("/restricted/sgl/Veranstaltung")
-     * @Template("FHBingenMHBBundle:Veranstaltung:Veranstaltung_Uebersicht.html.twig")
-     */
-    public function VeranstaltungMainAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT v.Modul_ID,v.Kuerzel,v.Name,v.Name_EN,v.Versionsnummer_Modul,v.Status,v.Haeufigkeit,v.Dauer,
-                                   v.Lehrveranstaltungen,v.Kontaktzeit_VL,v.Kontaktzeit_Sonstige,v.Selbststudium,v.Gruppengroesse,v.Lernergebnisse,v.Inhalte,
-                                   v.Sprache,v.Pruefungsformen,v.Literatur,v.Leistungspunkte,v.Voraussetzung_inh,
-                                   v.Voraussetzung_LP
-                                   FROM FHBingenMHBBundle:Veranstaltung v
-                                   WHERE v.Modul_ID=1');
-        $result = $query->getSingleResult();
-
-        return array('Titel' => $result, 'pageTitle' => 'STARTSEITE');
-    }
 }
