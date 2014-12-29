@@ -17,10 +17,12 @@ use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use FHBingen\Bundle\MHBBundle\PHP\UserDependentRole;
+
 /**
  * Class Dozent
  * @package FHBingen\Bundle\MHBBundle\Entity
- * @ORM\Entity(repositoryClass="FHBingen\Bundle\MHBBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="FHBingen\Bundle\MHBBundle\PHP\UserRepository")
  * @ORM\Table(name="Dozent")
  * @UniqueEntity(fields="email", message="Unter dieser EMail ist bereits ein Dozent eingetragen.")
  * @ORM\HasLifecycleCallbacks

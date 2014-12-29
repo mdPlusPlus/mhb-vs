@@ -81,6 +81,10 @@ class SglController extends Controller
                 $angebot->setCode($form->get('code')->getData());
                 $em->persist($angebot);
                 $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'Der Code wurde erfolgreich bearbeitet.');
+
+                return $this->redirect($this->generateUrl('modulCodeUebersicht'));
             }
 
         }

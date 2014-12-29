@@ -25,8 +25,7 @@ class Studienplan
 
     public function __toString()
     {
-        //TODO $Semester richtig? getter?
-        $string = (string)$this->getRegelSemester();
+        $string = (string) $this->getRegelSemester();
         return $string;
     }
     /**
