@@ -3,33 +3,38 @@
 {#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
 
 {% block content %}
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table-without-code").tablesorter();
+            $("#table-with-code").tablesorter();
+        });
+    </script>
     <div class="table-responsive">
         <h3>Module mit DUMMY Modulcode</h3>
-        <table class="table table-bordered">
+        <table id="table-without-code" class="table table-bordered tablesorter">
             <thead>
-            <tr>
-                <th>Modultitel</th>
-                <th style="min-width: 130px; width: 12%">Erstelldatum</th>
-            </tr>
+                <tr>
+                    <th>Modultitel</th>
+                    <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+                </tr>
             </thead>
             <tbody>
             {% for dummy in dummyAngebote %}
                 <tr>
                     <td><a href="{{'/restricted/sgl/modulCodeErstellung/'~dummy.getVeranstaltung().getModulID()}}">{{dummy.getVeranstaltung()}}</a></td>
-                   <td>{{dummy.getVeranstaltung().getErstellungsdatum()|date('d.m.Y')}}</td>
+                    <td>{{dummy.getVeranstaltung().getErstellungsdatum()|date('d.m.Y')}}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
 
        <h3 style="margin-top: 50px">Module mit Modulcode</h3>
-        <table class="table table-bordered">
+        <table id="table-with-code" class="table table-bordered tablesorter">
             <thead>
-            <tr>
-                <th>Modultitel</th>
-                <th style="min-width: 130px; width: 12%">Erstelldatum</th>
-            </tr>
+                <tr>
+                    <th>Modultitel</th>
+                    <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+                </tr>
             </thead>
             <tbody>
             {% for normal in angebote %}
@@ -51,6 +56,5 @@
             {%endif%}
         {% endfor %}
     {% endfor %}
-
 
 {% endblock %}

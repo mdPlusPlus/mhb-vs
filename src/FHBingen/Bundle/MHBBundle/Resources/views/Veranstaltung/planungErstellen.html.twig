@@ -2,13 +2,13 @@
 
 {% form_theme form _self %}
 
-    {% block form_row %}
-        <tr class="form_row">
-            <td>{{ form_label(form) }}</td>
-            <td>{{ form_widget(form) }}</td>
-            <td>{{ form_errors(form) }}</td>
-        </tr>
-    {% endblock form_row %}
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
 
 {% block content %}
     <h3>Modulplanung</h3>
@@ -36,5 +36,4 @@
         </table>
         {{ form_end(form) }}
     </div>
-
 {% endblock %}
