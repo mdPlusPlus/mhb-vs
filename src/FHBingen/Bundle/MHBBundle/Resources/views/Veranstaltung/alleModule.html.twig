@@ -1,32 +1,35 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-{#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
-
 {% block content %}
-
-<div class="table-responsive">
-    <h3>Veranstaltungs Übersicht</h3>
-    <table class="table table-bordered" >
-        <thead>
-        <tr>
-            <th>Modultitel</th>
-            <th style="min-width: 100px; width: 7%">Kürzel</th>
-            <th style="min-width: 130px; width: 12%">Erstelldatum</th>
-            <th style="min-width: 150px; width: 15%">Häufigkeit</th>
-            <th style="min-width: 220px; width: 23%">Modulverantwortlicher</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for veranstaltung in module %}
-            <tr>
-                <td><a href="{{'/restricted/dozent/modulbearbeiten/'~veranstaltung.getModulID()}}">{{veranstaltung.name}}</a></td>
-                <td>{{veranstaltung.kuerzel}}</td>
-                <td>{{veranstaltung.erstellungsdatum|date('d.m.Y')}}</td>
-                <td>{{veranstaltung.haeufigkeit}}</td>
-                <td>{{veranstaltung.beauftragter}}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-  </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").tablesorter();
+        });
+    </script>
+    <div class="table-responsive">
+        <h3>Veranstaltungsübersicht</h3>
+        <table id="table" class="table table-bordered tablesorter">
+            <thead>
+                <tr>
+                    <th>Modultitel</th>
+                    <th style="min-width: 100px; width: 7%">Kürzel</th>
+                    <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+                    <th style="min-width: 150px; width: 15%">Häufigkeit</th>
+                    <th style="min-width: 220px; width: 23%">Modulverantwortlicher</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for veranstaltung in module %}
+                <tr>
+                    <td><a href="{{ '/restricted/dozent/modulbearbeiten/'~veranstaltung.getModulID() }}">{{ veranstaltung.name }}</a></td>
+                    <td>{{ veranstaltung.kuerzel }}</td>
+                    {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                    <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
+                    <td>{{ veranstaltung.haeufigkeit }}</td>
+                    <td>{{ veranstaltung.beauftragter }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

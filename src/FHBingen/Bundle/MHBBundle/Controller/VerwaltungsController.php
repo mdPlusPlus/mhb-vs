@@ -48,13 +48,13 @@ class VerwaltungsController extends Controller
         return array('sgl' => $sgl, 'dozent' => $dozent, 'pageTitle' => 'Nutzerverwaltung');
     }
 
-
     /**
      * @Route("/restricted/sgl/passwordReset", name="passwdReset")
      * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
      */
     public function resetAction()
     {
+        //TODO: @Template entfernen, weil nur redirect erfolgt
         $em = $this->getDoctrine()->getManager();
         $dozenten = $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
 
@@ -68,7 +68,6 @@ class VerwaltungsController extends Controller
 
         return $this->redirect($this->generateUrl('benutzerverwaltung'));
     }
-
 
     /**
      * @Route("/restricted/sgl/createUsers")
@@ -101,9 +100,9 @@ class VerwaltungsController extends Controller
                 return $this->redirect($this->generateUrl('benutzerverwaltung'));
             }
         }
+
         return array('form' => $form->createView(), 'pageTitle' => 'Nutzerverwaltung');
     }
-
 
     /**
      * @Route("/restricted/sgl/updateUsers/{userid}")
@@ -139,7 +138,6 @@ class VerwaltungsController extends Controller
         return array('form' => $form->createView(), 'pageTitle' => 'Nutzerverwaltung');
     }
 
-
     /**
      * @Route("/restricted/sgl/showAllCourses", name="studiengangverwaltung")
      * @Template("FHBingenMHBBundle:Verwaltung:alleStudien.html.twig")
@@ -151,7 +149,6 @@ class VerwaltungsController extends Controller
 
         return array('courses' => $entries, 'pageTitle' => 'Studiengangverwaltung');
     }
-
 
     /**
      * @Route("/restricted/sgl/createCourse", name="studiengangErstellen")
@@ -206,9 +203,7 @@ class VerwaltungsController extends Controller
         }
 
         return array('form' => $form->createView(), 'pageTitle' => 'Studiengangverwaltung');
-
     }
-
 
     /**
      * @Route("/restricted/sgl/updateCourse/{courseID}", name="studiengangBearbeiten")
@@ -285,7 +280,6 @@ class VerwaltungsController extends Controller
         }
 
         return array('form' => $form->createView(), 'pageTitle' => 'Studiengangverwaltung');
-
     }
 
 }

@@ -54,7 +54,7 @@ class DozentController extends Controller
             $modullehrend[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modul->getVeranstaltung()));
         }
 
-        return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende, 'pageTitle' => 'STARTSEITE');
+        return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende, 'pageTitle' => 'Eigene Module');
     }
 
 
@@ -80,6 +80,7 @@ class DozentController extends Controller
      */
     public function planungLoeschenAction($id)
     {
+        //TODO @Template entfernen, weil nur redirect erfolgt
         $em = $this->getDoctrine()->getManager();
         $dbEntry = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id));
 
@@ -144,7 +145,8 @@ class DozentController extends Controller
                 return $this->redirect($this->generateUrl('planungAnzeigen'));
             }
         }
-        return $this->render('FHBingenMHBBundle:Veranstaltung:planungErstellen.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Planungserstellung'));
+
+        return array('form' => $form->createView(), 'pageTitle' => 'Planungserstellung');
     }
 
 
@@ -155,7 +157,7 @@ class DozentController extends Controller
      */
     public function modulplanungAction($id)
     {
-//TODO: Wird abgeschafft und neu gebaut
+        //TODO: Wird abgeschafft und neu gebaut
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id));
 
@@ -190,7 +192,7 @@ class DozentController extends Controller
             }
         }
 
-        return $this->render('FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig', array('form' => $form->createView(), 'pageTitle' => 'Modul Planung'));
+        return array('form' => $form->createView(), 'pageTitle' => 'Modulplanung');
     }
 
 }

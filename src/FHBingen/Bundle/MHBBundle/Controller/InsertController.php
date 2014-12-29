@@ -19,6 +19,7 @@ use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Semester;
 use FHBingen\Bundle\MHBBundle\Entity\Studiengang;
 
+//TODO: Controller löschen
 class InsertController extends Controller
 {
     public function semesterCreate()
