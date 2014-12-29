@@ -588,25 +588,25 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return 'pwenc';
     }
 
-    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    //von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
     public function isAccountNonExpired()
     {
         return true;
     }
 
-    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    //von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
     public function isAccountNonLocked()
     {
         return true;
     }
 
-    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    //von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
     public function isCredentialsNonExpired()
     {
         return true;
     }
 
-    //TODO von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
+    //von http://symfony.com/doc/2.5/cookbook/security/entity_provider.html übernommen
     public function isEnabled()
     {
         return $this->isActive;
