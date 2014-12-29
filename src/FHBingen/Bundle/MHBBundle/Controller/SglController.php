@@ -26,6 +26,8 @@ class SglController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
+
+
         $nichtInPlanung = array();
         foreach ($module as $value) {
             if ($value->getStatus() != 'in Planung'&& $value->getStatus()!='expired') {
@@ -33,7 +35,19 @@ class SglController extends Controller
             }
         }
 
-        return array('module' => $nichtInPlanung, 'pageTitle' => 'STARTSEITE');
+        $stgZuModul = array();
+        foreach ($nichtInPlanung as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
+           foreach ($tmp as $studiengang) {
+               $name[] =  (string) $studiengang->getStudiengang();;
+               }
+            $stgZuModul[] = $name;
+        }
+
+
+
+        return array('module' => $nichtInPlanung,'stgZuModul' => $stgZuModul, 'pageTitle' => 'STARTSEITE');
     }
 
 

@@ -14,9 +14,11 @@
             <th style="min-width: 130px; width: 12%">Erstelldatum</th>
             <th style="min-width: 150px; width: 15%">Häufigkeit</th>
             <th style="min-width: 220px; width: 23%">Modulverantwortlicher</th>
+            <th style="min-width: 220px; width: 23%">Studiengang</th>
         </tr>
         </thead>
         <tbody>
+        {% set count = 0 %}
         {% for veranstaltung in module %}
             <tr>
                 <td><a href="{{'/restricted/dozent/modulbearbeiten/'~veranstaltung.getModulID()}}">{{veranstaltung.name}}</a></td>
@@ -24,7 +26,13 @@
                 <td>{{veranstaltung.erstellungsdatum|date('d.m.Y')}}</td>
                 <td>{{veranstaltung.haeufigkeit}}</td>
                 <td>{{veranstaltung.beauftragter}}</td>
+                <td>
+                {% for name in stgZuModul[count] %}
+                    {{name}}<br />
+                {% endfor %}
+                </td>
             </tr>
+            {% set count = count +1 %}
         {% endfor %}
         </tbody>
     </table>
