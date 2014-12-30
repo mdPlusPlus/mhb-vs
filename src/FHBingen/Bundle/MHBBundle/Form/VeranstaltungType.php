@@ -64,15 +64,16 @@ class VeranstaltungType extends AbstractType
             ->add('sprache', 'choice', array('label' => 'Sprache: ', 'required' => true, 'choices' => $lang))
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => true))
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
-//            ->add('voraussetzungLP', 'choice', array('label' => 'Voraussetzung für Leistungspunkte: ','choices'
-//            => array('Prüfungsleistung'   => 'Prüfungsleistung',
-//                     'Studienleistung' => 'Studienleistung'),
-//                     'multiple'  => true,
-//                     'expanded' => true))
+            ->add('voraussetzungLP', 'choice', array('label' => 'Voraussetzung für Leistungspunkte: ','choices'
+            => array('Prüfungsleistung'   => 'Prüfungsleistung',
+                     'Studienleistung' => 'Studienleistung'),
+                     'multiple'  => true,
+                     'expanded' => true))
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true))
 
             ->add('reset', 'reset')
             ->add('submit', 'submit');
+
     }
 
     public function getName()

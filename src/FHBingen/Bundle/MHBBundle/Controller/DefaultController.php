@@ -31,4 +31,13 @@ class DefaultController extends Controller
         return array();
     }
 
+    /**
+     * ChoiceList Test
+     * @Route("/choiceListDemo")
+     * @Template("")
+     */
+    public function choiceListDemoAction(){
+
+    }
+
 }

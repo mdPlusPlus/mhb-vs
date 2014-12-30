@@ -265,9 +265,20 @@ class InsertFormController extends Controller
      */
     public function VeranstaltungAction()
     {
-        $veranstaltung = new Veranstaltung();
+        $em = $this->getDoctrine()->getManager();
+        //$veranstaltung = new Veranstaltung();
+        $veranstaltung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => 127));
 
         $form = $this->createForm(new VeranstaltungType(), $veranstaltung);
+
+        $data = $form->getData();
+        $data['voraussetzungLP'] = unserialize($veranstaltung->getVoraussetzungenLP());
+
+        $form->setData($data);
+
+
+        //$form = $form->setData(array('voraussetzungLP' => unserialize($veranstaltung->getVoraussetzungenLP())));
+
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -276,40 +287,42 @@ class InsertFormController extends Controller
             if ($form->isValid()) {
                 $veranstaltung->setErstellungsdatum(new \DateTime());
                 $veranstaltung->setVersionsnummer(1);
-                $veranstaltung->setStatus($form->get('Status')->getData());
-                $veranstaltung->setKuerzel($form->get('Kuerzel')->getData());
-                $veranstaltung->setName($form->get('Name')->getData());
-                $veranstaltung->setNameEn($form->get('Name_en')->getData());
-                $veranstaltung->setHaeufigkeit($form->get('Haeufigkeit')->getData());
-                $veranstaltung->setDauer($form->get('Dauer')->getData());
-                $veranstaltung->setKontaktzeitVL($form->get('Kontaktzeit_VL')->getData());
-                $veranstaltung->setKontaktzeitSonstige($form->get('Kontaktzeit_sonstige')->getData());
-                $veranstaltung->setSelbststudium($form->get('Selbststudium')->getData());
-                $veranstaltung->setGruppengroesse($form->get('Gruppengroesse')->getData());
-                $veranstaltung->setLernergebnisse($form->get('Lernergebnisse')->getData());
-                $veranstaltung->setInhalte($form->get('Inhalte')->getData());;
-                $veranstaltung->setSprache($form->get('Sprache')->getData());
-                $veranstaltung->setLiteratur($form->get('Literatur')->getData());
-                $veranstaltung->setLeistungspunkte($form->get('Leistungspunkte')->getData());
-                $veranstaltung->setVoraussetzungInh($form->get('Voraussetzung_inh')->getData());
+                //$veranstaltung->setStatus($form->get('Status')->getData());
+                $veranstaltung->setStatus('freigegeben');
+                $veranstaltung->setKuerzel($form->get('kuerzel')->getData());
+                $veranstaltung->setName($form->get('name')->getData());
+                $veranstaltung->setNameEn($form->get('nameEN')->getData());
+                $veranstaltung->setHaeufigkeit($form->get('haeufigkeit')->getData());
+                $veranstaltung->setDauer($form->get('dauer')->getData());
+                $veranstaltung->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
+                $veranstaltung->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
+                $veranstaltung->setSelbststudium($form->get('selbststudium')->getData());
+                $veranstaltung->setGruppengroesse($form->get('gruppengroesse')->getData());
+                $veranstaltung->setLernergebnisse($form->get('lernergebnisse')->getData());
+                $veranstaltung->setInhalte($form->get('inhalte')->getData());;
+                $veranstaltung->setSprache($form->get('sprache')->getData());
+                $veranstaltung->setLiteratur($form->get('literatur')->getData());
+                $veranstaltung->setLeistungspunkte($form->get('leistungspunkte')->getData());
+                $veranstaltung->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $veranstaltung->setBeauftragter($form->get('beauftragter')->getData());
 
-                $string1 = '';
+                /*$string1 = '';
                 $array = ($form->get('Pruefungsformen')->getData());
                 foreach ($array as $entry) {
                     $string1 = $string1 . $entry . ';;';
-                }
+                }*/
 
-                $veranstaltung->setPruefungsformen($string1);
+                //$veranstaltung->setPruefungsformen($string1);
 
-                $string2 = '';
-                $array = ($form->get('Voraussetzung_LP')->getData());
-                foreach ($array as $entry) {
-                    $string2 = $string2 . $entry . ';;';
-                }
+                //$string2 = '';
+                //$array = ($form->get('Voraussetzung_LP')->getData());
+                //foreach ($array as $entry) {
+                  //  $string2 = $string2 . $entry . ';;';
+                //}
 
-                $veranstaltung->setVoraussetzungLP($string2);
+                //$veranstaltung->setVoraussetzungLP(serialize($form->get('voraussetzungLP')->getData()));
 
+                /*
                 $string3 = '';
                 $array = ($form->get('Lehrveranstaltungen')->getData());
                 foreach ($array as $entry) {
@@ -317,8 +330,8 @@ class InsertFormController extends Controller
                 }
 
                 $veranstaltung->setLehrveranstaltungen($string3);
+                */
 
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($veranstaltung);
                 $em->flush();
 
