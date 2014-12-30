@@ -1,10 +1,13 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block content %}
-
 <div class="table-responsive">
-    <h3>Veranstaltungsübersicht</h3>
-    <table class="table table-bordered" >
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").tablesorter();
+        });
+    </script>
+    <table id="table" class="table table-bordered tablesorter" >
         <thead>
         <tr>
             <th>Modultitel</th>
