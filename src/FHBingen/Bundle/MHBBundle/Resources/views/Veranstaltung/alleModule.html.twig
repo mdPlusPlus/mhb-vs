@@ -29,9 +29,10 @@
                 <td>{{ veranstaltung.haeufigkeit }}</td>
                 <td>{{ veranstaltung.beauftragter }}</td>
                 <td>
-                {% for name in stgZuModul[count] %}
-                    {{name}}<br />
-                {% endfor %}
+                    {# TODO: Studiengänge alphabetisch sortieren #}
+                    {% for name in stgZuModul[count] %}
+                        {{name}}<br />
+                    {% endfor %}
                 </td>
             </tr>
             {% set count = count +1 %}
