@@ -21,7 +21,7 @@
             <tbody>
             {% for entity in angebote %}
                 <tr>
-                    <td><a href="{{'/restricted/dozent/modulbearbeiten/'~entity.getVeranstaltung().getModulID }}">{{ entity.getVeranstaltung().getName() }}</td>
+                    <td><a href="{{ path('modulBearbeiten', {'id': entity.getVeranstaltung().getModulID()}) }}">{{ entity.getVeranstaltung().getName() }}</a></td>
                     <td>{{ entity.getVeranstaltung().getKuerzel() }}</td>
                     <td>{{ entity.getVeranstaltung().getVersionsnummer() }}</td>
                     <td>{{ entity.getVeranstaltung().getHaeufigkeit() }}</td>

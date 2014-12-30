@@ -44,7 +44,7 @@ class SglController extends Controller
                }
             $stgZuModul[] = $name;
         }
-        return array('module' => $nichtInPlanung,'stgZuModul' => $stgZuModul, 'pageTitle' => 'STARTSEITE');
+        return array('module' => $nichtInPlanung,'stgZuModul' => $stgZuModul, 'pageTitle' => 'Alle Module');
     }
 
 
@@ -69,7 +69,7 @@ class SglController extends Controller
             }
         }
 
-        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote, 'pageTitle' => 'STARTSEITE');
+        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote, 'pageTitle' => 'Modulcodes');
     }
 
     /**
@@ -113,7 +113,7 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
 
-        return array('mhb' => $mhb, 'pageTitle' => 'STARTSEITE');
+        return array('mhb' => $mhb, 'pageTitle' => 'Modulhandbücher');
     }
 
 
@@ -134,7 +134,7 @@ class SglController extends Controller
 
         $result = $mhb->getResult();
 
-        return array('mhb' => $result, 'pageTitle' => 'STARTSEITE');
+        return array('mhb' => $result, 'pageTitle' => 'Module des Modulhandbuchs');
     }
 
 
@@ -157,12 +157,12 @@ class SglController extends Controller
                 $angeboteOhneMHB[] = $value;
             }
         }
-        return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'STARTSEITE');
+        return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'Modulhandbucherstellung');
     }
 
 
     /**
-     * @Route("/restricted/sgl/moduldeaktivierung", name="moduldeaktivierung")
+     * @Route("/restricted/sgl/modulDeaktivierung", name="modulDeaktivierung")
      */
     public function modulDeaktivierungAction()
     {

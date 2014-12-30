@@ -1,7 +1,5 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-{#bei Date wird immer |date('Y-m-d') benötigt um als String zu casten#}
-
 {% block content %}
 
 <div class="table-responsive">
@@ -21,11 +19,12 @@
         {% set count = 0 %}
         {% for veranstaltung in module %}
             <tr>
-                <td><a href="{{'/restricted/dozent/modulbearbeiten/'~veranstaltung.getModulID()}}">{{veranstaltung.name}}</a></td>
-                <td>{{veranstaltung.kuerzel}}</td>
-                <td>{{veranstaltung.erstellungsdatum|date('d.m.Y')}}</td>
-                <td>{{veranstaltung.haeufigkeit}}</td>
-                <td>{{veranstaltung.beauftragter}}</td>
+                <td><a href="{{ path('modulBearbeiten', {'id': veranstaltung.getModulID()}) }}">{{ veranstaltung.name }}</a></td>
+                <td>{{ veranstaltung.kuerzel }}</td>
+                {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
+                <td>{{ veranstaltung.haeufigkeit }}</td>
+                <td>{{ veranstaltung.beauftragter }}</td>
                 <td>
                 {% for name in stgZuModul[count] %}
                     {{name}}<br />
