@@ -35,7 +35,7 @@ class Kernfach
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="kernfach")
-     * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID", nullable=false)
+     * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
      * */
     protected $veranstaltung;
 
@@ -45,8 +45,8 @@ class Kernfach
 
     /**
      * @ORM\ManyToOne(targetEntity="Vertiefung", inversedBy="vertiefung")
-     * @ORM\JoinColumn(name="vertiefung_id", referencedColumnName="Vertiefung_ID", nullable=false)
-     * @ORM\OrderBy({"vertiefungsrichtung" = "ASC"})
+     * @ORM\JoinColumn(name="vertiefung", referencedColumnName="Vertiefung_ID", nullable=false)
+     * @ORM\OrderBy({"Name" = "ASC"})
      * */
     protected $vertiefung;
 

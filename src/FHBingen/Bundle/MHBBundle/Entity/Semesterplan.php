@@ -38,23 +38,23 @@ class Semesterplan
      * @ORM\Column(type="integer")
      * @Assert\Range(
      * min = 1,
-     * max = 50,
+     * max = 10,
      * minMessage = "Ein Modul braucht mindestens {{ limit }}SWS Übung",
      * maxMessage = "Ein Modul darf nicht mehr als {{ limit }}SWS Übung haben"
      * )
      */
-    protected $swsUebungen;
+    protected $SWSUebung;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\Range(
      * min = 1,
-     * max = 50,
+     * max = 10,
      * minMessage = "Ein Modul braucht mindestens {{ limit }}SWS Vorlesung",
      * maxMessage = "Ein Modul darf nicht mehr als {{ limit }}SWS Vorlesung haben"
      * )
      */
-    protected $swsVorlesung;
+    protected $SWSVorlesung;
 
     /**
      * @ORM\Column(type="integer")
@@ -65,7 +65,7 @@ class Semesterplan
      * maxMessage = "Ein Modul darf nicht mehr als {{ limit }} Übungsgruppen haben"
      * )
      */
-    protected $anzahlUebungsgruppen;
+    protected $AnzahlUebungsgruppen;
 
     /**
      * @ORM\Column(type="integer")
@@ -76,7 +76,7 @@ class Semesterplan
      * maxMessage = "Eine Übungsgruppe darf aus nicht mehr als {{ limit }} Studenten bestehen"
      * )
      */
-    protected $groesseUebungsgruppen;
+    protected $GroesseUebungsgruppen;
 
     /**
      * Abhaengigkeiten
@@ -84,7 +84,7 @@ class Semesterplan
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID", nullable=false)
+     * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
      * @ORM\OrderBy({"titel" = "ASC"})
      * */
     protected $veranstaltung;
@@ -92,14 +92,14 @@ class Semesterplan
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="dozent_id", referencedColumnName="Dozenten_ID", nullable=false)
+     * @ORM\JoinColumn(name="dozent", referencedColumnName="Dozenten_ID", nullable=false)
      * @ORM\OrderBy({"nachname" = "ASC"})
      * */
     protected $dozent;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="semester", referencedColumnName="semester", nullable=false)
+     * @ORM\JoinColumn(name="semester", referencedColumnName="Semester", nullable=false)
      * */
     protected $semester;
 
@@ -119,9 +119,9 @@ class Semesterplan
      * @param integer $swsUebung
      * @return Semesterplan
      */
-    public function setSwsUebungen($swsUebung)
+    public function setSWSUebung($swsUebung)
     {
-        $this->swsUebungen = $swsUebung;
+        $this->SWSUebung = $swsUebung;
     
         return $this;
     }
@@ -131,9 +131,9 @@ class Semesterplan
      *
      * @return integer 
      */
-    public function getSwsUebungen()
+    public function getSWSUebung()
     {
-        return $this->swsUebungen;
+        return $this->swsUebung;
     }
 
     /**
@@ -142,9 +142,9 @@ class Semesterplan
      * @param integer $swsVorlesung
      * @return Semesterplan
      */
-    public function setSwsVorlesung($swsVorlesung)
+    public function setSWSVorlesung($swsVorlesung)
     {
-        $this->swsVorlesung = $swsVorlesung;
+        $this->SWSVorlesung = $swsVorlesung;
     
         return $this;
     }
@@ -154,9 +154,9 @@ class Semesterplan
      *
      * @return integer 
      */
-    public function getSwsVorlesung()
+    public function getSWSVorlesung()
     {
-        return $this->swsVorlesung;
+        return $this->SWSVorlesung;
     }
 
     /**

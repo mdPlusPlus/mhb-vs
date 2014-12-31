@@ -38,7 +38,7 @@ class Semester
      * maxMessage="Ein Semester darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $semester;
+    protected $Semester;
 
     /**
      * Set Semester
@@ -48,7 +48,7 @@ class Semester
      */
     public function setSemester($semester)
     {
-        $this->semester = $semester;
+        $this->Semester = $semester;
     
         return $this;
     }
@@ -60,7 +60,7 @@ class Semester
      */
     public function getSemester()
     {
-        return $this->semester;
+        return $this->Semester;
     }
 
 

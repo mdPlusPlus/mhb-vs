@@ -51,12 +51,12 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * message = "Bitte geben Sie eine korrekte Anrede an!"
      * )
      */
-    protected $anrede;
+    protected $Anrede;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected $titel;
+    protected $Titel;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
@@ -65,7 +65,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * minMessage="Ein Dozenten-Vorname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $name;
+    protected $Name;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=false)
@@ -74,7 +74,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * minMessage="Ein Dozenten-Nachname muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $nachname;
+    protected $Nachname;
 
 //@Assert\Email(
 //message = "Die Email '{{ value }}' ist keine gueltige Email."
@@ -105,7 +105,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setAnrede($anrede)
     {
-        $this->anrede = $anrede;
+        $this->Anrede = $anrede;
     
         return $this;
     }
@@ -117,7 +117,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getAnrede()
     {
-        return $this->anrede;
+        return $this->Anrede;
     }
 
     /**
@@ -128,7 +128,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setTitel($titel)
     {
-        $this->titel = $titel;
+        $this->Titel = $titel;
     
         return $this;
     }
@@ -140,7 +140,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getTitel()
     {
-        return $this->titel;
+        return $this->Titel;
     }
 
     /**
@@ -151,7 +151,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->Name = $name;
     
         return $this;
     }
@@ -163,7 +163,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getName()
     {
-        return $this->name;
+        return $this->Name;
     }
 
     /**
@@ -174,7 +174,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function setNachname($nachname)
     {
-        $this->nachname = $nachname;
+        $this->Nachname = $nachname;
     
         return $this;
     }
@@ -186,7 +186,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getNachname()
     {
-        return $this->nachname;
+        return $this->Nachname;
     }
 
     /**

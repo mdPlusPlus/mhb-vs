@@ -44,7 +44,7 @@ class Vertiefung
      * minMessage="Ein Vertiefungsrichtungstitel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $vertiefungsrichtung;
+    protected $Name;
 
     /**
      * Get Vertiefungs_ID
@@ -62,9 +62,9 @@ class Vertiefung
      * @param string $vertiefungsrichtung
      * @return Vertiefung
      */
-    public function setVertiefungsrichtung($vertiefungsrichtung)
+    public function setName($name)
     {
-        $this->vertiefungsrichtung = $vertiefungsrichtung;
+        $this->Name = $name;
     
         return $this;
     }
@@ -74,9 +74,9 @@ class Vertiefung
      *
      * @return string 
      */
-    public function getVertiefungsrichtung()
+    public function getName()
     {
-        return $this->vertiefungsrichtung;
+        return $this->Name;
     }
 
 
@@ -136,7 +136,7 @@ class Vertiefung
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="richtung")
-     * @ORM\JoinColumn(name="studiengang_id", referencedColumnName="Studiengang_ID", nullable=false)
+     * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
      * @ORM\OrderBy({"titel" = "ASC"})
      */
     protected $studiengang;

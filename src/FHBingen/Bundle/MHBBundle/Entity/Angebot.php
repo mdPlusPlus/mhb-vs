@@ -39,26 +39,26 @@ class Angebot
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="angebot")
-     * @ORM\JoinColumn(name="modul_id", referencedColumnName="Modul_ID", nullable=false)
+     * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
      * */
     protected $veranstaltung;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Modulhandbuch", inversedBy="angebot")
-     * @ORM\JoinColumn(name="mhb_id", referencedColumnName="MHB_ID", nullable=false)
+     * @ORM\JoinColumn(name="mhb", referencedColumnName="MHB_ID", nullable=false)
      * */
     protected $mhb;
 
     /**
      * @ORM\ManyToOne(targetEntity="Fachgebiet", inversedBy="angebot")
-     * @ORM\JoinColumn(name="fachgebiet_id", referencedColumnName="Fachgebiets_ID", nullable=false)
+     * @ORM\JoinColumn(name="fachgebiet", referencedColumnName="Fachgebiets_ID", nullable=false)
      * */
     protected $fachgebiet;
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="angebot")
-     * @ORM\JoinColumn(name="studiengang_id", referencedColumnName="Studiengang_ID", nullable=false)
+     * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
      * @ORM\OrderBy({"titel" = "ASC"})
      * */
     protected $studiengang;
@@ -71,22 +71,22 @@ class Angebot
      * message = "Bitte geben Sie eine korrekte Angebotsart an!"
      * )
      */
-    protected	$angebotsart;
+    protected	$Angebotsart;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
      */
-    protected	$code;
+    protected	$Code;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
      */
-    protected	$titelDE;
+    protected	$AbweichenderNameDE;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
      */
-    protected	$titelEN;
+    protected	$AbweichenderNameEN;
 
     /**
      * Get id
@@ -210,7 +210,7 @@ class Angebot
      */
     public function getAngebotsart()
     {
-        return $this->angebotsart;
+        return $this->Angebotsart;
     }
 
     /**
@@ -221,7 +221,7 @@ class Angebot
      */
     public function setCode($code)
     {
-        $this->code = $code;
+        $this->Code = $code;
     
         return $this;
     }
@@ -233,7 +233,7 @@ class Angebot
      */
     public function getCode()
     {
-        return $this->code;
+        return $this->Code;
     }
 
     /**
@@ -242,9 +242,9 @@ class Angebot
      * @param string $abweichenderTitelDE
      * @return Angebot
      */
-    public function setTitelDE($abweichenderTitelDE)
+    public function setAbweichenderNameDE($abweichenderNameDE)
     {
-        $this->titelDE = $abweichenderTitelDE;
+        $this->AbweichenderNameDE = $abweichenderNameDE;
     
         return $this;
     }
@@ -254,9 +254,9 @@ class Angebot
      *
      * @return string 
      */
-    public function getTitelDE()
+    public function getAbweichenderNameDE()
     {
-        return $this->titelDE;
+        return $this->AbweichenderNameDE;
     }
 
     /**
@@ -265,9 +265,9 @@ class Angebot
      * @param string $abweichenderTitelEN
      * @return Angebot
      */
-    public function setTitelEN($abweichenderTitelEN)
+    public function setAbweichenderNameEN($abweichenderNameEN)
     {
-        $this->titelEN = $abweichenderTitelEN;
+        $this->AbweichenderNameEN = $abweichenderNameEN;
     
         return $this;
     }
@@ -277,8 +277,8 @@ class Angebot
      *
      * @return string 
      */
-    public function getTitelEN()
+    public function getAbweichenderNameEN()
     {
-        return $this->titelEN;
+        return $this->AbweichenderNameEN;
     }
 }
