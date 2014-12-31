@@ -40,18 +40,18 @@ class Modulhandbuch
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $versionsnummer;
+    protected $Versionsnummer;
 
     /**
      * @ORM\Column(type="date", nullable=false)
      * @Assert\Date()
      */
-    protected $erstellungsdatum;
+    protected $Erstellungsdatum;
 
     /**
      * @ORM\Column(type="text", nullable=false)
      */
-    protected $beschreibung;
+    protected $Beschreibung;
 
     /**
      * Get MHB_ID
@@ -71,7 +71,7 @@ class Modulhandbuch
      */
     public function setVersionsnummer($mHBVersionsnummer)
     {
-        $this->versionsnummer = $mHBVersionsnummer;
+        $this->Versionsnummer = $mHBVersionsnummer;
     
         return $this;
     }
@@ -83,7 +83,7 @@ class Modulhandbuch
      */
     public function getVersionsnummer()
     {
-        return $this->versionsnummer;
+        return $this->Versionsnummer;
     }
 
     /**
@@ -94,7 +94,7 @@ class Modulhandbuch
      */
     public function setErstellungsdatum($erstellungsdatum)
     {
-        $this->erstellungsdatum = $erstellungsdatum;
+        $this->Erstellungsdatum = $erstellungsdatum;
     
         return $this;
     }
@@ -106,7 +106,7 @@ class Modulhandbuch
      */
     public function getErstellungsdatum()
     {
-        return $this->erstellungsdatum;
+        return $this->Erstellungsdatum;
     }
 
     /**
@@ -117,7 +117,7 @@ class Modulhandbuch
      */
     public function setBeschreibung($beschreibung)
     {
-        $this->beschreibung = $beschreibung;
+        $this->Beschreibung = $beschreibung;
     
         return $this;
     }
@@ -129,7 +129,7 @@ class Modulhandbuch
      */
     public function getBeschreibung()
     {
-        return $this->beschreibung;
+        return $this->Beschreibung;
     }
 
 
@@ -187,8 +187,8 @@ class Modulhandbuch
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="gueltigAbSemester")
-     * @ORM\JoinColumn(name="gueltig_ab", referencedColumnName="semester", nullable=false)
-     * @ORM\OrderBy({"semester" = "ASC"})
+     * @ORM\JoinColumn(name="gueltigAb", referencedColumnName="Semester", nullable=false)
+     * @ORM\OrderBy({"Semester" = "ASC"})
      */
     protected $gueltigAb;
 
@@ -196,7 +196,7 @@ class Modulhandbuch
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studiengang")
-     * @ORM\JoinColumn(name="gehoert_zu", referencedColumnName="Studiengang_ID", nullable=false)
+     * @ORM\JoinColumn(name="gehoertZu", referencedColumnName="Studiengang_ID", nullable=false)
      * @ORM\OrderBy({"titel" = "ASC"})
      */
     protected $gehoertZu;

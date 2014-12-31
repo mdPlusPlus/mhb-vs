@@ -45,14 +45,14 @@ class Studiengang
      * maxMessage = "Fachbereich {{ limit }} ist Maximum"
      * )
      */
-    protected $fachbereich;
+    protected $Fachbereich;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
      * @Assert\Choice(choices = {"Bachelor", "Master"}, message = "Waehlen Sie einen gueltigen Bildungsgrad")
      * @ORM\OrderBy({"grad" = "ASC"})
      */
-    protected $grad;
+    protected $Grad;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=false, unique=true)
@@ -62,7 +62,7 @@ class Studiengang
      * )
      * @ORM\OrderBy({"titel" = "ASC"})
      */
-    protected $titel;
+    protected $Titel;
     /**
      * @ORM\Column(type="string", length=5, nullable=false, unique=true)
      * @Assert\Length(
@@ -72,12 +72,12 @@ class Studiengang
      * maxMessage="Ein Studiengangs-Kuerzel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $kuerzel;
+    protected $Kuerzel;
 
     /**
      * @ORM\Column(type="text", nullable=false)
      */
-    protected $beschreibung;
+    protected $Beschreibung;
 
     /**
      * Get Studiengang_ID
@@ -97,7 +97,7 @@ class Studiengang
      */
     public function setFachbereich($fachbereich)
     {
-        $this->fachbereich = $fachbereich;
+        $this->Fachbereich = $fachbereich;
     
         return $this;
     }
@@ -109,7 +109,7 @@ class Studiengang
      */
     public function getFachbereich()
     {
-        return $this->fachbereich;
+        return $this->Fachbereich;
     }
 
     /**
@@ -120,7 +120,7 @@ class Studiengang
      */
     public function setGrad($grad)
     {
-        $this->grad = $grad;
+        $this->Grad = $grad;
     
         return $this;
     }
@@ -132,7 +132,7 @@ class Studiengang
      */
     public function getGrad()
     {
-        return $this->grad;
+        return $this->Grad;
     }
 
     /**
@@ -143,7 +143,7 @@ class Studiengang
      */
     public function setTitel($titel)
     {
-        $this->titel = $titel;
+        $this->Titel = $titel;
     
         return $this;
     }
@@ -155,7 +155,7 @@ class Studiengang
      */
         public function getTitel()
     {
-        return $this->titel;
+        return $this->Titel;
     }
 
     /**
@@ -166,7 +166,7 @@ class Studiengang
      */
     public function setKuerzel($kuerzel)
     {
-        $this->kuerzel = $kuerzel;
+        $this->Kuerzel = $kuerzel;
     
         return $this;
     }
@@ -178,7 +178,7 @@ class Studiengang
      */
     public function getKuerzel()
     {
-        return $this->kuerzel;
+        return $this->Kuerzel;
     }
 
     /**
@@ -189,7 +189,7 @@ class Studiengang
      */
     public function setBeschreibung($beschreibung)
     {
-        $this->beschreibung = $beschreibung;
+        $this->Beschreibung = $beschreibung;
     
         return $this;
     }
@@ -201,7 +201,7 @@ class Studiengang
      */
     public function getBeschreibung()
     {
-        return $this->beschreibung;
+        return $this->Beschreibung;
     }
 
 
@@ -268,7 +268,7 @@ class Studiengang
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="studiengang")
-     * @ORM\JoinColumn(name="SGL", referencedColumnName="Dozenten_ID", nullable=false)
+     * @ORM\JoinColumn(name="sgl", referencedColumnName="Dozenten_ID", nullable=false)
      */
     protected $sgl;
 

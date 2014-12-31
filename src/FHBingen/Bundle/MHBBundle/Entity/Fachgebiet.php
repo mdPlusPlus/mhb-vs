@@ -23,7 +23,7 @@ class Fachgebiet
 
     public function __toString()
     {
-        $string = $this->getTitel();
+        $string = $this->getStudiengang().$this->getTitel();
         return $string;
     }
 
@@ -42,7 +42,7 @@ class Fachgebiet
      * minMessage="Der Fachgebietstitel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      */
-    protected $titel;
+    protected $Titel;
 
     /**
      * Get Fachgebiets_ID
@@ -62,7 +62,7 @@ class Fachgebiet
      */
     public function setTitel($titel)
     {
-        $this->titel = $titel;
+        $this->Titel = $titel;
     
         return $this;
     }
@@ -74,7 +74,7 @@ class Fachgebiet
      */
     public function getTitel()
     {
-        return $this->titel;
+        return $this->Titel;
     }
 
 
@@ -132,7 +132,7 @@ class Fachgebiet
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="fachgebiete")
-     * @ORM\JoinColumn(name="Studiengang_ID", referencedColumnName="Studiengang_ID", nullable=false)
+     * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
      * @ORM\OrderBy({"titel" = "ASC"})
      */
     protected $studiengang;
