@@ -200,14 +200,14 @@ CREATE TABLE IF NOT EXISTS `Studiengang` (
 
 CREATE TABLE IF NOT EXISTS `Studienplan` (
   `startsemester` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `modul` int(11) NOT NULL,
+  `studiengang` int(11) NOT NULL,
   `Studienplan_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `RegelSemester` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Modul` int(11) NOT NULL,
-  `Studiengang` int(11) NOT NULL,
+  `Regelsemester` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`Studienplan_ID`),
   KEY `IDX_7E7DD6273B53343` (`startsemester`),
-  KEY `IDX_7E7DD625C964F8C` (`Modul`),
-  KEY `IDX_7E7DD623CB5857C` (`Studiengang`)
+  KEY `IDX_7E7DD629D576088` (`modul`),
+  KEY `IDX_7E7DD62BA290AAB` (`studiengang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -337,9 +337,9 @@ ALTER TABLE `Studiengang`
 -- Constraints der Tabelle `Studienplan`
 --
 ALTER TABLE `Studienplan`
-  ADD CONSTRAINT `FK_7E7DD623CB5857C` FOREIGN KEY (`Studiengang`) REFERENCES `Studiengang` (`Studiengang_ID`),
-  ADD CONSTRAINT `FK_7E7DD625C964F8C` FOREIGN KEY (`Modul`) REFERENCES `Veranstaltung` (`Modul_ID`),
-  ADD CONSTRAINT `FK_7E7DD6273B53343` FOREIGN KEY (`startsemester`) REFERENCES `Semester` (`Semester`);
+  ADD CONSTRAINT `FK_7E7DD62BA290AAB` FOREIGN KEY (`studiengang`) REFERENCES `Studiengang` (`Studiengang_ID`),
+  ADD CONSTRAINT `FK_7E7DD6273B53343` FOREIGN KEY (`startsemester`) REFERENCES `Semester` (`Semester`),
+  ADD CONSTRAINT `FK_7E7DD629D576088` FOREIGN KEY (`modul`) REFERENCES `Veranstaltung` (`Modul_ID`);
 
 --
 -- Constraints der Tabelle `Veranstaltung`
