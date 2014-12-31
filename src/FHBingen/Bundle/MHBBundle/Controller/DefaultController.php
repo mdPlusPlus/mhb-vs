@@ -18,6 +18,26 @@ class DefaultController extends Controller
     {
         //'login' ist hier route alias von /login
         return $this->redirect($this->generateUrl('login'));
+
+        //TODO: wenn bereits eingeloggt auf andere Seite verweisen
+    }
+
+    /**
+     * PDF-Export Test
+     * @Route("/pdf")
+     * @Template("FHBingenMHBBundle:PDF-Test:modulhandbuch.html.twig")
+     */
+    public function pdfAction(){
+        return array();
+    }
+
+    /**
+     * ChoiceList Test
+     * @Route("/choiceListDemo")
+     * @Template("")
+     */
+    public function choiceListDemoAction(){
+
     }
 
 }

@@ -9,7 +9,7 @@
     <h4 style="font-weight: bold">Studiengangübersicht</h4>
     <div class="table-responsive">
         <ul>
-            <li><a href="{{'/restricted/sgl/createCourse'}}">Neuen Studiengang anlegen</a></li>
+            <li><a href="{{ path('studiengangErstellen') }}">Neuen Studiengang anlegen</a></li>
         </ul>
 
         <table id="table" class="table table-bordered tablesorter">
@@ -23,9 +23,9 @@
             <tbody>
             {% for gang in courses %}
                 <tr>
-                    <td><a href="{{'/restricted/sgl/updateCourse/'~gang.getStudiengangID()}}">{{gang.getTitel()}}</a></td>
-                    <td>{{gang.getGrad()}}</td>
-                    <td>{{gang.getSgl()}}</td>
+                    <td><a href="{{ path('studiengangBearbeiten', {'courseID': gang.getStudiengangID()}) }}">{{ gang.getTitel() }}</a></td>
+                    <td>{{ gang.getGrad() }}</td>
+                    <td>{{ gang.getSgl() }}</td>
                 </tr>
             {% endfor %}
             </tbody>

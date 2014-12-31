@@ -1,7 +1,7 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block content %}
-    {# TODO: Layout so sinnvoll? Keine Sortierung möglich#}
+    {# TODO: Layout so sinnvoll? Keine Sortierung möglich #}
     <div class="table-responsive">
         <table class="table table-bordered">
             <tr>
@@ -15,8 +15,7 @@
                     <ul>
                         {% for person in dozent %}
                             <li>
-                                {# TODO route alias#}
-                                <a href="{{'/restricted/sgl/updateUsers/'~person.getDozentenID() }}">{{person}}</a>
+                                <a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -25,15 +24,14 @@
                     <ul>
                         {% for person in sgl %}
                             <li>
-                                {# TODO route alias#}
-                                <a href="{{'/restricted/sgl/updateUsers/'~person.getDozentenID() }}">{{person}}</a>
+                                <a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a>
                             </li>
                         {% endfor %}
                     </ul>
                 </td>
                 <td>
                     <ul>
-                        <li><a href="{{'/restricted/sgl/createUsers'}}">Nutzer anlegen</a></li>
+                        <li><a href="{{ path('benutzerErstellen') }}">Nutzer anlegen</a></li>
                     </ul>
                 </td>
             </tr>

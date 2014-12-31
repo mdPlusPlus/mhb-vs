@@ -20,12 +20,14 @@ class SglController extends Controller
 {
     /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
-     * @Template("FHBingenMHBBundle:Veranstaltung:alleModule.html.twig")
+     * * @Template("FHBingenMHBBundle:Veranstaltung:alleModule.html.twig")
      */
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
         $em = $this->getDoctrine()->getManager();
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
+
+
         $nichtInPlanung = array();
         foreach ($module as $value) {
             if ($value->getStatus() != 'in Planung'&& $value->getStatus()!='expired') {
@@ -33,7 +35,16 @@ class SglController extends Controller
             }
         }
 
-        return array('module' => $nichtInPlanung, 'pageTitle' => 'Alle Module');
+        $stgZuModul = array();
+        foreach ($nichtInPlanung as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
+           foreach ($tmp as $studiengang) {
+               $name[] =  (string) $studiengang->getStudiengang();;
+               }
+            $stgZuModul[] = $name;
+        }
+        return array('module' => $nichtInPlanung,'stgZuModul' => $stgZuModul, 'pageTitle' => 'Alle Module');
     }
 
 
@@ -89,7 +100,7 @@ class SglController extends Controller
 
         }
 
-        return array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung');
+        return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung'));
     }
 
 
@@ -123,7 +134,7 @@ class SglController extends Controller
 
         $result = $mhb->getResult();
 
-        return array('mhb' => $result, 'pageTitle' => 'Module des MHB');
+        return array('mhb' => $result, 'pageTitle' => 'Module des Modulhandbuchs');
     }
 
 
@@ -146,13 +157,12 @@ class SglController extends Controller
                 $angeboteOhneMHB[] = $value;
             }
         }
-
         return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'Modulhandbucherstellung');
     }
 
 
     /**
-     * @Route("/restricted/sgl/moduldeaktivierung", name="moduldeaktivierung")
+     * @Route("/restricted/sgl/modulDeaktivierung", name="modulDeaktivierung")
      */
     public function modulDeaktivierungAction()
     {

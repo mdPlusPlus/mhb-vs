@@ -22,7 +22,7 @@ use FHBingen\Bundle\MHBBundle\Form;
 class VerwaltungsController extends Controller
 {
     /**
-     * @Route("/restricted/sgl/showUsers", name="benutzerverwaltung")
+     * @Route("/restricted/sgl/showUsers", name="benutzerVerwaltung")
      * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
      */
     public function SglShowUsersAction()
@@ -66,11 +66,11 @@ class VerwaltungsController extends Controller
 
         $this->get('session')->getFlashBag()->add('info', 'Alle Passwörter wurden zurückgesetzt.');
 
-        return $this->redirect($this->generateUrl('benutzerverwaltung'));
+        return $this->redirect($this->generateUrl('benutzerVerwaltung'));
     }
 
     /**
-     * @Route("/restricted/sgl/createUsers")
+     * @Route("/restricted/sgl/createUsers", name="benutzerErstellen")
      * @Template("FHBingenMHBBundle:Verwaltung:userCreate.html.twig")
      */
     public function SglCreateUserAction()
@@ -97,7 +97,7 @@ class VerwaltungsController extends Controller
 
                 $this->get('session')->getFlashBag()->add('info', 'Der neue Nutzer wurde erfolgreich angelegt.');
 
-                return $this->redirect($this->generateUrl('benutzerverwaltung'));
+                return $this->redirect($this->generateUrl('benutzerVerwaltung'));
             }
         }
 
@@ -105,11 +105,12 @@ class VerwaltungsController extends Controller
     }
 
     /**
-     * @Route("/restricted/sgl/updateUsers/{userid}")
+     * @Route("/restricted/sgl/updateUsers/{userid}", name="benutzerBearbeiten")
      * @Template("FHBingenMHBBundle:Verwaltung:userCreate.html.twig")
      */
     public function SglUpdateUserAction($userid)
     {
+        //TODO: userCreate und updateUsers zusammenführen
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $userid));
         $form = $this->createForm(new Form\DozentType(), $dozent);
@@ -124,6 +125,7 @@ class VerwaltungsController extends Controller
                 $dozent->setName($form->get('name')->getData());
                 $dozent->setNachname($form->get('nachname')->getData());
                 $dozent->setEmail($form->get('email')->getData());
+                //TODO: $dozent->setPassword('password'); wieder aufnehmen?
                 $dozent->setRole($form->get('roles')->getData());
 
                 $em->persist($dozent);
@@ -131,7 +133,7 @@ class VerwaltungsController extends Controller
 
                 $this->get('session')->getFlashBag()->add('info', 'Der Nutzer wurde erfolgreich bearbeitet.');
 
-                return $this->redirect($this->generateUrl('benutzerverwaltung'));
+                return $this->redirect($this->generateUrl('benutzerVerwaltung'));
             }
         }
 
@@ -139,7 +141,7 @@ class VerwaltungsController extends Controller
     }
 
     /**
-     * @Route("/restricted/sgl/showAllCourses", name="studiengangverwaltung")
+     * @Route("/restricted/sgl/showAllCourses", name="studiengangVerwaltung")
      * @Template("FHBingenMHBBundle:Verwaltung:alleStudien.html.twig")
      */
     public function SglShowAllCoursesAction()
@@ -198,7 +200,7 @@ class VerwaltungsController extends Controller
 
                 $this->get('session')->getFlashBag()->add('info', 'Der Studiengang wurde erfolgreich angelegt.');
 
-                return $this->redirect($this->generateUrl('studiengangverwaltung'));
+                return $this->redirect($this->generateUrl('studiengangVerwaltung'));
             }
         }
 
@@ -275,7 +277,7 @@ class VerwaltungsController extends Controller
 
                 $this->get('session')->getFlashBag()->add('info', 'Der Studiengang wurde erfolgreich bearbeitet.');
 
-                return $this->redirect($this->generateUrl('studiengangverwaltung'));
+                return $this->redirect($this->generateUrl('studiengangVerwaltung'));
             }
         }
 

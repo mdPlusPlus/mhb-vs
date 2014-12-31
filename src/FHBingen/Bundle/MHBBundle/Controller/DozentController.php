@@ -60,7 +60,7 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/planungAnzeigen", name="planungAnzeigen")
-     * @Template("FHBingenMHBBundle:Veranstaltung:planungsUebersicht.html.twig")
+     * @Template("FHBingenMHBBundle:Veranstaltung:planungUebersicht.html.twig")
      */
     public function planungAnzeigenAction()
     {
@@ -76,7 +76,7 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/planungLoeschen/{id}", name="planungLoeschen")
-     * @Template("FHBingenMHBBundle:Veranstaltung:planungsUebersicht.html.twig")
+     * @Template("FHBingenMHBBundle:Veranstaltung:planungUebersicht.html.twig")
      */
     public function planungLoeschenAction($id)
     {
@@ -152,10 +152,10 @@ class DozentController extends Controller
 
 
     /**
-     * @Route("/restricted/dozent/modulbearbeiten/{id}", name="modulbearbeiten")
-     * @Template("FHBingenMHBBundle:Veranstaltung:modulbearbeiten.html.twig")
+     * @Route("/restricted/dozent/modulBearbeiten/{id}", name="modulBearbeiten")
+     * @Template("FHBingenMHBBundle:Veranstaltung:modulBearbeiten.html.twig")
      */
-    public function modulplanungAction($id)
+    public function modulPlanungAction($id)
     {
         //TODO: Wird abgeschafft und neu gebaut
         $em = $this->getDoctrine()->getManager();

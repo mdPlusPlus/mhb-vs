@@ -27,6 +27,7 @@ class VeranstaltungType extends AbstractType
 
         $builder
             ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+            //TODO: Status wieder mit aufnehmen
 //            ->add('status', 'choice', array('label' => 'Status: ', 'required' => true, 'choices' => $state))
             ->add('kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))
             ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true))
@@ -63,15 +64,16 @@ class VeranstaltungType extends AbstractType
             ->add('sprache', 'choice', array('label' => 'Sprache: ', 'required' => true, 'choices' => $lang))
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => true))
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
-//            ->add('voraussetzungLP', 'choice', array('label' => 'Voraussetzung für Leistungspunkte: ','choices'
-//            => array('Prüfungsleistung'   => 'Prüfungsleistung',
-//                     'Studienleistung' => 'Studienleistung'),
-//                     'multiple'  => true,
-//                     'expanded' => true))
+            ->add('voraussetzungLP', 'choice', array('label' => 'Voraussetzung für Leistungspunkte: ','choices'
+            => array('Prüfungsleistung'   => 'Prüfungsleistung',
+                     'Studienleistung' => 'Studienleistung'),
+                     'multiple'  => true,
+                     'expanded' => true))
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true))
 
             ->add('reset', 'reset')
             ->add('submit', 'submit');
+
     }
 
     public function getName()
