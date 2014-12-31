@@ -38,6 +38,10 @@ use FHBingen\Bundle\MHBBundle\Form\VertiefungType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use Symfony\Component\Serializer\Encoder\JsonDecode;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Serializer;
+
 use Symfony\Component\HttpFoundation\Response;
 
 //TODO: Controller löschen
@@ -266,13 +270,14 @@ class InsertFormController extends Controller
     public function VeranstaltungAction()
     {
         $em = $this->getDoctrine()->getManager();
-        //$veranstaltung = new Veranstaltung();
-        $veranstaltung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => 127));
+        $veranstaltung = new Veranstaltung();
+        //$veranstaltung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => 127));
 
         $form = $this->createForm(new VeranstaltungType(), $veranstaltung);
-
+        $encoder=new JsonEncoder();
         $data = $form->getData();
-        $data['voraussetzungLP'] = unserialize($veranstaltung->getVoraussetzungenLP());
+        $data['voraussetzungLP'] = $encoder->encode($veranstaltung->getVoraussetzungenLP(),'json');
+
 
         $form->setData($data);
 
@@ -320,8 +325,17 @@ class InsertFormController extends Controller
                   //  $string2 = $string2 . $entry . ';;';
                 //}
 
-                //$veranstaltung->setVoraussetzungLP(serialize($form->get('voraussetzungLP')->getData()));
 
+
+                $veranstaltung->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(),'json'));
+                $compressed=$encoder->encode($form->get('voraussetzungLP')->getData(),'json');
+                $decompressed=$encoder->decode($compressed, 'json');
+                $result="";
+
+                foreach($decompressed as $part)
+                {
+                    $result = $result.$part;
+                }
                 /*
                 $string3 = '';
                 $array = ($form->get('Lehrveranstaltungen')->getData());
@@ -332,10 +346,10 @@ class InsertFormController extends Controller
                 $veranstaltung->setLehrveranstaltungen($string3);
                 */
 
-                $em->persist($veranstaltung);
-                $em->flush();
+//                $em->persist($veranstaltung);
+//                $em->flush();
 
-                return new Response('Modul erfolgreich erstellt ');
+                return new Response('Nach dem decode: '.$result);
             }
             return $this->render('FHBingenMHBBundle:InsertForm:veranstaltung.html.twig', array('form' => $form->createView()));
         }
