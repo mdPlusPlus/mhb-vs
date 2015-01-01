@@ -37,7 +37,7 @@
                     <td>
                         <div class="key">Studiensemeseter</div>
                         {% for name in regelsemester[count] %}
-                            {{name.getStartSemester()}} {{name}}<br />
+                            {{name.getStartSemester()|replace({'SS14': "Sommersemester", 'WS13': "Wintersemester"})}} {{name}}. Semester<br />
                         {% endfor %}
                     </td>
                     <td>
@@ -106,8 +106,13 @@
                     <td>5</td>
                     <td colspan="6">
                         <div class="key">Teilnahmevoraussetzungen</div>
-                        Formal: keine<br/>
-                        Inhaltlich:  {{ modul.getVoraussetzungInh()}}
+                        Formal: keine!!!!!!!!!!!!!TODO!<br/>
+                        Inhaltlich:
+                        {% if modul.getVoraussetzungInh() != "" %}
+                            {{ modul.getVoraussetzungInh()}}
+                        {% else %}
+                            keine
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>
@@ -145,7 +150,7 @@
                     <td colspan="6">
                         <div class="key">Modulbeauftragte/r und hauptamtlich Lehrende</div>
                         {{ modul.getBeauftragter()}}
-                        {#{{ lehrende.getDozent().__toString()}}#}
+                        LEHRENDE!!!!!!!
                     </td>
                 </tr>
                 <tr>
@@ -154,7 +159,7 @@
                         <div class="key">Sonstige Informationen</div>
                         Sprache: {{ modul.getSprache()}}<br/>
                         Literatur:<br/>
-                        {{ modul.getLiteratur()}}
+                        {{ modul.getLiteratur()|nl2br}}
                     </td>
                 </tr>
                 </tbody>
