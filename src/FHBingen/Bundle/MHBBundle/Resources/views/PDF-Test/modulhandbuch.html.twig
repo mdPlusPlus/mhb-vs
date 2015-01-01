@@ -44,7 +44,12 @@
                     </td>
                     <td>
                         <div class="key">Dauer</div>
-                        {{ modul.getDauer()}} Semester!
+                        {{ modul.getDauer()}}
+                        {% if modul.getDauer() < 3 %}
+                            Semester
+                        {% else %}
+                            Wochen
+                        {% endif %}
                     </td>
                     <td>
 
