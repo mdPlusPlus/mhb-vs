@@ -666,7 +666,7 @@ protected $VoraussetzungInhalte;
      */
     public function setVoraussetzungInh($voraussetzungInh)
     {
-        $this->VoraussetzungInh = $voraussetzungInh;
+        $this->VoraussetzungInhalte = $voraussetzungInh;
     
         return $this;
     }

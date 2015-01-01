@@ -6,15 +6,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    {% macro pdfModul(modul) %}
+    {% macro pdfModul(veranstaltung,angebot) %}
+        {% set count = 0 %}
+        {% for modul in veranstaltung %}
         <div class="modul">
-            <p>Deutscher Titel (+ Modulcode)</p>
-            <table>
+           <p>{{ modul }} ({{ modul.getKuerzel() }})</p>
+              <table>
                 <thead>
                 <tr>
-                    <th colspan="6">
-                        Deutscher Titel (+Kürzel)<br/>
-                        Englischer Titel
+                    <th colspan="7">
+                        {{ modul }} ({{ modul.getKuerzel() }})<br/>
+                        {{ modul.getNameEN() }}
                     </th>
                 </tr>
                 </thead>
@@ -22,151 +24,132 @@
                 <tr>
                     <td>
                         <div class="key">Kennnummer</div>
-                        B-IN-IG03
+                        {{ angebot[count].getCode() }}
                     </td>
                     <td>
                         <div class="key">Arbeitsbelastung</div>
-                        180h
+                        {{ modul.getLeistungspunkte()*30 }}h
                     </td>
                     <td>
                         <div class="key">Leistungspunkte</div>
-                        6
+                        {{ modul.getLeistungspunkte() }}
                     </td>
                     <td>
                         <div class="key">Studiensemeseter</div>
-                        1+2 Semester
+                        1+2 Semester!!!
                     </td>
                     <td>
                         <div class="key">Häufigkeit des Angebots</div>
-                        Wintersemester
+                        {{ modul.getHaeufigkeit()}}
                     </td>
                     <td>
                         <div class="key">Dauer</div>
-                        1 Semester
+                        {{ modul.getDauer()}} Semester!
+                    </td>
+                    <td>
+
                     </td>
                 </tr>
                 <tr>
                     <td>1</td>
                     <td colspan="2">
                         <div class="key">Lehrveranstaltung</div>
-                        Vorlesung und parallele Übung
+                        {{ modul.getLehrveranstaltungen()}}
                     </td>
                     <td>
-                        <div class="key">Kontaktzeit</div>
-                        75h
+                        <div class="key">Kontaktzeit Vorlesung</div>
+                        {{ modul.getKontaktzeitVL()}}h
+                    </td>
+                    <td>
+                        <div class="key">Kontaktzeit Sonstiege</div>
+                        {{ modul.getKontaktzeitSonstige()}}h
                     </td>
                     <td>
                         <div class="key">Selbststudium</div>
-                        105h
+                        {{ modul.getSelbststudium()}}h
                     </td>
                     <td>
                         <div class="key">Geplante Gruppengröße</div>
-                        70 Studierende
+                        {{ modul.getGruppengroesse()}} Studierende
                     </td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="key">Lernergebnisse</div>
-                        Kenntnisse von Grundbegriffen der Graphentheorie<br/>
-                        Einblick in Prinzipien von Programmiersprachen<br/>
-                        Fähigkeit, formale Sprachen mittels Grammatiken zu definieren und anzuwenden (z.B. bei der
-                        Konstruktion von Automaten)<br/>
-                        Grundkenntnisse von Modellen zur Berechenbarkeit, z.B. Turingmaschine. Grenzen der
-                        Berechenbarkeit und Beispiele von NP-vollständigen Problemen<br/>
-                        Grundbegriffe der diskreten Wahrscheinlichkeitsrechnung<br/>
-                        Kenntnis von Grundbegriffen der Informationstheorie<br/>
-                        Datenkompression: Fähigkeit Redundanz zu erkennen und zu vermeiden. Anwendung von verlustfreien
-                        Codierungsverfahren zur Verringerung der Redundanz<br/>
-                        Verlustbehaftete Kompression: Kenntnisse von Verfahren, Daten mit kaum merkbarem Verlust zu
-                        komprimieren<br/>
-                        Kenntnisse von Verfahren der Fehlererkennung und -korrektur<br/>
-                        Grundkenntnisse der Kryptographie.
+                        {{ modul.getLernergebnisse()}}
                     </td>
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="key">Inhalte</div>
-                        - Graphentheorie und Modellbildung<br/>
-                        - Konzepte von Programmiersprachen, Anwendung von Rekursion<br/>
-                        - Formale Sprachen<br/>
-                        - Berechenbarkeitstheorie<br/>
-                        - Komplexitätstheorie<br/>
-                        - Diskrete Wahrscheinlichkeitstheorie<br/>
-                        - Informationstheorie, Entscheidungsbäume<br/>
-                        - Datenkompression (verlustfrei)<br/>
-                        - Verlustbehaftete Kompression<br/>
-                        - Fehlererkennung und -korrektur<br/>
-                        - Kryptographie: Symmetrische und asymmetrische Verfahren.
+                        {{ modul.getInhalte()}}
                     </td>
                 </tr>
                 <tr>
                     <td>4</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="key">Lehrform</div>
-                        3 SWS Vorlesung, 2 SWS begleitende Übung
+                        3 SWS Vorlesung, 2 SWS begleitende Übung!!!
                     </td>
                 </tr>
                 <tr>
                     <td>5</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="key">Teilnahmevoraussetzungen</div>
                         Formal: keine<br/>
-                        Inhaltlich: kein
+                        Inhaltlich:  {{ modul.getVoraussetzungInh()}}
                     </td>
                 </tr>
                 <tr>
                     <td>6</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="key">Prüfungsformen</div>
-                        Schriftliche Prüfung
+                        {{ modul.getPruefungsformen()}}
                     </td>
                 </tr>
                 <tr>
                     <td>7</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="key">Voraussetzungen für die Vergabe von Leistungspunkten</div>
-                        Prüfungsleistung (Bestandene Modulklausur)
+                        {{ modul.getVoraussetzungLP()}}
                     </td>
                 </tr>
                 <tr>
                     <td>8</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="key">Verwendung des Moduls (in anderen Studiengängen)</div>
-                        Bachelor Bioinformatik
+                        Bachelor Bioinformatik!!!
                     </td>
                 </tr>
                 <tr>
                     <td>9</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="key">Stellenwert der Note für die Endnote</div>
-                        Gewichtung nach Leistungspunkten
+                        Gewichtung nach Leistungspunkten!!!(Brauchen wir nicht)
                     </td>
                 </tr>
                 <tr>
                     <td>10</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="key">Modulbeauftragte/r und hauptamtlich Lehrende</div>
-                        Prof. Dr. Frank Mehler, Prof. Dr. Antje Krause
+                        {{ modul.getBeauftragter()}}
                     </td>
                 </tr>
                 <tr>
                     <td>11</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="key">Sonstige Informationen</div>
-                        Sprache: Deutsch, einzelne Abschnitte in Englisch<br/>
+                        Sprache: {{ modul.getSprache()}}<br/>
                         Literatur:<br/>
-                        H.-P. Gumm, M. Sommer: Einführung in die Informatik. Verlag Oldenbourg, München<br/>
-                        H. Herold, B. Lurz, J. Wohlrab, Grundlagen der Informatik, Verlag Pearson, München<br/>
-                        Uwe Schöning, Ideen der Informatik: Grundlegende Modelle und Konzepte der Theoretischen
-                        Informatik, München<br/>
-                        Peter Rechenberg, Gustav Pomberger: Informatik Handbuch, Verlag Hanser: München, Wien<br/>
-                        P. Becker, Mathematische Grundlagen für die Informatik, Graphentheorie, ZFH Koblenz<br/>
+                        {{ modul.getLiteratur()}}
                     </td>
                 </tr>
                 </tbody>
             </table>
+            {% set count = count +1 %}
+            {% endfor %}
         </div>
     {% endmacro %}
     <title>Modulhandbuch</title>
@@ -174,6 +157,6 @@
 </head>
 <body>
 {# TODO: array mit modulen übergeben mit foreach durchlaufen #}
-{{ _self.pdfModul('test') }}
+{{ _self.pdfModul(moduleZuMHB,angebote) }}
 </body>
 </html>
