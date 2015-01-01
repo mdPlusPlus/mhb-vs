@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    {% macro pdfModul(veranstaltung,angebot) %}
+    {% macro pdfModul(veranstaltung,angebot,lehrende) %}
         {% set count = 0 %}
         {% for modul in veranstaltung %}
         <div class="modul">
@@ -82,6 +82,7 @@
                     <td>2</td>
                     <td colspan="6">
                         <div class="key">Lernergebnisse</div>
+                        $text = str_replace(,"<br>",modul.getLernergebnisse());!!!!!!!!!!!
                         {{ modul.getLernergebnisse()}}
                     </td>
                 </tr>
@@ -140,6 +141,7 @@
                     <td colspan="6">
                         <div class="key">Modulbeauftragte/r und hauptamtlich Lehrende</div>
                         {{ modul.getBeauftragter()}}
+                        {#{{ lehrende.getDozent().__toString()}}#}
                     </td>
                 </tr>
                 <tr>
@@ -162,6 +164,6 @@
 </head>
 <body>
 {# TODO: array mit modulen übergeben mit foreach durchlaufen #}
-{{ _self.pdfModul(moduleZuMHB,angebote) }}
+{{ _self.pdfModul(moduleZuMHB,angebote,lehrendeZuModul) }}
 </body>
 </html>

@@ -32,6 +32,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();  //->findOneBy(array('Modul_ID' =>3));
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('mhb' =>3));
+        $lehrende = $em->getRepository('FHBingenMHBBundle:Lehrende');
 
         $moduleZuMHB = array();
         foreach ($angebote as $valueA) {
@@ -42,7 +43,15 @@ class DefaultController extends Controller
             }
         }
 
-        return array('moduleZuMHB' => $moduleZuMHB,'angebote' => $angebote);
+        $lehrendeZuModul = array();
+        foreach($module as $mod){
+            foreach($lehrende as $lehrer) {
+                if($lehrer->getDozent()->getDozentenID() == $mod->getDozentenID())
+                    $lehrendeZuModul[] = $lehrer;
+            }
+        }
+
+        return array('moduleZuMHB' => $moduleZuMHB,'angebote' => $angebote, 'lehrendeZuModul' => $lehrendeZuModul);
     }
 
     /**
