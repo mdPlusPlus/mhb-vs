@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    {% macro pdfModul(veranstaltung,angebot,lehrende) %}
+    {% macro pdfModul(veranstaltung,angebot,stgang,regelsemester) %}
         {% set count = 0 %}
         {% for modul in veranstaltung %}
         <div class="modul">
@@ -36,7 +36,9 @@
                     </td>
                     <td>
                         <div class="key">Studiensemeseter</div>
-                        1+2 Semester!!!
+                        {% for name in regelsemester[count] %}
+                            {{name.getStartSemester()}} {{name}}<br />
+                        {% endfor %}
                     </td>
                     <td>
                         <div class="key">Häufigkeit des Angebots</div>
@@ -82,15 +84,15 @@
                     <td>2</td>
                     <td colspan="6">
                         <div class="key">Lernergebnisse</div>
-                        $text = str_replace(,"<br>",modul.getLernergebnisse());!!!!!!!!!!!
-                        {{ modul.getLernergebnisse()}}
+
+                        {{ modul.getLernergebnisse()|nl2br}}
                     </td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td colspan="6">
                         <div class="key">Inhalte</div>
-                        {{ modul.getInhalte()}}
+                        {{ modul.getInhalte()|nl2br}}
                     </td>
                 </tr>
                 <tr>
@@ -126,7 +128,9 @@
                     <td>8</td>
                     <td colspan="6">
                         <div class="key">Verwendung des Moduls (in anderen Studiengängen)</div>
-                        Bachelor Bioinformatik!!!
+                        {% for name in stgang[count] %}
+                            {{name}}<br />
+                        {% endfor %}
                     </td>
                 </tr>
                 <tr>
@@ -164,6 +168,6 @@
 </head>
 <body>
 {# TODO: array mit modulen übergeben mit foreach durchlaufen #}
-{{ _self.pdfModul(moduleZuMHB,angebote,lehrendeZuModul) }}
+{{ _self.pdfModul(moduleZuMHB,angebote,studiengaenge,semester) }}
 </body>
 </html>
