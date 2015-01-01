@@ -21,11 +21,11 @@
             <tbody>
             {% for entity in mhb %}
                 <tr>
-                    <td><a href="{{ path('modulBearbeiten', {'id': entity['Modul_ID']}) }}">{{ entity['name'] }}</a></td>
-                    <td>{{ entity['kuerzel'] }}</td>
-                    <td>{{ entity['code'] }}</td>
-                    <td>{{ entity['versionsnummer'] }}</td>
-                    <td>{{ entity['titel']~' '~entity['nachname'] }}</td>
+                    <td><a href="{{ path('modulBearbeiten', {'id': entity['Modul_ID']}) }}">{{ entity['Name'] }}</a></td>
+                    <td>{{ entity['Kuerzel'] }}</td>
+                    <td>{{ entity['Code'] }}</td>
+                    <td>{{ entity['Versionsnummer'] }}</td>
+                    <td>{{ entity['Titel']~' '~entity['Nachname'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>

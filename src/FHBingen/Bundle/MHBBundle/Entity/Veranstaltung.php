@@ -678,7 +678,7 @@ protected $VoraussetzungInhalte;
      */
     public function getVoraussetzungInh()
     {
-        return $this->VoraussetzungInh;
+        return $this->VoraussetzungInhalte;
     }
 
 

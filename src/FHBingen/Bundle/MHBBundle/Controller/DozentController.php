@@ -34,7 +34,7 @@ class DozentController extends Controller
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'status' => 'Freigegeben'));
+        $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'Status' => 'Freigegeben'));
 
         $mLehrende = array();
         foreach ($modulverantwortung as $m) {
@@ -68,7 +68,7 @@ class DozentController extends Controller
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'status' => 'in Planung'));
+        $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'Status' => 'in Planung'));
 
         return array('planungen' => $module, 'pageTitle' => 'Modulplanung');
     }

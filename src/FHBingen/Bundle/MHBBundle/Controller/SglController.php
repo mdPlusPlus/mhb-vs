@@ -40,7 +40,7 @@ class SglController extends Controller
             $name = array();
             $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
            foreach ($tmp as $studiengang) {
-               $name[] =  (string) $studiengang->getStudiengang();;
+               $name[] =  (string) $studiengang->getStudiengang();
                }
             $stgZuModul[] = $name;
         }
@@ -60,7 +60,7 @@ class SglController extends Controller
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
 
-        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('code' => 'DUMMY'));
+        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY'));
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
         $angeboteOhneDummy = array();
         foreach ($angebote as $value) {
@@ -89,7 +89,7 @@ class SglController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $angebot->setCode($form->get('code')->getData());
+                $angebot->setCode($form->get('Code')->getData());
                 $em->persist($angebot);
                 $em->flush();
 
@@ -125,8 +125,8 @@ class SglController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $mhb = $em->createQuery('SELECT v.Modul_ID, v.name , v.kuerzel ,a.code, v.haeufigkeit, v.versionsnummer,
-                                 d.titel, d.nachname
+        $mhb = $em->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer,
+                                 d.Titel, d.Nachname
                                  FROM  FHBingenMHBBundle:Angebot a
                                  JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung =  v.Modul_ID
                                  JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
