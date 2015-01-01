@@ -29,7 +29,20 @@ class DefaultController extends Controller
      * @Template("FHBingenMHBBundle:PDF-Test:modulhandbuch.html.twig")
      */
     public function pdfAction(){
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();  //->findOneBy(array('Modul_ID' =>3));
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('mhb' =>3));
+
+        $moduleZuMHB = array();
+        foreach ($angebote as $valueA) {
+            foreach ($module as $valueM) {
+                if ($valueA->getVeranstaltung()->getModulID() == $valueM->getModulID()) {
+                    $moduleZuMHB[] = $valueM;
+                }
+            }
+        }
+
+        return array('moduleZuMHB' => $moduleZuMHB,'angebote' => $angebote);
     }
 
     /**
