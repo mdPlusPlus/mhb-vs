@@ -22,7 +22,7 @@
             <tbody>
             {% for planung in planungen %}
                 <tr>
-                    <td><a href="">{{planung.getName()}}</a></td>
+                    <td><a href="{{ path('modulBearbeiten', {'id': planung.getModulID()}) }}">{{planung.getName()}}</a></td>
                     <td>{{planung.getErstellungsdatum()|date('d.m.Y')}}</td>
                     <td><a href="">freigeben</a></td>
                     {# <td><a href="{{ '/restricted/dozent/planungLoeschen/'~planung.getModulID() }}"></a></td> #}

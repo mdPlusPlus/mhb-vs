@@ -278,7 +278,6 @@ class InsertFormController extends Controller
         $data = $form->getData();
         $data['voraussetzungLP'] = $encoder->encode($veranstaltung->getVoraussetzungenLP(),'json');
 
-
         $form->setData($data);
 
 

@@ -18,6 +18,10 @@ use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
 use Symfony\Component\Validator\Constraints\Null;
 
+use Symfony\Component\Serializer\Encoder\JsonDecode;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Serializer;
+
 class DozentController extends Controller
 {
     /**
@@ -98,6 +102,7 @@ class DozentController extends Controller
      */
     public function planungErstellenAction()
     {
+        $encoder=new JsonEncoder();
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
@@ -133,9 +138,9 @@ class DozentController extends Controller
                 $modul->setLiteratur($form->get('literatur')->getData());
                 $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
-                $modul->setVoraussetzungLP($form->get('voraussetzungLP')->getData());
-                $modul->setPruefungsformen($form->get('pruefungsformen')->getData());
-                $modul->setLehrveranstaltungen($form->get('lehrveranstaltungen')->getData());
+                $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
+                $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
+                $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
 
                 $em->persist($modul);
                 $em->flush();
@@ -158,37 +163,46 @@ class DozentController extends Controller
     public function modulPlanungAction($id)
     {
         //TODO: Wird abgeschafft und neu gebaut
+        $encoder=new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id));
 
-        $form = $this->createForm(new Form\VeranstaltungType(), $modul);
+        $form = $this->createForm(new Form\PlanungType(), $modul);
 
         $request = $this->get('request');
         $form->handleRequest($request);
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $modul->setStatus($form->get('status')->getData());
+                //notwendige Einträge
+                $modul->setErstellungsdatum(new \DateTime());
+
+                //Änderungen an Einträgen
                 $modul->setKuerzel($form->get('kuerzel')->getData());
                 $modul->setName($form->get('name')->getData());
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
-                //$modul->setDauer($form->get('lehrveranstaltungen')->getData());
-                $modul->setDauer($form->get('kontaktzeitVL')->getData());
-                $modul->setDauer($form->get('kontaktzeitSonstige')->getData());
-                $modul->setDauer($form->get('selbststudium')->getData());
-                $modul->setDauer($form->get('gruppengroesse')->getData());
-                $modul->setDauer($form->get('lernergebnisse')->getData());
-                $modul->setDauer($form->get('inhalte')->getData());
-                //$modul->setDauer($form->get('pruefungsformen')->getData());
-                $modul->setDauer($form->get('sprache')->getData());
-                $modul->setDauer($form->get('literatur')->getData());
-                $modul->setDauer($form->get('leistungspunkte')->getData());
-                //$modul->setDauer($form->get('voraussetzungLP')->getData());
-                $modul->setDauer($form->get('voraussetzungInh')->getData());
+                $modul->setDauer($form->get('dauer')->getData());
+                $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
+                $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
+                $modul->setSelbststudium($form->get('selbststudium')->getData());
+                $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
+                $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
+                $modul->setInhalte($form->get('inhalte')->getData());
+                $modul->setSprache($form->get('sprache')->getData());
+                $modul->setLiteratur($form->get('literatur')->getData());
+                $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
+                $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
+                $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
+                $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
+                $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
 
                 $em->persist($modul);
                 $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'Die Planung wurde erfolgreich bearbeitet.');
+
+                return $this->redirect($this->generateUrl('planungAnzeigen'));
             }
         }
 
