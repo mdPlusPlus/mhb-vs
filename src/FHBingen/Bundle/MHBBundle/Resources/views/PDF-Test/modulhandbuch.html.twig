@@ -98,7 +98,7 @@
                     <td>4</td>
                     <td colspan="6">
                         <div class="key">Lehrform</div>
-                      {{ modul.getKontaktzeitVL()/15 SWS Vorlesung, modul.getKontaktzeitVL()/15 SWS begleitende Übung
+                      {{ modul.getKontaktzeitVL()/15 }} SWS Vorlesung, {{ modul.getKontaktzeitVL()/15 }} SWS begleitende Übung
                     </td>
                 </tr>
                 <tr>
@@ -106,13 +106,13 @@
                     <td colspan="6">
                         <div class="key">Teilnahmevoraussetzungen</div>
                         Formal:
-                        {% for name in voraussetzung[count] %}
-                        {% if voraussetzung[count] != "" %}
-                        {{name}}<br />
-                        {% else %}
-                            keine<br />
-                        {% endif %}
-                        {% endfor %} <br />
+                        {#{% for name in voraussetzung[count] %}#}
+                        {#{% if voraussetzung[count] != "" %}#}
+                        {#{{name}}<br />#}
+                        {#{% else %}#}
+                            {#keine<br />#}
+                        {#{% endif %}#}
+                        {#{% endfor %} <br />#}
                         Inhaltlich:
                         {% if modul.getVoraussetzungInh() != "" %}
                             {{ modul.getVoraussetzungInh()}}
