@@ -55,6 +55,28 @@ class DefaultController extends Controller
             $stgZuModul[] = $name;
         }
 
+        $lehrendeZuModul = array();
+        foreach ($module as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $modul->getModulID()));
+            foreach ($tmp as $lehrend) {
+                if ($lehrend->getDozent() != $modul->getBeauftragter()) {
+                    $name[] = (string)$lehrend->getDozent();
+                }
+            }
+            $lehrendeZuModul[] = $name;
+        }
+
+        $voraussetzungZuModul = array();
+        foreach ($module as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('modul_' => $modul->getModulID()));
+            foreach ($tmp as $voraus) {
+                    $name[] = (string)$voraus->getModulVoraussetzung();
+            }
+            $lehrendeZuModul[] = $name;
+        }
+
         $regelsemester = array();
         foreach ($moduleZuMHB as $modul) {
             $name = array();
@@ -64,10 +86,10 @@ class DefaultController extends Controller
                    }
             $regelsemester[] = $name;
         }
-
-
-        return array('moduleZuMHB' => $moduleZuMHB,'angebote' => $angebote, 'studiengaenge' => $stgZuModul,'semester'=>$regelsemester);
+        return array('moduleZuMHB' => $moduleZuMHB,'angebote' => $angebote, 'studiengaenge' => $stgZuModul,'semester'=>$regelsemester,"lehrende" => $lehrendeZuModul, "voraussetzung" => $voraussetzungZuModul);
     }
+
+
 
     /**
      * ChoiceList Test

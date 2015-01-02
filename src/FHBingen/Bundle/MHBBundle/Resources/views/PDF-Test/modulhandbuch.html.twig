@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    {% macro pdfModul(veranstaltung,angebot,stgang,regelsemester) %}
+    {% macro pdfModul(veranstaltung,angebot,stgang,regelsemester,lehrende,voraussetzung) %}
         {% set count = 0 %}
         {% for modul in veranstaltung %}
         <div class="modul">
@@ -68,7 +68,7 @@
                         {{ modul.getKontaktzeitVL()}}h
                     </td>
                     <td>
-                        <div class="key">Kontaktzeit Sonstiege</div>
+                        <div class="key">Kontaktzeit Sonstige</div>
                         {{ modul.getKontaktzeitSonstige()}}h
                     </td>
                     <td>
@@ -84,7 +84,6 @@
                     <td>2</td>
                     <td colspan="6">
                         <div class="key">Lernergebnisse</div>
-
                         {{ modul.getLernergebnisse()|nl2br}}
                     </td>
                 </tr>
@@ -106,7 +105,14 @@
                     <td>5</td>
                     <td colspan="6">
                         <div class="key">Teilnahmevoraussetzungen</div>
-                        Formal: keine!!!!!!!!!!!!!TODO!<br/>
+                        Formal:
+                        {% for name in voraussetzung[count] %}
+                        {% if voraussetzung[count] != "" %}
+                        {{name}}<br />
+                        {% else %}
+                            keine<br />
+                        {% endif %}
+                        {% endfor %} <br/>
                         Inhaltlich:
                         {% if modul.getVoraussetzungInh() != "" %}
                             {{ modul.getVoraussetzungInh()}}
@@ -149,8 +155,10 @@
                     <td>10</td>
                     <td colspan="6">
                         <div class="key">Modulbeauftragte/r und hauptamtlich Lehrende</div>
-                        {{ modul.getBeauftragter()}}
-                        LEHRENDE!!!!!!!
+                        Modulbeauftragter: {{ modul.getBeauftragter()}}<br/>
+                        weitere Lehrende:  {% for name in lehrende[count] %}
+                            {{name}},
+                        {% endfor %}
                     </td>
                 </tr>
                 <tr>
@@ -173,6 +181,6 @@
 </head>
 <body>
 {# TODO: array mit modulen übergeben mit foreach durchlaufen #}
-{{ _self.pdfModul(moduleZuMHB,angebote,studiengaenge,semester) }}
+{{ _self.pdfModul(moduleZuMHB,angebote,studiengaenge,semester,lehrende,voraussetzung) }}
 </body>
 </html>
