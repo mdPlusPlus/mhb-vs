@@ -67,15 +67,15 @@ class DefaultController extends Controller
             $lehrendeZuModul[] = $name;
         }
 
-        $voraussetzungZuModul = array();
-        foreach ($module as $modul) {
-            $name = array();
-            $tmp = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('modul_' => $modul->getModulID()));
-            foreach ($tmp as $voraus) {
-                    $name[] = (string)$voraus->getModulVoraussetzung();
-            }
-            $lehrendeZuModul[] = $name;
-        }
+       $voraussetzungZuModul = array();
+//        foreach ($module as $modul) {
+//            $name = array();
+//            $tmp = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('modul_' => $modul->getModulID()));
+//            foreach ($tmp as $voraus) {
+//                    $name[] = (string)$voraus->getModulVoraussetzung();
+//            }
+//            $lehrendeZuModul[] = $name;
+//        }
 
         $regelsemester = array();
         foreach ($moduleZuMHB as $modul) {

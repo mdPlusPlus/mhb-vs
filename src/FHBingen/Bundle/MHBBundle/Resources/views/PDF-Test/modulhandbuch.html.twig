@@ -98,7 +98,7 @@
                     <td>4</td>
                     <td colspan="6">
                         <div class="key">Lehrform</div>
-                        3 SWS Vorlesung, 2 SWS begleitende Übung!!!
+                      {{ modul.getKontaktzeitVL()/15 SWS Vorlesung, modul.getKontaktzeitVL()/15 SWS begleitende Übung
                     </td>
                 </tr>
                 <tr>
@@ -112,7 +112,7 @@
                         {% else %}
                             keine<br />
                         {% endif %}
-                        {% endfor %} <br/>
+                        {% endfor %} <br />
                         Inhaltlich:
                         {% if modul.getVoraussetzungInh() != "" %}
                             {{ modul.getVoraussetzungInh()}}
@@ -180,7 +180,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/fhbingenmhb/css/modul.css') }}"/>
 </head>
 <body>
-{# TODO: array mit modulen übergeben mit foreach durchlaufen #}
+ {#TODO: array mit modulen übergeben mit foreach durchlaufen #}
 {{ _self.pdfModul(moduleZuMHB,angebote,studiengaenge,semester,lehrende,voraussetzung) }}
 </body>
 </html>
