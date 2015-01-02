@@ -9,178 +9,180 @@
     {% macro pdfModul(veranstaltung,angebot,stgang,regelsemester,lehrende,voraussetzung) %}
         {% set count = 0 %}
         {% for modul in veranstaltung %}
-        <div class="modul">
-           <p>{{ modul }} ({{ modul.getKuerzel() }})</p>
-              <table>
-                <thead>
-                <tr>
-                    <th colspan="7">
-                        {{ modul }} ({{ modul.getKuerzel() }})<br/>
-                        {{ modul.getNameEN() }}
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <div class="key">Kennnummer</div>
-                        {{ angebot[count].getCode() }}
-                    </td>
-                    <td>
-                        <div class="key">Arbeitsbelastung</div>
-                        {{ modul.getLeistungspunkte()*30 }}h
-                    </td>
-                    <td>
-                        <div class="key">Leistungspunkte</div>
-                        {{ modul.getLeistungspunkte() }}
-                    </td>
-                    <td>
-                        <div class="key">Studiensemeseter</div>
-                        {% for name in regelsemester[count] %}
-                            {{name.getStartSemester()|replace({'SS14': "Sommersemester", 'WS13': "Wintersemester"})}} {{name}}. Semester<br />
-                        {% endfor %}
-                    </td>
-                    <td>
-                        <div class="key">Häufigkeit des Angebots</div>
-                        {{ modul.getHaeufigkeit()}}
-                    </td>
-                    <td>
-                        <div class="key">Dauer</div>
-                        {{ modul.getDauer()}}
-                        {% if modul.getDauer() < 3 %}
-                            Semester
-                        {% else %}
-                            Wochen
-                        {% endif %}
-                    </td>
-                    <td>
+            <div class="modul">
+                <p>{{ modul }} ({{ modul.getKuerzel() }})</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="7">
+                            {{ modul }} ({{ modul.getKuerzel() }})<br/>
+                            {{ modul.getNameEN() }}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="key">Kennnummer</div>
+                            {{ angebot[count].getCode() }}
+                        </td>
+                        <td>
+                            <div class="key">Arbeitsbelastung</div>
+                            {{ modul.getLeistungspunkte()*30 }}h
+                        </td>
+                        <td>
+                            <div class="key">Leistungspunkte</div>
+                            {{ modul.getLeistungspunkte() }}
+                        </td>
+                        <td>
+                            <div class="key">Studiensemeseter</div>
+                            {% for name in regelsemester[count] %}
+                                {{ name.getStartSemester()|replace({'SS14': "Sommersemester", 'WS13': "Wintersemester"}) }} {{ name }}. Semester
+                                <br/>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <div class="key">Häufigkeit des Angebots</div>
+                            {{ modul.getHaeufigkeit() }}
+                        </td>
+                        <td>
+                            <div class="key">Dauer</div>
+                            {{ modul.getDauer() }}
+                            {% if modul.getDauer() < 3 %}
+                                Semester
+                            {% else %}
+                                Wochen
+                            {% endif %}
+                        </td>
+                        <td>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td colspan="2">
-                        <div class="key">Lehrveranstaltung</div>
-                        {{ modul.getLehrveranstaltungen()}}
-                    </td>
-                    <td>
-                        <div class="key">Kontaktzeit Vorlesung</div>
-                        {{ modul.getKontaktzeitVL()}}h
-                    </td>
-                    <td>
-                        <div class="key">Kontaktzeit Sonstige</div>
-                        {{ modul.getKontaktzeitSonstige()}}h
-                    </td>
-                    <td>
-                        <div class="key">Selbststudium</div>
-                        {{ modul.getSelbststudium()}}h
-                    </td>
-                    <td>
-                        <div class="key">Geplante Gruppengröße</div>
-                        {{ modul.getGruppengroesse()}} Studierende
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td colspan="6">
-                        <div class="key">Lernergebnisse</div>
-                        {{ modul.getLernergebnisse()|nl2br}}
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td colspan="6">
-                        <div class="key">Inhalte</div>
-                        {{ modul.getInhalte()|nl2br}}
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td colspan="6">
-                        <div class="key">Lehrform</div>
-                      {{ modul.getKontaktzeitVL()/15 }} SWS Vorlesung, {{ modul.getKontaktzeitVL()/15 }} SWS begleitende Übung
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td colspan="6">
-                        <div class="key">Teilnahmevoraussetzungen</div>
-                        Formal:
-                        {#{% for name in voraussetzung[count] %}#}
-                        {#{% if voraussetzung[count] != "" %}#}
-                        {#{{name}}<br />#}
-                        {#{% else %}#}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td colspan="2">
+                            <div class="key">Lehrveranstaltung</div>
+                            {{ modul.getLehrveranstaltungen() }}
+                        </td>
+                        <td>
+                            <div class="key">Kontaktzeit Vorlesung</div>
+                            {{ modul.getKontaktzeitVL() }}h
+                        </td>
+                        <td>
+                            <div class="key">Kontaktzeit Sonstige</div>
+                            {{ modul.getKontaktzeitSonstige() }}h
+                        </td>
+                        <td>
+                            <div class="key">Selbststudium</div>
+                            {{ modul.getSelbststudium() }}h
+                        </td>
+                        <td>
+                            <div class="key">Geplante Gruppengröße</div>
+                            {{ modul.getGruppengroesse() }} Studierende
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td colspan="6">
+                            <div class="key">Lernergebnisse</div>
+                            {{ modul.getLernergebnisse()|nl2br }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td colspan="6">
+                            <div class="key">Inhalte</div>
+                            {{ modul.getInhalte()|nl2br }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td colspan="6">
+                            <div class="key">Lehrform</div>
+                            {{ modul.getKontaktzeitVL()/15 }} SWS Vorlesung, {{ modul.getKontaktzeitVL()/15 }} SWS
+                            begleitende Übung
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td colspan="6">
+                            <div class="key">Teilnahmevoraussetzungen</div>
+                            Formal:
+                            {#{% for name in voraussetzung[count] %}#}
+                            {#{% if voraussetzung[count] != "" %}#}
+                            {#{{name}}<br />#}
+                            {#{% else %}#}
                             {#keine<br />#}
-                        {#{% endif %}#}
-                        {#{% endfor %} <br />#}
-                        Inhaltlich:
-                        {% if modul.getVoraussetzungInh() != "" %}
-                            {{ modul.getVoraussetzungInh()}}
-                        {% else %}
-                            keine
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td colspan="6">
-                        <div class="key">Prüfungsformen</div>
-                        {{ modul.getPruefungsformen()}}
-                    </td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td colspan="6">
-                        <div class="key">Voraussetzungen für die Vergabe von Leistungspunkten</div>
-                        {{ modul.getVoraussetzungLP()}}
-                    </td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td colspan="6">
-                        <div class="key">Verwendung des Moduls (in anderen Studiengängen)</div>
-                        {% for name in stgang[count] %}
-                            {{name}}<br />
-                        {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td colspan="6">
-                        <div class="key">Stellenwert der Note für die Endnote</div>
-                        Gewichtung nach Leistungspunkten!!!(Brauchen wir nicht)
-                    </td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td colspan="6">
-                        <div class="key">Modulbeauftragte/r und hauptamtlich Lehrende</div>
-                        Modulbeauftragter: {{ modul.getBeauftragter()}}<br/>
-                        weitere Lehrende:  {% for name in lehrende[count] %}
-                            {{name}},
-                        {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td colspan="6">
-                        <div class="key">Sonstige Informationen</div>
-                        Sprache: {{ modul.getSprache()}}<br/>
-                        Literatur:<br/>
-                        {{ modul.getLiteratur()|nl2br}}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                            {#{% endif %}#}
+                            {#{% endfor %} <br />#}
+                            Inhaltlich:
+                            {% if modul.getVoraussetzungInh() != "" %}
+                                {{ modul.getVoraussetzungInh() }}
+                            {% else %}
+                                keine
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td colspan="6">
+                            <div class="key">Prüfungsformen</div>
+                            {{ modul.getPruefungsformen() }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td colspan="6">
+                            <div class="key">Voraussetzungen für die Vergabe von Leistungspunkten</div>
+                            {{ modul.getVoraussetzungLP() }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td colspan="6">
+                            <div class="key">Verwendung des Moduls (in anderen Studiengängen)</div>
+                            {% for name in stgang[count] %}
+                                {{ name }}<br/>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td colspan="6">
+                            <div class="key">Stellenwert der Note für die Endnote</div>
+                            Gewichtung nach Leistungspunkten!!!(Brauchen wir nicht)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td colspan="6">
+                            <div class="key">Modulbeauftragte/r und hauptamtlich Lehrende</div>
+                            Modulbeauftragter: {{ modul.getBeauftragter() }}<br/>
+                            weitere Lehrende:  {% for name in lehrende[count] %}
+                                {{ name }},
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td colspan="6">
+                            <div class="key">Sonstige Informationen</div>
+                            Sprache: {{ modul.getSprache() }}<br/>
+                            Literatur:<br/>
+                            {{ modul.getLiteratur()|nl2br }}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             {% set count = count +1 %}
-            {% endfor %}
-        </div>
+        {% endfor %}
     {% endmacro %}
     <title>Modulhandbuch</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/fhbingenmhb/css/modul.css') }}"/>
 </head>
 <body>
- {#TODO: array mit modulen übergeben mit foreach durchlaufen #}
+{#TODO: array mit modulen übergeben mit foreach durchlaufen #}
 {{ _self.pdfModul(moduleZuMHB,angebote,studiengaenge,semester,lehrende,voraussetzung) }}
 </body>
 </html>
