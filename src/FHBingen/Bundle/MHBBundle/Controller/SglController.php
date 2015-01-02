@@ -40,7 +40,7 @@ class SglController extends Controller
             $name = array();
             $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
            foreach ($tmp as $studiengang) {
-               $name[] =  (string) $studiengang->getStudiengang();
+                   $name[] = (string)$studiengang->getStudiengang();
                }
             $stgZuModul[] = $name;
         }

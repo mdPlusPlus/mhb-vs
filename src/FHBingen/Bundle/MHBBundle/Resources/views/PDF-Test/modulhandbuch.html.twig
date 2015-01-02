@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    {% macro pdfModul(veranstaltung,angebot) %}
+    {% macro pdfModul(veranstaltung,angebot,stgang,regelsemester) %}
         {% set count = 0 %}
         {% for modul in veranstaltung %}
         <div class="modul">
@@ -36,7 +36,9 @@
                     </td>
                     <td>
                         <div class="key">Studiensemeseter</div>
-                        1+2 Semester!!!
+                        {% for name in regelsemester[count] %}
+                            {{name.getStartSemester()|replace({'SS14': "Sommersemester", 'WS13': "Wintersemester"})}} {{name}}. Semester<br />
+                        {% endfor %}
                     </td>
                     <td>
                         <div class="key">Häufigkeit des Angebots</div>
@@ -44,7 +46,12 @@
                     </td>
                     <td>
                         <div class="key">Dauer</div>
-                        {{ modul.getDauer()}} Semester!
+                        {{ modul.getDauer()}}
+                        {% if modul.getDauer() < 3 %}
+                            Semester
+                        {% else %}
+                            Wochen
+                        {% endif %}
                     </td>
                     <td>
 
@@ -77,14 +84,15 @@
                     <td>2</td>
                     <td colspan="6">
                         <div class="key">Lernergebnisse</div>
-                        {{ modul.getLernergebnisse()}}
+
+                        {{ modul.getLernergebnisse()|nl2br}}
                     </td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td colspan="6">
                         <div class="key">Inhalte</div>
-                        {{ modul.getInhalte()}}
+                        {{ modul.getInhalte()|nl2br}}
                     </td>
                 </tr>
                 <tr>
@@ -98,8 +106,13 @@
                     <td>5</td>
                     <td colspan="6">
                         <div class="key">Teilnahmevoraussetzungen</div>
-                        Formal: keine<br/>
-                        Inhaltlich:  {{ modul.getVoraussetzungInh()}}
+                        Formal: keine!!!!!!!!!!!!!TODO!<br/>
+                        Inhaltlich:
+                        {% if modul.getVoraussetzungInh() != "" %}
+                            {{ modul.getVoraussetzungInh()}}
+                        {% else %}
+                            keine
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>
@@ -120,7 +133,9 @@
                     <td>8</td>
                     <td colspan="6">
                         <div class="key">Verwendung des Moduls (in anderen Studiengängen)</div>
-                        Bachelor Bioinformatik!!!
+                        {% for name in stgang[count] %}
+                            {{name}}<br />
+                        {% endfor %}
                     </td>
                 </tr>
                 <tr>
@@ -135,6 +150,7 @@
                     <td colspan="6">
                         <div class="key">Modulbeauftragte/r und hauptamtlich Lehrende</div>
                         {{ modul.getBeauftragter()}}
+                        LEHRENDE!!!!!!!
                     </td>
                 </tr>
                 <tr>
@@ -143,7 +159,7 @@
                         <div class="key">Sonstige Informationen</div>
                         Sprache: {{ modul.getSprache()}}<br/>
                         Literatur:<br/>
-                        {{ modul.getLiteratur()}}
+                        {{ modul.getLiteratur()|nl2br}}
                     </td>
                 </tr>
                 </tbody>
@@ -157,6 +173,6 @@
 </head>
 <body>
 {# TODO: array mit modulen übergeben mit foreach durchlaufen #}
-{{ _self.pdfModul(moduleZuMHB,angebote) }}
+{{ _self.pdfModul(moduleZuMHB,angebote,studiengaenge,semester) }}
 </body>
 </html>

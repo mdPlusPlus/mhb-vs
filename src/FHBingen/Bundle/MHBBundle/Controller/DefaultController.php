@@ -30,8 +30,9 @@ class DefaultController extends Controller
      */
     public function pdfAction(){
         $em = $this->getDoctrine()->getManager();
-        $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();  //->findOneBy(array('Modul_ID' =>3));
-        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('mhb' =>3));
+        $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('mhb' =>1));
+        $lehrende = $em->getRepository('FHBingenMHBBundle:Lehrende');
 
         $moduleZuMHB = array();
         foreach ($angebote as $valueA) {
@@ -42,7 +43,30 @@ class DefaultController extends Controller
             }
         }
 
-        return array('moduleZuMHB' => $moduleZuMHB,'angebote' => $angebote);
+        $stgZuModul = array();
+        foreach ($moduleZuMHB as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
+            foreach ($tmp as $studiengang) {
+                if ($studiengang->getStudiengang() != $angebote[3]->getStudiengang()) {
+                    $name[] = (string)$studiengang->getStudiengang();
+                }
+            }
+            $stgZuModul[] = $name;
+        }
+
+        $regelsemester = array();
+        foreach ($moduleZuMHB as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array('veranstaltung' => $modul->getModulID(),'studiengang'=>2));
+            foreach ($tmp as $studienplan) {
+                      $name[] = $studienplan;
+                   }
+            $regelsemester[] = $name;
+        }
+
+
+        return array('moduleZuMHB' => $moduleZuMHB,'angebote' => $angebote, 'studiengaenge' => $stgZuModul,'semester'=>$regelsemester);
     }
 
     /**

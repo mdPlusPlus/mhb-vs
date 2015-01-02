@@ -93,7 +93,7 @@ class Studienplan
      */
     public function getRegelSemester()
     {
-        return $this->regelSemester;
+        return $this->Regelsemester;
     }
 
     /**
