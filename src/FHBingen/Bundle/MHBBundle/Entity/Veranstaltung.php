@@ -957,7 +957,8 @@ protected $VoraussetzungInhalte;
      */
     public function addModulVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
     {
-        $this->modulVoraussetzung[] = $modulVoraussetzung;
+        //$this->modulVoraussetzung[] = $modulVoraussetzung;
+        $this->modul_[] = $modulVoraussetzung;
     
         return $this;
     }
@@ -969,7 +970,8 @@ protected $VoraussetzungInhalte;
      */
     public function removeModulVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
     {
-        $this->modulVoraussetzung->removeElement($modulVoraussetzung);
+        //$this->modulVoraussetzung->removeElement($modulVoraussetzung);
+        $this->modul_->removeElement($modulVoraussetzung);
     }
 
     /**
@@ -979,7 +981,8 @@ protected $VoraussetzungInhalte;
      */
     public function getModulVoraussetzung()
     {
-        return $this->modulVoraussetzung;
+        //return $this->modulVoraussetzung;
+        return $this->modul_;
     }
 
     /*Studienplan*/

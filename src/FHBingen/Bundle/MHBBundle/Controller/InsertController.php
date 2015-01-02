@@ -166,25 +166,19 @@ class InsertController extends Controller
 
     public function voraussetzungCreate()
     {
-        // legt die Voraussetzung-Objekte an und gibt sie als Array zurueck
-        $voraus0 = new Veranstaltung();
+        $em = $this->getDoctrine()->getManager();
 
-        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Veranstaltung');
-        $entry = $table->find(1);
+        $igru2 = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find(1);
+        $prog2 = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find(3);
+        $whatever = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find(4);
 
-        $voraus0->addModulVoraussetzung($entry);
+        $igru2->addModulVoraussetzung($prog2);
+        $igru2->addModulVoraussetzung($whatever);
 
-        $table = $this->getDoctrine()->getRepository('FHBingenMHBBundle:Veranstaltung');
-        $entry = $table->find(3);
+        $em->persist($igru2);
+        $em->flush();
 
-        $voraus0->addModulVoraussetzung($entry);
-
-
-        $vorausArr = array(
-            $voraus0
-        );
-
-        return $vorausArr;
+        return new Response('Test-Voraussetzung angelegt!');
     }
 
 

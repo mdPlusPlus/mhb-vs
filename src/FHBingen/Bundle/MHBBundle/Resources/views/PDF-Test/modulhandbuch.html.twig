@@ -108,13 +108,13 @@
                         <td colspan="6">
                             <div class="key">Teilnahmevoraussetzungen</div>
                             Formal:
-                            {#{% for name in voraussetzung[count] %}#}
-                            {#{% if voraussetzung[count] != "" %}#}
-                            {#{{name}}<br />#}
-                            {#{% else %}#}
-                            {#keine<br />#}
-                            {#{% endif %}#}
-                            {#{% endfor %} <br />#}
+                            {% if voraussetzung[count] is not empty %}
+                                {% for name in voraussetzung[count] %}
+                                    {{ name }}<br/>
+                                {% endfor %}
+                            {% else %}
+                                keine<br/>
+                            {% endif %}
                             Inhaltlich:
                             {% if modul.getVoraussetzungInh() != "" %}
                                 {{ modul.getVoraussetzungInh() }}
