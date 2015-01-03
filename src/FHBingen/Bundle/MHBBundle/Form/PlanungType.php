@@ -8,7 +8,6 @@
 
 namespace FHBingen\Bundle\MHBBundle\Form;
 
-use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -16,10 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
-use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Validator\Constraints\Null;
 
 class PlanungType extends AbstractType
 {
@@ -164,6 +160,6 @@ class PlanungType extends AbstractType
 
     public function getName()
     {
-        return 'Veranstaltung';
+        return 'Planung';
     }
 }

@@ -1,0 +1,40 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
+
+{% block content %}
+    <h3>Modulplanung</h3>
+    <div class="table-responsive">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        <table class="table table-bordered">
+            {{ form_row(form.name) }}
+            {{ form_row(form.nameEN) }}
+            {{ form_row(form.kuerzel) }}
+            {{ form_row(form.beauftragter) }}
+            {{ form_row(form.haeufigkeit) }}
+            {{ form_row(form.dauer) }}
+            {{ form_row(form.leistungspunkte) }}
+            {{ form_row(form.kontaktzeitVL) }}
+            {{ form_row(form.kontaktzeitSonstige) }}
+            {{ form_row(form.selbststudium) }}
+            {{ form_row(form.gruppengroesse) }}
+            {{ form_row(form.lernergebnisse) }}
+            {{ form_row(form.inhalte) }}
+            {{ form_row(form.sprache) }}
+            {{ form_row(form.literatur) }}
+            {{ form_row(form.voraussetzungInh) }}
+            {{ form_row(form.lehrveranstaltungen) }}
+            {{ form_row(form.pruefungsformen) }}
+            {{ form_row(form.voraussetzungLP) }}
+        </table>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
