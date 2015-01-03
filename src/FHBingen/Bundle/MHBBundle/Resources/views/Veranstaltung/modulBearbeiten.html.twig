@@ -10,6 +10,23 @@
     </tr>
 {% endblock form_row %}
 
+{% block form_label -%}
+    {% if label is not sameas(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
+        {% if label is empty -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+        {# added <br /> for nicer lyout of checboxes #}
+        <br />
+    {%- endif %}
+{%- endblock form_label %}
+
 {% block content %}
     <h3>Modulplanung</h3>
     <div class="table-responsive">
