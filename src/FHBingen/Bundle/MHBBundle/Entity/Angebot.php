@@ -24,8 +24,7 @@ class Angebot
 
     public function __toString()
     {
-        //TODO $Semester richtig? getter?
-        $string = (string)$this->$veranstaltung;
+        $string = (string) $this->$veranstaltung;
         return $string;
     }
 

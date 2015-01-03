@@ -30,7 +30,6 @@ class DozentController extends Controller
      */
     public function eigeneModuleAction()
     {
-        //TODO: Filter auf gleiche Module in beiden Tabellen
         //TODO: Filter auf Versionsnummer
         //TODO: Abfangen falls keine Module vorhanden sind
 
@@ -80,11 +79,9 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/planungLoeschen/{id}", name="planungLoeschen")
-     * @Template("FHBingenMHBBundle:Veranstaltung:planungUebersicht.html.twig")
      */
     public function planungLoeschenAction($id)
     {
-        //TODO @Template entfernen, weil nur redirect erfolgt
         $em = $this->getDoctrine()->getManager();
         $dbEntry = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id));
 

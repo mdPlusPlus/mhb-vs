@@ -50,11 +50,9 @@ class VerwaltungsController extends Controller
 
     /**
      * @Route("/restricted/sgl/passwordReset", name="passwdReset")
-     * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
      */
     public function resetAction()
     {
-        //TODO: @Template entfernen, weil nur redirect erfolgt
         $em = $this->getDoctrine()->getManager();
         $dozenten = $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
 
@@ -169,7 +167,7 @@ class VerwaltungsController extends Controller
             if ($form->isValid()) {
                 /*
                  * TODO:
-                 * - überprüfen ob Vertiefungsrichtung oder Fachgebeiet doppelt in Feldern steht
+                 * - überprüfen ob Vertiefungsrichtung oder Fachgebiet doppelt in Feldern steht
                  * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
                  */
                 $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice

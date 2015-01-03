@@ -54,6 +54,7 @@ class SglController extends Controller
      */
     public function modulCodeUebersichtAction()
     {
+        //TODO: Modulcode in der Tabelle anzeigen
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
