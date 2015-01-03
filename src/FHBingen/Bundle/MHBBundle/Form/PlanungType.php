@@ -99,7 +99,7 @@ class PlanungType extends AbstractType
                     'Dokumentation' => 'Dokumentation',
                     'Durchführung Übung' => 'Durchführung Übung',
                     'Erfolgreiche Zertifizierung' => 'Erfolgreiche Zertifizierung',
-                    'schriftliche Ausarbeitung' => 'schriftliche Ausarbeitung',
+                    'Schriftliche Ausarbeitung' => 'Schriftliche Ausarbeitung',
                     'Projektarbeit' => 'Projektarbeit',
                     'Kolloquium' => 'Kolloquium'),
                 'data' => $pruefungsformen,
