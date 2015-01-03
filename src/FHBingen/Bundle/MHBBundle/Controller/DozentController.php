@@ -217,10 +217,7 @@ class DozentController extends Controller
     {
         $encoder=new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $userMail = $user->getUsername();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'beauftragter' => $dozent->getDozentenID(), 'Status' => 'Freigegeben'));
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => 'Freigegeben'));
 
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 

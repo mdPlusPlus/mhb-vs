@@ -25,7 +25,7 @@
             {% set count = 0 %}
             {% for veranstaltung in modulverantwortung %}
                 <tr>
-                    <td>{{ veranstaltung.name }}</td>
+                    <td><a href="{{ path('modulBearbeiten', {'id': veranstaltung.getModulID()}) }}">{{ veranstaltung.name }}</a></td>
                     <td>{{ veranstaltung.kuerzel }}</td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                     <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
@@ -55,7 +55,7 @@
             <tbody>
             {% for veranstaltung in modullehrend %}
                 <tr>
-                    <td>{{ veranstaltung.name }}</td>
+                    <td><a href="{{ path('modulBearbeiten', {'id': veranstaltung.getModulID()}) }}">{{ veranstaltung.name }}</a></td>
                     <td>{{ veranstaltung.kuerzel }}</td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                     <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
