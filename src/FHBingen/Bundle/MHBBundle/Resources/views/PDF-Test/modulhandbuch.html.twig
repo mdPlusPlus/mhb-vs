@@ -10,7 +10,7 @@
         {% set count = 0 %}
         {% for modul in veranstaltung %}
             <div class="modul">
-                <p>{{ modul }} ({{ modul.getKuerzel() }})</p>
+                <p>{{ modul }} ({{ angebot[count].getCode() }})</p>
                 <table>
                     <thead>
                     <tr>
@@ -66,11 +66,19 @@
                         </td>
                         <td>
                             <div class="key">Kontaktzeit Vorlesung</div>
-                            {{ modul.getKontaktzeitVL() }}h
+                            {% if modul.getKontaktzeitVL() != "" %}
+                                {{ modul.getKontaktzeitVL() }}h
+                            {% else %}
+                                0h
+                            {% endif %}
                         </td>
                         <td>
                             <div class="key">Kontaktzeit Sonstige</div>
-                            {{ modul.getKontaktzeitSonstige() }}h
+                            {% if modul.getKontaktzeitSonstige() != "" %}
+                                {{ modul.getKontaktzeitSonstige() }}h
+                            {% else %}
+                                0h
+                            {% endif %}
                         </td>
                         <td>
                             <div class="key">Selbststudium</div>
@@ -113,7 +121,15 @@
                                     {{ name }}<br/>
                                 {% endfor %}
                             {% else %}
-                                keine<br/>
+                                {% if modul.getKuerzel() == "BACH" %}
+                                    Bestehen aller anderen Studienmodule laut Studienplan<br/>
+                                {% endif %}
+                                {% if modul.getKuerzel() == "PRAX" %}
+                                    Alle Module der ersten sechs Semester<br/>
+                                {% endif %}
+                                {% if (modul.getKuerzel() != "PRAX") and (modul.getKuerzel() != "BACH") %}
+                                    keine<br/>
+                                {% endif %}
                             {% endif %}
                             Inhaltlich:
                             {% if modul.getVoraussetzungInh() != "" %}
@@ -150,7 +166,7 @@
                         <td>9</td>
                         <td colspan="6">
                             <div class="key">Stellenwert der Note für die Endnote</div>
-                            Gewichtung nach Leistungspunkten!!!(Brauchen wir nicht)
+                            Gewichtung nach Leistungspunkten
                         </td>
                     </tr>
                     <tr>
