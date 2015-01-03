@@ -21,7 +21,6 @@ class VeranstaltungType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $frequency=['Sommersemester' => 'Sommersemester', 'Wintersemester' => 'Wintersemester', 'wechselnd' => 'wechselnd', 'jedes Semester' => 'jedes Semester'];
 
         $lang=['deutsch' => 'deutsch', 'englisch' => 'englisch'];
@@ -32,24 +31,23 @@ class VeranstaltungType extends AbstractType
             ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
             ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
             ->add('kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))
-            ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true))
-            ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => true))
+            ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true, 'attr' => array('class' => 'modulNameClass')))
+            ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => true, 'attr' => array('class' => 'modulNameClass')))
             ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots: ', 'required' => true, 'choices' => $frequency))
-            ->add('dauer', 'text',  array('label' => 'Dauer: ', 'required' => true))
+            ->add('dauer', 'text', array('label' => 'Dauer: ', 'required' => true))
             ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung: ', 'required' => true))
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige: ', 'required' => true))
             ->add('selbststudium', 'integer', array('label' => 'Selbststudium: ', 'required' => true))
             ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße: ', 'required' => true))
-            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse: ', 'required' => true))
-            ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => true))
+            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('sprache', 'choice', array('label' => 'Sprache: ', 'required' => true, 'choices' => $lang))
-            ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => true))
+            ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
-            ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true))
+            ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
 
             ->add('reset', 'reset')
             ->add('submit', 'submit');
-
     }
 
     public function onPreSetData(FormEvent $event)
@@ -62,8 +60,7 @@ class VeranstaltungType extends AbstractType
         $pruefungsformen = $input->getPruefungsformen();
         $lehrveranstaltungen = $input->getLehrveranstaltungen();
 
-        if(!is_null($vorausetzungLP))
-        {
+        if (!is_null($vorausetzungLP)) {
             $vorausetzungLP = $encoder->decode($vorausetzungLP, 'json');
 
             $form->add('voraussetzungLP', 'choice', array(
@@ -74,8 +71,7 @@ class VeranstaltungType extends AbstractType
                 'data' => $vorausetzungLP,
                 'multiple' => true,
                 'expanded' => true));
-        }
-        else{
+        } else {
             $form->add('voraussetzungLP', 'choice', array(
                 'label' => 'Voraussetzung für Leistungspunkte: ',
                 'choices' => array(
@@ -85,8 +81,7 @@ class VeranstaltungType extends AbstractType
                 'expanded' => true));
         }
 
-        if(!is_null($pruefungsformen))
-        {
+        if (!is_null($pruefungsformen)) {
             $pruefungsformen = $encoder->decode($pruefungsformen, 'json');
 
             $form->add('pruefungsformen', 'choice', array(
@@ -104,8 +99,7 @@ class VeranstaltungType extends AbstractType
                 'data' => $pruefungsformen,
                 'multiple' => true,
                 'expanded' => true));
-        }
-        else{
+        } else {
             $form->add('pruefungsformen', 'choice', array(
                 'label' => 'Prüfungsform: ',
                 'choices' => array(
@@ -122,8 +116,7 @@ class VeranstaltungType extends AbstractType
                 'expanded' => true));
         }
 
-        if(!is_null($lehrveranstaltungen))
-        {
+        if (!is_null($lehrveranstaltungen)) {
             $lehrveranstaltungen = $encoder->decode($lehrveranstaltungen, 'json');
 
             $form->add('lehrveranstaltungen', 'choice', array(
@@ -138,8 +131,7 @@ class VeranstaltungType extends AbstractType
                 'data' => $lehrveranstaltungen,
                 'multiple' => true,
                 'expanded' => true));
-        }
-        else{
+        } else {
             $form->add('lehrveranstaltungen', 'choice', array(
                 'label' => 'Lehrveranstaltungen: ',
                 'choices' => array(
