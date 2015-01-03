@@ -1,6 +1,11 @@
 body {
     padding-top: 50px;
+    margin-top: 75px
     overflow: hidden;
+}
+
+#header {
+    min-height:75px
 }
 
 #wrapper {
