@@ -22,8 +22,8 @@ class Role implements RoleInterface
 
     public function __toString()
     {
-        //TODO noch ändern?
         $string = $this->getRole();
+
         return $string;
     }
 
