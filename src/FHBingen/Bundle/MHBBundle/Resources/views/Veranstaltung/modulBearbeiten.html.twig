@@ -22,7 +22,7 @@
             {% set label = name|humanize %}
         {%- endif -%}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
-        {# added <br /> for nicer lyout of checboxes #}
+        {# added <br /> for nicer layout of checboxes #}
         <br />
     {%- endif %}
 {%- endblock form_label %}

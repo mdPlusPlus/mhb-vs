@@ -21,7 +21,6 @@ class VeranstaltungType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $frequency=['Sommersemester' => 'Sommersemester', 'Wintersemester' => 'Wintersemester', 'wechselnd' => 'wechselnd', 'jedes Semester' => 'jedes Semester'];
 
         $lang=['deutsch' => 'deutsch', 'englisch' => 'englisch'];
@@ -49,7 +48,6 @@ class VeranstaltungType extends AbstractType
 
             ->add('reset', 'reset')
             ->add('submit', 'submit');
-
     }
 
     public function onPreSetData(FormEvent $event)
@@ -62,8 +60,7 @@ class VeranstaltungType extends AbstractType
         $pruefungsformen = $input->getPruefungsformen();
         $lehrveranstaltungen = $input->getLehrveranstaltungen();
 
-        if(!is_null($vorausetzungLP))
-        {
+        if (!is_null($vorausetzungLP)) {
             $vorausetzungLP = $encoder->decode($vorausetzungLP, 'json');
 
             $form->add('voraussetzungLP', 'choice', array(
@@ -74,8 +71,7 @@ class VeranstaltungType extends AbstractType
                 'data' => $vorausetzungLP,
                 'multiple' => true,
                 'expanded' => true));
-        }
-        else{
+        } else {
             $form->add('voraussetzungLP', 'choice', array(
                 'label' => 'Voraussetzung für Leistungspunkte: ',
                 'choices' => array(
@@ -85,8 +81,7 @@ class VeranstaltungType extends AbstractType
                 'expanded' => true));
         }
 
-        if(!is_null($pruefungsformen))
-        {
+        if (!is_null($pruefungsformen)) {
             $pruefungsformen = $encoder->decode($pruefungsformen, 'json');
 
             $form->add('pruefungsformen', 'choice', array(
@@ -104,8 +99,7 @@ class VeranstaltungType extends AbstractType
                 'data' => $pruefungsformen,
                 'multiple' => true,
                 'expanded' => true));
-        }
-        else{
+        } else {
             $form->add('pruefungsformen', 'choice', array(
                 'label' => 'Prüfungsform: ',
                 'choices' => array(
@@ -122,8 +116,7 @@ class VeranstaltungType extends AbstractType
                 'expanded' => true));
         }
 
-        if(!is_null($lehrveranstaltungen))
-        {
+        if (!is_null($lehrveranstaltungen)) {
             $lehrveranstaltungen = $encoder->decode($lehrveranstaltungen, 'json');
 
             $form->add('lehrveranstaltungen', 'choice', array(
@@ -138,8 +131,7 @@ class VeranstaltungType extends AbstractType
                 'data' => $lehrveranstaltungen,
                 'multiple' => true,
                 'expanded' => true));
-        }
-        else{
+        } else {
             $form->add('lehrveranstaltungen', 'choice', array(
                 'label' => 'Lehrveranstaltungen: ',
                 'choices' => array(

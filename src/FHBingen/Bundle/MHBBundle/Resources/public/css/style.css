@@ -84,3 +84,7 @@ body {
     border: 3px solid #cccccc;
     padding: 5px;
 }
+
+.modulNameClass {
+    width: 200px;
+}

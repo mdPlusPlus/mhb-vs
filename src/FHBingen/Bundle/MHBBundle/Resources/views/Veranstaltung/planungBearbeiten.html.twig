@@ -22,7 +22,7 @@
             {% set label = name|humanize %}
         {%- endif -%}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
-        {# added <br /> for nicer lyout of checboxes #}
+        {# added <br /> for nicer layout of checboxes #}
         <br />
     {%- endif %}
 {%- endblock form_label %}
@@ -35,6 +35,7 @@
             {{ form_row(form.name) }}
             {{ form_row(form.nameEN) }}
             {{ form_row(form.kuerzel) }}
+            {#{{ form_row(form.beauftragter) }}#}
             {{ form_row(form.haeufigkeit) }}
             {{ form_row(form.dauer) }}
             {{ form_row(form.leistungspunkte) }}

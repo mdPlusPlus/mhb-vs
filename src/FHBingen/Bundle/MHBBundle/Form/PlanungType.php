@@ -29,6 +29,7 @@ class PlanungType extends AbstractType
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
+//            ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
             ->add('kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => false))
             ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true))
             ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => false))
