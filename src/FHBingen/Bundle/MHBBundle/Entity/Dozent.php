@@ -35,7 +35,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return (string) $this->getTitel().' '.$this->getNachname();
     }
 
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -54,14 +53,21 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "Der Titel darf nicht länger als {{ limit }} Zeichen sein."
+     * )
      */
     protected $Titel;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
      * @Assert\Length(
-     * min= 3,
-     * minMessage="Ein Dozenten-Vorname muss aus mindestens {{ limit }} Zeichen bestehen."
+     *      max = 20,
+     *      maxMessage = "Der Vorname darf nicht länger als {{ limit }} Zeichen sein."
+     * )
+     * @Assert\NotBlank(
+     *      message="Der Vorname darf nicht leer sein."
      * )
      */
     protected $Name;
@@ -69,19 +75,25 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * @ORM\Column(type="string", length=30, nullable=false)
      * @Assert\Length(
-     * min= 3,
-     * minMessage="Ein Dozenten-Nachname muss aus mindestens {{ limit }} Zeichen bestehen."
+     *      max = 30,
+     *      maxMessage = "Der Nachname darf nicht länger als {{ limit }} Zeichen sein."
+     * )
+     * @Assert\NotBlank(
+     *      message="Der Nachname darf nicht leer sein."
      * )
      */
     protected $Nachname;
 
-//@Assert\Email(
-//message = "Die Email '{{ value }}' ist keine gueltige Email."
-//)
-
     /**
-     *
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *      message = "Die Email '{{ value }}' ist keine gueltige Email."
+     * )
+     * @Assert\Length(
+     *      max = 60,
+     *      maxMessage = "Die eMail-Adresse darf nicht länger als {{ limit }} Zeichen sein."
+     * )
      */
     private $email;
 
