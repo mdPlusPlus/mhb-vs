@@ -98,7 +98,7 @@ class DefaultController extends Controller
             $regelsemester[] = $name;
         }
         return array('moduleZuMHB' => $moduleZuMHB,'angebote' => $angebote, 'studiengaenge' => $stgZuModul,'semester'=>$regelsemester,
-            "lehrende" => $lehrendeZuModul, "voraussetzung" => $voraussetzungZuModul, "pruef" => $pruef, "veranstaltung" => $veranstaltung, "vorlp" => $vorlp);
+            "lehrende" => $lehrendeZuModul, "voraussetzung" => $voraussetzungZuModul, "pruef" => $pruef, "veranst" => $veranstaltung, "vorlp" => $vorlp);
     }
 
 

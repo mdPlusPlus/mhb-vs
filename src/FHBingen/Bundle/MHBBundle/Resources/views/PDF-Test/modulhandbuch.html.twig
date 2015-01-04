@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    {% macro pdfModul(veranstaltung,angebot,stgang,regelsemester,lehrende,voraussetzung,pruef,veranstaltung,vorlp) %}
+    {% macro pdfModul(veranstaltung,angebot,stgang,regelsemester,lehrende,voraussetzung,pruef,veranst,vorlp) %}
         {% set count = 0 %}
         {% for modul in veranstaltung %}
             <div class="modul">
@@ -67,7 +67,7 @@
                         <td>1</td>
                         <td colspan="2">
                             <div class="key">Lehrveranstaltung</div>
-                            {% for name in veranstaltung[count] %}
+                            {% for name in veranst[count] %}
                                 {{ name }}<br/>
                             {% endfor %}
                         </td>
@@ -159,9 +159,13 @@
                         <td>7</td>
                         <td colspan="6">
                             <div class="key">Voraussetzungen für die Vergabe von Leistungspunkten</div>
-                            {% for name in vorlp[count] %}
-                                {{ name }}<br/>
-                            {% endfor %}
+                            {% if voraussetzung[count] is not empty %}
+                                {% for name in vorlp[count] %}
+                                    {{ name }}<br/>
+                                {% endfor %}
+                            {% else %}
+                                ...
+                            {% endif %}
                         </td>
                     </tr>
                     <tr>
@@ -220,6 +224,6 @@
 </head>
 <body>
 {#TODO: array mit modulen übergeben mit foreach durchlaufen #}
-{{ _self.pdfModul(moduleZuMHB,angebote,studiengaenge,semester,lehrende,voraussetzung,pruef,veranstaltung,vorlp) }}
+{{ _self.pdfModul(moduleZuMHB,angebote,studiengaenge,semester,lehrende,voraussetzung,pruef,veranst,vorlp) }}
 </body>
 </html>
