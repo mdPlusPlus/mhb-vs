@@ -177,7 +177,7 @@ class VerwaltungsController extends Controller
                 $studiengang->setBeschreibung($form->get('beschreibung')->getData());   //text
                 $studiengang->setSgl($form->get('sgl')->getData());                     //entity
 
-                //ohne ->toArray() gibt sizeof das doppelte aus O.o
+                //hier keine Collection, sondern "nur" array
                 $vertiefungArr = $form->get('richtung')->getData();
                 foreach ($vertiefungArr as $vertiefung) {
                     $studiengang->addRichtung($vertiefung);
@@ -185,7 +185,7 @@ class VerwaltungsController extends Controller
                     $em->persist($vertiefung);
                 }
 
-                //ohne ->toArray() gibt sizeof das doppelte aus O.o
+                //hier keine Collection, sondern "nur" array
                 $fachgebietArr = $form->get('fachgebiete')->getData();
                 foreach ($fachgebietArr as $fachgebiet) {
                     $studiengang->addFachgebiete($fachgebiet);
@@ -233,7 +233,6 @@ class VerwaltungsController extends Controller
                 $studiengang->setBeschreibung($form->get('beschreibung')->getData());   //text
                 $studiengang->setSgl($form->get('sgl')->getData());                     //entity
 
-                //ohne ->toArray() gibt sizeof das doppelte aus O.o
                 $vertiefungArr = $form->get('richtung')->getData()->toArray();
                 foreach ($vertiefungArr as $vertiefung) {
                     $studiengang->addRichtung($vertiefung);
@@ -241,7 +240,6 @@ class VerwaltungsController extends Controller
                     $em->persist($vertiefung);
                 }
 
-                //ohne ->toArray() gibt sizeof das doppelte aus O.o
                 $fachgebietArr = $form->get('fachgebiete')->getData()->toArray();
                 foreach ($fachgebietArr as $fachgebiet) {
                     $studiengang->addFachgebiete($fachgebiet);
