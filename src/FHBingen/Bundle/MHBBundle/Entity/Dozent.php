@@ -86,7 +86,9 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
 
     /**
      * @ORM\Column(type="string", length=60, unique=true, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *      message="Die eMail-Adresse darf nicht leer sein."
+     * )
      * @Assert\Email(
      *      message = "Die Email '{{ value }}' ist keine gueltige Email."
      * )
