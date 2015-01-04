@@ -40,9 +40,10 @@ class Vertiefung
 
     /**
      * @ORM\Column(type="string", length=30, unique=true, nullable=false)
+     * @Assert\NotBlank(message = "Ein Vertiefungsrichtungstitel darf nicht leer sein.")
      * @Assert\Length(
-     * min= 8,
-     * minMessage="Ein Vertiefungsrichtungstitel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * max = 30,
+     * maxMessage="Ein Vertiefungsrichtungstitel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Name;

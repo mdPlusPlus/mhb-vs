@@ -50,6 +50,7 @@ class Modulhandbuch
 
     /**
      * @ORM\Column(type="text", nullable=false)
+     * @Assert\NotBlank(message = "Die Modulhandbuchbeschreibung darf nicht leer sein.")
      */
     protected $Beschreibung;
 

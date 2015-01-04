@@ -38,7 +38,7 @@ class Semesterplan
     /**
      * @ORM\Column(type="integer")
      * @Assert\Range(
-     * min = 1,
+     * min = 0,
      * max = 10,
      * minMessage = "Ein Modul braucht mindestens {{ limit }}SWS Übung",
      * maxMessage = "Ein Modul darf nicht mehr als {{ limit }}SWS Übung haben"
@@ -49,7 +49,7 @@ class Semesterplan
     /**
      * @ORM\Column(type="integer")
      * @Assert\Range(
-     * min = 1,
+     * min = 0,
      * max = 10,
      * minMessage = "Ein Modul braucht mindestens {{ limit }}SWS Vorlesung",
      * maxMessage = "Ein Modul darf nicht mehr als {{ limit }}SWS Vorlesung haben"
@@ -71,7 +71,7 @@ class Semesterplan
     /**
      * @ORM\Column(type="integer")
      * @Assert\Range(
-     * min = 5,
+     * min = 0,
      * max = 30,
      * minMessage = "Eine Übungsgruppe muss aus mindestens {{ limit }} Studenten bestehen",
      * maxMessage = "Eine Übungsgruppe darf aus nicht mehr als {{ limit }} Studenten bestehen"

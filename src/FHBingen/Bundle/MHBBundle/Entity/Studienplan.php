@@ -39,6 +39,8 @@ class Studienplan
 
     /**
      * @ORM\Column(type="string"), nullable=false
+     * TODO: string -> integer (dann Assert\Range)
+     * @Assert\NotBlank(message = "Das Regelsemester muss gesetzt sein.")
      */
     protected $Regelsemester;
 

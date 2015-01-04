@@ -55,25 +55,29 @@ class Studiengang
 
     /**
      * @ORM\Column(type="string", length=40, nullable=false, unique=true)
+     * @Assert\NotBlank(message = "Der Studiengang-Titel darf nicht leer sein.")
      * @Assert\Length(
-     * min= 8,
-     * minMessage="Ein Studiengang-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * max = 40,
+     * maxMessage="Ein Studiengang-Titel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Titel;
+
     /**
      * @ORM\Column(type="string", length=5, nullable=false, unique=true)
+     * @Assert\NotBlank(message = "Das Studiengang-Kuerzel darf nicht leer sein.")
      * @Assert\Length(
      * min= 2,
      * max= 5,
-     * minMessage="Ein Studiengangs-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * maxMessage="Ein Studiengangs-Kuerzel darf aus maximal {{ limit }} Zeichen bestehen."
+     * minMessage="Ein Studiengang-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * maxMessage="Ein Studiengang-Kuerzel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Kuerzel;
 
     /**
      * @ORM\Column(type="text", nullable=false)
+     * @Assert\NotBlank(message = "Die Studiengang-Beschreibung darf nicht leer sein.")
      */
     protected $Beschreibung;
 

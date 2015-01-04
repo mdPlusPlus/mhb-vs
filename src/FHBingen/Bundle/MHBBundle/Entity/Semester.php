@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields="Semester", message="Dieses Semester wurde bereits in die Datenbank eingetragen.")
  * @ORM\Table(name="Semester")
  * @ORM\HasLifecycleCallbacks
+ * TODO: Start- und Enddatum einführen ?
  */
 class Semester
 {
@@ -31,6 +32,7 @@ class Semester
     /**
      * @ORM\ID
      * @ORM\Column(type="string",  length=5, nullable=false, unique=true)
+     * @Assert\NotBlank(message = "Die Bezeichnung des Semesters darf nicht leer sein.")
      * @Assert\Length(
      * min = 4,
      * max = 5,

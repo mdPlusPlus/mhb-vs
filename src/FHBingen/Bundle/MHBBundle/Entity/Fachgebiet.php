@@ -37,9 +37,12 @@ class Fachgebiet
 
     /**
      * @ORM\Column(type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message = "Der Fachgebietstitel darf nicht leer sein.")
      * @Assert\Length(
-     * min= "4",
-     * minMessage="Der Fachgebietstitel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * min = 4,
+     * minMessage = "Der Fachgebietstitel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * max = 50,
+     * maxMessage = "Der Fachgebietstitel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Titel;
