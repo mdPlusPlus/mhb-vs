@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    {% macro pdfModul(veranstaltung,angebot,stgang,regelsemester,lehrende,voraussetzung) %}
+    {% macro pdfModul(veranstaltung,angebot,stgang,regelsemester,lehrende,voraussetzung,pruef,veranstaltung,vorlp) %}
         {% set count = 0 %}
         {% for modul in veranstaltung %}
             <div class="modul">
@@ -36,10 +36,15 @@
                         </td>
                         <td>
                             <div class="key">Studiensemeseter</div>
+                            {% if angebot[count].getAngebotsart() == "Wahlpflichtfach" %}
+                                SS: 3.+4.+5. Semester<br/>
+                                WS: 3.+4.+5. Semester
+                            {% else %}
                             {% for name in regelsemester[count] %}
-                                {{ name.getStartSemester()|replace({'SS14': "Sommersemester", 'WS13': "Wintersemester"}) }} {{ name }}. Semester
+                                {{ name.getStartSemester()|replace({'SS14': "SS:", 'WS13': "WS"}) }} {{ name }}. Semester
                                 <br/>
                             {% endfor %}
+                            {% endif %}
                         </td>
                         <td>
                             <div class="key">Häufigkeit des Angebots</div>
@@ -62,7 +67,9 @@
                         <td>1</td>
                         <td colspan="2">
                             <div class="key">Lehrveranstaltung</div>
-                            {{ modul.getLehrveranstaltungen() }}
+                            {% for name in veranstaltung[count] %}
+                                {{ name }}<br/>
+                            {% endfor %}
                         </td>
                         <td>
                             <div class="key">Kontaktzeit Vorlesung</div>
@@ -143,14 +150,18 @@
                         <td>6</td>
                         <td colspan="6">
                             <div class="key">Prüfungsformen</div>
-                            {{ modul.getPruefungsformen() }}
+                            {% for name in pruef[count] %}
+                                {{ name }}<br/>
+                            {% endfor %}
                         </td>
                     </tr>
                     <tr>
                         <td>7</td>
                         <td colspan="6">
                             <div class="key">Voraussetzungen für die Vergabe von Leistungspunkten</div>
-                            {{ modul.getVoraussetzungLP() }}
+                            {% for name in vorlp[count] %}
+                                {{ name }}<br/>
+                            {% endfor %}
                         </td>
                     </tr>
                     <tr>
@@ -177,6 +188,16 @@
                             weitere Lehrende:  {% for name in lehrende[count] %}
                                 {{ name }},
                             {% endfor %}
+                             {#TODO:  Unterscheidung in Studiengänge!#}
+                            {% if modul.getKuerzel() == "BACH" %}
+                                Alle Dozenten des Informatik Studiengangs<br/>
+                            {% endif %}
+                            {% if modul.getKuerzel() == "PRAX" %}
+                                Alle Dozenten des Informatik Studiengangs<br/>
+                            {% endif %}
+                            {% if modul.getKuerzel() == "PROFI" %}
+                                Alle Dozenten des Informatik Studiengangs<br/>
+                            {% endif %}
                         </td>
                     </tr>
                     <tr>
@@ -199,6 +220,6 @@
 </head>
 <body>
 {#TODO: array mit modulen übergeben mit foreach durchlaufen #}
-{{ _self.pdfModul(moduleZuMHB,angebote,studiengaenge,semester,lehrende,voraussetzung) }}
+{{ _self.pdfModul(moduleZuMHB,angebote,studiengaenge,semester,lehrende,voraussetzung,pruef,veranstaltung,vorlp) }}
 </body>
 </html>

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 
+
 class DefaultController extends Controller
 {
     /**
@@ -30,17 +31,27 @@ class DefaultController extends Controller
      */
     public function pdfAction(){
         $em = $this->getDoctrine()->getManager();
+        $decode = new JsonEncoder();
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('mhb' =>1));
         $lehrende = $em->getRepository('FHBingenMHBBundle:Lehrende');
 
         $moduleZuMHB = array();
+        $pruef = array();
+        $veranstaltung = array();
+        $vorlp = array();
         foreach ($angebote as $valueA) {
             foreach ($module as $valueM) {
                 if ($valueA->getVeranstaltung()->getModulID() == $valueM->getModulID()) {
                     $moduleZuMHB[] = $valueM;
                 }
             }
+        }
+
+        foreach($moduleZuMHB as $entry){
+            $pruef[] = $decode->decode($entry->getPruefungsformen(), 'json');
+            $veranstaltung[] = $decode->decode($entry->getLehrveranstaltungen(), 'json');
+            $vorlp[] = $decode->decode($entry->getVoraussetzungLP(), 'json');
         }
 
         $stgZuModul = array();
@@ -86,7 +97,8 @@ class DefaultController extends Controller
             }
             $regelsemester[] = $name;
         }
-        return array('moduleZuMHB' => $moduleZuMHB,'angebote' => $angebote, 'studiengaenge' => $stgZuModul,'semester'=>$regelsemester,"lehrende" => $lehrendeZuModul, "voraussetzung" => $voraussetzungZuModul);
+        return array('moduleZuMHB' => $moduleZuMHB,'angebote' => $angebote, 'studiengaenge' => $stgZuModul,'semester'=>$regelsemester,
+            "lehrende" => $lehrendeZuModul, "voraussetzung" => $voraussetzungZuModul, "pruef" => $pruef, "veranstaltung" => $veranstaltung, "vorlp" => $vorlp);
     }
 
 

@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for entity in mhb %}
+            {% for entity in mhb|sort %}
                 <tr>
                     <td><a href="{{ path('mhbModulListe', {'id': entity.getMHBID()}) }}">{{ entity.Beschreibung }}</a></td>
                     <td>{{ entity.getGueltigAb() }}</td>
