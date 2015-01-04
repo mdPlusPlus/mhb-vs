@@ -19,7 +19,7 @@ class VertiefungType extends AbstractType
 
         $builder
 //            ->add('fachgebiete', 'entity', array('label' => 'Studiengang: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
-            ->add('vertiefungsrichtung', 'text', array('label' => 'Vertiefungsrichtung: ', 'required' => false));
+            ->add('name', 'text', array('label' => 'Vertiefungsrichtung: ', 'required' => false));
             /*->add('reset', 'reset')
             ->add('submit', 'submit');*/
     }
