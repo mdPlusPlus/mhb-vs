@@ -26,8 +26,8 @@ class DefaultController extends Controller
 
     /**
      * PDF-Export Test
-     * @Route("/pdf")
-     * @Template("FHBingenMHBBundle:PDF-Test:modulhandbuch.html.twig")
+     * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
+     * @Template("FHBingenMHBBundle:MHB:mhbErstellung.html.twig")
      */
     public function pdfAction(){
         $em = $this->getDoctrine()->getManager();

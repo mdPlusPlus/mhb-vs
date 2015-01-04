@@ -139,10 +139,7 @@ class SglController extends Controller
     }
 
 
-    /**
-     * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
-     * @Template("FHBingenMHBBundle:MHB:mhbErstellung.html.twig")
-     */
+    /*
     public function mhbErstellungAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -160,6 +157,7 @@ class SglController extends Controller
         }
         return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'Modulhandbucherstellung');
     }
+    */
 
 
     /**
