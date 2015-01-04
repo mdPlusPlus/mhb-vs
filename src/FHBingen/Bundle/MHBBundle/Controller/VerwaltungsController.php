@@ -178,7 +178,7 @@ class VerwaltungsController extends Controller
                 $studiengang->setSgl($form->get('sgl')->getData());                     //entity
 
                 //ohne ->toArray() gibt sizeof das doppelte aus O.o
-                $vertiefungArr = $form->get('richtung')->getData()->toArray();
+                $vertiefungArr = $form->get('richtung')->getData();
                 foreach ($vertiefungArr as $vertiefung) {
                     $studiengang->addRichtung($vertiefung);
                     $vertiefung->setStudiengang($studiengang);
@@ -186,7 +186,7 @@ class VerwaltungsController extends Controller
                 }
 
                 //ohne ->toArray() gibt sizeof das doppelte aus O.o
-                $fachgebietArr = $form->get('fachgebiete')->getData()->toArray();
+                $fachgebietArr = $form->get('fachgebiete')->getData();
                 foreach ($fachgebietArr as $fachgebiet) {
                     $studiengang->addFachgebiete($fachgebiet);
                     $fachgebiet->setStudiengang($studiengang);

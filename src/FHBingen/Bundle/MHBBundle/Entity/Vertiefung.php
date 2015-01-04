@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Studiengang
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
- * @UniqueEntity(fields="Vertiefungsrichtung", message="Diese Vertiefungsrichtung wurde bereits in die Datenbank eingetragen.")
+ * @UniqueEntity(fields="Name", message="Diese Vertiefungsrichtung wurde bereits in die Datenbank eingetragen.")
  * @ORM\Table(name="Vertiefung")
  * @ORM\HasLifecycleCallbacks
  */
@@ -26,7 +26,8 @@ class Vertiefung
 
     public function __toString()
     {
-        $string =(string) $this->getVertiefungsrichtung();
+        $string =(string) $this->getName();
+
         return $string;
     }
 
@@ -137,7 +138,6 @@ class Vertiefung
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="richtung")
      * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
-     * @ORM\OrderBy({"titel" = "ASC"})
      */
     protected $studiengang;
 
