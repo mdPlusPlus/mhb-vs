@@ -70,9 +70,13 @@ class Veranstaltung
      * @ORM\Column(type="string", length=70, nullable=false)
      * @Assert\Length(
      * min= 5,
-     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * max = 70,
+     * maxMessage="Der deutsche Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
      * )
-     * @ORM\OrderBy({"name" = "ASC"})
+     * @Assert\NotBlank(
+     *      message="Der deutsche Modultitel muss gesetzt werden."
+     * )
      */
     protected $Name;
 
@@ -80,7 +84,9 @@ class Veranstaltung
      * @ORM\Column(type="string", length=70, nullable=true)
      * @Assert\Length(
      * min= 5,
-     * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * max = 70,
+     * maxMessage="Der englische Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
      * )
      */
     protected $NameEN;
@@ -97,12 +103,12 @@ class Veranstaltung
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Range(
-     *      min=1,
-     *      minMessage="minMessage",
-     *      max=2,
-     *      maxMessage="maxMessage",
-     *      invalidMessage="invalidMessage"
+     *      min = 1,
+     *      minMessage = "Die Dauer muss mindestens {{ limit }} Semester betragen.",
+     *      max = 12,
+     *      maxMessage = "Die Dauer darf maximal {{ limit }} Wochen betragen.",
      * )
+     * TODO: Überprüfung auf Datentyp (Assert\Type funktioniert nicht, weil Umwandlung in NULL)
      */
     protected $Dauer;
 
@@ -113,21 +119,41 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 0,
+     *      minMessage = "Die Kontaktzeit Vorlesung muss mindestens {{ limit }} Stunden betragen."
+     * )
+     * TODO: Überprüfung auf Datentyp (Assert\Type funktioniert nicht, weil Umwandlung in NULL)
      */
     protected $KontaktzeitVL;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 0,
+     *      minMessage = "Die Kontaktzeit Sonstige muss mindestens {{ limit }} Stunden betragen."
+     * )
+     * TODO: Überprüfung auf Datentyp (Assert\Type funktioniert nicht, weil Umwandlung in NULL)
      */
     protected $KontaktzeitSonstige;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 0,
+     *      minMessage = "Das Selbststudium muss mindestens {{ limit }} Stunden betragen."
+     * )
+     * TODO: Überprüfung auf Datentyp (Assert\Type funktioniert nicht, weil Umwandlung in NULL)
      */
     protected $Selbststudium;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 0,
+     *      minMessage = "Die Gruppengroesse muss mindestens {{ limit }} Studenten betragen."
+     * )
+     * TODO: Überprüfung auf Datentyp (Assert\Type funktioniert nicht, weil Umwandlung in NULL)
      */
     protected $Gruppengroesse;
 
@@ -148,6 +174,11 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\Choice(
+     * choices = { "deutsch", "englisch" },
+     * message = "Bitte geben Sie eine korrekte Sprache an!"
+     * )
+     * TODO: Mehrere Sprachen? Eventuell als Checkboxen, dann aber longtext in DB
      */
     protected $Sprache;
 
@@ -158,6 +189,10 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Choice(
+     * choices = { "3", "6", "9", "12", "15", "30"},
+     * message = "Bitte geben Sie eine korrekte Anzahl an Leistungspunkten an!"
+     * )
      */
     protected $Leistungspunkte;
 
