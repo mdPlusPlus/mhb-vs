@@ -40,7 +40,7 @@ class Fachgebiet
      * @Assert\NotBlank(message = "Der Fachgebietstitel darf nicht leer sein.")
      * @Assert\Length(
      * min = 4,
-     * minMessage = "Der Fachgebietstitel muss aus mindestens {{ limit }} Zeichen bestehen."
+     * minMessage = "Der Fachgebietstitel muss aus mindestens {{ limit }} Zeichen bestehen.",
      * max = 50,
      * maxMessage = "Der Fachgebietstitel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
