@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Studiengang
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
- * @UniqueEntity(fields="titel", message="Dieser Studiengang/Kuerzel ist bereits in die Datenbank eingepflegt worden.")
+ * @UniqueEntity(fields="Titel", message="Dieser Studiengang/Kuerzel ist bereits in die Datenbank eingepflegt worden.")
  * @ORM\Table(name="Studiengang")
  * @ORM\HasLifecycleCallbacks
  */
@@ -60,7 +60,7 @@ class Studiengang
      * min= 8,
      * minMessage="Ein Studiengang-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
-     * @ORM\OrderBy({"titel" = "ASC"})
+     * @ORM\OrderBy({"Titel" = "ASC"})
      */
     protected $Titel;
     /**
