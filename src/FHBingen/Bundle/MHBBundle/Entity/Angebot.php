@@ -73,16 +73,41 @@ class Angebot
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
+     * @Assert\NotBlank(
+     *      message = "Der Modulcode darf nicht leer sein."
+     * )
+     * @Assert\Length(
+     *      min = 9,
+     *      minMessage = "Der Modulcode muss genau {{ limit }} Zeichen lang sein.",
+     *      max = 9,
+     *      maxMessage="Der Modulcode muss genau {{ limit }} Zeichen lang sein."
+     * )
      */
     protected	$Code;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
+     * @Assert\NotBlank(
+     *      message = "Der abweichende deutsche Name darf nicht leer sein."
+     * )
+     * @Assert\Length(
+     *      max = 40,
+     *      maxMessage = "Der abweichende deutsche Name darf maximal {{ limit }} Zeichen lang sein."
+     * )
+     * TODO: aufpassen! richtiger Titel ist kann bis zu 70 zeichen lang sein! ändern?
      */
     protected	$AbweichenderNameDE;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
+     * @Assert\NotBlank(
+     *      message = "Der abweichende englische Name darf nicht leer sein."
+     * )
+     * @Assert\Length(
+     *      max = 40,
+     *      maxMessage = "Der abweichende englische Name darf maximal {{ limit }} Zeichen lang sein."
+     * )
+     * TODO: aufpassen! richtiger Titel ist kann bis zu 70 zeichen lang sein! ändern?
      */
     protected	$AbweichenderNameEN;
 
