@@ -34,7 +34,7 @@ class PlanungType extends AbstractType
             ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => false, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots: ', 'required' => false, 'choices' => $frequency))
-            ->add('dauer', 'text', array('label' => 'Dauer: ', 'required' => false))
+            ->add('dauer', 'integer', array('label' => 'Dauer: ', 'required' => false))
             ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung: ', 'required' => false))
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige: ', 'required' => false))
             ->add('selbststudium', 'integer', array('label' => 'Selbststudium: ', 'required' => false))

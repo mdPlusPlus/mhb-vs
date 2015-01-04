@@ -69,9 +69,9 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="string", length=70, nullable=false)
-    * @Assert\Length(
+     * @Assert\Length(
      * min= 5,
-     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen. Blubb"
+     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
      * @ORM\OrderBy({"name" = "ASC"})
      */

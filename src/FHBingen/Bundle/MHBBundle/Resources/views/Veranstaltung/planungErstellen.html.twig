@@ -6,7 +6,6 @@
     <tr class="form_row">
         <td>{{ form_label(form) }}</td>
         <td>{{ form_widget(form) }}</td>
-        <td>{{ form_errors(form) }}</td>
     </tr>
 {% endblock form_row %}
 
@@ -15,6 +14,7 @@
     <div class="table-responsive">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <table class="table table-bordered">
+            {{ form_errors(form) }}
             {{ form_row(form.name) }}
             {{ form_row(form.nameEN) }}
             {{ form_row(form.kuerzel) }}

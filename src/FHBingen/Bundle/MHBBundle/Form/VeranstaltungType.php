@@ -34,7 +34,7 @@ class VeranstaltungType extends AbstractType
             ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots: ', 'required' => true, 'choices' => $frequency))
-            ->add('dauer', 'text', array('label' => 'Dauer: ', 'required' => true))
+            ->add('dauer', 'integer', array('label' => 'Dauer: ', 'required' => true))
             ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung: ', 'required' => true))
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige: ', 'required' => true))
             ->add('selbststudium', 'integer', array('label' => 'Selbststudium: ', 'required' => true))
