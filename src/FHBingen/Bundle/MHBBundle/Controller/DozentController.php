@@ -35,7 +35,8 @@ class DozentController extends Controller
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'Status' => 'Freigegeben'));
+        $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'Status' => 'Freigegeben'),
+            array("Name" => 'asc'));
 
         $mLehrende = array();
         foreach ($modulverantwortung as $m) {
@@ -52,7 +53,7 @@ class DozentController extends Controller
 
         $modullehrend = array();
         foreach ($entries as $modul) {
-            $modullehrend[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modul->getVeranstaltung()));
+            $modullehrend[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modul->getVeranstaltung()),array("Name" => 'asc'));
         }
 
         return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende, 'pageTitle' => 'Eigene Module');
