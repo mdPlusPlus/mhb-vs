@@ -31,6 +31,7 @@
     <div class="table-responsive">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <table class="table table-bordered">
+            {{ form_errors(form) }}
             {{ form_row(form.name) }}
             {{ form_row(form.nameEN) }}
             {{ form_row(form.kuerzel) }}
