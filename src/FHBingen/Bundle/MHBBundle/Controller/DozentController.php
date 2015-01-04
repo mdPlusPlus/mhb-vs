@@ -53,8 +53,10 @@ class DozentController extends Controller
 
         $modullehrend = array();
         foreach ($entries as $modul) {
-            $modullehrend[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modul->getVeranstaltung()),array("Name" => 'asc'));
+            $modullehrend[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modul->getVeranstaltung()));
         }
+
+        asort($modullehrend, SORT_STRING);
 
         return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende, 'pageTitle' => 'Eigene Module');
     }
