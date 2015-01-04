@@ -86,16 +86,14 @@ class Semesterplan
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="semesterplan")
      * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
-     * @ORM\OrderBy({"titel" = "ASC"})
-     * */
+     */
     protected $veranstaltung;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="semesterplan")
      * @ORM\JoinColumn(name="dozent", referencedColumnName="Dozenten_ID", nullable=false)
-     * @ORM\OrderBy({"nachname" = "ASC"})
-     * */
+     */
     protected $dozent;
 
     /**

@@ -46,7 +46,6 @@ class Kernfach
     /**
      * @ORM\ManyToOne(targetEntity="Vertiefung", inversedBy="vertiefung")
      * @ORM\JoinColumn(name="vertiefung", referencedColumnName="Vertiefung_ID", nullable=false)
-     * @ORM\OrderBy({"Name" = "ASC"})
      * */
     protected $vertiefung;
 

@@ -73,7 +73,6 @@ class Veranstaltung
      * min= 5,
      * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
-     * @ORM\OrderBy({"name" = "ASC"})
      */
     protected $Name;
 
@@ -97,6 +96,12 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Die Dauer muss mindestens {{ limit }} Semester betragen.",
+     *      max = 12,
+     *      maxMessage = "Die Dauer darf maximal {{ limit }} Wochen betragen."
+     * )
      */
     protected $Dauer;
 

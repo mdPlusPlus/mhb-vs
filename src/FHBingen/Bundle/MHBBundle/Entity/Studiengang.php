@@ -50,7 +50,6 @@ class Studiengang
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
      * @Assert\Choice(choices = {"Bachelor", "Master"}, message = "Waehlen Sie einen gueltigen Bildungsgrad")
-     * @ORM\OrderBy({"grad" = "ASC"})
      */
     protected $Grad;
 
@@ -60,7 +59,6 @@ class Studiengang
      * min= 8,
      * minMessage="Ein Studiengang-Titel muss aus mindestens {{ limit }} Zeichen bestehen."
      * )
-     * @ORM\OrderBy({"Titel" = "ASC"})
      */
     protected $Titel;
     /**
