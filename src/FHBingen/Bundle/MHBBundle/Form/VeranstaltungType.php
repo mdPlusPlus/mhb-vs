@@ -46,6 +46,18 @@ class VeranstaltungType extends AbstractType
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
 
+            //Merge mit Lehrenden
+
+            ->add('modul', 'collection', array('label' => false, 'type' => new LehrendeType(),
+                'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+                'options' => array(
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'lehrende'
+                    )
+                )
+            ))
+
             ->add('reset', 'reset')
             ->add('submit', 'submit');
     }
