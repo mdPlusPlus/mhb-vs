@@ -274,6 +274,7 @@ class DozentController extends Controller
                 $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
 
                 //TODO: Testen hier ist nicht klar ob vorher Verbindungen zu Veranstaltung und Dozenten gekappt werden müssen
+                //TODO: Doppelte?
                 foreach ($dbLehrendeArr as $dbEntry) {
                     if (!in_array($dbEntry, $lehrendeArr)) {
                         // link von Modul auf Lehrenden löschen
