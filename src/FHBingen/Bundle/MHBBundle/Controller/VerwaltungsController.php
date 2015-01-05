@@ -23,7 +23,7 @@ class VerwaltungsController extends Controller
 {
     /**
      * @Route("/restricted/sgl/showUsers", name="benutzerVerwaltung")
-     * @Template("FHBingenMHBBundle:Verwaltung:benutzerVerwaltung.twig")
+     * @Template("FHBingenMHBBundle:Verwaltung:benutzerVerwaltung.html.twig")
      */
     public function SglShowUsersAction()
     {
