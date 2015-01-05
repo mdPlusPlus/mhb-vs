@@ -24,12 +24,60 @@
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
         {# added <br /> for nicer layout of checboxes #}
         <br />
+        {# Der Zeilenumbruck bricht noch das Design von Lehrenden#}
     {%- endif %}
 {%- endblock form_label %}
 
+{% block form_widget_compound -%}
+    {# notwending, damit es keine divs gibt #}
+    {%- if form.parent is empty -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+{%- endblock form_widget_compound %}
+
 {% block content %}
+
+    <script type="text/javascript">
+        var lehrendeCount = '{{ form.modul|length }}';
+
+        jQuery(document).ready(function () {
+            jQuery('#add-another-lehrende').click(function (e) {
+                e.preventDefault();
+                return addAnotherLehrende();
+            });
+        });
+
+        function addAnotherLehrende(){
+            var lehrendeList = jQuery('#lehrende-fields-list');
+
+            // grab the prototype template
+            var newWidget = lehrendeList.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, lehrendeCount);
+
+            // create a new list element and add it to the list
+            var newLi = jQuery('<li></li>').html(newWidget);
+
+            var link = jQuery('<a href="#">Lehrenden entfernen</a>');
+            link.click(function(e){
+                e.preventDefault();
+                newLi.remove();
+            });
+
+            newLi.append(link);
+            newLi.appendTo(lehrendeList);
+            lehrendeCount++;
+        }
+
+    </script>
+
+    <h4 style="font-weight: bold">Studiengang einpflegen</h4>
     <div class="table-responsive">
-        {{ form_start(form) }}
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <table class="table table-bordered">
             {{ form_errors(form) }}
             {{ form_row(form.name) }}
@@ -52,6 +100,23 @@
             {{ form_row(form.pruefungsformen) }}
             {{ form_row(form.voraussetzungLP) }}
         </table>
+
+        <h4 style="font-weight: bold">Lehrende</h4>
+        <ul id="lehrende-fields-list" data-prototype=
+        "{% filter escape %}
+                {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.modul.vars.prototype } %}
+            {% endfilter %}">
+
+            {% for lehrendeField in form.modul %}
+                <li>
+                    {{ form_errors(lehrendeField) }}
+                    {{ form_widget(lehrendeField) }}
+                    <a href="#" onclick="jQuery(this).parent().remove()">Lehrenden entfernen</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <a id="add-another-lehrende">Lehrenden hinzufügen</a>
         {{ form_end(form) }}
     </div>
+
 {% endblock %}
