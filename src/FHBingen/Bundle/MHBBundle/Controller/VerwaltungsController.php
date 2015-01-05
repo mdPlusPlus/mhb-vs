@@ -53,6 +53,7 @@ class VerwaltungsController extends Controller
      */
     public function resetAction()
     {
+        //TODO: Abfrage Ja/Nein
         $em = $this->getDoctrine()->getManager();
         $dozenten = $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
 
