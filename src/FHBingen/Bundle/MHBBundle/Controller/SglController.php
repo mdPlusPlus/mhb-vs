@@ -30,7 +30,7 @@ class SglController extends Controller
 
         $nichtInPlanung = array();
         foreach ($module as $value) {
-            if ($value->getStatus() != 'in Planung'&& $value->getStatus()!='expired') {
+            if ($value->getStatus() != 'in Planung' && $value->getStatus() != 'expired') {
                 $nichtInPlanung[] = $value;
             }
         }
@@ -39,14 +39,13 @@ class SglController extends Controller
         foreach ($nichtInPlanung as $modul) {
             $name = array();
             $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
-           foreach ($tmp as $studiengang) {
-                   $name[] = (string)$studiengang->getStudiengang();
-               }
+            foreach ($tmp as $studiengang) {
+                $name[] = (string) $studiengang->getStudiengang();
+            }
             $stgZuModul[] = $name;
         }
-        return array('module' => $nichtInPlanung,'stgZuModul' => $stgZuModul, 'pageTitle' => 'Alle Module');
+        return array('module' => $nichtInPlanung, 'stgZuModul' => $stgZuModul, 'pageTitle' => 'Alle Module');
     }
-
 
     /**
      * @Route("/restricted/sgl/modulCodeUebersicht", name="modulCodeUebersicht")
@@ -104,7 +103,6 @@ class SglController extends Controller
         return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung'));
     }
 
-
     /**
      * @Route("/restricted/sgl/mhbUebersicht", name="mhbUebersicht")
      * @Template("FHBingenMHBBundle:MHB:MHB_Modul_Uebersicht.html.twig")
@@ -116,7 +114,6 @@ class SglController extends Controller
 
         return array('mhb' => $mhb, 'pageTitle' => 'Modulhandbücher');
     }
-
 
     /**
      * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
@@ -158,7 +155,84 @@ class SglController extends Controller
         return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'Modulhandbucherstellung');
     }
     */
+    /**
+     * PDF-Export Test
+     * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
+     * @Template("FHBingenMHBBundle:MHB:mhbErstellung.html.twig")
+     */
+    public function mhbErstellungAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $decode = new JsonEncoder();
+        $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('mhb' => 1));
+        $lehrende = $em->getRepository('FHBingenMHBBundle:Lehrende');
 
+        $moduleZuMHB = array();
+        $pruef = array();
+        $veranstaltung = array();
+        $vorlp = array();
+        foreach ($angebote as $valueA) {
+            foreach ($module as $valueM) {
+                if ($valueA->getVeranstaltung()->getModulID() == $valueM->getModulID()) {
+                    $moduleZuMHB[] = $valueM;
+                }
+            }
+        }
+
+        foreach ($moduleZuMHB as $entry) {
+            $pruef[] = $decode->decode($entry->getPruefungsformen(), 'json');
+            $veranstaltung[] = $decode->decode($entry->getLehrveranstaltungen(), 'json');
+            $vorlp[] = $decode->decode($entry->getVoraussetzungLP(), 'json');
+        }
+
+        $stgZuModul = array();
+        foreach ($moduleZuMHB as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
+            foreach ($tmp as $studiengang) {
+                if ($studiengang->getStudiengang() != $angebote[3]->getStudiengang()) {
+                    $name[] = (string) $studiengang->getStudiengang();
+                }
+            }
+            $stgZuModul[] = $name;
+        }
+
+        $lehrendeZuModul = array();
+        foreach ($moduleZuMHB as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $modul->getModulID()));
+            foreach ($tmp as $lehrend) {
+                if ($lehrend->getDozent() != $modul->getBeauftragter()) {
+                    $name[] = (string) $lehrend->getDozent();
+                }
+            }
+            $lehrendeZuModul[] = $name;
+        }
+
+        $voraussetzungZuModul = array();
+        foreach ($moduleZuMHB as $modul) {
+            $name = array();
+            $vorArr = $modul->getModulVoraussetzung();
+            foreach ($vorArr as $vor) {
+                $name[] = $vor;//->getModulID();
+            }
+            $voraussetzungZuModul[] = $name;
+        }
+
+        $regelsemester = array();
+        foreach ($moduleZuMHB as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array('veranstaltung' => $modul->getModulID(), 'studiengang' => 2));
+            foreach ($tmp as $studienplan) {
+                $name[] = $studienplan;
+            }
+            $regelsemester[] = $name;
+        }
+
+        return array('moduleZuMHB' => $moduleZuMHB, 'angebote' => $angebote, 'studiengaenge' => $stgZuModul, 'semester' => $regelsemester,
+            "lehrende" => $lehrendeZuModul, "voraussetzung" => $voraussetzungZuModul, "pruef" => $pruef, "veranst" => $veranstaltung, "vorlp" => $vorlp);
+    }
 
     /**
      * @Route("/restricted/sgl/modulDeaktivierung", name="modulDeaktivierung")
