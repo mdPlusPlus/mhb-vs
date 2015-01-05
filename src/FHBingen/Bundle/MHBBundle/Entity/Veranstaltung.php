@@ -931,6 +931,7 @@ class Veranstaltung
      * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="veranstaltung", cascade={"all"})
      * */
     protected $modul;
+    //TODO: Sind eigentlich Lehrende... Warum Modul? Weiß kein Mensch.
 
 
     /*Modulbeauftragter (Dozent/Modul)*/
