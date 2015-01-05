@@ -105,7 +105,7 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/mhbUebersicht", name="mhbUebersicht")
-     * @Template("FHBingenMHBBundle:MHB:MHB_Modul_Uebersicht.html.twig")
+     * @Template("FHBingenMHBBundle:MHB:mhbModulUebersicht.html.twig")
      */
     public function mhbUebersichtAction()
     {
@@ -117,7 +117,7 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
-     * @Template("FHBingenMHBBundle:MHB:MHB_Modul_Liste.html.twig")
+     * @Template("FHBingenMHBBundle:MHB:mhbModulListe.twig")
      */
     public function mhbModulListe($id)
     {
