@@ -26,8 +26,10 @@ class Studienplan
     public function __toString()
     {
         $string = (string) $this->getRegelSemester();
+
         return $string;
     }
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -36,11 +38,9 @@ class Studienplan
      */
     protected $Studienplan_ID;
 
-
     /**
-     * @ORM\Column(type="string"), nullable=false
-     * TODO: string -> integer (dann Assert\Range)
-     * @Assert\NotBlank(message = "Das Regelsemester muss gesetzt sein.")
+     * @ORM\Column(type="text"), nullable=false
+     * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
     protected $Regelsemester;
 
@@ -74,13 +74,13 @@ class Studienplan
 
     /**
      * Set reg_sem
+     * @param string $regSem
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $regSem
      * @return Studienplan
      */
-    public function setRegelSemester($regSem = null)
+    public function setRegelSemester($regSem)
     {
-        $this->regelSemester = $regSem;
+        $this->Regelsemester = $regSem;
     
         return $this;
     }
@@ -88,7 +88,6 @@ class Studienplan
     /**
      * Get reg_sem
      *
-     * @return \FHBingen\Bundle\MHBBundle\Entity\Semester 
      */
     public function getRegelSemester()
     {
@@ -99,6 +98,7 @@ class Studienplan
      * Set start_sem
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $startSem
+     *
      * @return Studienplan
      */
     public function setStartSemester(\FHBingen\Bundle\MHBBundle\Entity\Semester $startSem = null)
@@ -122,6 +122,7 @@ class Studienplan
      * Set modul
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul
+     *
      * @return Studienplan
      */
     public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul = null)
@@ -145,6 +146,7 @@ class Studienplan
      * Set studiengang
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     *
      * @return Studienplan
      */
     public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null)

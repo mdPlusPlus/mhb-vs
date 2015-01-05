@@ -23,7 +23,7 @@ class VeranstaltungType extends AbstractType
     {
         $frequency=['Sommersemester' => 'Sommersemester', 'Wintersemester' => 'Wintersemester', 'wechselnd' => 'wechselnd', 'jedes Semester' => 'jedes Semester'];
 
-        $lang=['deutsch' => 'deutsch', 'englisch' => 'englisch'];
+        $lang=['Deutsch' => 'Deutsch', 'Englisch' => 'Englisch', 'Deutsch, einzelne Abschnitte möglicherweise in Englisch' => 'Deutsch, einzelne Abschnitte möglicherweise in Englisch'];
 
         $lp=['3' => '3', '6' => '6', '9' => '9', '12' => '12', '15' => '15', '30' => '30'];
 

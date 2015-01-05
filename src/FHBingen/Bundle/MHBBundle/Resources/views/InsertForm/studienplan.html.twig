@@ -19,9 +19,10 @@
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
     <table>
-        {{ form_row(form.reg_sem) }}
-        {{ form_row(form.start_sem_) }}
-        {{ form_row(form.modul) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.regelSemester) }}
+        {{ form_row(form.startSemester) }}
+        {{ form_row(form.veranstaltung) }}
         {{ form_row(form.studiengang) }}
     </table>
     {{ form_end(form) }}

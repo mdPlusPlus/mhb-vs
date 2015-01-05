@@ -22,4 +22,25 @@ class DefaultController extends Controller
         //'login' ist hier route alias von /login
         return $this->redirect($this->generateUrl('login'));
     }
+
+    /**
+     * @Route("/regSem")
+     */
+    public function regelSemesterCorrectAction()
+    {
+        $encoder = new JsonEncoder();
+        $em = $this->getDoctrine()->getManager();
+        $studienplanRepo = $em->getRepository('FHBingenMHBBundle:Studienplan');
+        $plans = $studienplanRepo->findAll();
+        foreach ($plans as $plan) {
+
+            $original = $plan->getRegelSemester();
+
+            $plan->setRegelSemester(str_replace('"', '', $original));
+            $em->persist($plan);
+            $em->flush();
+        }
+
+        return new Response('alles klar');
+    }
 }

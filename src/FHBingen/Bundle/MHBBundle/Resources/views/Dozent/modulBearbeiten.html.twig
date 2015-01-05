@@ -29,7 +29,7 @@
 
 {% block content %}
     <div class="table-responsive">
-        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {{ form_start(form) }}
         <table class="table table-bordered">
             {{ form_errors(form) }}
             {{ form_row(form.name) }}
