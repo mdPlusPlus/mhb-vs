@@ -22,18 +22,4 @@ class DefaultController extends Controller
         //'login' ist hier route alias von /login
         return $this->redirect($this->generateUrl('login'));
     }
-
-    /**
-     * Encoding Test
-     * @Route("/encode")
-     *
-     */
-    public function encodeAction(){
-//        $encoder=new JsonEncoder();
-//        $em = $this->getDoctrine()->getManager();
-//        $data= $em->getRepository()
-//        $encoder->encode(, 'json');
-    }
-
-
 }

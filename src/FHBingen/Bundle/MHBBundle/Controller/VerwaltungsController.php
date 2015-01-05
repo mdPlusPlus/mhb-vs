@@ -23,7 +23,7 @@ class VerwaltungsController extends Controller
 {
     /**
      * @Route("/restricted/sgl/showUsers", name="benutzerVerwaltung")
-     * @Template("FHBingenMHBBundle:Verwaltung:userverwaltung.html.twig")
+     * @Template("FHBingenMHBBundle:Verwaltung:benutzerVerwaltung.twig")
      */
     public function SglShowUsersAction()
     {
@@ -69,7 +69,7 @@ class VerwaltungsController extends Controller
 
     /**
      * @Route("/restricted/sgl/createUsers", name="benutzerErstellen")
-     * @Template("FHBingenMHBBundle:Verwaltung:userCreate.html.twig")
+     * @Template("FHBingenMHBBundle:Verwaltung:benutzerErstellen.html.twig")
      */
     public function SglCreateUserAction()
     {
@@ -104,7 +104,7 @@ class VerwaltungsController extends Controller
 
     /**
      * @Route("/restricted/sgl/updateUsers/{userid}", name="benutzerBearbeiten")
-     * @Template("FHBingenMHBBundle:Verwaltung:userCreate.html.twig")
+     * @Template("FHBingenMHBBundle:Verwaltung:benutzerErstellen.html.twig")
      */
     public function SglUpdateUserAction($userid)
     {
@@ -140,7 +140,7 @@ class VerwaltungsController extends Controller
 
     /**
      * @Route("/restricted/sgl/showAllCourses", name="studiengangVerwaltung")
-     * @Template("FHBingenMHBBundle:Verwaltung:alleStudien.html.twig")
+     * @Template("FHBingenMHBBundle:Verwaltung:alleStudiengaenge.html.twig")
      */
     public function SglShowAllCoursesAction()
     {

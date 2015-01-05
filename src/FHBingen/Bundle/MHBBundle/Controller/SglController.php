@@ -20,7 +20,7 @@ class SglController extends Controller
 {
     /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
-     * * @Template("FHBingenMHBBundle:Veranstaltung:alleModule.html.twig")
+     * * @Template("FHBingenMHBBundle:SGL:alleModule.html.twig")
      */
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
@@ -49,7 +49,7 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/modulCodeUebersicht", name="modulCodeUebersicht")
-     * @Template("FHBingenMHBBundle:Veranstaltung:modulCodeUebersicht.html.twig")
+     * @Template("FHBingenMHBBundle:SGL:modulCodeUebersicht.html.twig")
      */
     public function modulCodeUebersichtAction()
     {
@@ -73,7 +73,7 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/modulCodeErstellung/{id}", name="modulCodeErstellung")
-     * @Template("FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig")
+     * @Template("FHBingenMHBBundle:SGL:modulCodeErstellung.html.twig")
      */
     public function modulCodeErstellungAction($id)
     {
@@ -99,12 +99,12 @@ class SglController extends Controller
 
         }
 
-        return $this->render('FHBingenMHBBundle:Veranstaltung:modulCodeErstellung.html.twig', array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung'));
+        return $this->render('FHBingenMHBBundle:SGL:modulCodeErstellung.html.twig', array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung'));
     }
 
     /**
      * @Route("/restricted/sgl/mhbUebersicht", name="mhbUebersicht")
-     * @Template("FHBingenMHBBundle:MHB:mhbModulUebersicht.html.twig")
+     * @Template("FHBingenMHBBundle:SGL:mhbModulUebersicht.html.twig")
      */
     public function mhbUebersichtAction()
     {
@@ -116,7 +116,7 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
-     * @Template("FHBingenMHBBundle:MHB:mhbModulListe.twig")
+     * @Template("FHBingenMHBBundle:SGL:mhbModulListe.twig")
      */
     public function mhbModulListe($id)
     {
@@ -157,7 +157,7 @@ class SglController extends Controller
     /**
      * PDF-Export Test
      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
-     * @Template("FHBingenMHBBundle:MHB:mhbErstellung.html.twig")
+     * @Template("FHBingenMHBBundle:SGL:mhbErstellung.html.twig")
      */
     public function mhbErstellungAction()
     {

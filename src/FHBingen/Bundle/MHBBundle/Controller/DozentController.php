@@ -64,7 +64,7 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/planungAnzeigen", name="planungAnzeigen")
-     * @Template("FHBingenMHBBundle:Veranstaltung:planungUebersicht.html.twig")
+     * @Template("FHBingenMHBBundle:Dozent:planungUebersicht.html.twig")
      */
     public function planungAnzeigenAction()
     {
@@ -99,7 +99,7 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/planungErstellen", name="planungErstellen")
-     * @Template("FHBingenMHBBundle:Veranstaltung:planungErstellen.html.twig")
+     * @Template("FHBingenMHBBundle:Dozent:planungErstellen.html.twig")
      */
     public function planungErstellenAction()
     {
@@ -159,7 +159,7 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/planungBearbeiten/{id}", name="planungBearbeiten")
-     * @Template("FHBingenMHBBundle:Veranstaltung:planungBearbeiten.html.twig")
+     * @Template("FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig")
      */
     public function planungBearbeitenAction($id)
     {
@@ -214,7 +214,7 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/modulBearbeiten/{id}", name="modulBearbeiten")
-     * @Template("FHBingenMHBBundle:Veranstaltung:modulBearbeiten.html.twig")
+     * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")
      */
     public function modulBearbeitenAction($id)
     {
