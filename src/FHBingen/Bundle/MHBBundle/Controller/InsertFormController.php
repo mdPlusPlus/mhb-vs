@@ -238,6 +238,7 @@ class InsertFormController extends Controller
      */
     public function StudienplanAction()
     {
+        $encoder = new JsonEncoder();
         $studienplan = new Studienplan();
         $form = $this->createForm(new StudienplanType(), $studienplan);
 
@@ -246,20 +247,21 @@ class InsertFormController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $studienplan->setRegelSemester($form->get('reg_sem')->getData());
-
-                $studienplan->setStartSemester($form->get('start_sem_')->getData());
-                $studienplan->setVeranstaltung($form->get('modul')->getData());
+                $studienplan->setRegelSemester($encoder->encode($form->get('regelSemester')->getData(), 'json'));
+                //$studienplan->setRegelSemester($form->get('regelSemester')->getData());
+                $studienplan->setStartSemester($form->get('startSemester')->getData());
+                $studienplan->setVeranstaltung($form->get('veranstaltung')->getData());
                 $studienplan->setStudiengang($form->get('studiengang')->getData());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($studienplan);
                 $em->flush();
-
-                return new Response('Studienplan wurde erfolgreich erstellt');
             }
-            return $this->render('FHBingenMHBBundle:InsertForm:studienplan.html.twig', array('form' => $form->createView()));
+
+            return new Response($encoder->encode($form->get('regelSemester')->getData(), 'json'));
+
         }
+
         return $this->render('FHBingenMHBBundle:InsertForm:studienplan.html.twig', array('form' => $form->createView()));
     }
 
