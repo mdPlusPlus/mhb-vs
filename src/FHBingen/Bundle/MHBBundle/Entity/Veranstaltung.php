@@ -175,10 +175,9 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      * @Assert\Choice(
-     * choices = { "deutsch", "englisch" },
+     * choices = { "Deutsch", "Englisch", "Deutsch, einzelne Abschnitte möglicherweise in Englisch" },
      * message = "Bitte geben Sie eine korrekte Sprache an!"
      * )
-     * TODO: Mehrere Sprachen? Eventuell als Checkboxen, dann aber longtext in DB
      */
     protected $Sprache;
 

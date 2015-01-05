@@ -23,21 +23,15 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('login'));
     }
 
-    /**
-     * @Route("/regSem")
-     */
     public function regelSemesterCorrectAction()
     {
         $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
-        $studienplanRepo = $em->getRepository('FHBingenMHBBundle:Studienplan');
-        $plans = $studienplanRepo->findAll();
-        foreach ($plans as $plan) {
-
-            $original = $plan->getRegelSemester();
-
-            $plan->setRegelSemester(str_replace('"', '', $original));
-            $em->persist($plan);
+        $repo = $em->getRepository('FHBingenMHBBundle:Veranstaltung');
+        $entries = $repo->findAll();
+        foreach ($entries as $entry) {
+            $entry->setSprache(null);
+            $em->persist($entry);
             $em->flush();
         }
 
