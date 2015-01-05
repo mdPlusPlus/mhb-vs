@@ -45,6 +45,7 @@ class VeranstaltungType extends AbstractType
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => $lp))
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+
             //Merge mit Lehrenden
 
             ->add('modul', 'collection', array('label' => false, 'type' => new LehrendeType(),
