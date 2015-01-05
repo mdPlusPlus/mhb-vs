@@ -116,7 +116,7 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
-     * @Template("FHBingenMHBBundle:SGL:mhbModulListe.twig")
+     * @Template("FHBingenMHBBundle:SGL:mhbModulListe.html.twig")
      */
     public function mhbModulListe($id)
     {
