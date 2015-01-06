@@ -51,6 +51,7 @@ body {
     border-top: 0;
 }
 
+/*
 @media (max-width: 992px) {
     body {
         padding-top: 0;
@@ -77,6 +78,7 @@ body {
         border-right: 0;
     }
 }
+*/
 
 .textAreaClass {
     width: 650px;
