@@ -25,6 +25,7 @@ class SglController extends Controller
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
         $em = $this->getDoctrine()->getManager();
+        //TODO!
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
 
 
@@ -59,7 +60,8 @@ class SglController extends Controller
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
 
-        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY'));
+        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY'), array("Code" => 'asc'));
+        //TODO!
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
         $angeboteOhneDummy = array();
         foreach ($angebote as $value) {
@@ -109,6 +111,7 @@ class SglController extends Controller
     public function mhbUebersichtAction()
     {
         $em = $this->getDoctrine()->getManager();
+        //TODO!
         $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
 
         return array('mhb' => $mhb, 'pageTitle' => 'Modulhandbücher');

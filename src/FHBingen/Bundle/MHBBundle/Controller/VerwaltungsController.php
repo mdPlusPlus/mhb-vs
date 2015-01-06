@@ -30,6 +30,7 @@ class VerwaltungsController extends Controller
         //alle Nutzer sortieren
 
         $em = $this->getDoctrine()->getManager();
+        //TODO!
         $entries = $em->getRepository('FHBingenMHBBundle:Dozent')->findALL();
 
         $dozent = array();
