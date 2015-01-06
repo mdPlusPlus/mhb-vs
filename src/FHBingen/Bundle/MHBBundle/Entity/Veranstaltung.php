@@ -173,7 +173,7 @@ class Veranstaltung
     protected $Pruefungsformen;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\Choice(
      * choices = { "Deutsch", "Englisch", "Deutsch, einzelne Abschnitte möglicherweise in Englisch" },
      * message = "Bitte geben Sie eine korrekte Sprache an!"
