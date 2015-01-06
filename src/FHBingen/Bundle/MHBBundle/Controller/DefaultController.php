@@ -37,4 +37,19 @@ class DefaultController extends Controller
 
         return new Response('alles klar');
     }
+
+
+    public function sprachAction(){
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('FHBingenMHBBundle:Veranstaltung');
+        $entries = $repo->findAll();
+        foreach ($entries as $entry) {
+            if($entry->getSprache() == "Deutsch, einzelne Ab")
+                $entry->setSprache("Deutsch, einzelne Abschnitte in Englisch");
+
+            $em->persist($entry);
+            $em->flush();
+        }
+        return new Response('alles klar');
+    }
 }
