@@ -85,7 +85,7 @@
         }
     </script>
 
-    <h4 style="font-weight: bold">Studiengang einpflegen</h4>
+    <h4 style="font-weight: bold">Studiengang {{ studiengang.__toString() }} pflegen</h4>
     <div class="table-responsive">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <table class="table table-bordered">

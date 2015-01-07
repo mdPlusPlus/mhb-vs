@@ -279,7 +279,7 @@ class VerwaltungsController extends Controller
             }
         }
 
-        return array('form' => $form->createView(), 'pageTitle' => 'Studiengangverwaltung');
+        return array('form' => $form->createView(),'studiengang'=>$studiengang, 'pageTitle' => 'Studiengangverwaltung');
     }
 
 }

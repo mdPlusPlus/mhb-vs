@@ -70,7 +70,7 @@ class SglController extends Controller
             }
         }
 
-        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote, 'pageTitle' => 'Modulcodes');
+        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote,'studiengang'=>$studiengang, 'pageTitle' => 'Modulcodes');
     }
 
     /**
