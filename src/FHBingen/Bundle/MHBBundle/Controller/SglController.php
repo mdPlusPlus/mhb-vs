@@ -126,7 +126,7 @@ class SglController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $mhb = $em->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer,
-                                 d.Titel, d.Nachname
+                                 d.Titel, d.Nachname, v.Autor
                                  FROM  FHBingenMHBBundle:Angebot a
                                  JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung =  v.Modul_ID
                                  JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID

@@ -16,6 +16,7 @@
                     <th>Code</th>
                     <th>Version</th>
                     <th>Modulverantwortlicher</th>
+                    <th>Autor</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,7 @@
                     <td>{{ entity['Code'] }}</td>
                     <td>{{ entity['Versionsnummer'] }}</td>
                     <td>{{ entity['Titel']~' '~entity['Nachname'] }}</td>
+                    <td>{{ entity['Autor'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>

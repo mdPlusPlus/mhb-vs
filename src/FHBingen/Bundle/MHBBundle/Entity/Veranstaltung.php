@@ -189,6 +189,11 @@ class Veranstaltung
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    protected $Autor;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     protected $Literatur;
 
     /**
@@ -623,20 +628,6 @@ class Veranstaltung
 
         return $this;
     }
-
-    /**
-     * Set SpracheSonstiges
-     *
-     * @param string $sprache
-     * @return Veranstaltung
-     */
-    public function setSpracheSonstiges($sprache)
-    {
-        $this->SpracheSonstiges = $sprache;
-
-        return $this;
-    }
-
     /**
      * Get Sprache
      *
@@ -645,6 +636,41 @@ class Veranstaltung
     public function getSprache()
     {
         return $this->Sprache;
+    }
+
+    /**
+     * Set Autor
+     *
+     * @param string $autor
+     * @return Veranstaltung
+     */
+    public function setAutor($autor)
+    {
+        $this->Autor = $autor;
+
+        return $this;
+    }
+    /**
+     * Get Sprache
+     *
+     * @return string
+     */
+    public function getAutor()
+    {
+        return $this->Autor;
+    }
+
+
+    /**
+     * Set SpracheSonstiges
+     * @param string $sprache
+     * @return Veranstaltung
+     */
+    public function setSpracheSonstiges($sprache)
+    {
+        $this->SpracheSonstiges = $sprache;
+
+        return $this;
     }
 
     /**

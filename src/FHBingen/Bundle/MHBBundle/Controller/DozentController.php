@@ -143,7 +143,7 @@ class DozentController extends Controller
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
-
+                $modul->setAutor($user->__toString());
                 $em->persist($modul);
                 $em->flush();
 
@@ -201,6 +201,7 @@ class DozentController extends Controller
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
+                $modul->setAutor($user->__toString());
 
                 $em->persist($modul);
                 $em->flush();
@@ -221,6 +222,7 @@ class DozentController extends Controller
     public function modulBearbeitenAction($id)
     {
         $encoder=new JsonEncoder();
+        $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => 'Freigegeben'));
 
@@ -255,6 +257,7 @@ class DozentController extends Controller
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
+                $modul->setAutor($user->__toString());
 
                 //TODO: Testen hier ist unklarheit ob addModul() und addLehrende() benötigt wird
                 //TODO: Scheint zu klappen auch wenn Lehrende vertauscht werden. bzw. Neue hinzu Reihenfolge getauscht usw.
@@ -349,6 +352,7 @@ class DozentController extends Controller
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
+
 
                 $lehrendeArr = $form->get('modul')->getData()->toArray();
 

@@ -8,13 +8,14 @@
         });
     </script>
     <div class="table-responsive">
-        <h3>Module ohne Modulcode aus {{ studiengang.__toString() }}</h3>
+        <h3>Module ohne Modulcode  aus Studiengang {{ studiengang.__toString() }}</h3>
         <table id="table-without-code" class="table table-bordered tablesorter">
             <thead>
                 <tr>
                     <th>Modultitel</th>
                     <th style="min-width: 130px; width: 12%">Modulcode</th>
                     <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+                    <th style="min-width: 130px; width: 12%">Autor</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,18 +25,20 @@
                     <td>{{ dummy.getCode() }}</td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                     <td>{{dummy.getVeranstaltung().getErstellungsdatum()|date('d.m.Y')}}</td>
+                    <td>{{ dummy.getVeranstaltung().getAutor() }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
 
-       <h3 style="margin-top: 50px">Module mit Modulcode</h3>
+       <h3 style="margin-top: 50px">Module mit Modulcode  aus Studiengang {{ studiengang.__toString() }}</h3>
         <table id="table-with-code" class="table table-bordered tablesorter">
             <thead>
                 <tr>
                     <th>Modultitel</th>
                     <th style="min-width: 130px; width: 12%">Modulcode</th>
                     <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+                    <th style="min-width: 130px; width: 12%">Autor</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,6 +48,7 @@
                     <td>{{ normal.getCode() }}</td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                     <td>{{ normal.getVeranstaltung().getErstellungsdatum()|date('d.m.Y') }}</td>
+                    <td>{{ normal.getVeranstaltung().getAutor() }}</td>
                 </tr>
             {% endfor %}
             </tbody>
