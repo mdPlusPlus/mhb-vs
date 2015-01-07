@@ -254,6 +254,7 @@ class DozentController extends Controller
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
 
                 //TODO: Testen hier ist unklarheit ob addModul() und addLehrende() benötigt wird
+                //TODO: Scheint zu klappen auch wenn Lehrende vertauscht werden. bzw. Neue hinzu Reihenfolge getauscht usw.
                 $lehrendeArr = $form->get('modul')->getData()->toArray();
                 foreach ($lehrendeArr as $lehrend) {
                     // Modul mit Lehrenden verketten
@@ -300,4 +301,107 @@ class DozentController extends Controller
 
         return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
     }
+
+
+    /**
+     * @Route("/restricted/dozent/planungFreigeben/{id}", name="planungFreigeben")
+     * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")
+     */
+    public function planungFreigebenAction($id)
+    {
+        $encoder=new JsonEncoder();
+        $em = $this->getDoctrine()->getManager();
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => 'in Planung'));
+
+        $form = $this->createForm(new Form\VeranstaltungType(), $modul);
+
+        $request = $this->get('request');
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+
+                //notwendige Einträge
+                $modul->setErstellungsdatum(new \DateTime());
+                $modul->setStatus('Freigegeben');
+
+                //Änderungen an Einträgen
+                $modul->setKuerzel($form->get('kuerzel')->getData());
+                $modul->setName($form->get('name')->getData());
+                $modul->setNameEn($form->get('nameEN')->getData());
+                $modul->setBeauftragter($form->get('beauftragter')->getData());
+                $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
+                $modul->setDauer($form->get('dauer')->getData());
+                $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
+                $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
+                $modul->setSelbststudium($form->get('selbststudium')->getData());
+                $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
+                $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
+                $modul->setInhalte($form->get('inhalte')->getData());
+                $modul->setSprache($form->get('sprache')->getData());
+                $modul->setLiteratur($form->get('literatur')->getData());
+                $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
+                $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
+                $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
+                $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
+                $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
+
+                $lehrendeArr = $form->get('modul')->getData()->toArray();
+
+                if(!empty($lehrendeArr)){
+
+                foreach ($lehrendeArr as $lehrend) {
+                    // Modul mit Lehrenden verketten
+                    $modul->addModul($lehrend);
+                    // Lehrende mit Veranstaltung verketten
+                    $lehrend->setVeranstaltung($modul);
+                    // passenden Dozenten aus dem Lehrenden Entity finden
+                    $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
+                    // Dozent mit Lehrenden verketten
+                    $dozent->addLehrende($lehrend);
+                    // Lehrenden mit Dozent verketten
+                    $lehrend->setDozent($dozent);
+                    $em->persist($dozent);
+                    $em->persist($lehrend);
+                }
+
+                $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
+                $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
+
+                foreach ($dbLehrendeArr as $dbEntry) {
+                    if (!in_array($dbEntry, $lehrendeArr)) {
+                        // link von Modul auf Lehrenden löschen
+                        $modul->removeModul($dbEntry);
+                        // passenden Dozenten zu dem Lehrenden Etity finden
+                        $dozentTmp = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $dbEntry->getDozent()->getDozentenID()));
+                        // link von Dozenten zu Lehrenden Entity löschen
+                        $dozentTmp->removeLehrende($dbEntry);
+                        // Lehrenden entfernen
+                        $em->remove($dbEntry);
+                        $em->persist($dozentTmp);
+                    }
+                }
+                }
+                else{
+                    $lehr =new Entity\Lehrende();
+                    $modul->addModul($lehr);
+                    $lehr->setVeranstaltung($modul);
+                    $doz = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $modul->getBeauftragter()->getDozentenID()));
+                    $doz->addLehrende($lehr);
+                    $lehr->setDozent($doz);
+                    $em->persist($lehr);
+                    $em->persist($doz);
+                }
+                $em->persist($modul);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
+
+                return $this->redirect($this->generateUrl('eigeneModule'));
+            }
+        }
+
+        return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
+    }
+
 }

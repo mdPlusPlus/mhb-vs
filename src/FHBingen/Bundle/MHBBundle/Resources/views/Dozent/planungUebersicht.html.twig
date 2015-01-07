@@ -24,7 +24,7 @@
                 <tr>
                     <td><a href="{{ path('planungBearbeiten', {'id': planung.getModulID()}) }}">{{planung.getName()}}</a></td>
                     <td>{{planung.getErstellungsdatum()|date('d.m.Y')}}</td>
-                    <td><a href="">freigeben</a></td>
+                    <td><a href="{{ path('planungFreigeben', {'id': planung.getModulID()}) }}">freigeben</a></td>
                     <td><a href="{{ path('planungLoeschen', {'id': planung.getModulID()}) }}">löschen</a></td>
                 </tr>
             {% endfor %}
