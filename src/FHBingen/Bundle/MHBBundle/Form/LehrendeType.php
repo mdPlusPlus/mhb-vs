@@ -17,7 +17,7 @@ class LehrendeType extends AbstractType
     {
 
         $builder
-            ->add('dozent', 'entity', array('label' => 'Dozent[#]: ', 'required' => false, 'class' => 'FHBingenMHBBundle:Dozent'));
+            ->add('dozent', 'entity', array('label' => 'Dozent [#]: ', 'required' => false, 'class' => 'FHBingenMHBBundle:Dozent'));
     }
 
     /**

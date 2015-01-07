@@ -29,22 +29,22 @@ class VeranstaltungType extends AbstractType
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
-            ->add('beauftragter', 'entity', array('label' => 'Modulbeauftragter[#]: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
-            ->add('kuerzel', 'text', array('label' => 'Modulkürzel[#]: ', 'required' => true))
-            ->add('name', 'text', array('label' => 'Modulname (deutsch)[#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
-            ->add('nameEN', 'text', array('label' => 'Modulname (englisch)[#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
-            ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots[#]: ', 'required' => true, 'choices' => $frequency))
-            ->add('dauer', 'integer', array('label' => 'Dauer[#]: ', 'required' => true, 'attr' => array('min' => '1')))
-            ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung[#]: ', 'required' => true, 'attr' => array('min' => '0')))
-            ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige[#]: ', 'required' => true, 'attr' => array('min' => '0')))
-            ->add('selbststudium', 'integer', array('label' => 'Selbststudium[#]: ', 'required' => true, 'attr' => array('min' => '0')))
-            ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße[#]: ', 'required' => true, 'attr' => array('min' => '0')))
-            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse[#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte[#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('sprache', 'choice', array('label' => 'Sprache[#]: ', 'required' => true, 'choices' => $lang))
-            ->add('literatur', 'textarea', array('label' => 'Literaturverweise[#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte[#]: ', 'required' => true, 'choices' => $lp))
-            ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich[#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('beauftragter', 'entity', array('label' => "Modulbeauftragter [#]: ", 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+            ->add('kuerzel', 'text', array('label' => 'Modulkürzel [#]: ', 'required' => true))
+            ->add('name', 'text', array('label' => 'Modulname (deutsch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
+            ->add('nameEN', 'text', array('label' => 'Modulname (englisch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
+            ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots [#]: ', 'required' => true, 'choices' => $frequency))
+            ->add('dauer', 'integer', array('label' => 'Dauer [#]: ', 'required' => true, 'attr' => array('min' => '1')))
+            ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung [#]: ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige [#]: ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('selbststudium', 'integer', array('label' => 'Selbststudium [#]: ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße [#]: ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('sprache', 'choice', array('label' => 'Sprache [#]: ', 'required' => true, 'choices' => $lang))
+            ->add('literatur', 'textarea', array('label' => 'Literaturverweise [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => $lp))
+            ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
 
             //Merge mit Lehrenden
 
@@ -76,7 +76,7 @@ class VeranstaltungType extends AbstractType
             $vorausetzungLP = $encoder->decode($vorausetzungLP, 'json');
 
             $form->add('voraussetzungLP', 'choice', array(
-                'label' => 'Voraussetzung für Leistungspunkte[#]: ',
+                'label' => 'Voraussetzung für Leistungspunkte [#]: ',
                 'choices' => array(
                     'Prüfungsleistung' => 'Prüfungsleistung',
                     'Studienleistung' => 'Studienleistung'),
@@ -85,7 +85,7 @@ class VeranstaltungType extends AbstractType
                 'expanded' => true));
         } else {
             $form->add('voraussetzungLP', 'choice', array(
-                'label' => 'Voraussetzung für Leistungspunkte[#]: ',
+                'label' => 'Voraussetzung für Leistungspunkte [#]: ',
                 'choices' => array(
                     'Prüfungsleistung' => 'Prüfungsleistung',
                     'Studienleistung' => 'Studienleistung'),
@@ -97,7 +97,7 @@ class VeranstaltungType extends AbstractType
             $pruefungsformen = $encoder->decode($pruefungsformen, 'json');
 
             $form->add('pruefungsformen', 'choice', array(
-                'label' => 'Prüfungsform[#]: ',
+                'label' => 'Prüfungsform [#]: ',
                 'choices' => array(
                     'Schriftliche Klausur' => 'Schriftliche Klausur',
                     'Mündliche Prüfung' => 'Mündliche Prüfung',
@@ -113,7 +113,7 @@ class VeranstaltungType extends AbstractType
                 'expanded' => true));
         } else {
             $form->add('pruefungsformen', 'choice', array(
-                'label' => 'Prüfungsform[#]: ',
+                'label' => 'Prüfungsform [#]: ',
                 'choices' => array(
                     'Schriftliche Klausur' => 'Schriftliche Klausur',
                     'Mündliche Prüfung' => 'Mündliche Prüfung',
@@ -132,7 +132,7 @@ class VeranstaltungType extends AbstractType
             $lehrveranstaltungen = $encoder->decode($lehrveranstaltungen, 'json');
 
             $form->add('lehrveranstaltungen', 'choice', array(
-                'label' => 'Lehrveranstaltungen[#]: ',
+                'label' => 'Lehrveranstaltungen [#]: ',
                 'choices' => array(
                     'Vorlesung' => 'Vorlesung',
                     'Übung' => 'Übung',
@@ -145,7 +145,7 @@ class VeranstaltungType extends AbstractType
                 'expanded' => true));
         } else {
             $form->add('lehrveranstaltungen', 'choice', array(
-                'label' => 'Lehrveranstaltungen[#]: ',
+                'label' => 'Lehrveranstaltungen [#]: ',
                 'choices' => array(
                     'Vorlesung' => 'Vorlesung',
                     'Übung' => 'Übung',
