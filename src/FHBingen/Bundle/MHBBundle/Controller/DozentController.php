@@ -136,6 +136,7 @@ class DozentController extends Controller
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
                 $modul->setSprache($form->get('sprache')->getData());
+                $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
                 $modul->setLiteratur($form->get('literatur')->getData());
                 $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
@@ -193,6 +194,7 @@ class DozentController extends Controller
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
                 $modul->setSprache($form->get('sprache')->getData());
+                $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
                 $modul->setLiteratur($form->get('literatur')->getData());
                 $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
@@ -246,6 +248,7 @@ class DozentController extends Controller
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
                 $modul->setSprache($form->get('sprache')->getData());
+                $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
                 $modul->setLiteratur($form->get('literatur')->getData());
                 $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
@@ -339,6 +342,7 @@ class DozentController extends Controller
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
                 $modul->setSprache($form->get('sprache')->getData());
+                $modul->setSpracheSonstieges($form->get('SpracheSonstiges')->getData());
                 $modul->setLiteratur($form->get('literatur')->getData());
                 $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());

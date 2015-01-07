@@ -175,11 +175,16 @@ class Veranstaltung
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Choice(
-     * choices = { "Deutsch", "Englisch", "Deutsch, einzelne Abschnitte möglicherweise in Englisch" },
+     * choices = { "Deutsch", "Englisch" },
      * message = "Bitte geben Sie eine korrekte Sprache an!"
      * )
      */
     protected $Sprache;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $SpracheSonstiges;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -620,6 +625,19 @@ class Veranstaltung
     }
 
     /**
+     * Set SpracheSonstiges
+     *
+     * @param string $sprache
+     * @return Veranstaltung
+     */
+    public function setSpracheSonstiges($sprache)
+    {
+        $this->SpracheSonstiges = $sprache;
+
+        return $this;
+    }
+
+    /**
      * Get Sprache
      *
      * @return string
@@ -628,6 +646,18 @@ class Veranstaltung
     {
         return $this->Sprache;
     }
+
+    /**
+     * Get SpracheSonstiges
+     *
+     * @return string
+     */
+    public function getSpracheSonstiges()
+    {
+        return $this->SpracheSonstiges;
+    }
+
+
 
     /**
      * Set Literatur
