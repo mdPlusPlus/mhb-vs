@@ -8,21 +8,20 @@
 
 namespace FHBingen\Bundle\MHBBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
+use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\ORM\EntityRepository;
+
 
 class StudiengangType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $faculty =['1' => '1', '2' => '2'];
-        $level =['Bachelor' => 'Bachelor', 'Master' => 'Master'];
-
         $builder
-            ->add('fachbereich', 'choice', array('label' => 'Fachbereich: ', 'required' => true, 'choices' => $faculty))
-            ->add('grad', 'choice', array('label' => 'Grad: ', 'required' => true, 'choices' => $level))
+            ->add('fachbereich', 'choice', array('label' => 'Fachbereich: ', 'required' => true, 'choices' => ArrayValues::$faculty))
+            ->add('grad', 'choice', array('label' => 'Grad: ', 'required' => true, 'choices' => ArrayValues::$level))
             ->add('titel', 'text', array('label' => 'Titel: ', 'required' => true))
             ->add('kuerzel', 'text', array('label' => 'Kürzel: ', 'required' => true))
             ->add('beschreibung', 'text', array('label' => 'Beschreibung: ', 'required' => true))

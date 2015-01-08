@@ -8,23 +8,23 @@
 
 namespace FHBingen\Bundle\MHBBundle\Form;
 
+use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 
 class StudienplanType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $regelsem =['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7', 'acht' => 'acht'];
-
         $builder
             ->add(
                 'regelSemester',
                 'choice',
                 array(
                     'label' => 'Regelsemester: ',
-                    'choices' => $regelsem,
+                    'choices' => ArrayValues::$regelsem,
                     'multiple' => true,
                     'expanded' => true
                 )

@@ -8,6 +8,7 @@
 
 namespace FHBingen\Bundle\MHBBundle\Form;
 
+use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -21,19 +22,13 @@ class VeranstaltungType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $frequency=['Sommersemester' => 'Sommersemester', 'Wintersemester' => 'Wintersemester', 'wechselnd' => 'wechselnd', 'jedes Semester' => 'jedes Semester'];
-
-        $lang=['Deutsch' => 'Deutsch', 'Englisch' => 'Englisch'];
-
-        $lp=['3' => '3', '6' => '6', '9' => '9', '12' => '12', '15' => '15', '30' => '30'];
-
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
             ->add('beauftragter', 'entity', array('label' => "Modulbeauftragter [#]: ", 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
             ->add('kuerzel', 'text', array('label' => 'Modulkürzel [#]: ', 'required' => true))
             ->add('name', 'text', array('label' => 'Modulname (deutsch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('nameEN', 'text', array('label' => 'Modulname (englisch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
-            ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots [#]: ', 'required' => true, 'choices' => $frequency))
+            ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots [#]: ', 'required' => true, 'choices' => ArrayValues::$frequency))
             ->add('dauer', 'integer', array('label' => 'Dauer [#]: ', 'required' => true, 'attr' => array('min' => '1')))
             ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige [#]: ', 'required' => true, 'attr' => array('min' => '0')))
@@ -41,10 +36,10 @@ class VeranstaltungType extends AbstractType
             ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('sprache', 'choice', array('label' => 'Sprache [#]: ', 'required' => true, 'choices' => $lang))
+            ->add('sprache', 'choice', array('label' => 'Sprache [#]: ', 'required' => true, 'choices' => ArrayValues::$lang))
             ->add('SpracheSonstiges', 'text', array('label' => 'Sprache Sonstiges: ', 'required' => false))
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => $lp))
+            ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => ArrayValues::$lp))
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
 
             //Merge mit Lehrenden
