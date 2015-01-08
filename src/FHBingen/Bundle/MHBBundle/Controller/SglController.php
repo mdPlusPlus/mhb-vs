@@ -131,10 +131,13 @@ class SglController extends Controller
                                  JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung =  v.Modul_ID
                                  JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
                                  AND a.mhb =' . $id);
-
         $result = $mhb->getResult();
+        $mhb_tile = $em->createQuery('SELECT DISTINCT m.Beschreibung
+                                 FROM  FHBingenMHBBundle:Modulhandbuch m
+                                 WHERE m.MHB_ID =' . $id);
+        $mhb_Beschreibung = $mhb_tile->getResult();
 
-        return array('mhb' => $result, 'pageTitle' => 'Module des Modulhandbuchs');
+        return array('mhb' => $result,'beschreibung'=>$mhb_Beschreibung, 'pageTitle' => 'Module des Modulhandbuchs ' );
     }
 
 
