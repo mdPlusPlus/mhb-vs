@@ -57,14 +57,7 @@
 </div>
 <div id="wrapper">
     <div id="sidebar-wrapper" class="col-md-2">
-        <nav id="sidebar">
-            <ul class="nav list-group nav-pills nav-stacked">
-                {% include 'FHBingenMHBBundle:Navigation:dozentNav.html.twig' %}
-                {% include 'FHBingenMHBBundle:Navigation:sglNav.html.twig' %}
-                {% include 'FHBingenMHBBundle:Navigation:adminNav.html.twig' %}
-                {% include 'FHBingenMHBBundle:Navigation:generalNav.html.twig' %}
-            </ul>
-        </nav>
+        {% include '@FHBingenMHB/Navigation/navigation.html.twig' %}
     </div>
     <div id="main-wrapper" class="col-md-10 pull-right">
         <div id="main">
