@@ -146,10 +146,19 @@ class VerwaltungsController extends Controller
      */
     public function SglShowAllCoursesAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $entries = $em->getRepository('FHBingenMHBBundle:Studiengang')->findALL();
+        // Da das Sortieren über querys einfacher ist wird der code nicht mehr benötigt
+        /*$em = $this->getDoctrine()->getManager();
+        $entries = $em->getRepository('FHBingenMHBBundle:Studiengang')->findALL();*/
 
-        return array('courses' => $entries, 'pageTitle' => 'Studiengangverwaltung');
+        $em = $this->getDoctrine()->getManager();
+        $mhb = $em->createQuery('SELECT s.Studiengang_ID,s.Titel as Studiengang,s.Grad,d.Titel, d.Nachname
+                                 FROM  FHBingenMHBBundle:Studiengang s
+                                 JOIN  FHBingenMHBBundle:Dozent d WITH  s.sgl =  d.Dozenten_ID
+                                 ORDER BY Studiengang ASC '
+        );
+        $result = $mhb->getResult();
+
+        return array('courses' => $result, 'pageTitle' => 'Studiengangverwaltung');
     }
 
     /**

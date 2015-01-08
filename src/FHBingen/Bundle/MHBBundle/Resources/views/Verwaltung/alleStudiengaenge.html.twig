@@ -23,9 +23,9 @@
             <tbody>
             {% for gang in courses %}
                 <tr>
-                    <td><a href="{{ path('studiengangBearbeiten', {'courseID': gang.getStudiengangID()}) }}">{{ gang.getTitel() }}</a></td>
-                    <td>{{ gang.getGrad() }}</td>
-                    <td>{{ gang.getSgl() }}</td>
+                    <td><a href="{{ path('studiengangBearbeiten', {'courseID': gang['Studiengang_ID']}) }}">{{ gang['Studiengang'] }}</a></td>
+                    <td>{{ gang['Grad'] }}</td>
+                    <td>{{ gang['Titel']~' '~gang['Nachname'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>
