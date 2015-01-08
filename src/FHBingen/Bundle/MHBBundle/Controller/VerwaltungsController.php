@@ -40,7 +40,7 @@ class VerwaltungsController extends Controller
             if ($e->getRoles()[0] == 'ROLE_SGL') {
                 $sgl[] = $e;
             } else {
-                if ($e->getRoles()[0] == 'ROLE_DOZENT') {
+                if ($e->getRoles()[0] == 'ROLE_DOZENT'&&$e->getName()!='Dummy') {
                     $dozent[] = $e;
                 }
             }
@@ -204,7 +204,7 @@ class VerwaltungsController extends Controller
             }
         }
 
-        return array('form' => $form->createView(), 'pageTitle' => 'Studiengangverwaltung');
+        return array('form' => $form->createView(),'studiengang'=>$studiengang, 'pageTitle' => 'Studiengangverwaltung');
     }
 
     /**
