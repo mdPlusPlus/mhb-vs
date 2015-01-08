@@ -71,4 +71,19 @@ class ArrayValues {
         '7' => '7',
     );
 
+    /**
+     * Angebotsarten
+     */
+    public static $offerTypes = array(
+        'Wahlpflichtfach' => 'Wahlpflichtfach',
+        'Pflichtfach' => 'Pflichtfach',
+    );
+
+    /**
+     * Geschlechter
+     */
+    public static $gender = array(
+        'Herr' => 'Herr',
+        'Frau' => 'Frau',
+    );
 }
