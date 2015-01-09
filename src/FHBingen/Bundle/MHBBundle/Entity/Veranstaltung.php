@@ -101,14 +101,7 @@ class Veranstaltung
     protected $Haeufigkeit;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Assert\Range(
-     *      min = 1,
-     *      minMessage = "Die Dauer muss mindestens {{ limit }} Semester betragen.",
-     *      max = 12,
-     *      maxMessage = "Die Dauer darf maximal {{ limit }} Wochen betragen.",
-     * )
-     * TODO: Überprüfung auf Datentyp (Assert\Type funktioniert nicht, weil Umwandlung in NULL)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $Dauer;
 

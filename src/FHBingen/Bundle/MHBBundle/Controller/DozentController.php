@@ -242,7 +242,7 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
-                $modul->setDauer($form->get('dauer')->getData());
+               //TODO  $modul->setDauer($form->get('dauer')->getData().' '.$form->get('dauer_wahl')->getData());
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
                 $modul->setSelbststudium($form->get('selbststudium')->getData());

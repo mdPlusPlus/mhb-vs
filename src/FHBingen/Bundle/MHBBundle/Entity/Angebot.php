@@ -45,7 +45,7 @@ class Angebot
 
     /**
      * @ORM\ManyToOne(targetEntity="Modulhandbuch", inversedBy="angebot")
-     * @ORM\JoinColumn(name="mhb", referencedColumnName="MHB_ID", nullable=false)
+     * @ORM\JoinColumn(name="mhb", referencedColumnName="MHB_ID", nullable=true)
      * */
     protected $mhb;
 

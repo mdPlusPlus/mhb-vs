@@ -95,12 +95,7 @@ class VeranstaltungType extends AbstractType
                     'Schriftliche Klausur' => 'Schriftliche Klausur',
                     'Mündliche Prüfung' => 'Mündliche Prüfung',
                     'Vortrag' => 'Vortrag',
-                    //'Dokumentation' => 'Dokumentation',
-                    'Durchführung Übung' => 'Durchführung Übung',
-                    //'Erfolgreiche Zertifizierung' => 'Erfolgreiche Zertifizierung',
-                    'Schriftliche Ausarbeitung' => 'Schriftliche Ausarbeitung',
-                    'Projektarbeit' => 'Projektarbeit',
-                    'Kolloquium' => 'Kolloquium'),
+                    'Hausarbeit' => 'Hausarbeit'),
                 'data' => $pruefungsformen,
                 'multiple' => true,
                 'expanded' => true));
@@ -111,12 +106,7 @@ class VeranstaltungType extends AbstractType
                     'Schriftliche Klausur' => 'Schriftliche Klausur',
                     'Mündliche Prüfung' => 'Mündliche Prüfung',
                     'Vortrag' => 'Vortrag',
-                    //'Dokumentation' => 'Dokumentation',
-                    'Durchführung Übung' => 'Durchführung Übung',
-                    //'Erfolgreiche Zertifizierung' => 'Erfolgreiche Zertifizierung',
-                    'schriftliche Ausarbeitung' => 'schriftliche Ausarbeitung',
-                    'Projektarbeit' => 'Projektarbeit',
-                    'Kolloquium' => 'Kolloquium'),
+                    'Hausarbeit' => 'Hausarbeit'),
                 'multiple' => true,
                 'expanded' => true));
         }
