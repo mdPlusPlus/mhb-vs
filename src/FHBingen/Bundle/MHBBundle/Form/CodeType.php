@@ -16,9 +16,7 @@ class CodeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code', 'text', array('label' => 'Code: ', 'required' => true))
-            ->add('reset', 'reset')
-            ->add('submit', 'submit');
+            ->add('code', 'text', array('label' => 'Code: ', 'required' => true));
     }
 
     /**

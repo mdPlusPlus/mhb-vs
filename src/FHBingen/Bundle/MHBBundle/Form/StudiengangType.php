@@ -51,10 +51,7 @@ class StudiengangType extends AbstractType
                         'class' => 'Fachgebiet'
                     ),
                     )
-            ))
-
-            ->add('reset', 'reset')
-            ->add('submit', 'submit');
+            ));
     }
 
     /**

@@ -52,10 +52,7 @@ class VeranstaltungType extends AbstractType
                         'class' => 'lehrende'
                     )
                 )
-            ))
-
-            ->add('reset', 'reset')
-            ->add('submit', 'submit');
+            ));
     }
 
     public function onPreSetData(FormEvent $event)
