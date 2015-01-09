@@ -11,14 +11,13 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 
 class DozentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
         $builder
             ->add('anrede', 'choice', array('label' => 'Anrede: ', 'required' => true, 'choices' => ArrayValues::$gender))
             ->add('titel', 'text', array('label' => 'Titel: ', 'required' => false))
@@ -29,6 +28,13 @@ class DozentType extends AbstractType
             ->add('roles', 'entity', array('label' => 'Position: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Role'))
             ->add('reset', 'reset')
             ->add('submit', 'submit');
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Dozent'
+        ));
     }
 
     public function getName()
