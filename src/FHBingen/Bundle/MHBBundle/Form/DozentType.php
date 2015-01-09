@@ -30,8 +30,8 @@ class DozentType extends AbstractType
             ->add('email', 'email', array('label' => 'Email: ', 'required' => true))
 //            ->add('password', 'text', array('label' => 'Passwort: ', 'required' => true))
 //            ->add('roles', 'entity', array('label' => 'Position: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Role'))
-            ->add('reset', 'reset')
-            ->add('submit', 'submit');
+            ->add('reset', 'reset', array('label' => 'zurücksetzen', 'attr' => array('class' =>'btn btn-default')))
+            ->add('submit', 'submit', array('label' => 'abschicken', 'attr' => array('class' =>'btn btn-default')));
     }
 
     public function onPreSetData(FormEvent $event)
