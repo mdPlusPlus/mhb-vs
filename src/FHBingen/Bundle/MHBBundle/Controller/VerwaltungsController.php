@@ -126,7 +126,7 @@ class VerwaltungsController extends Controller
                 $dozent->setNachname($form->get('nachname')->getData());
                 $dozent->setEmail($form->get('email')->getData());
                 //TODO: $dozent->setPassword('password'); wieder aufnehmen?
-                $dozent->setRole($form->get('roles')->getData());
+                $dozent->setRole($form->get('roles')->getData()); //TODO: Rolle wird nicht richtig aus der DB gelesen
 
                 $em->persist($dozent);
                 $em->flush();
