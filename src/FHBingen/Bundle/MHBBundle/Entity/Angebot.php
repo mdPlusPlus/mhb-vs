@@ -25,6 +25,7 @@ class Angebot
     public function __toString()
     {
         $string = (string) $this->$veranstaltung;
+
         return $string;
     }
 
@@ -73,9 +74,6 @@ class Angebot
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
-     * @Assert\NotBlank(
-     *      message = "Der Modulcode darf nicht leer sein."
-     * )
      * @Assert\Length(
      *      min = 9,
      *      minMessage = "Der Modulcode muss genau {{ limit }} Zeichen lang sein.",
@@ -87,9 +85,6 @@ class Angebot
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
-     * @Assert\NotBlank(
-     *      message = "Der abweichende deutsche Name darf nicht leer sein."
-     * )
      * @Assert\Length(
      *      max = 40,
      *      maxMessage = "Der abweichende deutsche Name darf maximal {{ limit }} Zeichen lang sein."
@@ -100,9 +95,6 @@ class Angebot
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
-     * @Assert\NotBlank(
-     *      message = "Der abweichende englische Name darf nicht leer sein."
-     * )
      * @Assert\Length(
      *      max = 40,
      *      maxMessage = "Der abweichende englische Name darf maximal {{ limit }} Zeichen lang sein."
@@ -221,7 +213,7 @@ class Angebot
      */
     public function setAngebotsart($angebotsart)
     {
-        $this->angebotsart = $angebotsart;
+        $this->Angebotsart = $angebotsart;
     
         return $this;
     }

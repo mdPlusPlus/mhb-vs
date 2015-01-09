@@ -19,7 +19,7 @@ class AngebotType extends AbstractType
 
 
         $builder
-            ->add('veranstaltung', 'entity', array('label' => 'Modul: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
+            //->add('veranstaltung', 'entity', array('label' => 'Modul: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
 
             ->add('studiengang', 'entity', array('label' => 'Studiengang: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
 

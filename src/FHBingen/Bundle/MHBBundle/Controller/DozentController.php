@@ -310,6 +310,7 @@ class DozentController extends Controller
 
 
     /**
+     * @Route("/restricted/dozent/planungFreigeben/{id}", name="planungFreigeben")
      * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")
      */
     public function planungFreigebenAction($id)
@@ -326,9 +327,27 @@ class DozentController extends Controller
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
 
+                $valid = true;
+                if ($encoder->encode($form->get('voraussetzungLP')->getData(), 'json') == '[]') {
+                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Voraussetzung für die Vergabe von leistungspunkten gesetzt sein.');
+                    $valid = false;
+                }
+                if ($encoder->encode($form->get('pruefungsformen')->getData(), 'json') == '[]') {
+                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Prüfungsform gesetzt sein.');
+                    $valid = false;
+                }
+                if ($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json') == '[]') {
+                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Lehrveranstaltungsform gesetzt sein.');
+                    $valid = false;
+                }
+
+                if (!$valid) {
+                    return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
+                }
+
                 //notwendige Einträge
                 $modul->setErstellungsdatum(new \DateTime());
-                $modul->setStatus('Freigegeben');
+                //$modul->setStatus('Freigegeben');
 
                 //Änderungen an Einträgen
                 $modul->setKuerzel($form->get('kuerzel')->getData());
@@ -344,7 +363,7 @@ class DozentController extends Controller
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
                 $modul->setSprache($form->get('sprache')->getData());
-                $modul->setSpracheSonstieges($form->get('SpracheSonstiges')->getData());
+                $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
                 $modul->setLiteratur($form->get('literatur')->getData());
                 $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
@@ -402,20 +421,23 @@ class DozentController extends Controller
                 $em->persist($modul);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
+                //$this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
 
-                return $this->redirect($this->generateUrl('eigeneModule'));
+                return $this->redirect($this->generateUrl('angebot', array('id' => $id)));
             }
         }
 
         return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
     }
     /**
-     * @Route("/restricted/dozent/planungFreigeben/{id}", name="planungFreigeben")
+     * @Route("/restricted/dozent/angebot/{id}", name="angebot")
      * @Template("FHBingenMHBBundle:Dozent:angebot.html.twig")
      */
-    public function angebotAction()
+    public function angebotAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($id);
+
         $angebot = new Entity\Angebot();
         $form = $this->createForm(new Form\AngebotType(), $angebot);
 
@@ -424,15 +446,19 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $angebot->setVeranstaltung($form->get('veranstaltung')->getData());
+                $angebot->setCode('DUMMY');
+                $angebot->setVeranstaltung($modul);
                 $angebot->setStudiengang($form->get('studiengang')->getData());
                 $angebot->setAngebotsart($form->get('angebotsart')->getData());
                 $angebot->setAbweichenderNameDE($form->get('abweichenderNameDE')->getData());
                 $angebot->setAbweichenderNameEN($form->get('abweichenderNameEN')->getData());
+
+                $em->persist($angebot);
+                $em->flush();
             }
         }
 
-        return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen');
+        return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen', 'modul' => $modul );
     }
 
 }

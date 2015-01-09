@@ -38,12 +38,12 @@
 {%- endblock form_widget_compound %}
 
 {% block content %}
-    <h4 style="font-weight: bold">Modulfreigabe</h4>
+    <h4 style="font-weight: bold">Modulfreigabe für {{ modul }}</h4>
     <div class="table-responsive">
         {{ form_start(form) }}
         <table class="table table-bordered">
             {{ form_errors(form) }}
-            {{ form_row(form.veranstaltung) }}
+            {#{{ form_row(form.veranstaltung) }}#}
             {{ form_row(form.studiengang) }}
             {{ form_row(form.angebotsart) }}
             {{ form_row(form.fachgebiet) }}
