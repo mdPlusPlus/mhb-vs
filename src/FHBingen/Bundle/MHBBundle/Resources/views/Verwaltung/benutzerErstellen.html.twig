@@ -11,6 +11,13 @@
     {% endblock form_row %}
 
 {% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('benutzerverwaltungLink'));
+        });
+    </script>
+
     <h3>Neuen User anlegen</h3>
 
     <div class="table-responsive">
