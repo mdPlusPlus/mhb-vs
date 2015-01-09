@@ -1,0 +1,60 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
+
+{% block form_label -%}
+    {% if label is not sameas(false) -%}
+        {% if not compound -%}
+    {% set label_attr = label_attr|merge({'for': id}) %}
+{%- endif %}
+        {% if required -%}
+    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+{%- endif %}
+        {% if label is empty -%}
+    {% set label = name|humanize %}
+{%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+        {# added <br /> for nicer layout of checboxes #}
+        <br />
+        {# Der Zeilenumbruck bricht noch das Design von Lehrenden#}
+    {%- endif %}
+{%- endblock form_label %}
+
+{% block form_widget_compound -%}
+    {# notwending, damit es keine divs gibt #}
+    {%- if form.parent is empty -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+{%- endblock form_widget_compound %}
+
+{% block content %}
+    <h4 style="font-weight: bold">Modulfreigabe</h4>
+    <div class="table-responsive">
+        {{ form_start(form) }}
+        <table class="table table-bordered">
+            {{ form_errors(form) }}
+            {{ form_row(form.veranstaltung) }}
+            {{ form_row(form.studiengang) }}
+            {{ form_row(form.angebotsart) }}
+            {{ form_row(form.fachgebiet) }}
+            {#{{ form_row(form.kernfach) }}#}
+            {{ form_row(form.abweichenderNameDE) }}
+            {{ form_row(form.abweichenderNameEN) }}
+            {#{{ form_row(form.studienplan) }}#}
+        </table>
+
+        {% include '@FHBingenMHB/buttons.html.twig' %}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

@@ -19,16 +19,36 @@ class AngebotType extends AbstractType
 
 
         $builder
-            ->add('veranstaltung', 'entity', array('label' => 'ModulName: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
-            ->add('mhb', 'entity', array('label' => 'MHB_beschreibung: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Modulhandbuch'))
-            ->add('fachgebiet', 'entity', array('label' => 'FachgebietTitel: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Fachgebiet'))
-            ->add('studiengang', 'entity', array('label' => 'StudiengangTitel: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
+            ->add('veranstaltung', 'entity', array('label' => 'Modul: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
+
+            ->add('studiengang', 'entity', array('label' => 'Studiengang: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
+
             ->add('angebotsart', 'choice', array('label' => 'Angebotsart: ', 'required' => true, 'choices' => ArrayValues::$offerTypes))
-            ->add('code', 'text', array('label' => 'Code: ', 'required' => true))
-            ->add('titelDE', 'text', array('label' => 'abweichender_Titel(Deutsch): ', 'required' => false))
-            ->add('titelEN', 'text', array('label' => 'abweichender_Titel(Englisch): ', 'required' => false))
-            ->add('reset', 'reset')
-            ->add('submit', 'submit');
+            ->add('fachgebiet', 'entity', array('label' => 'Fachgebiet: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Fachgebiet'))
+            //TODO Kernfach für Vertiefungsrichtung: xyz
+            ->add('abweichenderNameDE', 'text', array('label' => 'abweichender Titel (Deutsch): ', 'required' => false))
+            ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false));
+
+            /*
+            ->add('ss', 'collection', array('label' => false, 'type' => new StudienplanType(),
+                'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+                'options' => array(
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'studienplam'
+                    )
+                )
+            ))
+            ->add('ws', 'collection', array('label' => false, 'type' => new StudienplanType(),
+                'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+                'options' => array(
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'studienplam'
+                    )
+                )
+            ))
+            */
     }
 
     public function getName()

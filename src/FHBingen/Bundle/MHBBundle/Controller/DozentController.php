@@ -310,7 +310,6 @@ class DozentController extends Controller
 
 
     /**
-     * @Route("/restricted/dozent/planungFreigeben/{id}", name="planungFreigeben")
      * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")
      */
     public function planungFreigebenAction($id)
@@ -410,6 +409,30 @@ class DozentController extends Controller
         }
 
         return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
+    }
+    /**
+     * @Route("/restricted/dozent/planungFreigeben/{id}", name="planungFreigeben")
+     * @Template("FHBingenMHBBundle:Dozent:angebot.html.twig")
+     */
+    public function angebotAction()
+    {
+        $angebot = new Entity\Angebot();
+        $form = $this->createForm(new Form\AngebotType(), $angebot);
+
+        $request = $this->get('request');
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $angebot->setVeranstaltung($form->get('veranstaltung')->getData());
+                $angebot->setStudiengang($form->get('studiengang')->getData());
+                $angebot->setAngebotsart($form->get('angebotsart')->getData());
+                $angebot->setAbweichenderNameDE($form->get('abweichenderNameDE')->getData());
+                $angebot->setAbweichenderNameEN($form->get('abweichenderNameEN')->getData());
+            }
+        }
+
+        return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen');
     }
 
 }
