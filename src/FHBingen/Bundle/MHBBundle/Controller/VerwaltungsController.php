@@ -37,11 +37,15 @@ class VerwaltungsController extends Controller
         $sgl = array();
 
         foreach ($entries as $e) {
-            if ($e->getRoles()[0] == 'ROLE_SGL') {
-                $sgl[] = $e;
-            } else {
-                if ($e->getRoles()[0] == 'ROLE_DOZENT'&&$e->getName()!='Dummy') {
-                    $dozent[] = $e;
+            //wenn nicht "Alle" oder "N.N."
+            if ($e->getName()!='Dummy') {
+
+                if (in_array('ROLE_SGL', $e->getRoles())) {
+                    $sgl[] = $e;
+                } else {
+                    if (in_array('ROLE_DOZENT', $e->getRoles())) {
+                        $dozent[] = $e;
+                    }
                 }
             }
         }

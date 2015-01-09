@@ -458,6 +458,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     private $roles;
 
+    //TODO: warum setRole UND setRoles?
     public function setRole(RoleInterface $role)
     {
         $this->roles = $role;
