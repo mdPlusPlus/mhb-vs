@@ -40,7 +40,7 @@ class DozentType extends AbstractType
         $form = $event->getForm();
 
         $roles = $input->getRoles();
-        $role = $roles[0];
+        $role = $roles[0]; //Notwendig wegen UserDependentRole
 
         $form->add('roles', 'entity', array(
             'label' => 'Position: ',
