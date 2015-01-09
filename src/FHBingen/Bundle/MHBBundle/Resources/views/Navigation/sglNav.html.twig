@@ -5,23 +5,23 @@
         </li>
 
         <li role="presentation">
-            <a href="{{ path('alleModule') }}">Modulansicht (alle)</a>
+            <a id="alleModuleLink" href="{{ path('alleModule') }}">Modulansicht (alle)</a>
         </li>
 
         <li role="presentation">
-            <a href="{{ path('modulCodeUebersicht') }}">Modulcodeübersicht</a>
+            <a id="modulcodeLink" href="{{ path('modulCodeUebersicht') }}">Modulcodeübersicht</a>
         </li>
 
         <li role="presentation">
-            <a href="{{ path('mhbUebersicht') }}">Modulhandbuchübersicht</a>
+            <a id="mhbUebersichtLink" href="{{ path('mhbUebersicht') }}">Modulhandbuchübersicht</a>
         </li>
 
         <li role="presentation">
-            <a href=" {{ path('mhbErstellung') }} ">Modulhandbucherstellung</a>
+            <a id="mhbErstellungLink" href="{{ path('mhbErstellung') }}">Modulhandbucherstellung</a>
         </li>
 
         <li role="presentation">
-            <a href="#{# {{ path('modulDeaktivierung') }} #}" onclick="return highlightMe(this)">Moduldeaktivierung</a>
+            <a id="moduldeaktivierungLink" href="#{# {{ path('modulDeaktivierung') }} #}">Moduldeaktivierung</a>
         </li>
     {% endif %}
 {% endif %}

@@ -28,6 +28,13 @@
 {%- endblock form_label %}
 
 {% block content %}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('modulplanungLink'));
+        });
+    </script>
+
     <div class="table-responsive">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <table class="table table-bordered">

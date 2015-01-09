@@ -27,6 +27,13 @@
 {%- endblock form_label %}
 
 {% block content %}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('modulplanungLink'));
+        });
+    </script>
+
     <h3>Modulplanung</h3>
     <div class="table-responsive">
         {{ form_start(form) }}

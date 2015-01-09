@@ -11,6 +11,13 @@
 {% endblock form_row %}
 
 {% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('modulcodeLink'));
+        });
+    </script>
+
     <h3>Modul bearbeiten</h3>
     <div class="table-responsive">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
