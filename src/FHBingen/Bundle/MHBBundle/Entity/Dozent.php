@@ -503,8 +503,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function getRoles()
     {
-        $rolesArrCol = new ArrayCollection();
-        $rolesArr = $rolesArrCol->toArray();
+        $rolesArr = array();
         $rolesArr[] = $this->roles;
         $rolesArr[] = new UserDependentRole($this);
 
