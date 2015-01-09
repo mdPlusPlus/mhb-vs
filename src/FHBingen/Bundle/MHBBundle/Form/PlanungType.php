@@ -149,6 +149,6 @@ class PlanungType extends AbstractType
 
     public function getName()
     {
-        return 'Planung';
+        return 'planung';
     }
 }

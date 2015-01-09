@@ -163,6 +163,6 @@ class VeranstaltungType extends AbstractType
 
     public function getName()
     {
-        return 'Veranstaltung';
+        return 'veranstaltung';
     }
 }
