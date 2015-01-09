@@ -368,6 +368,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $this->modulbeauftragter;
     }
 
+    //TODO: Was zur Hölle ist das?
     /**
      * Add modul_erstellt
      *
@@ -381,6 +382,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $this;
     }
 
+    //TODO: Was zur Hölle ist das?
     /**
      * Remove modul_erstellt
      *
@@ -391,6 +393,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         $this->modul_erstellt->removeElement($modulErstellt);
     }
 
+    //TODO: Was zur Hölle ist das?
     /**
      * Get modul_erstellt
      *
@@ -455,13 +458,15 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     private $roles;
 
-    public function setRole(RoleInterface $role){
+    public function setRole(RoleInterface $role)
+    {
         $this->roles = $role;
 
         return $this;
     }
 
-    public function setRoles(RoleInterface $role){
+    public function setRoles(RoleInterface $role)
+    {
 
         return $this->setRole($role);
     }
