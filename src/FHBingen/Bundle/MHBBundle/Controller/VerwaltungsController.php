@@ -39,7 +39,6 @@ class VerwaltungsController extends Controller
         foreach ($entries as $e) {
             //wenn nicht "Alle" oder "N.N."
             if ($e->getName()!='Dummy') {
-
                 if (in_array('ROLE_SGL', $e->getRoles())) {
                     $sgl[] = $e;
                 } else {

@@ -458,7 +458,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     private $roles;
 
-    //TODO: warum setRole UND setRoles?
+
     public function setRole(RoleInterface $role)
     {
         $this->roles = $role;
@@ -466,6 +466,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $this;
     }
 
+    //TODO: warum setRole UND setRoles?
     public function setRoles(RoleInterface $role)
     {
 
@@ -509,6 +510,12 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         $rolesArr[] = new UserDependentRole($this);
 
         return $rolesArr;
+    }
+
+    public function getRole()
+    {
+        //TODO: Nur Test-Funktion, kann gelöscht werden
+        return $this->roles;
     }
 
     /**
