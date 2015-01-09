@@ -1,6 +1,33 @@
 <script type="text/javascript">
-    var links = document.getElementsByTagName('a');
-    {# TODO: Links highlighten #}
+    {#
+    TODO:
+    - funktioniert nicht, weil navbar immer neu geladen wird
+    - alternative: setze style attribute im jeweiligen Template (IDs für <a>-Elemente vergeben)
+    #}
+
+    function getLinks() {
+        var sidebar = document.getElementById('sidebar');
+        var unorderedList = sidebar.getElementsByTagName('ul')[0]; //only one <ul> in sidebar
+        var listItems = unorderedList.getElementsByTagName('li');
+
+        var links = [];
+        for (var i = 0; i < listItems.length; i++) {
+            var currentLink = listItems[i].getElementsByTagName('a')[0]; //only one <a> in a <li>
+            links.push(currentLink);
+        }
+
+        return links;
+    }
+
+    function highlightMe(clickedLink) {
+        var links = getLinks();
+
+        for (var i = 0; i < links; i++) {
+            links[i].removeAttribute('style')
+        }
+
+        clickedLink.setAttribute('style', 'font-weight: bold;')
+    }
 </script>
 
 <nav id="sidebar">
