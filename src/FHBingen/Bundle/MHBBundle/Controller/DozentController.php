@@ -425,7 +425,7 @@ class DozentController extends Controller
 
                 //$this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
 
-                return $this->redirect($this->generateUrl('angebot', array('id' => $id)));
+                return $this->redirect($this->generateUrl('angebot', array('id' => $id, 'options' => array('em' => $em))));
             }
         }
 
@@ -441,7 +441,7 @@ class DozentController extends Controller
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($id);
 
         $angebot = new Entity\Angebot();
-        $form = $this->createForm(new Form\AngebotType(), $angebot);
+        $form = $this->createForm(new Form\AngebotType($this->getDoctrine()), $angebot);
 
         $request = $this->get('request');
         $form->handleRequest($request);

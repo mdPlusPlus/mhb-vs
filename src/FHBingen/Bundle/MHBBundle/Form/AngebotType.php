@@ -13,16 +13,23 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class AngebotType extends AbstractType
 {
+
+    protected  $em;
+
+    public function __construct(Doctrine $doctrine)
+    {
+        $this->em = $doctrine->getManager();
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
         $builder
             //->add('veranstaltung', 'entity', array('label' => 'Modul: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
-
+            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
             ->add('studiengang', 'entity', array('label' => 'Studiengang: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
 
             ->add('angebotsart', 'choice', array('label' => 'Angebotsart: ', 'required' => true, 'choices' => ArrayValues::$offerTypes))
@@ -37,16 +44,8 @@ class AngebotType extends AbstractType
             ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false));
 
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $form = $event->getForm();
-            $data = $event->getData();
 
-            $studiengang = $data->getStudiengang();
-            $fachgebiete  = null === $studiengang ? array() : $studiengang->getFachgebiete();
 
-            $form->add('fachgebiet', 'entity', array('label' => 'Fachgebiet: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Fachgebiet', 'choices' => $fachgebiete));
-
-        });
 
             /*
             ->add('ss', 'collection', array('label' => false, 'type' => new StudienplanType(),
@@ -68,6 +67,32 @@ class AngebotType extends AbstractType
                 )
             ))
             */
+    }
+
+
+    public function onPreSetData(FormEvent $event){
+
+            $input = $event->getData();
+            $form = $event->getForm();
+            $studiengang = $form->get('studiengang')->getData();
+            $fachgebiete = $this->$em->getRepository('FHBingenMHBBundle:Fachgebiet')->findBy($studiengang);
+
+//            $form->add('fachgebiet', 'choice', array(
+//                'label' => 'Fachgebiet [#]: ',
+//                'choices' => $fachgebiete
+//            ));
+
+            $form = $event->getForm();
+            $data = $event->getData();
+
+            $studiengang = $data->getStudiengang();
+
+            $fachgebiete  = $studiengang->getFachgebiete();
+            //$fachgebiete = array('abc' => 'abc');
+
+            $form->add('fachgebiet', 'entity', array('label' => 'Fachgebiet: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Fachgebiet', 'choices' => $fachgebiete));
+
+
     }
 
     public function getName()
