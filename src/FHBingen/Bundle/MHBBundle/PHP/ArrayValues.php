@@ -21,6 +21,15 @@ class ArrayValues {
     );
 
     /**
+     * Dauer
+     */
+    public static $duration = array(
+        'Wochen' => 'Wochen',
+        'Monate' => 'Monate',
+        'Semester' => 'Semester',
+    );
+
+    /**
      * Sprache
      */
     public static $lang = array(

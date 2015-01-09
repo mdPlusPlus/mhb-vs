@@ -345,6 +345,8 @@ class DozentController extends Controller
                     return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
                 }
 
+
+
                 //notwendige Einträge
                 $modul->setErstellungsdatum(new \DateTime());
                 //$modul->setStatus('Freigegeben');
