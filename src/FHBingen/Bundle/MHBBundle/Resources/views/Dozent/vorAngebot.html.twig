@@ -43,14 +43,7 @@
         {{ form_start(form) }}
         <table class="table table-bordered">
             {{ form_errors(form) }}
-            {#{{ form_row(form.veranstaltung) }}#}
-            {#{{ form_row(form.studiengang) }}#}
-            {{ form_row(form.angebotsart) }}
-            {{ form_row(form.fachgebiet) }}
-            {#{{ form_row(form.kernfach) }}#}
-            {{ form_row(form.abweichenderNameDE) }}
-            {{ form_row(form.abweichenderNameEN) }}
-            {#{{ form_row(form.studienplan) }}#}
+            {{ form_row(form.studiengang) }}
         </table>
 
         {% include '@FHBingenMHB/buttons.html.twig' %}

@@ -25,6 +25,7 @@ class StudiengangType extends AbstractType
             ->add('titel', 'text', array('label' => 'Titel: ', 'required' => true))
             ->add('kuerzel', 'text', array('label' => 'Kürzel: ', 'required' => true))
             ->add('beschreibung', 'text', array('label' => 'Beschreibung: ', 'required' => true))
+            //TODO: Bullshit: Hier werden nur die SGLs ausgegeben, die bereits einen Studiengang haben!
             ->add('sgl', 'entity', array('label' => 'Studiengangleiter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('d')

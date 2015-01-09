@@ -425,23 +425,24 @@ class DozentController extends Controller
 
                 //$this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
 
-                return $this->redirect($this->generateUrl('angebot', array('id' => $id, 'options' => array('em' => $em))));
+                return $this->redirect($this->generateUrl('vorAngebot', array('modulID' => $id)));
             }
         }
 
         return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
     }
     /**
-     * @Route("/restricted/dozent/angebot/{id}", name="angebot")
+     * @Route("/restricted/dozent/angebot/{studiengangID}/{modulID}", name="angebot")
      * @Template("FHBingenMHBBundle:Dozent:angebot.html.twig")
      */
-    public function angebotAction($id)
+    public function angebotAction($studiengangID, $modulID)
     {
         $em = $this->getDoctrine()->getManager();
-        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($id);
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($modulID);
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->find($studiengangID);
 
         $angebot = new Entity\Angebot();
-        $form = $this->createForm(new Form\AngebotType($this->getDoctrine()), $angebot);
+        $form = $this->createForm(new Form\AngebotType($studiengangID), $angebot);
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -450,7 +451,8 @@ class DozentController extends Controller
             if ($form->isValid()) {
                 $angebot->setCode('DUMMY');
                 $angebot->setVeranstaltung($modul);
-                $angebot->setStudiengang($form->get('studiengang')->getData());
+                $angebot->setStudiengang($studiengang);
+
                 $angebot->setAngebotsart($form->get('angebotsart')->getData());
                 $angebot->setAbweichenderNameDE($form->get('abweichenderNameDE')->getData());
                 $angebot->setAbweichenderNameEN($form->get('abweichenderNameEN')->getData());
@@ -460,7 +462,33 @@ class DozentController extends Controller
             }
         }
 
-        return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen', 'modul' => $modul );
+        return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen', 'modul' => $modul);
     }
 
+    /**
+     * @Route("/restricted/dozent/vorAngebot/{modulID}", name="vorAngebot")
+     * @Template("FHBingenMHBBundle:Dozent:vorAngebot.html.twig")
+     *
+     * dient der Auswahl des Studiengangs für die eigentliche angebotAction
+     */
+    public function vorAngebotAction($modulID)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($modulID);
+
+        $form = $this->createForm(new Form\VorAngebotType());
+
+        $request = $this->get('request');
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $studiengang = $form->get('studiengang')->getData();
+
+                return $this->redirect($this->generateUrl('angebot', array('modulID' => $modulID, 'studiengangID' => $studiengang->getStudiengangID())));
+            }
+        }
+
+        return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen', 'modul' => $modul);
+    }
 }
