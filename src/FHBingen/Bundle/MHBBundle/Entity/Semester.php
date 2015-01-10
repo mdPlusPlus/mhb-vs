@@ -22,13 +22,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Semester
 {
-	
-	public function __toString()
-	{
-		$string = $this->getSemester();
-		return $string;
-	}
-	
+
+    public function __toString()
+    {
+        $string = $this->getSemester();
+        return $string;
+    }
+
     /**
      * @ORM\ID
      * @ORM\Column(type="string",  length=5, nullable=false, unique=true)
@@ -51,14 +51,14 @@ class Semester
     public function setSemester($semester)
     {
         $this->Semester = $semester;
-    
+
         return $this;
     }
 
     /**
      * Get Semester
      *
-     * @return string 
+     * @return string
      */
     public function getSemester()
     {
@@ -74,6 +74,7 @@ class Semester
      * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="semester", cascade={"all"})
      * */
     protected $semesterplan;
+
     /**
      * Constructor
      */
@@ -91,7 +92,7 @@ class Semester
     public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
     {
         $this->semesterplan[] = $semesterplan;
-    
+
         return $this;
     }
 
@@ -108,7 +109,7 @@ class Semester
     /**
      * Get semesterplan
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSemesterplan()
     {
@@ -132,7 +133,7 @@ class Semester
     public function addGueltigAbSemester(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $sem)
     {
         $this->gueltigAbSemester[] = $sem;
-    
+
         return $this;
     }
 
@@ -149,7 +150,7 @@ class Semester
     /**
      * Get sem
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGueltigAbSemester()
     {
@@ -165,7 +166,7 @@ class Semester
     public function addModulStart(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart)
     {
         $this->modul_start[] = $modulStart;
-    
+
         return $this;
     }
 
@@ -182,20 +183,12 @@ class Semester
     /**
      * Get modul_start
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModulStart()
     {
         return $this->modul_start;
     }
-
-
-    /*Studienplan*/
-    /*Startsemester*/
-    /**
-     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="startSemester", cascade={"all"})
-     * */
-    protected $startSemester;
 
 
     /**
@@ -207,7 +200,7 @@ class Semester
     public function addRegelsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem)
     {
         $this->regelsem[] = $regelsem;
-    
+
         return $this;
     }
 
@@ -224,43 +217,10 @@ class Semester
     /**
      * Get regelsem
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRegelSemester()
     {
         return $this->regelsem;
-    }
-
-    /**
-     * Add startsem
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem
-     * @return Semester
-     */
-    public function addStartSemester(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem)
-    {
-        $this->startSemester[] = $startsem;
-    
-        return $this;
-    }
-
-    /**
-     * Remove startsem
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem
-     */
-    public function removeStartSemester(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $startsem)
-    {
-        $this->startSemester->removeElement($startsem);
-    }
-
-    /**
-     * Get startsem
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getStartSemester()
-    {
-        return $this->startSemester;
     }
 }

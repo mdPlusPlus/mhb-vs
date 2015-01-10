@@ -45,10 +45,10 @@ class Studienplan
     protected $Regelsemester;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="startSemester")
-     * @ORM\JoinColumn(name="startsemester", referencedColumnName="Semester", nullable=false)
+    * @ORM\Column(type="string"), nullable = false
+     * @Assert\NotBlank(message = "Das Startsemester muss gesetzt werden.")
      * */
-    protected $startSemester;
+    protected $StartSemester;
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="studienplanModul")
@@ -94,28 +94,18 @@ class Studienplan
         return $this->Regelsemester;
     }
 
-    /**
-     * Set start_sem
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $startSem
-     *
-     * @return Studienplan
-     */
-    public function setStartSemester(\FHBingen\Bundle\MHBBundle\Entity\Semester $startSem = null)
+
+    public function setStartSemester($startSem)
     {
-        $this->startSemester = $startSem;
+        $this->StartSemester = $startSem;
     
         return $this;
     }
 
-    /**
-     * Get start_sem
-     *
-     * @return \FHBingen\Bundle\MHBBundle\Entity\Semester 
-     */
+
     public function getStartSemester()
     {
-        return $this->startSemester;
+        return $this->StartSemester;
     }
 
     /**

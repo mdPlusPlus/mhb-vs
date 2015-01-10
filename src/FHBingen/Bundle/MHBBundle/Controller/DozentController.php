@@ -447,6 +447,10 @@ class DozentController extends Controller
         }
 
         $angebot = new Entity\Angebot();
+        $kernfach = new Entity\Kernfach();
+        $studienplan_ws = new Entity\Studienplan();
+        $studienplan_ss = new Entity\Studienplan();
+
         $form = $this->createForm(new Form\AngebotType($studiengangID, $isWahl) /*, $angebot*/);
 
         $request = $this->get('request');
@@ -458,13 +462,19 @@ class DozentController extends Controller
                 $angebot->setVeranstaltung($modul);
                 $angebot->setStudiengang($studiengang);
                 $angebot->setAngebotsart($angebotsart);
-
-
-
                 $angebot->setAbweichenderNameDE($form->get('abweichenderNameDE')->getData());
                 $angebot->setAbweichenderNameEN($form->get('abweichenderNameEN')->getData());
 
+
+                $kernfach->setVeranstaltung($modul);
+                $kernfach->setVertiefung($form->get('vertiefung')->getData());
+
+                $studienplan_ws->setStartSemester('WS');
+                $studienplan_ws->setVeranstaltung($modul);
+                $studienplan_ws->setStudiengang($studiengang);
+
                 $em->persist($angebot);
+                $em->persist($kernfach);
                 $em->flush();
             }
         }
