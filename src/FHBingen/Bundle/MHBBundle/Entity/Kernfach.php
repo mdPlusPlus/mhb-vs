@@ -49,6 +49,8 @@ class Kernfach
      * */
     protected $vertiefung;
 
+
+
     /**
      * Get id
      *
@@ -94,6 +96,7 @@ class Kernfach
     
         return $this;
     }
+
 
     /**
      * Get vertiefung

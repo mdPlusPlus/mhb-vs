@@ -50,27 +50,7 @@ class AngebotType extends AbstractType
             ));
         }
 
-        /*
-         * TODO:
-         * Studienplan:
-         * 1.
-         */
         $builder
-            ->add('studienplan_ws', 'choice', array(
-                'label' => 'Wintersemester',
-                'required' => true,
-                'multiple' => true,
-                'expanded' => true,
-                'choices' => ArrayValues::$regelsem))
-
-            ->add('studienplan_ss', 'choice', array(
-                  'label' => 'Sommersemester',
-                  'required' => true,
-                  'multiple' => true,
-                  'expanded' => true,
-                  'choices' => ArrayValues::$regelsem))
-
-
             ->add('abweichenderNameDE', 'text', array('label' => 'abweichender Titel (Deutsch): ', 'required' => false))
             ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false));
     }

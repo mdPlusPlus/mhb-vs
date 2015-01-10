@@ -22,6 +22,25 @@ class VorAngebotType extends AbstractType
         $builder
             ->add('studiengang', 'entity', array('label' => 'Studiengang: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
             ->add('angebotsart', 'choice', array('label' => 'Angebotsart:', 'required' => true, 'choices' => ArrayValues::$offerTypes));
+        /*
+  * TODO:
+  * Studienplan:
+  * 1.
+  */
+        $builder
+            ->add('studienplan_ws', 'choice', array(
+                'label' => 'Wintersemester',
+                'required' => true,
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => ArrayValues::$regelsem))
+
+            ->add('studienplan_ss', 'choice', array(
+                'label' => 'Sommersemester',
+                'required' => true,
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => ArrayValues::$regelsem));
     }
 
     public function getName()

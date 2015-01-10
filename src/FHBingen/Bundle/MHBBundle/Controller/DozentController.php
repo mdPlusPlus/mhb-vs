@@ -448,8 +448,7 @@ class DozentController extends Controller
 
         $angebot = new Entity\Angebot();
         $kernfach = new Entity\Kernfach();
-        $studienplan_ws = new Entity\Studienplan();
-        $studienplan_ss = new Entity\Studienplan();
+
 
         $form = $this->createForm(new Form\AngebotType($studiengangID, $isWahl) /*, $angebot*/);
 
@@ -458,7 +457,6 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $encoder=new JsonEncoder();
                 $angebot->setCode('DUMMY');
                 $angebot->setVeranstaltung($modul);
                 $angebot->setStudiengang($studiengang);
@@ -468,12 +466,7 @@ class DozentController extends Controller
 
 
                 $kernfach->setVeranstaltung($modul);
-                $kernfach->setVertiefung($form->get('vertiefung')->getData());
-
-                $studienplan_ws->setStartSemester('WS');
-                $studienplan_ws->setVeranstaltung($modul);
-                $studienplan_ws->setStudiengang($studiengang);
-                $studienplan_ws->setRegelSemester($encoder->encode(get($studienplan_ws)->getData()), 'json')
+                $kernfach->setVertiefung($form->get('kernfach')->getData());
 
                 $em->persist($angebot);
                 $em->persist($kernfach);
@@ -500,11 +493,29 @@ class DozentController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
+        $studienplan_ws = new Entity\Studienplan();
+        $studienplan_ss = new Entity\Studienplan();
+
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
+                $encoder=new JsonEncoder();
                 $studiengang = $form->get('studiengang')->getData();
                 $angeotsart = $form->get('angebotsart')->getData();
 
+                $studienplan_ws->setStartsemester('WS');
+                $studienplan_ws->setVeranstaltung($modul);
+                $studienplan_ws->setStudiengang($studiengang);
+                $studienplan_ws->setRegelSemester($encoder->encode($form->get('studienplan_ws')->getData(), 'json'));
+
+
+                $studienplan_ss->setStartsemester('SS');
+                $studienplan_ss->setVeranstaltung($modul);
+                $studienplan_ss->setStudiengang($studiengang);
+                $studienplan_ss->setRegelSemester($encoder->encode($form->get('studienplan_ss')->getData(), 'json'));
+
+                $em->persist($studienplan_ws);
+                $em->persist($studienplan_ss);
+                $em->flush();
 
                 return $this->redirect($this->generateUrl('angebot', array('modulID' => $modulID, 'studiengangID' => $studiengang->getStudiengangID(), 'angebotsart' => $angeotsart)));
             }
