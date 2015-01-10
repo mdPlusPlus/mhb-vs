@@ -112,3 +112,8 @@ body {
     font-weight: bolder;
     page-break-after: avoid;
 }
+
+div.ourButtons {
+    margin-top: 50px;
+    margin-bottom: 200px;
+}

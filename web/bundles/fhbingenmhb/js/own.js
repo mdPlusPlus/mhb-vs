@@ -12,12 +12,12 @@ function getNavbarLinks() {
     return links;
 }
 
-function highlightMe(id) {
+function highlightMe(me) {
     var links = getNavbarLinks();
 
     for (var i = 0; i < links; i++) {
         links[i].removeAttribute('style')
     }
 
-    id.setAttribute('style', 'font-weight: bold;')
+    me.setAttribute('style', 'font-weight: bold;')
 }
