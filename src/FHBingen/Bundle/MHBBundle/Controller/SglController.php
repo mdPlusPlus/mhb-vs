@@ -43,10 +43,13 @@ class SglController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
+            asort($name,SORT_STRING);
             $stgZuModul[] = $name;
         }
+
         return array('module' => $nichtInPlanung, 'stgZuModul' => $stgZuModul, 'pageTitle' => 'Alle Module');
     }
+
 
     /**
      * @Route("/restricted/sgl/modulCodeUebersicht", name="modulCodeUebersicht")

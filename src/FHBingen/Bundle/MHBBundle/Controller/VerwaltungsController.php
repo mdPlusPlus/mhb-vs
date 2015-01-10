@@ -13,9 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use Symfony\Component\HttpFoundation\Response;
-
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
 

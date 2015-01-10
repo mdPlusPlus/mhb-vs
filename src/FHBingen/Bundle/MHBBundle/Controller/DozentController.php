@@ -56,10 +56,34 @@ class DozentController extends Controller
             $modullehrend[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modul->getVeranstaltung()));
         }
 
+        $stgZuModul = array();
+        foreach ($modulverantwortung as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
+            foreach ($tmp as $studiengang) {
+                $name[] = (string) $studiengang->getStudiengang();
+            }
+            asort($name,SORT_STRING);
+
+            $stgZuModul[] = $name;
+        }
+
+        $stgZuModullehrend = array();
+        foreach ($modullehrend as $modul) {
+            $name = array();
+            $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
+            foreach ($tmp as $studiengang) {
+                $name[] = (string) $studiengang->getStudiengang();
+            }
+            asort($name,SORT_STRING);
+            $stgZuModul[] = $name;
+        }
+
         asort($modullehrend, SORT_STRING);
 
-        return array('modulverantwortung' => $modulverantwortung, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende, 'pageTitle' => 'Eigene Module');
+        return array('modulverantwortung' => $modulverantwortung, 'stgZuModullehrend' => $stgZuModullehrend, 'stgZuModul' => $stgZuModul, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende, 'pageTitle' => 'Eigene Module');
     }
+
 
 
     /**

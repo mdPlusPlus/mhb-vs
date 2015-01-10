@@ -33,8 +33,7 @@
                 <td>{{ veranstaltung.beauftragter }}</td>
                 <td>{{ veranstaltung.Autor }}</td>
                 <td>
-                    {# TODO: Studiengänge alphabetisch sortieren #}
-                    {% for name in stgZuModul[count] %}
+                        {% for name in stgZuModul[count] %}
                         {{name}}<br />
                     {% endfor %}
                 </td>
