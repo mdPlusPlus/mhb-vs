@@ -65,80 +65,46 @@ class VeranstaltungType extends AbstractType
         $pruefungsformen = $input->getPruefungsformen();
         $lehrveranstaltungen = $input->getLehrveranstaltungen();
 
+        $voraussetzungLPChoiceOptions = array(
+            'label' => 'Voraussetzung für Leistungspunkte: ',
+            'choices' => ArrayValues::$voraussetzungLP,
+            'multiple' => true,
+            'expanded' => true
+        );
+
         if (!is_null($vorausetzungLP)) {
             $vorausetzungLP = $encoder->decode($vorausetzungLP, 'json');
-
-            $form->add('voraussetzungLP', 'choice', array(
-                'label' => 'Voraussetzung für Leistungspunkte [#]: ',
-                'choices' => array(
-                    'Prüfungsleistung' => 'Prüfungsleistung',
-                    'Studienleistung' => 'Studienleistung'),
-                'data' => $vorausetzungLP,
-                'multiple' => true,
-                'expanded' => true));
-        } else {
-            $form->add('voraussetzungLP', 'choice', array(
-                'label' => 'Voraussetzung für Leistungspunkte [#]: ',
-                'choices' => array(
-                    'Prüfungsleistung' => 'Prüfungsleistung',
-                    'Studienleistung' => 'Studienleistung'),
-                'multiple' => true,
-                'expanded' => true));
+            $voraussetzungLPChoiceOptions['data'] = $vorausetzungLP;
         }
+        $form->add('voraussetzungLP', 'choice', $voraussetzungLPChoiceOptions);
+
+
+        $pruefungsformenChoiceOptions = array(
+            'label' => 'Prüfungsform: ',
+            'choices' => ArrayValues::$pruefungsformen,
+            'multiple' => true,
+            'expanded' => true,
+        );
 
         if (!is_null($pruefungsformen)) {
             $pruefungsformen = $encoder->decode($pruefungsformen, 'json');
-
-            $form->add('pruefungsformen', 'choice', array(
-                'label' => 'Prüfungsform [#]: ',
-                'choices' => array(
-                    'Schriftliche Klausur' => 'Schriftliche Klausur',
-                    'Mündliche Prüfung' => 'Mündliche Prüfung',
-                    'Vortrag' => 'Vortrag',
-                    'Hausarbeit' => 'Hausarbeit'),
-                'data' => $pruefungsformen,
-                'multiple' => true,
-                'expanded' => true));
-        } else {
-            $form->add('pruefungsformen', 'choice', array(
-                'label' => 'Prüfungsform [#]: ',
-                'choices' => array(
-                    'Schriftliche Klausur' => 'Schriftliche Klausur',
-                    'Mündliche Prüfung' => 'Mündliche Prüfung',
-                    'Vortrag' => 'Vortrag',
-                    'Hausarbeit' => 'Hausarbeit'),
-                'multiple' => true,
-                'expanded' => true));
+            $pruefungsformenChoiceOptions['data'] = $pruefungsformen;
         }
+        $form->add('pruefungsformen', 'choice', $pruefungsformenChoiceOptions);
+
+
+        $lehrveranstaltungenChoiceOptions = array(
+            'label' => 'Lehrveranstaltungen: ',
+            'choices' => ArrayValues::$lehrveranstaltungen,
+            'multiple' => true,
+            'expanded' => true,
+        );
 
         if (!is_null($lehrveranstaltungen)) {
             $lehrveranstaltungen = $encoder->decode($lehrveranstaltungen, 'json');
-
-            $form->add('lehrveranstaltungen', 'choice', array(
-                'label' => 'Lehrveranstaltungen [#]: ',
-                'choices' => array(
-                    'Vorlesung' => 'Vorlesung',
-                    'Übung' => 'Übung',
-                    'Labor' => 'Labor',
-                    'Seminar' => 'Seminar',
-                    'Praxisprojekt' => 'Praxisprojekt',
-                    'Selbststudium und Konsultationen' => 'Selbststudium und Konsultationen'),
-                'data' => $lehrveranstaltungen,
-                'multiple' => true,
-                'expanded' => true));
-        } else {
-            $form->add('lehrveranstaltungen', 'choice', array(
-                'label' => 'Lehrveranstaltungen [#]: ',
-                'choices' => array(
-                    'Vorlesung' => 'Vorlesung',
-                    'Übung' => 'Übung',
-                    'Labor' => 'Labor',
-                    'Seminar' => 'Seminar',
-                    'Praxisprojekt' => 'Praxisprojekt',
-                    'Selbststudium und Konsultationen' => 'Selbststudium und Konsultationen'),
-                'multiple' => true,
-                'expanded' => true));
+            $lehrveranstaltungenChoiceOptions['data'] = $lehrveranstaltungen;
         }
+        $form->add('lehrveranstaltungen', 'choice', $lehrveranstaltungenChoiceOptions);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

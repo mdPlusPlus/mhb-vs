@@ -95,4 +95,34 @@ class ArrayValues {
         'Herr' => 'Herr',
         'Frau' => 'Frau',
     );
+
+    /**
+     * Voraussetzungen für die Vergabe von Leistungspunkten
+     */
+    public static $voraussetzungLP = array(
+        'Prüfungsleistung' => 'Prüfungsleistung',
+        'Studienleistung' => 'Studienleistung',
+    );
+
+    /**
+     * Prüfungsformen
+     */
+    public static $pruefungsformen = array(
+        'Schriftliche Klausur' => 'Schriftliche Klausur',
+        'Mündliche Prüfung' => 'Mündliche Prüfung',
+        'Vortrag' => 'Vortrag',
+        'Hausarbeit' => 'Hausarbeit',
+    );
+
+    /**
+     * Lehrveranstaltungen
+     */
+    public static $lehrveranstaltungen = array(
+        'Vorlesung' => 'Vorlesung',
+        'Übung' => 'Übung',
+        'Labor' => 'Labor',
+        'Seminar' => 'Seminar',
+        'Praxisprojekt' => 'Praxisprojekt',
+        'Selbststudium und Konsultationen' => 'Selbststudium und Konsultationen',
+    );
 }

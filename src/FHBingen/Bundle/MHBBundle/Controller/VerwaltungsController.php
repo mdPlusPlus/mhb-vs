@@ -49,7 +49,22 @@ class VerwaltungsController extends Controller
             }
         }
 
+        uasort($sgl, array($this, 'dozentSort'));
+        uasort($dozent, array($this,'dozentSort'));
+
         return array('sgl' => $sgl, 'dozent' => $dozent, 'pageTitle' => 'Nutzerverwaltung');
+    }
+
+    private function dozentSort($dozA, $dozB)
+    {
+        $a = $dozA->getNachname();
+        $b = $dozB->getNachname();
+
+        if ($a == $b) {
+            return 0;
+        }
+
+        return ($a < $b) ? -1 : 1;
     }
 
     /**
