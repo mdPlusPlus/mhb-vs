@@ -38,12 +38,13 @@
 {%- endblock form_widget_compound %}
 
 {% block content %}
-    <h4 style="font-weight: bold">Modulfreigabe für {{ modul }}</h4>
+    <h4 style="font-weight: bold">Studiengangswahl für Angebot von {{ modul }}</h4>
     <div class="table-responsive">
         {{ form_start(form) }}
         <table class="table table-bordered">
             {{ form_errors(form) }}
             {{ form_row(form.studiengang) }}
+            {{ form_row(form.angebotsart) }}
         </table>
 
         {% include '@FHBingenMHB/buttons.html.twig' %}

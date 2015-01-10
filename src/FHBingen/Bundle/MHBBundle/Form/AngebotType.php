@@ -17,16 +17,16 @@ use Symfony\Component\Form\FormEvents;
 class AngebotType extends AbstractType
 {
     private $studiengangID;
+    private $isWahl;
 
-    public function __construct($studiengangID){
+    public function __construct($studiengangID, $isWahl){
         $this->studiengangID = $studiengangID;
+        $this->isWahl = $isWahl;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('angebotsart', 'choice', array('label' => 'Angebotsart:', 'required' => true, 'choices' => ArrayValues::$offerTypes))
-            ->add('fachgebiet', 'entity', array(
+        $builder->add('fachgebiet', 'entity', array(
                 'label' => "Fachgebiet:",
                 'required' => true,
                 'class' => 'FHBingenMHBBundle:Fachgebiet',
@@ -34,21 +34,29 @@ class AngebotType extends AbstractType
                     //SELECT * FROM `Fachgebiet` WHERE `studiengang` = 2
                     return $er->createQueryBuilder('f')->select('')->where('f.studiengang = ' . $this->studiengangID);
                 },
+            ));
 
-                /*
-                 * Vertiefungsrichtungen:
-                 * 1. Ist Wahlfach?
-                 * 2. Welcher Studiengang?
-                 * 3. Welche Verteifungsrichtungen hat der Studiengang?
-                 * 4. Modul + Vertiefung -> Kernfach
-                 */
+        if ($this->isWahl) {
+            $builder->add('kernfach', 'entity', array(
+                'label' => "Kernfach in diesen Vertiefungsrichtungen",
+                'required' => true,
+                'multiple' => true,
+                'expanded' => true,
+                'class' => 'FHBingenMHBBundle:Vertiefung',
+                'query_builder' => function(EntityRepository $er) {
+                    //SELECT * FROM `Fachgebiet` WHERE `studiengang` = 2
+                    return $er->createQueryBuilder('v')->select('')->where('v.studiengang = ' . $this->studiengangID);
+                },
+            ));
+        }
 
+        /*
+         * TODO:
+         * Studienplan:
+         * 1.
+         */
 
-            ))
-
-            //TODO Kernfach für Vertiefungsrichtung: xyz
-            //->add('kernfach', 'entity', array('label' => 'Kernfach für Vertiefungsrichtung: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Kernfach'))
-
+        $builder
             ->add('abweichenderNameDE', 'text', array('label' => 'abweichender Titel (Deutsch): ', 'required' => false))
             ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false));
     }

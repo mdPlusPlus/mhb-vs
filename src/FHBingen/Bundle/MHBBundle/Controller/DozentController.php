@@ -432,17 +432,22 @@ class DozentController extends Controller
         return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
     }
     /**
-     * @Route("/restricted/dozent/angebot/{studiengangID}/{modulID}", name="angebot")
+     * @Route("/restricted/dozent/angebot/{studiengangID}/{modulID}/{angebotsart}", name="angebot")
      * @Template("FHBingenMHBBundle:Dozent:angebot.html.twig")
      */
-    public function angebotAction($studiengangID, $modulID)
+    public function angebotAction($studiengangID, $modulID, $angebotsart)
     {
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($modulID);
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->find($studiengangID);
 
+        $isWahl = false;
+        if ($angebotsart == 'Wahlpflichtfach') {
+            $isWahl = true;
+        }
+
         $angebot = new Entity\Angebot();
-        $form = $this->createForm(new Form\AngebotType($studiengangID), $angebot);
+        $form = $this->createForm(new Form\AngebotType($studiengangID, $isWahl) /*, $angebot*/);
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -452,8 +457,10 @@ class DozentController extends Controller
                 $angebot->setCode('DUMMY');
                 $angebot->setVeranstaltung($modul);
                 $angebot->setStudiengang($studiengang);
+                $angebot->setAngebotsart($angebotsart);
 
-                $angebot->setAngebotsart($form->get('angebotsart')->getData());
+
+
                 $angebot->setAbweichenderNameDE($form->get('abweichenderNameDE')->getData());
                 $angebot->setAbweichenderNameEN($form->get('abweichenderNameEN')->getData());
 
@@ -462,7 +469,7 @@ class DozentController extends Controller
             }
         }
 
-        return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen', 'modul' => $modul);
+        return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen', 'modul' => $modul, 'studiengang' => $studiengang, 'wahlpflichtfach' => $isWahl);
     }
 
     /**
@@ -484,8 +491,10 @@ class DozentController extends Controller
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
                 $studiengang = $form->get('studiengang')->getData();
+                $angeotsart = $form->get('angebotsart')->getData();
 
-                return $this->redirect($this->generateUrl('angebot', array('modulID' => $modulID, 'studiengangID' => $studiengang->getStudiengangID())));
+
+                return $this->redirect($this->generateUrl('angebot', array('modulID' => $modulID, 'studiengangID' => $studiengang->getStudiengangID(), 'angebotsart' => $angeotsart)));
             }
         }
 

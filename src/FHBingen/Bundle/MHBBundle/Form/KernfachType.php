@@ -9,12 +9,12 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class KernfachType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('modul', 'entity', array('label' => 'Name: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
             ->add('vertiefung', 'entity', array('label' => 'Vertiefungsrichtung: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Vertiefung'))
@@ -22,6 +22,17 @@ class KernfachType extends AbstractType
             ->add('submit', 'submit');
 
     }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Kernfach'
+        ));
+    }
+
     public function getName()
     {
         return 'kernfach';

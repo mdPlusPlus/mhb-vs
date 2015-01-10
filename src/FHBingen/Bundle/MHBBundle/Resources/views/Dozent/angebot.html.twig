@@ -38,19 +38,18 @@
 {%- endblock form_widget_compound %}
 
 {% block content %}
-    <h4 style="font-weight: bold">Modulfreigabe für {{ modul }}</h4>
+    <h4 style="font-weight: bold">Angebotserstellung für {{ modul }} in {{ studiengang }}</h4>
     <div class="table-responsive">
         {{ form_start(form) }}
         <table class="table table-bordered">
             {{ form_errors(form) }}
-            {#{{ form_row(form.veranstaltung) }}#}
-            {#{{ form_row(form.studiengang) }}#}
-            {{ form_row(form.angebotsart) }}
             {{ form_row(form.fachgebiet) }}
-            {#{{ form_row(form.kernfach) }}#}
+            {% if wahlpflichtfach %}
+                {{ form_row(form.kernfach) }}
+            {% endif %}
             {{ form_row(form.abweichenderNameDE) }}
             {{ form_row(form.abweichenderNameEN) }}
-            {#{{ form_row(form.studienplan) }}#}
+
         </table>
 
         {% include '@FHBingenMHB/buttons.html.twig' %}
