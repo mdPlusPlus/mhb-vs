@@ -368,42 +368,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $this->modulbeauftragter;
     }
 
-    //TODO: Was zur Hölle ist das?
-    /**
-     * Add modul_erstellt
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulErstellt
-     * @return Dozent
-     */
-    public function addModulErstellt(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulErstellt)
-    {
-        $this->modul_erstellt[] = $modulErstellt;
-
-        return $this;
-    }
-
-    //TODO: Was zur Hölle ist das?
-    /**
-     * Remove modul_erstellt
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulErstellt
-     */
-    public function removeModulErstellt(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulErstellt)
-    {
-        $this->modul_erstellt->removeElement($modulErstellt);
-    }
-
-    //TODO: Was zur Hölle ist das?
-    /**
-     * Get modul_erstellt
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getModulErstellt()
-    {
-        return $this->modul_erstellt;
-    }
-
     /**
      * Add studiengang
      *

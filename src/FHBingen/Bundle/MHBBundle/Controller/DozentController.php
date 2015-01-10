@@ -44,7 +44,7 @@ class DozentController extends Controller
             $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $m->getModulID()));
 
             foreach ($tmp as $lehrend) {
-                $name[] = (string) $lehrend->getDozent();
+                $name[] = (string)$lehrend->getDozent();
             }
             $mLehrende[] = $name;
         }
@@ -127,7 +127,7 @@ class DozentController extends Controller
      */
     public function planungErstellenAction()
     {
-        $encoder=new JsonEncoder();
+        $encoder = new JsonEncoder();
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
@@ -181,14 +181,13 @@ class DozentController extends Controller
     }
 
 
-
     /**
      * @Route("/restricted/dozent/planungBearbeiten/{id}", name="planungBearbeiten")
      * @Template("FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig")
      */
     public function planungBearbeitenAction($id)
     {
-        $encoder=new JsonEncoder();
+        $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
@@ -245,7 +244,7 @@ class DozentController extends Controller
      */
     public function modulBearbeitenAction($id)
     {
-        $encoder=new JsonEncoder();
+        $encoder = new JsonEncoder();
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => 'Freigegeben'));
@@ -266,7 +265,7 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
-               //TODO  $modul->setDauer($form->get('dauer')->getData().' '.$form->get('dauer_wahl')->getData());
+                //TODO  $modul->setDauer($form->get('dauer')->getData().' '.$form->get('dauer_wahl')->getData());
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
                 $modul->setSelbststudium($form->get('selbststudium')->getData());
@@ -339,7 +338,7 @@ class DozentController extends Controller
      */
     public function planungFreigebenAction($id)
     {
-        $encoder=new JsonEncoder();
+        $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => 'in Planung'));
 
@@ -370,10 +369,9 @@ class DozentController extends Controller
                 }
 
 
-
                 //notwendige Einträge
                 $modul->setErstellungsdatum(new \DateTime());
-                //$modul->setStatus('Freigegeben');
+
 
                 //Änderungen an Einträgen
                 $modul->setKuerzel($form->get('kuerzel')->getData());
@@ -400,42 +398,41 @@ class DozentController extends Controller
 
                 $lehrendeArr = $form->get('modul')->getData()->toArray();
 
-                if(!empty($lehrendeArr)){
+                if (!empty($lehrendeArr)) {
 
-                foreach ($lehrendeArr as $lehrend) {
-                    // Modul mit Lehrenden verketten
-                    $modul->addModul($lehrend);
-                    // Lehrende mit Veranstaltung verketten
-                    $lehrend->setVeranstaltung($modul);
-                    // passenden Dozenten aus dem Lehrenden Entity finden
-                    $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
-                    // Dozent mit Lehrenden verketten
-                    $dozent->addLehrende($lehrend);
-                    // Lehrenden mit Dozent verketten
-                    $lehrend->setDozent($dozent);
-                    $em->persist($dozent);
-                    $em->persist($lehrend);
-                }
-
-                $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
-                $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
-
-                foreach ($dbLehrendeArr as $dbEntry) {
-                    if (!in_array($dbEntry, $lehrendeArr)) {
-                        // link von Modul auf Lehrenden löschen
-                        $modul->removeModul($dbEntry);
-                        // passenden Dozenten zu dem Lehrenden Etity finden
-                        $dozentTmp = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $dbEntry->getDozent()->getDozentenID()));
-                        // link von Dozenten zu Lehrenden Entity löschen
-                        $dozentTmp->removeLehrende($dbEntry);
-                        // Lehrenden entfernen
-                        $em->remove($dbEntry);
-                        $em->persist($dozentTmp);
+                    foreach ($lehrendeArr as $lehrend) {
+                        // Modul mit Lehrenden verketten
+                        $modul->addModul($lehrend);
+                        // Lehrende mit Veranstaltung verketten
+                        $lehrend->setVeranstaltung($modul);
+                        // passenden Dozenten aus dem Lehrenden Entity finden
+                        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
+                        // Dozent mit Lehrenden verketten
+                        $dozent->addLehrende($lehrend);
+                        // Lehrenden mit Dozent verketten
+                        $lehrend->setDozent($dozent);
+                        $em->persist($dozent);
+                        $em->persist($lehrend);
                     }
-                }
-                }
-                else{
-                    $lehr =new Entity\Lehrende();
+
+                    $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
+                    $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
+
+                    foreach ($dbLehrendeArr as $dbEntry) {
+                        if (!in_array($dbEntry, $lehrendeArr)) {
+                            // link von Modul auf Lehrenden löschen
+                            $modul->removeModul($dbEntry);
+                            // passenden Dozenten zu dem Lehrenden Etity finden
+                            $dozentTmp = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $dbEntry->getDozent()->getDozentenID()));
+                            // link von Dozenten zu Lehrenden Entity löschen
+                            $dozentTmp->removeLehrende($dbEntry);
+                            // Lehrenden entfernen
+                            $em->remove($dbEntry);
+                            $em->persist($dozentTmp);
+                        }
+                    }
+                } else {
+                    $lehr = new Entity\Lehrende();
                     $modul->addModul($lehr);
                     $lehr->setVeranstaltung($modul);
                     $doz = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $modul->getBeauftragter()->getDozentenID()));
@@ -455,11 +452,12 @@ class DozentController extends Controller
 
         return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
     }
+
     /**
-     * @Route("/restricted/dozent/angebot/{studiengangID}/{modulID}/{angebotsart}", name="angebot")
+     * @Route("/restricted/dozent/angebot/{studiengangID}/{modulID}/{angebotsart}/{encSS}/{encWS}", name="angebot")
      * @Template("FHBingenMHBBundle:Dozent:angebot.html.twig")
      */
-    public function angebotAction($studiengangID, $modulID, $angebotsart)
+    public function angebotAction($studiengangID, $modulID, $angebotsart, $encSS, $encWS)
     {
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($modulID);
@@ -471,9 +469,6 @@ class DozentController extends Controller
         }
 
         $angebot = new Entity\Angebot();
-        $kernfach = new Entity\Kernfach();
-
-
         $form = $this->createForm(new Form\AngebotType($studiengangID, $isWahl) /*, $angebot*/);
 
         $request = $this->get('request');
@@ -487,14 +482,46 @@ class DozentController extends Controller
                 $angebot->setAngebotsart($angebotsart);
                 $angebot->setAbweichenderNameDE($form->get('abweichenderNameDE')->getData());
                 $angebot->setAbweichenderNameEN($form->get('abweichenderNameEN')->getData());
+                $angebot->setFachgebiet($form->get('fachgebiet')->getData());
 
+                if ($isWahl) {
+                    $kernfachData = $form->get('kernfach')->getData()->toArray();
+                    if (!empty($kernfachData)) {
+                        foreach ($kernfachData as $kernfachEntry) {
+                            $kernfach = new Entity\Kernfach();
+                            $kernfach->setVertiefung($kernfachEntry);
+                            $kernfach->setVeranstaltung($modul);
 
-                $kernfach->setVeranstaltung($modul);
-                $kernfach->setVertiefung($form->get('kernfach')->getData());
+                            $em->persist($kernfach);
+                            //$em->flush();
+                        }
 
+                    }
+                }
+
+                $studienplan_ss = new Entity\Studienplan();
+                $studienplan_ss->setStartsemester('SS');
+                $studienplan_ss->setVeranstaltung($modul);
+                $studienplan_ss->setStudiengang($studiengang);
+                $studienplan_ss->setRegelSemester($encSS);
+
+                $studienplan_ws = new Entity\Studienplan();
+                $studienplan_ws->setStartsemester('WS');
+                $studienplan_ws->setVeranstaltung($modul);
+                $studienplan_ws->setStudiengang($studiengang);
+                $studienplan_ws->setRegelSemester($encWS);
+
+                $modul->setStatus('Freigegeben');
+
+                $em->persist($studienplan_ss);
+                $em->persist($studienplan_ws);
+                $em->persist($modul);
                 $em->persist($angebot);
-                $em->persist($kernfach);
+
                 $em->flush();
+                //TODO: Erfolgsmeldung fehlt
+                $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
+                return $this->redirect($this->generateUrl('eigeneModule'));
             }
         }
 
@@ -517,31 +544,37 @@ class DozentController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        $studienplan_ws = new Entity\Studienplan();
-        $studienplan_ss = new Entity\Studienplan();
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $encoder=new JsonEncoder();
+                $encoder = new JsonEncoder();
                 $studiengang = $form->get('studiengang')->getData();
                 $angeotsart = $form->get('angebotsart')->getData();
 
-                $studienplan_ws->setStartsemester('WS');
-                $studienplan_ws->setVeranstaltung($modul);
-                $studienplan_ws->setStudiengang($studiengang);
-                $studienplan_ws->setRegelSemester($encoder->encode($form->get('studienplan_ws')->getData(), 'json'));
+                $valid = true;
 
+                $ssEncodedData = $encoder->encode($form->get('studienplan_ss')->getData(), 'json');
+                if (!$ssEncodedData == '[]') {
+                    $valid = false;
+                }
 
-                $studienplan_ss->setStartsemester('SS');
-                $studienplan_ss->setVeranstaltung($modul);
-                $studienplan_ss->setStudiengang($studiengang);
-                $studienplan_ss->setRegelSemester($encoder->encode($form->get('studienplan_ss')->getData(), 'json'));
+                $wsEncodedData = $encoder->encode($form->get('studienplan_ws')->getData(), 'json');
+                if ($wsEncodedData == '[]') {
+                    $valid = false;
+                }
 
-                $em->persist($studienplan_ws);
-                $em->persist($studienplan_ss);
-                $em->flush();
+                if ($valid) {
+                    return $this->redirect($this->generateUrl('angebot', array(
+                        'modulID' => $modulID,
+                        'studiengangID' => $studiengang->getStudiengangID(),
+                        'angebotsart' => $angeotsart,
+                        'encSS' => $ssEncodedData,
+                        'encWS' => $wsEncodedData)));
+                } else {
+                    //TODO: Fehlermeldung fehlt
+                    return new Response('false');
+                }
 
-                return $this->redirect($this->generateUrl('angebot', array('modulID' => $modulID, 'studiengangID' => $studiengang->getStudiengangID(), 'angebotsart' => $angeotsart)));
             }
         }
 
