@@ -156,9 +156,18 @@ class DozentController extends Controller
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
 
+
+                //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
 
-                $modul->setSelbststudium($ms);
+                if($ms >= 0){
+                    $modul->setSelbststudium($ms);
+                }
+                else{
+                    $modul->setSelbststudium(0);
+                }
+
+
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
@@ -216,7 +225,17 @@ class DozentController extends Controller
                 $modul->setDauer($form->get('dauer')->getData());
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
-                $modul->setSelbststudium($form->get('selbststudium')->getData());
+
+                //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
+                $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
+
+                if($ms >= 0){
+                    $modul->setSelbststudium($ms);
+                }
+                else{
+                    $modul->setSelbststudium(0);
+                }
+
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
@@ -273,7 +292,17 @@ class DozentController extends Controller
                 //TODO  $modul->setDauer($form->get('dauer')->getData().' '.$form->get('dauer_wahl')->getData());
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
-                $modul->setSelbststudium($form->get('selbststudium')->getData());
+
+                //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
+                $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
+
+                if($ms >= 0){
+                    $modul->setSelbststudium($ms);
+                }
+                else{
+                    $modul->setSelbststudium(0);
+                }
+
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
@@ -388,7 +417,18 @@ class DozentController extends Controller
                 $modul->setDauer($form->get('dauer')->getData());
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
-                $modul->setSelbststudium($form->get('selbststudium')->getData());
+
+                //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
+                $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
+
+                if($ms >= 0){
+                    $modul->setSelbststudium($ms);
+                }
+                else{
+                    $modul->setSelbststudium(0);
+                }
+
+
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
