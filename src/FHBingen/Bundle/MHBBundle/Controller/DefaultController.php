@@ -52,4 +52,23 @@ class DefaultController extends Controller
         }
         return new Response('alles klar');
     }
+
+    public function startsemesterAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('FHBingenMHBBundle:Studienplan');
+        $entries = $repo->findAll();
+        foreach ($entries as $entry) {
+            if ($entry->getStartsemester() == 'SS14') {
+                $entry->setStartsemester('SS');
+            }
+            if ($entry->getStartsemester() == 'WS13') {
+                $entry->setStartsemester('WS');
+            }
+
+            $em->persist($entry);
+            $em->flush();
+        }
+        return new Response('alles klar');
+    }
 }
