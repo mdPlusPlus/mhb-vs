@@ -430,10 +430,10 @@ class DozentController extends Controller
     }
 
     /**
-     * @Route("/restricted/dozent/angebot/{studiengangID}/{modulID}/{angebotsart}", name="angebot")
+     * @Route("/restricted/dozent/angebot/{studiengangID}/{modulID}/{angebotsart}/{encSS}/{encWS}", name="angebot")
      * @Template("FHBingenMHBBundle:Dozent:angebot.html.twig")
      */
-    public function angebotAction($studiengangID, $modulID, $angebotsart)
+    public function angebotAction($studiengangID, $modulID, $angebotsart, $encSS, $encWS)
     {
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($modulID);
@@ -475,14 +475,29 @@ class DozentController extends Controller
                     }
                 }
 
-                //TODO: Erfolgsmeldung fehlt
+                $studienplan_ss = new Entity\Studienplan();
+                $studienplan_ss->setStartsemester('SS');
+                $studienplan_ss->setVeranstaltung($modul);
+                $studienplan_ss->setStudiengang($studiengang);
+                $studienplan_ss->setRegelSemester($encSS);
 
-                $em->persist($angebot);
+                $studienplan_ws = new Entity\Studienplan();
+                $studienplan_ws->setStartsemester('WS');
+                $studienplan_ws->setVeranstaltung($modul);
+                $studienplan_ws->setStudiengang($studiengang);
+                $studienplan_ws->setRegelSemester($encWS);
 
                 $modul->setStatus('Freigegeben');
+
+                $em->persist($studienplan_ss);
+                $em->persist($studienplan_ws);
                 $em->persist($modul);
+                $em->persist($angebot);
 
                 $em->flush();
+                //TODO: Erfolgsmeldung fehlt
+                $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
+                return $this->redirect($this->generateUrl('eigeneModule'));
             }
         }
 
@@ -515,38 +530,24 @@ class DozentController extends Controller
                 $valid = true;
 
                 $ssEncodedData = $encoder->encode($form->get('studienplan_ss')->getData(), 'json');
-                if ($ssEncodedData != '[]') {
-                    $studienplan_ss = new Entity\Studienplan();
-                    $studienplan_ss->setStartsemester('SS');
-                    $studienplan_ss->setVeranstaltung($modul);
-                    $studienplan_ss->setStudiengang($studiengang);
-                    $studienplan_ss->setRegelSemester($ssEncodedData);
-                    //TODO: persist erst in Anbgebotaction persisten!
-                    $em->persist($studienplan_ss);
-                } else {
+                if (!$ssEncodedData == '[]') {
                     $valid = false;
                 }
 
                 $wsEncodedData = $encoder->encode($form->get('studienplan_ws')->getData(), 'json');
-                if ($wsEncodedData != '[]') {
-                    $studienplan_ws = new Entity\Studienplan();
-                    $studienplan_ws->setStartsemester('WS');
-                    $studienplan_ws->setVeranstaltung($modul);
-                    $studienplan_ws->setStudiengang($studiengang);
-                    $studienplan_ws->setRegelSemester($wsEncodedData);
-                    //TODO: persist erst in Anbgebotaction persisten!
-                    $em->persist($studienplan_ws);
-                } else {
+                if ($wsEncodedData == '[]') {
                     $valid = false;
                 }
 
-
                 if ($valid) {
-                    $em->flush();
-
-                    return $this->redirect($this->generateUrl('angebot', array('modulID' => $modulID, 'studiengangID' => $studiengang->getStudiengangID(), 'angebotsart' => $angeotsart)));
+                    return $this->redirect($this->generateUrl('angebot', array(
+                        'modulID' => $modulID,
+                        'studiengangID' => $studiengang->getStudiengangID(),
+                        'angebotsart' => $angeotsart,
+                        'encSS' => $ssEncodedData,
+                        'encWS' => $wsEncodedData)));
                 } else {
-                    //TODO: Fehlermeldung
+                    //TODO: Fehlermeldung fehlt
                     return new Response('false');
                 }
 
