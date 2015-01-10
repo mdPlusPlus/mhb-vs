@@ -103,7 +103,7 @@ class Studienplan
     }
 
 
-    public function getStartSemester()
+    public function getStartsemester()
     {
         return $this->Startsemester;
     }
