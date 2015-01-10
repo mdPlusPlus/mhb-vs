@@ -90,7 +90,7 @@ class SglController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $angebot->setCode($form->get('Code')->getData());
+                $angebot->setCode($form->get('code')->getData());
                 $em->persist($angebot);
                 $em->flush();
 
