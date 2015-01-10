@@ -167,6 +167,11 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     */
+    protected $PruefungsformSonstiges;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\Choice(
      * choices = { "Deutsch", "Englisch" },
      * message = "Bitte geben Sie eine korrekte Sprache an!"
@@ -607,6 +612,29 @@ class Veranstaltung
     public function getPruefungsformen()
     {
         return $this->Pruefungsformen;
+    }
+
+    /**
+     * Set PruefungsformSonstiges
+     *
+     * @param string $pruefungsformen
+     * @return Veranstaltung
+     */
+    public function setPruefungsformSonstiges($pruefungsformSonst)
+    {
+        $this->PruefungsformSonstiges = $pruefungsformSonst;
+
+        return $this;
+    }
+
+    /**
+     * Get PruefungsformenSonstiges
+     *
+     * @return string
+     */
+    public function getPruefungsformSonstiges()
+    {
+        return $this->PruefungsformSonstiges;
     }
 
     /**

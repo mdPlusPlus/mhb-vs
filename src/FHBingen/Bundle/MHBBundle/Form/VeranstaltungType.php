@@ -91,6 +91,7 @@ class VeranstaltungType extends AbstractType
             $pruefungsformenChoiceOptions['data'] = $pruefungsformen;
         }
         $form->add('pruefungsformen', 'choice', $pruefungsformenChoiceOptions);
+        $form->add('PruefungsformSonstiges', 'text', array('label' => 'Pruefungsform Sonstiges: ', 'required' => false));
 
 
         $lehrveranstaltungenChoiceOptions = array(

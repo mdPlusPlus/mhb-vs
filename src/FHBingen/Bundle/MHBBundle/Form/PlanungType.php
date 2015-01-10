@@ -77,6 +77,7 @@ class PlanungType extends AbstractType
             $pruefungsformenChoiceOptions['data'] = $pruefungsformen;
         }
         $form->add('pruefungsformen', 'choice', $pruefungsformenChoiceOptions);
+        $form->add('PruefungsformSonstiges', 'text', array('label' => 'PruefungsformSonstiges: ', 'required' => false));
 
 
         $lehrveranstaltungenChoiceOptions = array(
