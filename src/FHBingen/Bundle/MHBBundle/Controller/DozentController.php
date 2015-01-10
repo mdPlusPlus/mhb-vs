@@ -155,7 +155,10 @@ class DozentController extends Controller
                 $modul->setDauer($form->get('dauer')->getData());
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
-                $modul->setSelbststudium($form->get('selbststudium')->getData());
+
+                $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
+
+                $modul->setSelbststudium($ms);
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
@@ -166,7 +169,7 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
-                $modul->setPruefungsformenSonstiges($form->get('PruefungsformenSonstiges')->getData());
+                $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
                 $modul->setAutor($user->__toString());
                 $em->persist($modul);
@@ -224,7 +227,7 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
-                $modul->setPruefungsformenSonstiges($form->get('PruefungsformenSonstiges')->getData());
+                $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
                 $modul->setAutor($user->__toString());
 
@@ -281,7 +284,7 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
-                $modul->setPruefungsformenSonstiges($form->get('PruefungsformenSonstiges')->getData());
+                $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
                 $modul->setAutor($user->__toString());
 
@@ -396,7 +399,7 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
-                $modul->setPruefungsformenSonstiges($form->get('PruefungsformenSonstiges')->getData());
+                $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
 
 
