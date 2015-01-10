@@ -48,7 +48,7 @@ class Studienplan
     * @ORM\Column(type="string"), nullable = false
      * @Assert\NotBlank(message = "Das Startsemester muss gesetzt werden.")
      * */
-    protected $StartSemester;
+    protected $Startsemester;
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="studienplanModul")
@@ -95,9 +95,9 @@ class Studienplan
     }
 
 
-    public function setStartSemester($startSem)
+    public function setStartsemester($startSem)
     {
-        $this->StartSemester = $startSem;
+        $this->Startsemester = $startSem;
     
         return $this;
     }
@@ -105,7 +105,7 @@ class Studienplan
 
     public function getStartSemester()
     {
-        return $this->StartSemester;
+        return $this->Startsemester;
     }
 
     /**

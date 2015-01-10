@@ -458,6 +458,7 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
+                $encoder=new JsonEncoder();
                 $angebot->setCode('DUMMY');
                 $angebot->setVeranstaltung($modul);
                 $angebot->setStudiengang($studiengang);
@@ -472,6 +473,7 @@ class DozentController extends Controller
                 $studienplan_ws->setStartSemester('WS');
                 $studienplan_ws->setVeranstaltung($modul);
                 $studienplan_ws->setStudiengang($studiengang);
+                $studienplan_ws->setRegelSemester($encoder->encode(get($studienplan_ws)->getData()), 'json')
 
                 $em->persist($angebot);
                 $em->persist($kernfach);
