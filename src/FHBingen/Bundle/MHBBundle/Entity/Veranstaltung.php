@@ -247,29 +247,6 @@ class Veranstaltung
     }
 
     /**
-     * Set erstellt_von
-     *
-     * @param string $erstelltVon
-     * @return Veranstaltung
-     */
-    public function setErstelltVon($erstelltVon)
-    {
-        $this->Erstellt_von = $erstelltVon;
-
-        return $this;
-    }
-
-    /**
-     * Get erstellt_von
-     *
-     * @return string
-     */
-    public function getErstelltVon()
-    {
-        return $this->Erstellt_von;
-    }
-
-    /**
      * Set Versionsnummer_Modul
      *
      * @param integer $versionsnummerModul

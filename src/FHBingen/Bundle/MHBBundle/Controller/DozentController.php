@@ -272,6 +272,7 @@ class DozentController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => 'Freigegeben'));
+        $modulHistory= new Entity\VeranstaltungHistory();
 
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 
@@ -280,6 +281,35 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
+
+                $modulHistory->setAutor($modul->getAutor());
+                $modulHistory->setModulID($modul->getModulID());
+                $modulHistory->setVersionsnummer($modul->getVersionsnummer());
+                $modulHistory->setDauer($modul->getDauer());
+                $modulHistory->setName($modul->getName());
+                $modulHistory->setNameEN($modul->getNameEN());
+                $modulHistory->setKuerzel($modul->getKuerzel());
+                $modulHistory->setErstellungsdatum($modul->getErstellungsdatum());
+                $modulHistory->setGruppengroesse($modul->getGruppengroesse());
+                $modulHistory->setHaeufigkeit($modul->getHaeufigkeit());
+                $modulHistory->setInhalte($modul->getInhalte());
+                $modulHistory->setKontaktzeitSonstige($modul->getKontaktzeitSonstige());
+                $modulHistory->setKontaktzeitVL($modul->getKontaktzeitVL());
+                $modulHistory->setSelbststudium($modul->getSelbststudium());
+                $modulHistory->setLernergebnisse($modul->getLernergebnisse());
+                $modulHistory->setSprache($modul->getSprache());
+                $modulHistory->setSpracheSonstiges($modul->getSpracheSonstiges());
+                $modulHistory->setLiteratur($modul->getLiteratur());
+                $modulHistory->setLeistungspunkte($modul->getLeistungspunkte());
+                $modulHistory->setVoraussetzungInh($modul->getVoraussetzungInh());
+                $modulHistory->setPruefungsformSonstiges($modul->getPruefungsformSonstiges());
+                $modulHistory->setVoraussetzungLP($encoder->encode($modul->getVoraussetzungLP(), 'json'));
+                $modulHistory->setPruefungsformen($encoder->encode($modul->getPruefungsformen(), 'json'));
+                $modulHistory->setLehrveranstaltungen($encoder->encode($modul->getLehrveranstaltungen(), 'json'));
+
+
+                $em->persist($modulHistory);
+
                 //notwendige Einträge
                 $modul->setErstellungsdatum(new \DateTime());
 
@@ -315,6 +345,7 @@ class DozentController extends Controller
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
+                $modul->setVersionsnummer($modul->getVersionsnummer()+1);
                 $modul->setAutor($user->__toString());
 
                 //TODO: Testen hier ist unklarheit ob addModul() und addLehrende() benötigt wird

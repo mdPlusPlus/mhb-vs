@@ -35,6 +35,7 @@ class SglController extends Controller
                 $nichtInPlanung[] = $value;
             }
         }
+        asort($nichtInPlanung,SORT_STRING);
 
         $stgZuModul = array();
         foreach ($nichtInPlanung as $modul) {
@@ -64,7 +65,7 @@ class SglController extends Controller
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
 
         $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY'), array("Code" => 'asc'));
-        //TODO!
+
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
         $angeboteOhneDummy = array();
         foreach ($angebote as $value) {
@@ -72,6 +73,7 @@ class SglController extends Controller
                 $angeboteOhneDummy[] = $value;
             }
         }
+        asort($angeboteOhneDummy,SORT_STRING);
 
         return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote,'studiengang'=>$studiengang, 'pageTitle' => 'Modulcodes');
     }
