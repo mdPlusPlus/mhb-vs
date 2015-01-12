@@ -11,16 +11,10 @@ built on Symfony 2.5.*
 
 TODO
 ====
-- script-tag aus Templates entfernen (google analytics, jquery?, alles unbekannte/nicht benötigte)
 - .gitignore muss vermutlich noch angepasst werden wegen /web/bundles/
 (unter windows lokale kopie, soll auf server nur symlink sein, eventuell auf server löschen und update assets machen)
 (außerdem vllt parameters.yml drauf setzen)
 - MySQL-Konfiguration auf Produktiv-VM anpassen (bzw Anleitung schreiben für Deployment) (gar nicht notwendig!)
-- [mysqld]
-  collation-server = utf8_general_ci
-  character-set-server = utf8
-- 
-
 
 Deployment
 ==========
@@ -35,9 +29,15 @@ Voraussetzungen
 - MySQL
 - (?) Composer
 
+
+Development
+===========
+
+- PhpStorm
+- parameters.yml
+
 MySQL
 -----
-
 - MySQL-Sever verfügbar machen
 in `/etc/mysql/my.cnf`
 `bind-address = 0.0.0.0`
@@ -52,10 +52,3 @@ flush privileges;
 quit
 sudo service mysql restart
 `
-
-
-Development
-===========
-
-- PhpStorm
-- parameters.yml
