@@ -35,7 +35,7 @@ class SglController extends Controller
                 $nichtInPlanung[] = $value;
             }
         }
-        asort($nichtInPlanung,SORT_STRING);
+        asort($nichtInPlanung, SORT_STRING);
 
         $stgZuModul = array();
         foreach ($nichtInPlanung as $modul) {
@@ -44,7 +44,7 @@ class SglController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
-            asort($name,SORT_STRING);
+            asort($name, SORT_STRING);
             $stgZuModul[] = $name;
         }
 
@@ -65,7 +65,7 @@ class SglController extends Controller
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
 
         $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY'), array("Code" => 'asc'));
-        asort($dummyAngebote,SORT_STRING);
+        asort($dummyAngebote, SORT_STRING);
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
         $angeboteOhneDummy = array();
         foreach ($angebote as $value) {
@@ -73,7 +73,7 @@ class SglController extends Controller
                 $angeboteOhneDummy[] = $value;
             }
         }
-        asort($angeboteOhneDummy,SORT_STRING);
+        asort($angeboteOhneDummy, SORT_STRING);
 
         return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote,'studiengang'=>$studiengang, 'pageTitle' => 'Modulcodes');
     }
@@ -128,7 +128,6 @@ class SglController extends Controller
      */
     public function mhbModulListe($id)
     {
-
         $em = $this->getDoctrine()->getManager();
         $mhb = $em->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer,
                                  d.Titel, d.Nachname, v.Autor
@@ -136,13 +135,13 @@ class SglController extends Controller
                                  JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung =  v.Modul_ID
                                  JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
                                  AND a.mhb =' . $id);
-        $result = $mhb->getResult();
-        $mhb_tile = $em->createQuery('SELECT DISTINCT m.Beschreibung
+        $mhbResult = $mhb->getResult();
+        $mhbBeschreibung = $em->createQuery('SELECT DISTINCT m.Beschreibung
                                  FROM  FHBingenMHBBundle:Modulhandbuch m
                                  WHERE m.MHB_ID =' . $id);
-        $mhb_Beschreibung = $mhb_tile->getResult();
+        $mhbBeschreibungResult = $mhbBeschreibung->getResult();
 
-        return array('mhb' => $result,'beschreibung'=>$mhb_Beschreibung, 'pageTitle' => 'Module des Modulhandbuchs ' );
+        return array('mhb' => $mhbResult,'beschreibung'=>$mhbBeschreibungResult, 'pageTitle' => 'Module des Modulhandbuchs ' );
     }
 
 

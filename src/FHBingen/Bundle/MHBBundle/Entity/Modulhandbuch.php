@@ -25,7 +25,8 @@ class Modulhandbuch
     public function __toString()
     {
         //TODO richtig? getter?
-        $string =(string) $this->getGehoertZu().' '.$this->getVersionsnummer();
+        $string = (string) $this->getGehoertZu().' '.$this->getVersionsnummer();
+
         return $string;
     }
 

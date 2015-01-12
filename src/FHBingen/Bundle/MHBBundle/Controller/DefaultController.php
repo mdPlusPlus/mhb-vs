@@ -18,7 +18,11 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        //TODO: wenn bereits eingeloggt auf andere Seite verweisen
+        /*
+         * TODO:
+         * wenn bereits eingeloggt auf andere Seite verweisen
+         * nicht so einfach, weil nicht hinter /restricted/ und damit firewall kontext nicht verfügbar
+         */
         //'login' ist hier route alias von /login
         return $this->redirect($this->generateUrl('login'));
     }
