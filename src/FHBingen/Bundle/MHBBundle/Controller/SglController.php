@@ -25,18 +25,18 @@ class SglController extends Controller
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
         $em = $this->getDoctrine()->getManager();
-        //TODO!
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
 
-
+        //filtert die Module die in Planung sind herraus
         $nichtInPlanung = array();
         foreach ($module as $value) {
             if ($value->getStatus() != 'in Planung' && $value->getStatus() != 'expired') {
                 $nichtInPlanung[] = $value;
             }
         }
-        asort($nichtInPlanung, SORT_STRING);
+        asort($nichtInPlanung, SORT_STRING);//Sortiert die Veranstaltungen nach name
 
+        //Sucht die Studeingänge für die Module herraus
         $stgZuModul = array();
         foreach ($nichtInPlanung as $modul) {
             $name = array();
@@ -44,7 +44,7 @@ class SglController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
-            asort($name, SORT_STRING);
+            asort($name, SORT_STRING);//Sortiert die Studiengänge nach name
             $stgZuModul[] = $name;
         }
 
@@ -63,17 +63,18 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
-
+        //findet die Angebote mit Dummy Modulcode
         $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY'), array("Code" => 'asc'));
-        asort($dummyAngebote, SORT_STRING);
+        asort($dummyAngebote, SORT_STRING);//sortiert die Angebote
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
         $angeboteOhneDummy = array();
+        //Filtert die Angebote mit DummyModul und aus anderen Studiengängen herraus
         foreach ($angebote as $value) {
             if ($value->getCode() != 'DUMMY' && $value->getStudiengang()->getStudiengangID() == $studiengang->getStudiengangID()) {
                 $angeboteOhneDummy[] = $value;
             }
         }
-        asort($angeboteOhneDummy, SORT_STRING);
+        asort($angeboteOhneDummy, SORT_STRING);//Sortiert nach Veranstaltungen name
 
         return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote,'studiengang'=>$studiengang, 'pageTitle' => 'Modulcodes');
     }
@@ -92,7 +93,7 @@ class SglController extends Controller
 
         $request = $this->get('request');
         $form->handleRequest($request);
-
+        //Spiechert den neune Modulcode in der Angebots Tabelle
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
                 $angebot->setCode($form->get('code')->getData());
@@ -116,7 +117,6 @@ class SglController extends Controller
     public function mhbUebersichtAction()
     {
         $em = $this->getDoctrine()->getManager();
-        //TODO!
         $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
 
         return array('mhb' => $mhb, 'pageTitle' => 'Modulhandbücher');
@@ -129,13 +129,16 @@ class SglController extends Controller
     public function mhbModulListe($id)
     {
         $em = $this->getDoctrine()->getManager();
+        //findet alle Veranstaltungen die dem MHB zugeordnet sind
         $mhb = $em->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer,
                                  d.Titel, d.Nachname, v.Autor
                                  FROM  FHBingenMHBBundle:Angebot a
                                  JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung =  v.Modul_ID
                                  JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
-                                 AND a.mhb =' . $id);
+                                 AND a.mhb =' . $id.
+                                 ' ORDER BY v.Name ASC');
         $mhbResult = $mhb->getResult();
+        //FInet den Namen des MHB um MHB-Kontext  im Twig anzeigen zulassen
         $mhbBeschreibung = $em->createQuery('SELECT DISTINCT m.Beschreibung
                                  FROM  FHBingenMHBBundle:Modulhandbuch m
                                  WHERE m.MHB_ID =' . $id);

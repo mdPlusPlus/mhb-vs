@@ -279,7 +279,7 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-
+                //schreibt den Veranstaltungs Inhalt vor der änderung in die History Tabelle
                 $modulHistory->setAutor($modul->getAutor());
                 $modulHistory->setModulID($modul->getModulID());
                 $modulHistory->setVersionsnummer($modul->getVersionsnummer());
