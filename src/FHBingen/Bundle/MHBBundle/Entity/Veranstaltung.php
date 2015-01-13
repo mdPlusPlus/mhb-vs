@@ -21,6 +21,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Veranstaltung
 {
 
+    /*
+     * TODO:
+     * - Dauer (Unterscheidung Semster/Wochen/Monate)
+     * - VoraussetzungLP (SL Sonstiges, PL Sonstiges)
+     */
+
+
     public function __toString()
     {
         $string = (string)$this->getName();
