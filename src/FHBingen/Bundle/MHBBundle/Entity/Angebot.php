@@ -9,6 +9,7 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FHBingen\Bundle\MHBBundle\PHP\ModulBeschreibung;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -295,5 +296,15 @@ class Angebot
     public function getAbweichenderNameEN()
     {
         return $this->AbweichenderNameEN;
+    }
+
+    /**
+     * @return ModulBeschreibung
+     */
+    public function getModulBeschreibung() {
+        $modulBeschreibung = new ModulBeschreibung();
+        $modulBeschreibung->setAngebot($this);
+
+        return $modulBeschreibung;
     }
 }

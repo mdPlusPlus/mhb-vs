@@ -783,10 +783,12 @@ class Veranstaltung
     }
 
 
-    public function __construct_lehrende()
-    {
-        $this->Lehrende = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
+    //TODO: Was für ein Geniestreich war das denn O.o?
+//    public function __construct_lehrende()
+//    {
+//        $this->Lehrende = new \Doctrine\Common\Collections\ArrayCollection();
+//    }
 
 
     /**
@@ -796,6 +798,7 @@ class Veranstaltung
     {
         $this->modul = new \Doctrine\Common\Collections\ArrayCollection();
         $this->Lehrende = new \Doctrine\Common\Collections\ArrayCollection();
+        //TODO: Was ist denn da bei modul und Lehrende passiert? Das ist ein und das selbe Feld...
         $this->semesterplan = new \Doctrine\Common\Collections\ArrayCollection();
         $this->modul_kernfach = new \Doctrine\Common\Collections\ArrayCollection();
         $this->angebot = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1017,6 +1020,7 @@ class Veranstaltung
      *      )
      **/
     private $modul_;
+    //super unintitiv, modul_ ist eigentlich die Voraussetzung
 
     public function __construct_vor()
     {

@@ -10,35 +10,17 @@ namespace FHBingen\Bundle\MHBBundle\PHP;
 
 
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
-use FHBingen\Bundle\MHBBundle\Entity\Veranstaltung;
 
 class ModulBeschreibung {
 
-    private $modul;
     private $angebot;
-    private $studiengaenge;
+    private $fremdeStudiengaenge;
     private $studienplaene;
     private $lehrende;
     private $voraussetzungen;
     private $pruefungsformen;
     private $lehrveranstaltungen;
     private $voraussetzungenLP;
-
-    /**
-     * @return Veranstaltung
-     */
-    public function getModul()
-    {
-        return $this->modul;
-    }
-
-    /**
-     * @param Veranstaltung $modul
-     */
-    public function setModul(Veranstaltung $modul)
-    {
-        $this->modul = $modul;
-    }
 
     /**
      * @return Angebot
@@ -59,17 +41,17 @@ class ModulBeschreibung {
     /**
      * @return mixed
      */
-    public function getStudiengaenge()
+    public function getFremdeStudiengaenge()
     {
-        return $this->studiengaenge;
+        return $this->fremdeStudiengaenge;
     }
 
     /**
-     * @param mixed $studiengaenge
+     * @param mixed $fremdeStudiengaenge
      */
-    public function setStudiengaenge($studiengaenge)
+    public function setFremdeStudiengaenge($fremdeStudiengaenge)
     {
-        $this->studiengaenge = $studiengaenge;
+        $this->fremdeStudiengaenge = $fremdeStudiengaenge;
     }
 
     /**
