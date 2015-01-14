@@ -233,11 +233,11 @@
                 <span class="key">Modulbeauftragter:</span> {{ modulbeschreibung.getModul().getBeauftragter() }}<br/>
                 {% if modulbeschreibung.getLehrende() is not empty %}
                     <span class="key">weitere Lehrende:</span>
-                    {% for name in modulbeschreibung.getLehrende() %}
-                        {% if name == 'Alle' %}
-                            Alle Dozenten des Studiengangs {{ eigenerStudiengang }}
+                    {% for lehrender in modulbeschreibung.getLehrende() %}
+                        {% if lehrender.getNachname() == 'Alle Dozenten möglich' %}
+                            Alle Dozenten des Studiengangs {{ modulbeschreibung.getAngebot().getStudiengang() }}
                         {% else %}
-                            {{ name }}
+                            {{ lehrender }}
                         {% endif %}
                     {% endfor %}
                 {% endif %}

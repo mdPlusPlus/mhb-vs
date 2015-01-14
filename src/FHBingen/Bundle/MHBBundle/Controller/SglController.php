@@ -220,7 +220,7 @@ class SglController extends Controller
                 $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
                 foreach ($tmp as $studiengang) {
                     if ($studiengang->getStudiengang() != $angebote[3]->getStudiengang()) {
-                        $name[] = (string) $studiengang->getStudiengang();
+                        $name[] = $studiengang->getStudiengang();
                     }
                 }
                 $stgZuModul[] = $name;
@@ -232,7 +232,7 @@ class SglController extends Controller
                 $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $modul->getModulID()));
                 foreach ($tmp as $lehrend) {
                     if ($lehrend->getDozent() != $modul->getBeauftragter()) {
-                        $name[] = (string) $lehrend->getDozent();
+                        $name[] = $lehrend->getDozent();
                     }
                 }
                 $lehrendeZuModul[] = $name;
@@ -282,7 +282,7 @@ class SglController extends Controller
             uasort($modulBeschreibungen, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'modulBeschreibungSort'));
 
             foreach ($modulBeschreibungen as $modulbeschreibung) {
-                $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulbeschreibung' => $modulbeschreibung, 'eigenerStudiengang' => $currentStudiengang));
+                $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulbeschreibung' => $modulbeschreibung));
             }
 
             $footerText = "";

@@ -9,9 +9,11 @@
 namespace FHBingen\Bundle\MHBBundle\PHP;
 
 
+use FHBingen\Bundle\MHBBundle\Entity\Dozent;
+
 class SortFunctions {
 
-    public static function modulBeschreibungSort($descA, $descB)
+    public static function modulBeschreibungSort(ModulBeschreibung $descA, ModulBeschreibung $descB)
     {
         $a = $descA->getAngebot()->getCode();
         $b = $descB->getAngebot()->getCode();
@@ -23,7 +25,7 @@ class SortFunctions {
         return ($a < $b) ? -1 : 1;
     }
 
-    public static function dozentSort($dozA, $dozB)
+    public static function dozentSort(Dozent $dozA, Dozent $dozB)
     {
         $a = $dozA->getNachname();
         $b = $dozB->getNachname();

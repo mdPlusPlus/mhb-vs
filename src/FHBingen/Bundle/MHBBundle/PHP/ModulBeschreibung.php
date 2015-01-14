@@ -9,6 +9,9 @@
 namespace FHBingen\Bundle\MHBBundle\PHP;
 
 
+use FHBingen\Bundle\MHBBundle\Entity\Angebot;
+use FHBingen\Bundle\MHBBundle\Entity\Veranstaltung;
+
 class ModulBeschreibung {
 
     private $modul;
@@ -22,7 +25,7 @@ class ModulBeschreibung {
     private $voraussetzungenLP;
 
     /**
-     * @return mixed
+     * @return Veranstaltung
      */
     public function getModul()
     {
@@ -30,15 +33,15 @@ class ModulBeschreibung {
     }
 
     /**
-     * @param mixed $modul
+     * @param Veranstaltung $modul
      */
-    public function setModul($modul)
+    public function setModul(Veranstaltung $modul)
     {
         $this->modul = $modul;
     }
 
     /**
-     * @return mixed
+     * @return Angebot
      */
     public function getAngebot()
     {
@@ -46,9 +49,9 @@ class ModulBeschreibung {
     }
 
     /**
-     * @param mixed $angebot
+     * @param Angebot $angebot
      */
-    public function setAngebot($angebot)
+    public function setAngebot(Angebot $angebot)
     {
         $this->angebot = $angebot;
     }

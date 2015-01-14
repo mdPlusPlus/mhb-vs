@@ -24,7 +24,7 @@ class Angebot
 
     public function __toString()
     {
-        $string =(string) $this->getVeranstaltung();
+        $string = (string) $this->getVeranstaltung();
 
         return $string;
     }
