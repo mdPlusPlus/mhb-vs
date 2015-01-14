@@ -33,6 +33,7 @@ Voraussetzungen
 - PHP (>5.5 ?)
 - MySQL
 - (?) Composer
+- wkhtmltopdf
 
 
 Development
