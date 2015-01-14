@@ -10,6 +10,7 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
+use FHBingen\Bundle\MHBBundle\PHP\ModulBeschreibung;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
