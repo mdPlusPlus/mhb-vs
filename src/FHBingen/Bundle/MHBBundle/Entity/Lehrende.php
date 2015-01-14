@@ -37,7 +37,7 @@ class Lehrende
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="modul")
+     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="lehrende")
      * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
      */
     protected $veranstaltung;

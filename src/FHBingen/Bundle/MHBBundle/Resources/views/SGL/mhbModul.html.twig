@@ -234,10 +234,10 @@
                 {% if modulbeschreibung.getAngebot().getVeranstaltung().getLehrende() is not empty %}
                     <span class="key">weitere Lehrende:</span>
                     {% for lehrender in modulbeschreibung.getAngebot().getVeranstaltung().getLehrende() %}
-                        {% if lehrender.getNachname() == 'Alle Dozenten möglich' %}
+                        {% if lehrender.getDozent().getNachname() == 'Alle Dozenten möglich' %}
                             Alle Dozenten des Studiengangs {{ modulbeschreibung.getAngebot().getStudiengang() }}
                         {% else %}
-                            {{ lehrender }}
+                            {{ lehrender.getDozent() }}
                         {% endif %}
                     {% endfor %}
                 {% endif %}

@@ -223,9 +223,9 @@ class SglController extends Controller
         foreach ($moduleZuMHB as $modul) {
             $name = array();
             $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
-            foreach ($tmp as $studiengang) {
-                if ($studiengang->getStudiengang() != $angebote[3]->getStudiengang()) {
-                    $name[] = $studiengang->getStudiengang();
+            foreach ($tmp as $angeb) {
+                if ($angeb->getStudiengang() != $angebote[3]->getStudiengang()) {
+                    $name[] = $angeb->getStudiengang();
                 }
             }
             $stgZuModul[] = $name;
