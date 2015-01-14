@@ -148,7 +148,7 @@ class SglController extends Controller
     }
 
 
-   /*
+   /**
      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
      */
     public function mhbErstellungAction()

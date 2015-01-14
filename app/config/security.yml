@@ -16,8 +16,8 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        default:
-            anonymous: ~
+#        default:
+#            anonymous: ~
 
         login:
             pattern:  ^/restricted/login$
