@@ -21,6 +21,7 @@ Deployment
 
 - (?) Umleitung von 80 auf 8000 (apache sites-available ?)
 - (?) composer update macht .git history kaputt
+- libxrender (apt-get)
 - wkhtmltopdf binary pfad anpassen
 - toc argument wieder aufnehmen
 - parameters.yml
