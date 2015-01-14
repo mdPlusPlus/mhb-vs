@@ -21,7 +21,7 @@ class SglController extends Controller
 {
     /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
-     * * @Template("FHBingenMHBBundle:SGL:alleModule.html.twig")
+     * @Template("FHBingenMHBBundle:SGL:alleModule.html.twig")
      */
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
@@ -151,6 +151,7 @@ class SglController extends Controller
 
    /**
      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
+     * @Template("FHBingenMHBBundle:SGL:mhbErstellung.html.twig")
      */
     public function mhbErstellungAction()
     {
@@ -184,7 +185,7 @@ class SglController extends Controller
         $currentStudiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $currentUser));
         $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
 
-        if($mhb->getGehoertZu() == $currentStudiengang){
+        if ($mhb->getGehoertZu() == $currentStudiengang) {
             $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
 
             $mhbBeschreibung = $mhb->getBeschreibung();
@@ -215,7 +216,7 @@ class SglController extends Controller
                 $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
                 foreach ($tmp as $studiengang) {
                     if ($studiengang->getStudiengang() != $angebote[3]->getStudiengang()) {
-                        $name[] = (string)$studiengang->getStudiengang();
+                        $name[] = (string) $studiengang->getStudiengang();
                     }
                 }
                 $stgZuModul[] = $name;
@@ -227,7 +228,7 @@ class SglController extends Controller
                 $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $modul->getModulID()));
                 foreach ($tmp as $lehrend) {
                     if ($lehrend->getDozent() != $modul->getBeauftragter()) {
-                        $name[] = (string)$lehrend->getDozent();
+                        $name[] = (string) $lehrend->getDozent();
                     }
                 }
                 $lehrendeZuModul[] = $name;
@@ -276,16 +277,16 @@ class SglController extends Controller
 
             uasort($modulBeschreibungen, array($this, 'modulBeschreibungSort'));
 
-            foreach($modulBeschreibungen as $modulbeschreibung){
+            foreach ($modulBeschreibungen as $modulbeschreibung) {
                 $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulbeschreibung' => $modulbeschreibung, 'eigenerStudiengang' => $currentStudiengang));
             }
 
             $footerText = "";
 
-            if($currentStudiengang->getFachbereich() == 1) {
+            if ($currentStudiengang->getFachbereich() == 1) {
                 $footerText = 'Fachbereich 1 - Life Sciences and Engineering';
             }
-            if($currentStudiengang->getFachbereich() == 2) {
+            if ($currentStudiengang->getFachbereich() == 2) {
                 $footerText = 'Fachbereich 2 - Technik, Informatik und Wirtschaft';
             }
 
@@ -330,7 +331,8 @@ class SglController extends Controller
 
     }
 
-    private function modulBeschreibungSort($descA, $descB){
+    private function modulBeschreibungSort($descA, $descB)
+    {
         $a = $descA->getAngebot()->getCode();
         $b = $descB->getAngebot()->getCode();
 
