@@ -21,6 +21,8 @@ Deployment
 
 - (?) Umleitung von 80 auf 8000 (apache sites-available ?)
 - (?) composer update macht .git history kaputt
+- wkhtmltopdf binary pfad anpassen
+- toc argument wieder aufnehmen
 
 Voraussetzungen
 ----------------
