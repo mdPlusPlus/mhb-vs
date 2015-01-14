@@ -23,6 +23,8 @@ Deployment
 - (?) composer update macht .git history kaputt
 - wkhtmltopdf binary pfad anpassen
 - toc argument wieder aufnehmen
+- parameters.yml
+- assets:install
 
 Voraussetzungen
 ----------------
