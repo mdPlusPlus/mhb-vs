@@ -130,22 +130,24 @@ class SglController extends Controller
     public function mhbModulListe($id)
     {
         $em = $this->getDoctrine()->getManager();
-        //findet alle Veranstaltungen die dem MHB zugeordnet sind
-        $mhb = $em->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer,
-                                 d.Titel, d.Nachname, v.Autor
-                                 FROM  FHBingenMHBBundle:Angebot a
-                                 JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung =  v.Modul_ID
-                                 JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
-                                 AND a.mhb =' . $id.
-                                 ' ORDER BY v.Name ASC');
-        $mhbResult = $mhb->getResult();
-        //FInet den Namen des MHB um MHB-Kontext  im Twig anzeigen zulassen
-        $mhbBeschreibung = $em->createQuery('SELECT DISTINCT m.Beschreibung
-                                 FROM  FHBingenMHBBundle:Modulhandbuch m
-                                 WHERE m.MHB_ID =' . $id);
-        $mhbBeschreibungResult = $mhbBeschreibung->getResult();
 
-        return array('mhb' => $mhbResult,'beschreibung'=>$mhbBeschreibungResult, 'pageTitle' => 'Module des Modulhandbuchs ' );
+        //findet alle Veranstaltungen die dem MHB zugeordnet sind
+        $mhb = $em
+            ->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer, d.Titel, d.Nachname, v.Autor
+                           FROM  FHBingenMHBBundle:Angebot a
+                           JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung = v.Modul_ID
+                           JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter = d.Dozenten_ID
+                           AND a.mhb = ' . $id . ' ORDER BY v.Name ASC')
+            ->getResult();
+
+        //findet den Namen des MHB um MHB-Kontext im Twig anzeigen zulassen
+        $mhbBeschreibung = $em
+            ->createQuery('SELECT DISTINCT m.Beschreibung
+                           FROM  FHBingenMHBBundle:Modulhandbuch m
+                           WHERE m.MHB_ID =' . $id)
+            ->getResult();
+
+        return array('mhb' => $mhb,'beschreibung'=>$mhbBeschreibung, 'pageTitle' => 'Module des Modulhandbuchs' );
     }
 
 
@@ -155,6 +157,7 @@ class SglController extends Controller
      */
     public function mhbErstellungAction()
     {
+        //TODO: schön machen und auch die angebote mit MHB anzeigen
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
@@ -168,9 +171,10 @@ class SglController extends Controller
                 $angeboteOhneMHB[] = $value;
             }
         }
+
         return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'Modulhandbucherstellung');
     }
-	
+
     /**
      * PDF-Export Test
      * @Route("/restricted/sgl/pdf/{mhbID}", name="pdf")
