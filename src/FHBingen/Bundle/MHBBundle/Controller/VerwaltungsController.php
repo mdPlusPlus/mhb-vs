@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
 
+
 class VerwaltungsController extends Controller
 {
     /**
@@ -47,23 +48,13 @@ class VerwaltungsController extends Controller
             }
         }
 
-        uasort($sgl, array($this, 'dozentSort'));
-        uasort($dozent, array($this,'dozentSort'));
+        uasort($sgl, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'dozentSort'));
+        uasort($dozent, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions','dozentSort'));
 
         return array('sgl' => $sgl, 'dozent' => $dozent, 'pageTitle' => 'Nutzerverwaltung');
     }
 
-    private function dozentSort($dozA, $dozB)
-    {
-        $a = $dozA->getNachname();
-        $b = $dozB->getNachname();
 
-        if ($a == $b) {
-            return 0;
-        }
-
-        return ($a < $b) ? -1 : 1;
-    }
 
     /**
      * @Route("/restricted/sgl/passwordReset", name="passwdReset")

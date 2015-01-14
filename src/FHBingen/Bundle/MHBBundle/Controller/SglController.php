@@ -77,7 +77,7 @@ class SglController extends Controller
         }
         asort($angeboteOhneDummy, SORT_STRING);//Sortiert nach Veranstaltungen name
 
-        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote,'studiengang'=>$studiengang, 'pageTitle' => 'Modulcodes');
+        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote, 'studiengang' => $studiengang, 'pageTitle' => 'Modulcodes');
     }
 
     /**
@@ -147,11 +147,11 @@ class SglController extends Controller
                            WHERE m.MHB_ID =' . $id)
             ->getResult();
 
-        return array('mhb' => $mhb,'beschreibung'=>$mhbBeschreibung, 'pageTitle' => 'Module des Modulhandbuchs' );
+        return array('mhb' => $mhb, 'beschreibung' => $mhbBeschreibung, 'pageTitle' => 'Module des Modulhandbuchs');
     }
 
 
-   /**
+    /**
      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
      * @Template("FHBingenMHBBundle:SGL:mhbErstellung.html.twig")
      */
@@ -172,7 +172,7 @@ class SglController extends Controller
             }
         }
 
-        return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'Modulhandbucherstellung');
+        return array('angebote' => $angeboteOhneMHB, 'pageTitle' => 'Modulhandbucherstellung');
     }
 
     /**
@@ -279,7 +279,7 @@ class SglController extends Controller
 
             }
 
-            uasort($modulBeschreibungen, array($this, 'modulBeschreibungSort'));
+            uasort($modulBeschreibungen, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'modulBeschreibungSort'));
 
             foreach ($modulBeschreibungen as $modulbeschreibung) {
                 $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulbeschreibung' => $modulbeschreibung, 'eigenerStudiengang' => $currentStudiengang));
@@ -324,7 +324,7 @@ class SglController extends Controller
             ));
         }
 
-       return new Response('Nicht der eigene Studiengang');
+        return new Response('Nicht der eigene Studiengang');
     }
 
     /**
@@ -335,16 +335,6 @@ class SglController extends Controller
 
     }
 
-    private function modulBeschreibungSort($descA, $descB)
-    {
-        $a = $descA->getAngebot()->getCode();
-        $b = $descB->getAngebot()->getCode();
 
-        if ($a == $b) {
-            return 0;
-        }
-
-        return ($a < $b) ? -1 : 1;
-    }
 
 }
