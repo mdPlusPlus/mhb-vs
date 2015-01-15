@@ -205,7 +205,7 @@ class SglController extends Controller
                     $studienplaeneZuStudiengang[] = $studienplan;
                 }
             }
-            uasort($studienplaeneZuStudiengang, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'studienplanBeschreibungSort'));
+            uasort($studienplaeneZuStudiengang, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'studienplanSort'));
             $modulBeschreibung->setStudienplaene($studienplaeneZuStudiengang);
 
             $modulBeschreibung->setVoraussetzungen($veranstaltung->getModulVoraussetzung());
