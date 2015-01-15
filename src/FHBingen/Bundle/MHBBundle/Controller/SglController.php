@@ -192,6 +192,7 @@ class SglController extends Controller
 
             $modulBeschreibung = new ModulBeschreibung();
             $modulBeschreibung->setAngebot($angebot);
+            $modulBeschreibung->setVoraussetzungen($veranstaltung->getModulVoraussetzung());
             $modulBeschreibung->setPruefungsformen($encoder->decode($veranstaltung->getPruefungsformen(), 'json'));
             $modulBeschreibung->setLehrveranstaltungen($encoder->decode($veranstaltung->getLehrveranstaltungen(), 'json'));
             $modulBeschreibung->setVoraussetzungenLP($encoder->decode($veranstaltung->getVoraussetzungLP(), 'json'));
@@ -208,8 +209,6 @@ class SglController extends Controller
             uasort($studienplaeneZuStudiengang, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'studienplanSort'));
             $modulBeschreibung->setStudienplaene($studienplaeneZuStudiengang);
 
-            $modulBeschreibung->setVoraussetzungen($veranstaltung->getModulVoraussetzung());
-
             $angeboteZuVeranstaltung = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $veranstaltung));
             $fremdeStudiengaenge = array();
             foreach ($angeboteZuVeranstaltung as $angebotZuVeranstaltung) {
@@ -218,7 +217,6 @@ class SglController extends Controller
                 }
             }
             array_unique($fremdeStudiengaenge); //wenn es später mehrere Modulhandbücher für einen Studiengang gibt -> neue Angebote -> Dopplungen bei Studiengängen
-
             $modulBeschreibung->setFremdeStudiengaenge($fremdeStudiengaenge);
 
             $modulBeschreibungen[] = $modulBeschreibung;
