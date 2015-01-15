@@ -40,15 +40,6 @@ class ModulhandbuchZuweisung {
     private $angebot;
 
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set mhb
@@ -56,7 +47,7 @@ class ModulhandbuchZuweisung {
      * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $mhb
      * @return ModulhandbuchZuweisung
      */
-    public function setMhb(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $mhb = null)
+    public function setMhb(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $mhb)
     {
         $this->mhb = $mhb;
 
@@ -79,7 +70,7 @@ class ModulhandbuchZuweisung {
      * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
      * @return ModulhandbuchZuweisung
      */
-    public function setAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot = null)
+    public function setAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
     {
         $this->angebot = $angebot;
 
