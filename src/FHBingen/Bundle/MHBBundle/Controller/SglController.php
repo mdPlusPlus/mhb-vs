@@ -209,15 +209,17 @@ class SglController extends Controller
             uasort($studienplaeneZuStudiengang, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'studienplanSort'));
             $modulBeschreibung->setStudienplaene($studienplaeneZuStudiengang);
 
-            $angeboteZuVeranstaltung = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $veranstaltung));
             $fremdeStudiengaenge = array();
-            foreach ($angeboteZuVeranstaltung as $angebotZuVeranstaltung) {
-                if ($angebotZuVeranstaltung->getStudiengang() != $studiengang) {
-                    $fremdeStudiengaenge[] = $angebotZuVeranstaltung->getStudiengang();
+            //hole ALLE angebote, in denen das Modul steckt und hole davon die jeweiligen Studiengänge
+            $modulAngebote = $veranstaltung->getAngebot();
+            foreach ($modulAngebote as $modulAngebot) {
+                if ($modulAngebot->getStudiengang() != $studiengang) {
+                    $fremdeStudiengaenge[] = $modulAngebot->getStudiengang();
                 }
             }
             array_unique($fremdeStudiengaenge); //wenn es später mehrere Modulhandbücher für einen Studiengang gibt -> neue Angebote -> Dopplungen bei Studiengängen
             $modulBeschreibung->setFremdeStudiengaenge($fremdeStudiengaenge);
+
 
             $modulBeschreibungen[] = $modulBeschreibung;
         }
