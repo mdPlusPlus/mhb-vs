@@ -30,6 +30,12 @@ class Angebot
         return $string;
     }
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="ModulhandbuchZuweisung", mappedBy="angebot", cascade={"all"})
+     */
+    private $zuweisung;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -307,4 +313,54 @@ class Angebot
 //
 //        return $modulBeschreibung;
 //    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->zuweisung = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get Angebots_ID
+     *
+     * @return integer 
+     */
+    public function getAngebotsID()
+    {
+        return $this->Angebots_ID;
+    }
+
+    /**
+     * Add zuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
+     * @return Angebot
+     */
+    public function addZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
+    {
+        $this->zuweisung[] = $zuweisung;
+
+        return $this;
+    }
+
+    /**
+     * Remove zuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
+     */
+    public function removeZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
+    {
+        $this->zuweisung->removeElement($zuweisung);
+    }
+
+    /**
+     * Get zuweisung
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getZuweisung()
+    {
+        return $this->zuweisung;
+    }
 }

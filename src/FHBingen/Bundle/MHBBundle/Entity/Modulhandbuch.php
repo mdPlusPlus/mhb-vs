@@ -30,6 +30,12 @@ class Modulhandbuch
         return $string;
     }
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="ModulhandbuchZuweisung" , mappedBy="mhb" , cascade={"all"})
+     */
+    private $zuweisung;
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\ID
@@ -245,5 +251,39 @@ class Modulhandbuch
     public function getGehoertZu()
     {
         return $this->gehoertZu;
+    }
+
+
+    /**
+     * Add zuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
+     * @return Modulhandbuch
+     */
+    public function addZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
+    {
+        $this->zuweisung[] = $zuweisung;
+
+        return $this;
+    }
+
+    /**
+     * Remove zuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
+     */
+    public function removeZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
+    {
+        $this->zuweisung->removeElement($zuweisung);
+    }
+
+    /**
+     * Get zuweisung
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getZuweisung()
+    {
+        return $this->zuweisung;
     }
 }
