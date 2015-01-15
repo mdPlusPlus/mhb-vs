@@ -43,7 +43,7 @@ class SglController extends Controller
             $name = array();
             $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
             foreach ($tmp as $studiengang) {
-                $name[] = (string)$studiengang->getStudiengang();
+                $name[] = (string) $studiengang->getStudiengang();
             }
             asort($name, SORT_STRING);//Sortiert die Studiengänge nach name
             $stgZuModul[] = $name;
@@ -144,7 +144,7 @@ class SglController extends Controller
         $mhbBeschreibung = $em
             ->createQuery('SELECT DISTINCT m.Beschreibung
                            FROM  FHBingenMHBBundle:Modulhandbuch m
-                           WHERE m.MHB_ID =' . $id)
+                           WHERE m.MHB_ID = ' . $id)
             ->getResult();
 
         return array('mhb' => $mhb, 'beschreibung' => $mhbBeschreibung, 'pageTitle' => 'Module des Modulhandbuchs');

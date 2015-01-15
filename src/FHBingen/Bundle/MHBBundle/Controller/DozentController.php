@@ -44,7 +44,7 @@ class DozentController extends Controller
             $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $m->getModulID()));
 
             foreach ($tmp as $lehrend) {
-                $name[] = (string)$lehrend->getDozent();
+                $name[] = (string) $lehrend->getDozent();
             }
             $mLehrende[] = $name;
         }
@@ -63,7 +63,7 @@ class DozentController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
-            asort($name,SORT_STRING);
+            asort($name, SORT_STRING);
 
             $stgZuModul[] = $name;
         }
@@ -75,7 +75,7 @@ class DozentController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
-            asort($name,SORT_STRING);
+            asort($name, SORT_STRING);
             $stgZuModul[] = $name;
         }
 
@@ -162,10 +162,9 @@ class DozentController extends Controller
 
 
 
-                if($ms >= 0){
+                if ($ms >= 0) {
                     $modul->setSelbststudium($ms);
-                }
-                else{
+                } else {
                     $modul->setSelbststudium(0);
                 }
 
@@ -233,10 +232,9 @@ class DozentController extends Controller
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
 
-                if($ms >= 0){
+                if ($ms >= 0) {
                     $modul->setSelbststudium($ms);
-                }
-                else{
+                } else {
                     $modul->setSelbststudium(0);
                 }
 
@@ -333,10 +331,9 @@ class DozentController extends Controller
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
 
-                if($ms >= 0){
+                if ($ms >= 0) {
                     $modul->setSelbststudium($ms);
-                }
-                else{
+                } else {
                     $modul->setSelbststudium(0);
                 }
 
@@ -461,10 +458,9 @@ class DozentController extends Controller
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
 
-                if($ms >= 0){
+                if ($ms >= 0) {
                     $modul->setSelbststudium($ms);
-                }
-                else{
+                } else {
                     $modul->setSelbststudium(0);
                 }
 
@@ -586,28 +582,29 @@ class DozentController extends Controller
                     }
                 }
 
-                $studienplan_ss = new Entity\Studienplan();
-                $studienplan_ss->setStartsemester('SS');
-                $studienplan_ss->setVeranstaltung($modul);
-                $studienplan_ss->setStudiengang($studiengang);
-                $studienplan_ss->setRegelSemester($encSS);
+                $studienplanSS = new Entity\Studienplan();
+                $studienplanSS->setStartsemester('SS');
+                $studienplanSS->setVeranstaltung($modul);
+                $studienplanSS->setStudiengang($studiengang);
+                $studienplanSS->setRegelSemester($encSS);
 
-                $studienplan_ws = new Entity\Studienplan();
-                $studienplan_ws->setStartsemester('WS');
-                $studienplan_ws->setVeranstaltung($modul);
-                $studienplan_ws->setStudiengang($studiengang);
-                $studienplan_ws->setRegelSemester($encWS);
+                $studienplanWS = new Entity\Studienplan();
+                $studienplanWS->setStartsemester('WS');
+                $studienplanWS->setVeranstaltung($modul);
+                $studienplanWS->setStudiengang($studiengang);
+                $studienplanWS->setRegelSemester($encWS);
 
                 $modul->setStatus('Freigegeben');
 
-                $em->persist($studienplan_ss);
-                $em->persist($studienplan_ws);
+                $em->persist($studienplanSS);
+                $em->persist($studienplanWS);
                 $em->persist($modul);
                 $em->persist($angebot);
 
                 $em->flush();
                 //TODO: Erfolgsmeldung fehlt
                 $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
+
                 return $this->redirect($this->generateUrl('eigeneModule'));
             }
         }
