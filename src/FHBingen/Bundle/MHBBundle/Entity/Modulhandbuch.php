@@ -30,12 +30,6 @@ class Modulhandbuch
         return $string;
     }
 
-
-    /**
-     * @ORM\OneToMany(targetEntity="ModulhandbuchZuweisung" , mappedBy="mhb" , cascade={"all"})
-     */
-    private $zuweisung;
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\ID
@@ -140,56 +134,14 @@ class Modulhandbuch
         return $this->Beschreibung;
     }
 
-
     /*Abhaengigkeiten*/
 
     /*Angebot*/
 
     /**
-     * @ORM\OneToMany(targetEntity="Angebot", mappedBy="mhb", cascade={"all"})
-     * */
-    protected $angebot;
-    /**
-     * Constructor
+     * @ORM\OneToMany(targetEntity="ModulhandbuchZuweisung" , mappedBy="mhb" , cascade={"all"})
      */
-    public function __construct()
-    {
-        $this->angebot = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add angebot
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
-     * @return Modulhandbuch
-     */
-    public function addAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
-    {
-        $this->angebot[] = $angebot;
-
-        return $this;
-    }
-
-    /**
-     * Remove angebot
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
-     */
-    public function removeAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
-    {
-        $this->angebot->removeElement($angebot);
-    }
-
-    /**
-     * Get angebot
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAngebot()
-    {
-        return $this->angebot;
-    }
-
+    private $zuweisung;
 
     /*Modulhandbuch/Semester*/
 

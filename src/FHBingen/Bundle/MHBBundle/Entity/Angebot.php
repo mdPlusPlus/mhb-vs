@@ -50,13 +50,6 @@ class Angebot
      * */
     protected $veranstaltung;
 
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Modulhandbuch", inversedBy="angebot")
-     * @ORM\JoinColumn(name="mhb", referencedColumnName="MHB_ID", nullable=true)
-     * */
-    protected $mhb;
-
     /**
      * @ORM\ManyToOne(targetEntity="Fachgebiet", inversedBy="angebot")
      * @ORM\JoinColumn(name="fachgebiet", referencedColumnName="Fachgebiets_ID", nullable=false)
@@ -91,24 +84,30 @@ class Angebot
     protected	$Code;
 
     /**
-     * @ORM\Column(type="string", length=40, nullable=true)
+     * @ORM\Column(type="string", length=70, nullable=true)
      * @Assert\Length(
-     *      max = 40,
+     *      max = 70,
      *      maxMessage = "Der abweichende deutsche Name darf maximal {{ limit }} Zeichen lang sein."
      * )
-     * TODO: aufpassen! richtiger Titel ist kann bis zu 70 zeichen lang sein! ändern?
      */
     protected	$AbweichenderNameDE;
 
     /**
-     * @ORM\Column(type="string", length=40, nullable=true)
+     * @ORM\Column(type="string", length=70, nullable=true)
      * @Assert\Length(
-     *      max = 40,
+     *      max = 70,
      *      maxMessage = "Der abweichende englische Name darf maximal {{ limit }} Zeichen lang sein."
      * )
-     * TODO: aufpassen! richtiger Titel ist kann bis zu 70 zeichen lang sein! ändern?
      */
     protected	$AbweichenderNameEN;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->zuweisung = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -141,29 +140,6 @@ class Angebot
     public function getVeranstaltung()
     {
         return $this->veranstaltung;
-    }
-
-    /**
-     * Set mhb
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $mhb
-     * @return Angebot
-     */
-    public function setMhb(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $mhb = null)
-    {
-        $this->mhb = $mhb;
-    
-        return $this;
-    }
-
-    /**
-     * Get mhb
-     *
-     * @return \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch 
-     */
-    public function getMhb()
-    {
-        return $this->mhb;
     }
 
     /**
@@ -305,23 +281,6 @@ class Angebot
     }
 
     /**
-     * @return ModulBeschreibung
-     */
-//    public function getModulBeschreibung() {
-//        $modulBeschreibung = new ModulBeschreibung();
-//        $modulBeschreibung->setAngebot($this);
-//
-//        return $modulBeschreibung;
-//    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->zuweisung = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Get Angebots_ID
      *
      * @return integer 
@@ -363,4 +322,14 @@ class Angebot
     {
         return $this->zuweisung;
     }
+
+    /**
+     * @return ModulBeschreibung
+     */
+//    public function getModulBeschreibung() {
+//        $modulBeschreibung = new ModulBeschreibung();
+//        $modulBeschreibung->setAngebot($this);
+//
+//        return $modulBeschreibung;
+//    }
 }
