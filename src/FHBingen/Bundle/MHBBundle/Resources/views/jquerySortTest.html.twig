@@ -1,0 +1,57 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+    <style>
+        #sortable1, #sortable2, #sortable3 {
+            border: 1px solid #eee;
+            width: 142px;
+            min-height: 20px;
+            list-style-type: none;
+            margin: 0;
+            padding: 5px 0 0 0;
+            float: left;
+            margin-right: 10px;
+        }
+
+        #sortable1 li, #sortable2 li, #sortable3 li {
+            margin: 0 5px 5px 5px;
+            padding: 5px;
+            font-size: 1.2em;
+            width: 120px;
+        }
+
+        .wrap {
+            float: left;
+        }
+    </style>
+    <script>
+        $(function () {
+            $("#sortable1").sortable({
+                connectWith: ".connectedSortable1, .connectedSortable2"
+            });
+            $("#sortable2").sortable({
+                connectWith: ".connectedSortable1"
+            }).disableSelection();
+            $("#sortable3").sortable({
+                connectWith: ".connectedSortable2"
+            }).disableSelection();
+        });
+    </script>
+
+    <ul id="sortable1" class="connectedSortable1 connectedSortable2">
+    </ul>
+    <ul id="sortable2" class="connectedSortable1">
+        <li class="ui-state-highlight">Modul 1.1</li>
+        <li class="ui-state-highlight">Modul 1.2</li>
+        <li class="ui-state-highlight">Modul 1.3</li>
+        <li class="ui-state-highlight">Modul 1.4</li>
+        <li class="ui-state-highlight">Modul 1.5</li>
+    </ul>
+    <ul id="sortable3" class="connectedSortable2">
+        <li class="ui-state-highlight">Modul 2.1</li>
+        <li class="ui-state-highlight">Modul 2.2</li>
+        <li class="ui-state-highlight">Modul 2.3</li>
+        <li class="ui-state-highlight">Modul 2.4</li>
+        <li class="ui-state-highlight">Modul 2.5</li>
+    </ul>
+{% endblock %}

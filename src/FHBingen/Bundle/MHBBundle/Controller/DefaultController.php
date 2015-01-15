@@ -79,4 +79,13 @@ class DefaultController extends Controller
 
         return new Response('alles klar');
     }
+
+    /**
+     * @Route("/restricted/sgl/sort")
+     * @Template("@FHBingenMHB/jquerySortTest.html.twig")
+     */
+    public function jquerySortTestAction()
+    {
+        return array();
+    }
 }
