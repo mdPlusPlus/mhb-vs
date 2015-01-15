@@ -277,6 +277,8 @@ class Veranstaltung
         $this->semesterplan = new ArrayCollection();
         $this->modul_kernfach = new ArrayCollection();
         $this->angebot = new ArrayCollection();
+        $this->modulVoraussetzung = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->modul_ = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -1045,11 +1047,13 @@ class Veranstaltung
         return $this->angebot;
     }
 
-    public function __construct_vor()
-    {
-        $this->modulVoraussetzung = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->modul_ = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
+    //TODO: Was ist denn das hier schon wieder?
+//    public function __construct_vor()
+//    {
+//        $this->modulVoraussetzung = new \Doctrine\Common\Collections\ArrayCollection();
+//        $this->modul_ = new \Doctrine\Common\Collections\ArrayCollection();
+//    }
 
     /**
      * Get beauftragter
