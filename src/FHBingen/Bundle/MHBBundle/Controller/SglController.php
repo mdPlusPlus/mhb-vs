@@ -131,7 +131,7 @@ class SglController extends Controller
     public function mhbModulListe($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        //TODO:NEU MACHEN
         //findet alle Veranstaltungen die dem MHB zugeordnet sind
         $mhb = $em
             ->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer, d.Titel, d.Nachname, v.Autor

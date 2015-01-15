@@ -46,7 +46,7 @@ class VeranstaltungType extends AbstractType
 
             //Merge mit Lehrenden
 
-            ->add('modul', 'collection', array('label' => false, 'type' => new LehrendeType(),
+            ->add('lehrende', 'collection', array('label' => false, 'type' => new LehrendeType(),
                 'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
                 'options' => array(
                     'required' => false,

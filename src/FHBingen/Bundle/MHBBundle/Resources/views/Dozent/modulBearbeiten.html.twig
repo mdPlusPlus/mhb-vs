@@ -39,7 +39,7 @@
 
 {% block content %}
     <script type="text/javascript">
-        var lehrendeCount = '{{ form.modul|length }}';
+        var lehrendeCount = '{{ form.lehrende|length }}';
 
         jQuery(document).ready(function () {
             jQuery('#add-another-lehrende').click(function (e) {
@@ -112,10 +112,10 @@
         <h4 style="font-weight: bold">Lehrende</h4>
         <ul id="lehrende-fields-list" data-prototype=
         "{% filter escape %}
-                {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.modul.vars.prototype } %}
+                {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.lehrende.vars.prototype } %}
             {% endfilter %}">
 
-            {% for lehrendeField in form.modul %}
+            {% for lehrendeField in form.lehrende %}
                 <li>
                     {{ form_errors(lehrendeField) }}
                     {{ form_widget(lehrendeField) }}
