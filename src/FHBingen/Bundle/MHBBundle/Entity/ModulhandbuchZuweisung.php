@@ -21,10 +21,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ModulhandbuchZuweisung {
 
-
-
-
-
     /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Modulhandbuch", inversedBy="zuweisung")
@@ -38,8 +34,6 @@ class ModulhandbuchZuweisung {
      * @ORM\JoinColumn(name="angebot", referencedColumnName="Angebots_ID")
      */
     private $angebot;
-
-
 
     /**
      * Set mhb

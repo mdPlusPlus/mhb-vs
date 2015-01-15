@@ -253,7 +253,6 @@ class Modulhandbuch
         return $this->gehoertZu;
     }
 
-
     /**
      * Add zuweisung
      *
