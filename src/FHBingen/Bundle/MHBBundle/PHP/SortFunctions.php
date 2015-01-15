@@ -10,8 +10,21 @@ namespace FHBingen\Bundle\MHBBundle\PHP;
 
 
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
+use FHBingen\Bundle\MHBBundle\Entity\Studienplan;
 
 class SortFunctions {
+
+    public static function dozentSort(Dozent $dozA, Dozent $dozB)
+    {
+        $a = $dozA->getNachname();
+        $b = $dozB->getNachname();
+
+        if ($a == $b) {
+            return 0;
+        }
+
+        return ($a < $b) ? -1 : 1;
+    }
 
     public static function modulBeschreibungSort(ModulBeschreibung $descA, ModulBeschreibung $descB)
     {
@@ -25,10 +38,10 @@ class SortFunctions {
         return ($a < $b) ? -1 : 1;
     }
 
-    public static function dozentSort(Dozent $dozA, Dozent $dozB)
+    public static function studienplanSort(Studienplan $planA, Studienplan $planB)
     {
-        $a = $dozA->getNachname();
-        $b = $dozB->getNachname();
+        $a = $planA->getStartsemester();
+        $b = $planB->getStartsemester();
 
         if ($a == $b) {
             return 0;

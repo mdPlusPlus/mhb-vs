@@ -301,10 +301,10 @@ class Angebot
     /**
      * @return ModulBeschreibung
      */
-    public function getModulBeschreibung() {
-        $modulBeschreibung = new ModulBeschreibung();
-        $modulBeschreibung->setAngebot($this);
-
-        return $modulBeschreibung;
-    }
+//    public function getModulBeschreibung() {
+//        $modulBeschreibung = new ModulBeschreibung();
+//        $modulBeschreibung->setAngebot($this);
+//
+//        return $modulBeschreibung;
+//    }
 }

@@ -5,13 +5,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    {% set titelDE = modulbeschreibung.getAngebot().getVeranstaltung().getName() %}
-    {% set titelEN = modulbeschreibung.getAngebot().getVeranstaltung().getNameEn() %}
-    {% if modulbeschreibung.getAngebot().getAbweichenderNameDE() %}
-        {% set titelDE = modulbeschreibung.getAngebot().getAbweichenderNameDE()%}
+    {% set titelDE = modulBeschreibung.getAngebot().getVeranstaltung().getName() %}
+    {% set titelEN = modulBeschreibung.getAngebot().getVeranstaltung().getNameEn() %}
+    {% if modulBeschreibung.getAngebot().getAbweichenderNameDE() %}
+        {% set titelDE = modulBeschreibung.getAngebot().getAbweichenderNameDE()%}
     {% endif %}
-    {% if modulbeschreibung.getAngebot().getAbweichenderNameEN() %}
-        {% set titelEN = modulbeschreibung.getAngebot().getAbweichenderNameEN()%}
+    {% if modulBeschreibung.getAngebot().getAbweichenderNameEN() %}
+        {% set titelEN = modulBeschreibung.getAngebot().getAbweichenderNameEN()%}
     {% endif %}
     <title>{{ titelDE }}</title>
     <style type="text/css">
@@ -51,12 +51,12 @@
 </head>
 <body>
 <div class="modul">
-    <p class="intro"><h3>{{ titelDE }} ({{ modulbeschreibung.getAngebot().getCode() }})</h3></p>
+    <p class="intro"><h3>{{ titelDE }} ({{ modulBeschreibung.getAngebot().getCode() }})</h3></p>
     <table>
         <thead>
         <tr>
             <th colspan="7">
-                {{ titelDE }} ({{ modulbeschreibung.getAngebot().getVeranstaltung().getKuerzel() }})<br/>
+                {{ titelDE }} ({{ modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() }})<br/>
                 {{ titelEN }}
             </th>
         </tr>
@@ -65,21 +65,21 @@
         <tr>
             <td>
                 <div class="key">Kennnummer</div>
-                {{ modulbeschreibung.getAngebot().getCode() }}
+                {{ modulBeschreibung.getAngebot().getCode() }}
             </td>
             <td>
                 <div class="key">Arbeitsbelastung</div>
-                {{ modulbeschreibung.getAngebot().getVeranstaltung().getLeistungspunkte()*30 }}h
+                {{ modulBeschreibung.getAngebot().getVeranstaltung().getLeistungspunkte()*30 }}h
             </td>
             <td>
                 <div class="key">Leistungspunkte</div>
-                {{ modulbeschreibung.getAngebot().getVeranstaltung().getLeistungspunkte() }}
+                {{ modulBeschreibung.getAngebot().getVeranstaltung().getLeistungspunkte() }}
             </td>
             <td colspan="2">
                 <div class="key">Studiensemeseter</div>
                 {# TODO: als Tabelle ausgeben #}
                 <table>
-                {% for studienplan in modulbeschreibung.getStudienplaene() %}
+                {% for studienplan in modulBeschreibung.getStudienplaene() %}
                     <tr>
                         <td class="studiensemseter startsemester">{{ studienplan.getStartsemester() }}:</td>
                         <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': '', ',': '. + '}) }}. Semester</td>
@@ -89,13 +89,13 @@
             </td>
             <td>
                 <div class="key">Häufigkeit des Angebots</div>
-                {{ modulbeschreibung.getAngebot().getVeranstaltung().getHaeufigkeit() }}
+                {{ modulBeschreibung.getAngebot().getVeranstaltung().getHaeufigkeit() }}
             </td>
             <td>
                 <div class="key">Dauer</div>
-                {{ modulbeschreibung.getAngebot().getVeranstaltung().getDauer() }}
+                {{ modulBeschreibung.getAngebot().getVeranstaltung().getDauer() }}
                 {# < 3 sind Semester, >= 3 sind Wochen #}
-                {% if modulbeschreibung.getAngebot().getVeranstaltung().getDauer() < 3 %}
+                {% if modulBeschreibung.getAngebot().getVeranstaltung().getDauer() < 3 %}
                     Semester
                 {% else %}
                     Wochen
@@ -106,54 +106,54 @@
             <td>1</td>
             <td colspan="2">
                 <div class="key">Lehrveranstaltung</div>
-                {% for lehrveranstaltung in modulbeschreibung.getLehrveranstaltungen %}
+                {% for lehrveranstaltung in modulBeschreibung.getLehrveranstaltungen %}
                     {{ lehrveranstaltung }}<br/>
                 {% endfor %}
             </td>
             <td>
                 <div class="key">Kontaktzeit Vorlesung</div>
-                {% if modulbeschreibung.getAngebot().getVeranstaltung().getKontaktzeitVL() != "" %}
-                    {{ modulbeschreibung.getAngebot().getVeranstaltung().getKontaktzeitVL() }}h
+                {% if modulBeschreibung.getAngebot().getVeranstaltung().getKontaktzeitVL() != "" %}
+                    {{ modulBeschreibung.getAngebot().getVeranstaltung().getKontaktzeitVL() }}h
                 {% else %}
                     0h
                 {% endif %}
             </td>
             <td>
                 <div class="key">Kontaktzeit Sonstige</div>
-                {% if modulbeschreibung.getAngebot().getVeranstaltung().getKontaktzeitSonstige() != "" %}
-                    {{ modulbeschreibung.getAngebot().getVeranstaltung().getKontaktzeitSonstige() }}h
+                {% if modulBeschreibung.getAngebot().getVeranstaltung().getKontaktzeitSonstige() != "" %}
+                    {{ modulBeschreibung.getAngebot().getVeranstaltung().getKontaktzeitSonstige() }}h
                 {% else %}
                     0h
                 {% endif %}
             </td>
             <td>
                 <div class="key">Selbststudium</div>
-                {{ modulbeschreibung.getAngebot().getVeranstaltung().getSelbststudium() }}h
+                {{ modulBeschreibung.getAngebot().getVeranstaltung().getSelbststudium() }}h
             </td>
             <td>
                 <div class="key">Geplante Gruppengröße</div>
-                {{ modulbeschreibung.getAngebot().getVeranstaltung().getGruppengroesse() }} Studierende
+                {{ modulBeschreibung.getAngebot().getVeranstaltung().getGruppengroesse() }} Studierende
             </td>
         </tr>
         <tr>
             <td>2</td>
             <td colspan="6">
                 <div class="key">Lernergebnisse</div>
-                {{ modulbeschreibung.getAngebot().getVeranstaltung().getLernergebnisse()|nl2br }}
+                {{ modulBeschreibung.getAngebot().getVeranstaltung().getLernergebnisse()|nl2br }}
             </td>
         </tr>
         <tr>
             <td>3</td>
             <td colspan="6">
                 <div class="key">Inhalte</div>
-                {{ modulbeschreibung.getAngebot().getVeranstaltung().getInhalte()|nl2br }}
+                {{ modulBeschreibung.getAngebot().getVeranstaltung().getInhalte()|nl2br }}
             </td>
         </tr>
         <tr>
             <td>4</td>
             <td colspan="6">
                 <div class="key">Lehrform</div>
-                {{ modulbeschreibung.getAngebot().getVeranstaltung().getKontaktzeitVL()/15 }} SWS Vorlesung, {{ modulbeschreibung.getAngebot().getVeranstaltung().getKontaktzeitVL()/15 }} SWS
+                {{ modulBeschreibung.getAngebot().getVeranstaltung().getKontaktzeitVL()/15 }} SWS Vorlesung, {{ modulBeschreibung.getAngebot().getVeranstaltung().getKontaktzeitVL()/15 }} SWS
                 begleitende Übung
             </td>
         </tr>
@@ -162,24 +162,24 @@
             <td colspan="6">
                 <div class="key">Teilnahmevoraussetzungen</div>
                 Formal:
-                {% if modulbeschreibung.getVoraussetzungen() is not empty %}
-                    {% for modul in modulbeschreibung.getVoraussetzungen() %}
+                {% if modulBeschreibung.getVoraussetzungen() is not empty %}
+                    {% for modul in modulBeschreibung.getVoraussetzungen() %}
                         {{ modul }}<br/>
                     {% endfor %}
                 {% else %}
-                    {% if modulbeschreibung.getAngebot().getVeranstaltung().getKuerzel() == "BACH" %}
+                    {% if modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() == "BACH" %}
                         Bestehen aller anderen Studienveranstaltunge laut Studienplan<br/>
                     {% endif %}
-                    {% if modulbeschreibung.getAngebot().getVeranstaltung().getKuerzel() == "PRAX" %}
+                    {% if modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() == "PRAX" %}
                         Alle veranstaltunge der ersten sechs Semester<br/>
                     {% endif %}
-                    {% if (modulbeschreibung.getAngebot().getVeranstaltung().getKuerzel() != "PRAX") and (modulbeschreibung.getAngebot().getVeranstaltung().getKuerzel() != "BACH") %}
+                    {% if (modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() != "PRAX") and (modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() != "BACH") %}
                         keine<br/>
                     {% endif %}
                 {% endif %}
                 Inhaltlich:
-                {% if modulbeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInh() != "" %}
-                    {{ modulbeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInh() }}
+                {% if modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInh() != "" %}
+                    {{ modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInh() }}
                 {% else %}
                     keine
                 {% endif %}
@@ -189,11 +189,11 @@
             <td>6</td>
             <td colspan="6">
                 <div class="key">Prüfungsformen</div>
-                {% for pruefungsform in modulbeschreibung.getPruefungsformen() %}
+                {% for pruefungsform in modulBeschreibung.getPruefungsformen() %}
                     {{ pruefungsform }}<br/>
                 {% endfor %}
-                {% if modulbeschreibung.getAngebot().getVeranstaltung().getPruefungsformSonstiges() %}
-                    {{ modulbeschreibung.getAngebot().getVeranstaltung().getPruefungsformSonstiges() }}
+                {% if modulBeschreibung.getAngebot().getVeranstaltung().getPruefungsformSonstiges() %}
+                    {{ modulBeschreibung.getAngebot().getVeranstaltung().getPruefungsformSonstiges() }}
                 {% endif %}
             </td>
         </tr>
@@ -201,8 +201,8 @@
             <td>7</td>
             <td colspan="6">
                 <div class="key">Voraussetzungen für die Vergabe von Leistungspunkten</div>
-                {% if modulbeschreibung.getVoraussetzungenLP() is not empty %}
-                    {% for voraussetzung in modulbeschreibung.getVoraussetzungenLP() %}
+                {% if modulBeschreibung.getVoraussetzungenLP() is not empty %}
+                    {% for voraussetzung in modulBeschreibung.getVoraussetzungenLP() %}
                         {{ voraussetzung }}<br/>
                     {% endfor %}
                 {% else %}
@@ -214,7 +214,7 @@
             <td>8</td>
             <td colspan="6">
                 <div class="key">Verwendung des Moduls (in anderen Studiengängen)</div>
-                {% for studiengang in modulbeschreibung.getFremdeStudiengaenge() %}
+                {% for studiengang in modulBeschreibung.getFremdeStudiengaenge() %}
                     {{ studiengang }}<br/>
                 {% endfor %}
             </td>
@@ -230,12 +230,12 @@
             <td>10</td>
             <td colspan="6">
                 <div class="key">Modulbeauftragte/r und hauptamtlich Lehrende</div>
-                <span class="key">Modulbeauftragter:</span> {{ modulbeschreibung.getAngebot().getVeranstaltung().getBeauftragter() }}<br/>
-                {% if modulbeschreibung.getAngebot().getVeranstaltung().getLehrende() is not empty %}
+                <span class="key">Modulbeauftragter:</span> {{ modulBeschreibung.getAngebot().getVeranstaltung().getBeauftragter() }}<br/>
+                {% if modulBeschreibung.getAngebot().getVeranstaltung().getLehrende() is not empty %}
                     <span class="key">weitere Lehrende:</span>
-                    {% for lehrender in modulbeschreibung.getAngebot().getVeranstaltung().getLehrende() %}
+                    {% for lehrender in modulBeschreibung.getAngebot().getVeranstaltung().getLehrende() %}
                         {% if lehrender.getDozent().getNachname() == 'Alle Dozenten möglich' %}
-                            Alle Dozenten des Studiengangs {{ modulbeschreibung.getAngebot().getStudiengang() }}
+                            Alle Dozenten des Studiengangs {{ modulBeschreibung.getAngebot().getStudiengang() }}
                         {% else %}
                             {{ lehrender.getDozent() }}
                         {% endif %}
@@ -247,13 +247,13 @@
             <td>11</td>
             <td colspan="6">
                 <div class="key">Sonstige Informationen</div>
-                <span class="key">Sprache:</span> {{ modulbeschreibung.getAngebot().getVeranstaltung().getSprache() }}
-                {% if modulbeschreibung.getAngebot().getVeranstaltung().getSpracheSonstiges() %}
-                   ({{ modulbeschreibung.getAngebot().getVeranstaltung().getSpracheSonstiges() }})
+                <span class="key">Sprache:</span> {{ modulBeschreibung.getAngebot().getVeranstaltung().getSprache() }}
+                {% if modulBeschreibung.getAngebot().getVeranstaltung().getSpracheSonstiges() %}
+                   ({{ modulBeschreibung.getAngebot().getVeranstaltung().getSpracheSonstiges() }})
                 {% endif %}
                 <br/>
                 <span class="key">Literatur:</span><br/>
-                {{ modulbeschreibung.getAngebot().getVeranstaltung().getLiteratur()|nl2br }}
+                {{ modulBeschreibung.getAngebot().getVeranstaltung().getLiteratur()|nl2br }}
             </td>
         </tr>
         </tbody>
