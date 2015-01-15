@@ -158,15 +158,24 @@ class SglController extends Controller
      */
     public function mhbErstellungAction()
     {
-        //TODO: schön machen und auch die angebote mit MHB anzeigen
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $userMail = $user->getUsername();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
-        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang->getStudiengangID()));
+        $sgl = $this->get('security.context')->getToken()->getUser();
 
-        return array('angebote' => $angebote, 'pageTitle' => 'Modulhandbucherstellung');
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $sgl));
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang));
+
+        $zuordnung = array();
+        $fachgebiete = $em->getRepository('FHBingenMHBBundle:Fachgebiet')->findBy(array('studiengang' => $studiengang));
+
+        foreach ($fachgebiete as $fachgebiet) {
+            $zuordnung[$fachgebiet->getTitel()] = array();
+        }
+
+        foreach ($angebote as $angebot) {
+            $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
+        }
+
+        return array('studiengang' => $studiengang, 'zuordnung' => $zuordnung, 'pageTitle' => 'Modulhandbucherstellung');
     }
 
 
@@ -323,7 +332,32 @@ class SglController extends Controller
             $em->remove($del);
             $em->persist($lehrende);
         }
+    }
 
+    /**
+     * @Route("/restricted/sgl/mhbEstellungParsen", name="mhbErstellungParsen")
+     */
+    public function mhbErstellungParseAction()
+    {
+        if (!empty($_POST)) {
+            $angebote = array();
+            $em = $this->getDoctrine()->getManager();
+
+            $studiengang = new Entity\Studiengang(); // wird sowieso direkt überschrieben
+
+            foreach ($_POST as $key => $value) {
+                if ($key == 'Studiengang') {
+                    $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneById($value);
+                } else {
+                    $angebote[] = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneById($value);
+                }
+            }
+
+            //TODO: MHB erstellen usw
+
+        } else {
+            return new Response('$_POST was empty');
+        }
 
 
 

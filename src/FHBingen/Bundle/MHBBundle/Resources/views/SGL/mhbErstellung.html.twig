@@ -1,39 +1,70 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block content %}
-    {# TODO: Code für PDF-Erstellung noch in anderem Repository (snappy) #}
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#table").tablesorter();
+    <style>
+        .angebote, #mhb {
+            /*border: 3px solid #eee;*/
+            width: 300px;
+            min-height: 20px;
+            list-style-type: none;
+            margin: 0;
+            padding: 5px 0 0 0;
+            /*float: left;*/
+            margin-right: 10px;
+        }
 
-            <!-- navbar highlighting -->
-            highlightMe(document.getElementById('mhbErstellungLink'));
+        .angebote li, #mhb li {
+            margin: 0 5px 5px 5px;
+            padding: 5px;
+            font-size: 1.2em;
+            width: 288px;
+            /*border: 3px solid #eee;*/
+        }
+
+        .angebote, #mhb, .angebote li, #mhb li {
+            border: 1px solid;
+        }
+    </style>
+
+    <script>
+        {# TODO: Sobald man scrollt geht das Feature kaputt. Warum? #}
+        $(function () {
+            //$("#mhb").sortable();
+            $(".angebote").sortable({
+                connectWith: "#mhb"
+            });
+            $("#mhb").sortable({
+                connectWith: "#mhb, .angebote"
+            });
         });
     </script>
-    <div class="table-responsive">
-        <h3>Modulhandbucherstellung</h3>
-        <table id="table" class="table table-bordered tablesorter">
-            <thead>
-                <tr>
-                    <th>Modul</th>
-                    <th>Kürzel</th>
-                    <th>Version</th>
-                    <th>Regelsemester</th>
-                    <th>Modulverantwortlicher</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for entity in angebote %}
-                <tr>
-                    <td><a href="{{ path('modulBearbeiten', {'id': entity.getVeranstaltung().getModulID()}) }}">{{ entity.getVeranstaltung().getName() }}</a></td>
-                    <td>{{ entity.getVeranstaltung().getKuerzel() }}</td>
-                    <td>{{ entity.getVeranstaltung().getVersionsnummer() }}</td>
-                    <td>{{ entity.getVeranstaltung().getHaeufigkeit() }}</td>
-                    {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
-                    <td>{{ entity.getVeranstaltung().getErstellungsdatum()|date('d.m.Y') }}</td>
-                </tr>
+
+    {% for key in zuordnung|keys %}
+        <h4>{{ key }}</h4>
+        <ul id="{{ key }}" class="angebote {{ key|replace({' ': '_'}) }}">
+            {% for angebot in zuordnung[key] %}
+                <li>
+                    <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
+                    {{ angebot }}
+                </li>
             {% endfor %}
-            </tbody>
-        </table>
-    </div>
+        </ul>
+    {% endfor %}
+
+    {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
+    <form method="POST" action="{{ path('mhbErstellungParsen') }}"> {# testweise #}
+        <input type="hidden" name="Studiengang" value="{{ studiengang }}"/>
+
+        <h4>MHB</h4>
+        <ul id="mhb" class="
+            mhb
+            {% for key in zuordnung|keys %}
+                {{ key|replace({' ': '_'}) }}
+            {% endfor %}
+        ">
+        </ul>
+
+        {% include '@FHBingenMHB/buttons.html.twig' %}
+    </form>
+
 {% endblock %}
