@@ -662,7 +662,7 @@ class Veranstaltung
      */
     public function setPruefungsformen($pruefungsformen)
     {
-        $this->Pruefungsformn = $pruefungsformen;
+        $this->Pruefungsformen = $pruefungsformen;
 
         return $this;
     }
