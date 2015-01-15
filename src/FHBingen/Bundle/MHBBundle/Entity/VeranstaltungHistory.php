@@ -161,6 +161,16 @@ class VeranstaltungHistory
     protected $PruefungsformSonstiges;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $PruefungsleistungSonstiges;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $StudienleistungSonstiges;
+
+    /**
      * @ORM\Column(type="text", nullable=false)
      * @Assert\Choice(
      * choices = { "Deutsch", "Englisch" },

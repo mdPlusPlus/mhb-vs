@@ -44,7 +44,7 @@ class DozentController extends Controller
             $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $m->getModulID()));
 
             foreach ($tmp as $lehrend) {
-                $name[] = (string) $lehrend->getDozent();
+                $name[] = (string)$lehrend->getDozent();
             }
             $mLehrende[] = $name;
         }
@@ -63,7 +63,7 @@ class DozentController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
-            asort($name, SORT_STRING);
+            asort($name,SORT_STRING);
 
             $stgZuModul[] = $name;
         }
@@ -75,7 +75,7 @@ class DozentController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
-            asort($name, SORT_STRING);
+            asort($name,SORT_STRING);
             $stgZuModul[] = $name;
         }
 
@@ -160,9 +160,12 @@ class DozentController extends Controller
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
 
-                if ($ms >= 0) {
+
+
+                if($ms >= 0){
                     $modul->setSelbststudium($ms);
-                } else {
+                }
+                else{
                     $modul->setSelbststudium(0);
                 }
 
@@ -180,6 +183,8 @@ class DozentController extends Controller
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
                 $modul->setAutor($user->__toString());
+                $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
+                $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
                 $em->persist($modul);
                 $em->flush();
 
@@ -228,9 +233,10 @@ class DozentController extends Controller
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
 
-                if ($ms >= 0) {
+                if($ms >= 0){
                     $modul->setSelbststudium($ms);
-                } else {
+                }
+                else{
                     $modul->setSelbststudium(0);
                 }
 
@@ -247,6 +253,8 @@ class DozentController extends Controller
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
                 $modul->setAutor($user->__toString());
+                $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
+                $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
 
                 $em->persist($modul);
                 $em->flush();
@@ -270,7 +278,6 @@ class DozentController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => 'Freigegeben'));
-        $modulHistory= new Entity\VeranstaltungHistory();
 
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 
@@ -279,35 +286,6 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                //schreibt den Veranstaltungs Inhalt vor der änderung in die History Tabelle
-                $modulHistory->setAutor($modul->getAutor());
-                $modulHistory->setModulID($modul->getModulID());
-                $modulHistory->setVersionsnummer($modul->getVersionsnummer());
-                $modulHistory->setDauer($modul->getDauer());
-                $modulHistory->setName($modul->getName());
-                $modulHistory->setNameEN($modul->getNameEN());
-                $modulHistory->setKuerzel($modul->getKuerzel());
-                $modulHistory->setErstellungsdatum($modul->getErstellungsdatum());
-                $modulHistory->setGruppengroesse($modul->getGruppengroesse());
-                $modulHistory->setHaeufigkeit($modul->getHaeufigkeit());
-                $modulHistory->setInhalte($modul->getInhalte());
-                $modulHistory->setKontaktzeitSonstige($modul->getKontaktzeitSonstige());
-                $modulHistory->setKontaktzeitVL($modul->getKontaktzeitVL());
-                $modulHistory->setSelbststudium($modul->getSelbststudium());
-                $modulHistory->setLernergebnisse($modul->getLernergebnisse());
-                $modulHistory->setSprache($modul->getSprache());
-                $modulHistory->setSpracheSonstiges($modul->getSpracheSonstiges());
-                $modulHistory->setLiteratur($modul->getLiteratur());
-                $modulHistory->setLeistungspunkte($modul->getLeistungspunkte());
-                $modulHistory->setVoraussetzungInh($modul->getVoraussetzungInh());
-                $modulHistory->setPruefungsformSonstiges($modul->getPruefungsformSonstiges());
-                $modulHistory->setVoraussetzungLP($encoder->encode($modul->getVoraussetzungLP(), 'json'));
-                $modulHistory->setPruefungsformen($encoder->encode($modul->getPruefungsformen(), 'json'));
-                $modulHistory->setLehrveranstaltungen($encoder->encode($modul->getLehrveranstaltungen(), 'json'));
-
-
-                $em->persist($modulHistory);
-
                 //notwendige Einträge
                 $modul->setErstellungsdatum(new \DateTime());
 
@@ -324,9 +302,10 @@ class DozentController extends Controller
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
 
-                if ($ms >= 0) {
+                if($ms >= 0){
                     $modul->setSelbststudium($ms);
-                } else {
+                }
+                else{
                     $modul->setSelbststudium(0);
                 }
 
@@ -342,8 +321,9 @@ class DozentController extends Controller
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
-                $modul->setVersionsnummer($modul->getVersionsnummer()+1);
                 $modul->setAutor($user->__toString());
+                $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
+                $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
 
                 //TODO: Testen hier ist unklarheit ob addModul() und addLehrende() benötigt wird
                 //TODO: Scheint zu klappen auch wenn Lehrende vertauscht werden. bzw. Neue hinzu Reihenfolge getauscht usw.
@@ -449,9 +429,10 @@ class DozentController extends Controller
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
 
-                if ($ms >= 0) {
+                if($ms >= 0){
                     $modul->setSelbststudium($ms);
-                } else {
+                }
+                else{
                     $modul->setSelbststudium(0);
                 }
 
@@ -573,29 +554,28 @@ class DozentController extends Controller
                     }
                 }
 
-                $studienplanSS = new Entity\Studienplan();
-                $studienplanSS->setStartsemester('SS');
-                $studienplanSS->setVeranstaltung($modul);
-                $studienplanSS->setStudiengang($studiengang);
-                $studienplanSS->setRegelSemester($encSS);
+                $studienplan_ss = new Entity\Studienplan();
+                $studienplan_ss->setStartsemester('SS');
+                $studienplan_ss->setVeranstaltung($modul);
+                $studienplan_ss->setStudiengang($studiengang);
+                $studienplan_ss->setRegelSemester($encSS);
 
-                $studienplanWS = new Entity\Studienplan();
-                $studienplanWS->setStartsemester('WS');
-                $studienplanWS->setVeranstaltung($modul);
-                $studienplanWS->setStudiengang($studiengang);
-                $studienplanWS->setRegelSemester($encWS);
+                $studienplan_ws = new Entity\Studienplan();
+                $studienplan_ws->setStartsemester('WS');
+                $studienplan_ws->setVeranstaltung($modul);
+                $studienplan_ws->setStudiengang($studiengang);
+                $studienplan_ws->setRegelSemester($encWS);
 
                 $modul->setStatus('Freigegeben');
 
-                $em->persist($studienplanSS);
-                $em->persist($studienplanWS);
+                $em->persist($studienplan_ss);
+                $em->persist($studienplan_ws);
                 $em->persist($modul);
                 $em->persist($angebot);
 
                 $em->flush();
-
+                //TODO: Erfolgsmeldung fehlt
                 $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
-
                 return $this->redirect($this->generateUrl('eigeneModule'));
             }
         }

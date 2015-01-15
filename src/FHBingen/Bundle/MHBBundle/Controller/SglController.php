@@ -43,7 +43,7 @@ class SglController extends Controller
             $name = array();
             $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
             foreach ($tmp as $studiengang) {
-                $name[] = (string)$studiengang->getStudiengang();
+                $name[] = (string) $studiengang->getStudiengang();
             }
             asort($name, SORT_STRING);//Sortiert die Studiengänge nach name
             $stgZuModul[] = $name;
@@ -77,7 +77,7 @@ class SglController extends Controller
         }
         asort($angeboteOhneDummy, SORT_STRING);//Sortiert nach Veranstaltungen name
 
-        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote, 'studiengang' => $studiengang, 'pageTitle' => 'Modulcodes');
+        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote,'studiengang'=>$studiengang, 'pageTitle' => 'Modulcodes');
     }
 
     /**
@@ -130,34 +130,31 @@ class SglController extends Controller
     public function mhbModulListe($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         //findet alle Veranstaltungen die dem MHB zugeordnet sind
-        $mhb = $em
-            ->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer, d.Titel, d.Nachname, v.Autor
-                           FROM  FHBingenMHBBundle:Angebot a
-                           JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung = v.Modul_ID
-                           JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter = d.Dozenten_ID
-                           AND a.mhb = ' . $id . ' ORDER BY v.Name ASC')
-            ->getResult();
+        $mhb = $em->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer,
+                                 d.Titel, d.Nachname, v.Autor
+                                 FROM  FHBingenMHBBundle:Angebot a
+                                 JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung =  v.Modul_ID
+                                 JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter =  d.Dozenten_ID
+                                 AND a.mhb =' . $id.
+                                 ' ORDER BY v.Name ASC');
+        $mhbResult = $mhb->getResult();
+        //FInet den Namen des MHB um MHB-Kontext  im Twig anzeigen zulassen
+        $mhbBeschreibung = $em->createQuery('SELECT DISTINCT m.Beschreibung
+                                 FROM  FHBingenMHBBundle:Modulhandbuch m
+                                 WHERE m.MHB_ID =' . $id);
+        $mhbBeschreibungResult = $mhbBeschreibung->getResult();
 
-        //findet den Namen des MHB um MHB-Kontext im Twig anzeigen zulassen
-        $mhbBeschreibung = $em
-            ->createQuery('SELECT DISTINCT m.Beschreibung
-                           FROM  FHBingenMHBBundle:Modulhandbuch m
-                           WHERE m.MHB_ID =' . $id)
-            ->getResult();
-
-        return array('mhb' => $mhb, 'beschreibung' => $mhbBeschreibung, 'pageTitle' => 'Module des Modulhandbuchs');
+        return array('mhb' => $mhbResult,'beschreibung'=>$mhbBeschreibungResult, 'pageTitle' => 'Module des Modulhandbuchs ' );
     }
 
 
-    /**
+   /**
      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
      * @Template("FHBingenMHBBundle:SGL:mhbErstellung.html.twig")
      */
     public function mhbErstellungAction()
     {
-        //TODO: schön machen und auch die angebote mit MHB anzeigen
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
@@ -171,127 +168,219 @@ class SglController extends Controller
                 $angeboteOhneMHB[] = $value;
             }
         }
-
-        return array('angebote' => $angeboteOhneMHB, 'pageTitle' => 'Modulhandbucherstellung');
+        return array('angebote' => $angeboteOhneMHB,'pageTitle' => 'Modulhandbucherstellung');
     }
-
-
-    private function createModulBeschreibungen($mhbID)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $encoder = new JsonEncoder();
-
-        $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
-        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('mhb' => $mhbID));
-        $studiengang = $mhb->getGehoertZu();
-
-        $modulBeschreibungen = array();
-
-        foreach ($angebote as $angebot) {
-            $veranstaltung = $angebot->getVeranstaltung();
-
-            $modulBeschreibung = new ModulBeschreibung();
-            $modulBeschreibung->setAngebot($angebot);
-            $modulBeschreibung->setVoraussetzungen($veranstaltung->getModulVoraussetzung());
-            $modulBeschreibung->setPruefungsformen($encoder->decode($veranstaltung->getPruefungsformen(), 'json'));
-            $modulBeschreibung->setLehrveranstaltungen($encoder->decode($veranstaltung->getLehrveranstaltungen(), 'json'));
-            $modulBeschreibung->setVoraussetzungenLP($encoder->decode($veranstaltung->getVoraussetzungLP(), 'json'));
-
-            //TODO: Frage ans Team: Bei Studienplänen statt Modul+Studiengang lieber Angebot?
-            //$modulBeschreibung->setStudienplaene($veranstaltung->getStudienplanModul());
-            $studienplaene = $veranstaltung->getStudienplanModul();
-            $studienplaeneZuStudiengang = array();
-            foreach ($studienplaene as $studienplan) {
-                if ($studienplan->getStudiengang() == $studiengang) {
-                    $studienplaeneZuStudiengang[] = $studienplan;
-                }
-            }
-            uasort($studienplaeneZuStudiengang, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'studienplanSort'));
-            $modulBeschreibung->setStudienplaene($studienplaeneZuStudiengang);
-
-            $angeboteZuVeranstaltung = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $veranstaltung));
-            $fremdeStudiengaenge = array();
-            foreach ($angeboteZuVeranstaltung as $angebotZuVeranstaltung) {
-                if ($angebotZuVeranstaltung->getStudiengang() != $studiengang) {
-                    $fremdeStudiengaenge[] = $angebotZuVeranstaltung->getStudiengang();
-                }
-            }
-            array_unique($fremdeStudiengaenge); //wenn es später mehrere Modulhandbücher für einen Studiengang gibt -> neue Angebote -> Dopplungen bei Studiengängen
-            $modulBeschreibung->setFremdeStudiengaenge($fremdeStudiengaenge);
-
-            $modulBeschreibungen[] = $modulBeschreibung;
-        }
-
-        uasort($modulBeschreibungen, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'modulBeschreibungSort'));
-
-        return $modulBeschreibungen;
-    }
-
+	
     /**
      * PDF-Export Test
-     * @Route("/restricted/sgl/pdfErstellen/{mhbID}", name="pdfErstellen")
+     * @Route("/restricted/sgl/pdf/{mhbID}", name="pdf")
      */
-    public function pdfErstellenAction($mhbID)
+    public function pdfAction($mhbID)
     {
+        //TODO: Code ist Kot, neu schreiben!
+        $decode = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
 
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentStudiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $currentUser));
         $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
-        $studiengang = $mhb->getGehoertZu();
-        $sgl = $studiengang->getSgl();
 
-        $modulBeschreibungen = $this->createModulBeschreibungen($mhbID);
-        $htmlArr = array();
+        if ($mhb->getGehoertZu() == $currentStudiengang) {
+            $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
 
-        foreach ($modulBeschreibungen as $modulBeschreibung) {
-            $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibung' => $modulBeschreibung));
+            $mhbBeschreibung = $mhb->getBeschreibung();
+            $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('mhb' => $mhbID));
+
+            $moduleZuMHB = array();
+            $pruef = array();
+            $veranstaltung = array();
+            $vorlp = array();
+            foreach ($angebote as $valueA) {
+                //TODO: What the actual fuck?
+                foreach ($module as $valueM) {
+                    if ($valueA->getVeranstaltung()->getModulID() == $valueM->getModulID()) {
+                        $moduleZuMHB[] = $valueM;
+                    }
+                }
+            }
+
+            foreach ($moduleZuMHB as $entry) {
+                $pruef[] = $decode->decode($entry->getPruefungsformen(), 'json');
+                $veranstaltung[] = $decode->decode($entry->getLehrveranstaltungen(), 'json');
+                $vorlp[] = $decode->decode($entry->getVoraussetzungLP(), 'json');
+            }
+
+            $stgZuModul = array();
+            foreach ($moduleZuMHB as $modul) {
+                $name = array();
+                $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
+                foreach ($tmp as $studiengang) {
+                    if ($studiengang->getStudiengang() != $angebote[3]->getStudiengang()) {
+                        $name[] = (string) $studiengang->getStudiengang();
+                    }
+                }
+                $stgZuModul[] = $name;
+            }
+
+            $lehrendeZuModul = array();
+            foreach ($moduleZuMHB as $modul) {
+                $name = array();
+                $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $modul->getModulID()));
+                foreach ($tmp as $lehrend) {
+                    if ($lehrend->getDozent() != $modul->getBeauftragter()) {
+                        $name[] = (string) $lehrend->getDozent();
+                    }
+                }
+                $lehrendeZuModul[] = $name;
+            }
+
+            $voraussetzungZuModul = array();
+            foreach ($moduleZuMHB as $modul) {
+                $name = array();
+                $vorArr = $modul->getModulVoraussetzung();
+                foreach ($vorArr as $vor) {
+                    $name[] = $vor;
+                }
+                $voraussetzungZuModul[] = $name;
+            }
+
+            $regelsemester = array();
+            foreach ($moduleZuMHB as $modul) {
+                $name = array();
+                $tmp = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array('veranstaltung' => $modul->getModulID(), 'studiengang' => 2));
+                foreach ($tmp as $studienplan) {
+                    $name[] = $studienplan;
+                }
+                $regelsemester[] = $name;
+            }
+
+            $htmlArr = array();
+            $size = sizeof($moduleZuMHB);
+
+            $modulBeschreibungen = array();
+
+            for ($i = 0; $i < $size; $i++) {
+                $modulbeschreibung = new ModulBeschreibung();
+                $modulbeschreibung->setAngebot($angebote[$i]);
+                $modulbeschreibung->setLehrende($lehrendeZuModul[$i]);
+                $modulbeschreibung->setLehrveranstaltungen($veranstaltung[$i]);
+                $modulbeschreibung->setModul($moduleZuMHB[$i]);
+                $modulbeschreibung->setPruefungsformen($pruef[$i]);
+                $modulbeschreibung->setStudienplaene($regelsemester[$i]);
+                $modulbeschreibung->setStudiengaenge($stgZuModul[$i]);
+                $modulbeschreibung->setVoraussetzungen($voraussetzungZuModul[$i]);
+                $modulbeschreibung->setVoraussetzungenLP($vorlp[$i]);
+
+                $modulBeschreibungen[] = $modulbeschreibung;
+
+            }
+
+            uasort($modulBeschreibungen, array($this, 'modulBeschreibungSort'));
+
+            foreach ($modulBeschreibungen as $modulbeschreibung) {
+                $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulbeschreibung' => $modulbeschreibung, 'eigenerStudiengang' => $currentStudiengang));
+            }
+
+            $footerText = "";
+
+            if ($currentStudiengang->getFachbereich() == 1) {
+                $footerText = 'Fachbereich 1 - Life Sciences and Engineering';
+            }
+            if ($currentStudiengang->getFachbereich() == 2) {
+                $footerText = 'Fachbereich 2 - Technik, Informatik und Wirtschaft';
+            }
+
+            $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($htmlArr, array(
+                'lowquality' => false,
+                'orientation' => 'Portrait',
+                'encoding' => 'utf8',
+                'header-font-size' => 10,
+                'header-left' => $currentUser,
+                'header-center' => 'Modulhandbuch ' . $currentStudiengang,
+                'header-right' => '[date]',
+                'header-spacing' => 5, //in mm
+                'footer-font-size' => 10,
+                'footer-left' => 'Fachhochschule Bingen',
+                'footer-center' => $footerText,
+                'footer-right' => '[page]/[toPage]',
+                'title' => $mhbBeschreibung,
+                'disable-javascript' => true,
+                //'cover' => 'cover.html',
+                //'toc' => true,
+                //'xsl-style-sheet' => 'toc.xsl'
+                //'dump-outline' => 'outline.xml',
+                //'dump-default-toc-xsl' => 'toc.xsl',
+
+            ));
+
+
+            return new Response($pdf, 200, array(
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $mhbBeschreibung . '.pdf"'
+            ));
         }
 
-        $footerText = "";
-
-        if ($studiengang->getFachbereich() == 1) {
-            $footerText = 'Fachbereich 1 - Life Sciences and Engineering';
-        }
-        if ($studiengang->getFachbereich() == 2) {
-            $footerText = 'Fachbereich 2 - Technik, Informatik und Wirtschaft';
-        }
-
-        $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($htmlArr, array(
-            'lowquality' => false,
-            'orientation' => 'Portrait',
-            'encoding' => 'utf8',
-            'header-font-size' => 10,
-            'header-left' => $sgl,
-            'header-center' => 'Modulhandbuch ' . $studiengang,
-            'header-right' => '[date]',
-            'header-spacing' => 5, //in mm
-            'footer-font-size' => 10,
-            'footer-left' => 'Fachhochschule Bingen',
-            'footer-center' => $footerText,
-            'footer-right' => '[page]/[toPage]',
-            'title' => $mhb->getBeschreibung(),
-            'disable-javascript' => true,
-            //'cover' => 'cover.html',
-            //'toc' => true,
-            //'xsl-style-sheet' => 'toc.xsl'
-            //'dump-outline' => 'outline.xml',
-            //'dump-default-toc-xsl' => 'toc.xsl',
-
-        ));
-
-
-        return new Response($pdf, 200, array(
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="' . $mhb->getBeschreibung() . '.pdf"'
-        ));
+       return new Response('Nicht der eigene Studiengang');
     }
 
     /**
-     * @Route("/restricted/sgl/modulDeaktivierung", name="modulDeaktivierung")
+     * @Route("/restricted/sgl/modulDeaktivierung/{modulID}", name="modulDeaktivierung")
      */
-    public function modulDeaktivierungAction()
+    public function modulDeaktivierungAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id));
+
+        $modul->setStatus('expired');
+        $modul->setErstellungsdatum(new \DateTime());
+        $em->persist($modul);
+
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('modul' => $id));
+
+
+        foreach($angebot as $del){
+            $em->remove($del);
+            $em->persist($angebot);
+        }
+
+        $kernfach = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('modul' => $id));
+
+
+        foreach($kernfach as $del){
+            $em->remove($del);
+            $em->persist($kernfach);
+        }
+
+        $studienplan = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array('modul' => $id));
+
+        foreach($studienplan as $del){
+            $em->remove($del);
+            $em->persist($studienplan);
+        }
+
+        $lehrende = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('modul' => $id));
+
+        foreach($lehrende as $del){
+            $em->remove($del);
+            $em->persist($lehrende);
+        }
+
+
+
 
     }
 
+    private function modulBeschreibungSort($descA, $descB)
+    {
+        $a = $descA->getAngebot()->getCode();
+        $b = $descB->getAngebot()->getCode();
+
+        if ($a == $b) {
+            return 0;
+        }
+
+        return ($a < $b) ? -1 : 1;
+    }
 
 }

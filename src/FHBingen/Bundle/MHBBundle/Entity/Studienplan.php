@@ -46,7 +46,9 @@ class Studienplan
 
     /**
     * @ORM\Column(type="string"), nullable = false
-     * @Assert\NotBlank(message = "Das Startsemester muss gesetzt werden.")
+     * @Assert\Choice{
+     * choices = { "SS", "WS" },
+     * message = "Bitte geben Sie ein korrektes Startsemester!"
      * */
     protected $Startsemester;
 

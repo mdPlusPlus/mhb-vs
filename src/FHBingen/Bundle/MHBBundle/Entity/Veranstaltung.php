@@ -171,6 +171,17 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     */
+    protected $PruefungsleistungSonstiges;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $StudienleistungSonstiges;
+
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\Choice(
      * choices = { "Deutsch", "Englisch" },
      * message = "Bitte geben Sie eine korrekte Sprache an!"
@@ -651,7 +662,7 @@ class Veranstaltung
      */
     public function setPruefungsformen($pruefungsformen)
     {
-        $this->Pruefungsformen = $pruefungsformen;
+        $this->Pruefungsformn = $pruefungsformen;
 
         return $this;
     }
@@ -687,6 +698,52 @@ class Veranstaltung
     public function getSprache()
     {
         return $this->Sprache;
+    }
+
+    /**
+     * Set PruefungsleistungSonstiges
+     *
+     * @param string $pruefungsleistungSonst
+     * @return Veranstaltung
+     */
+    public function setPruefungsleistungSonstiges($pruefungsleistungSonst)
+    {
+        $this->PruefungsleistungSonstiges = $pruefungsleistungSonst;
+
+        return $this;
+    }
+
+    /**
+     * Get StudienleistungSonstiges
+     *
+     * @return string
+     */
+    public function getStudienleistungSonstiges()
+    {
+        return $this->StudienleistungSonstiges;
+    }
+
+    /**
+     * Set PruefungsleistungSonstiges
+     *
+     * @param string $StudienleistungSonstiges
+     * @return Veranstaltung
+     */
+    public function setStudienleistungSonstiges($StudienleistungSonst)
+    {
+        $this->StudienleistungSonstiges = $StudienleistungSonst;
+
+        return $this;
+    }
+
+    /**
+     * Get PruefungsleistungSonstiges
+     *
+     * @return string
+     */
+    public function getPruefungsleistungSonstiges()
+    {
+        return $this->PruefungsleistungSonstiges;
     }
 
     /**

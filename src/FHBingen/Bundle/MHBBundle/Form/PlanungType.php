@@ -38,7 +38,9 @@ class PlanungType extends AbstractType
             ->add('SpracheSonstiges', 'text', array('label' => 'Sprache Sonstiges: ', 'required' => false))
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => false, 'choices' => ArrayValues::$lp))
-            ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')));
+            ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
+            ->add('PruefungsleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Prüfungsleistung', 'required' =>false ))
+            ->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung', 'required' =>false ));
     }
 
     public function onPreSetData(FormEvent $event)
@@ -63,6 +65,7 @@ class PlanungType extends AbstractType
             $voraussetzungLPChoiceOptions['data'] = $vorausetzungLP;
         }
         $form->add('voraussetzungLP', 'choice', $voraussetzungLPChoiceOptions);
+
 
 
         $pruefungsformenChoiceOptions = array(
