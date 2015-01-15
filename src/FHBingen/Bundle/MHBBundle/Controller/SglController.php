@@ -66,7 +66,8 @@ class SglController extends Controller
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
         //findet die Angebote mit Dummy Modulcode
         $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY'), array("Code" => 'asc'));
-        asort($dummyAngebote, SORT_STRING);//sortiert die Angebote
+        uasort($dummyAngebote, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
+
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
         $angeboteOhneDummy = array();
         //Filtert die Angebote mit DummyModul und aus anderen Studiengängen herraus
@@ -75,7 +76,7 @@ class SglController extends Controller
                 $angeboteOhneDummy[] = $value;
             }
         }
-        asort($angeboteOhneDummy, SORT_STRING);//Sortiert nach Veranstaltungen name
+        uasort($angeboteOhneDummy, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
 
         return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote, 'studiengang' => $studiengang, 'pageTitle' => 'Modulcodes');
     }
@@ -163,16 +164,9 @@ class SglController extends Controller
         $userMail = $user->getUsername();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
-        $angeboteNachStudiengang = $em->getRepository('FHBingenMHBBundle:Angebot')
-            ->findBy(array('studiengang' => $studiengang->getStudiengangID()));
-        $angeboteOhneMHB = array();
-        foreach ($angeboteNachStudiengang as $value) {
-            if ($value->getMhb() == null) {
-                $angeboteOhneMHB[] = $value;
-            }
-        }
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang->getStudiengangID()));
 
-        return array('angebote' => $angeboteOhneMHB, 'pageTitle' => 'Modulhandbucherstellung');
+        return array('angebote' => $angebote, 'pageTitle' => 'Modulhandbucherstellung');
     }
 
 

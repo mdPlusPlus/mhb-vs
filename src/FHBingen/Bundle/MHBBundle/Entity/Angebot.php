@@ -25,11 +25,11 @@ class Angebot
 
     public function __toString()
     {
+        //TODO: abweichender name?
         $string = (string) $this->getVeranstaltung();
 
         return $string;
     }
-
 
     /**
      * @ORM\OneToMany(targetEntity="ModulhandbuchZuweisung", mappedBy="angebot", cascade={"all"})
@@ -42,7 +42,6 @@ class Angebot
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $Angebots_ID;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="angebot")

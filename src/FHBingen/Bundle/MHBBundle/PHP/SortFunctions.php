@@ -9,10 +9,24 @@
 namespace FHBingen\Bundle\MHBBundle\PHP;
 
 
+use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Studienplan;
 
 class SortFunctions {
+
+    public static function angebotSort(Angebot $angebotA, Angebot $angebotB)
+    {
+        //TODO: abweichender name?
+        $a = $angebotA->getVeranstaltung()->getName();
+        $b = $angebotB->getVeranstaltung()->getName();
+
+        if ($a == $b) {
+            return 0;
+        }
+
+        return ($a < $b) ? -1 : 1;
+    }
 
     public static function dozentSort(Dozent $dozA, Dozent $dozB)
     {

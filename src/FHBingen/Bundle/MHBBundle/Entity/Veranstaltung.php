@@ -286,7 +286,7 @@ class Veranstaltung
      */
     public function __toString()
     {
-        $string = (string) $this->getName();
+        $string = $this->getName();
 
         return $string;
     }
