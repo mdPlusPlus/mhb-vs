@@ -157,7 +157,7 @@ class VeranstaltungHistory
     protected $Pruefungsformen;
 
     /**
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $PruefungsformSonstiges;
 
