@@ -352,7 +352,7 @@ class SglController extends Controller
 
         $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich deaktiviert.');
 
-        return $this->redirect($this->generateUrl('modulCodeUebersicht'));
+        return $this->redirect($this->generateUrl('deaktivierungAlleModule'));
     }
 
 

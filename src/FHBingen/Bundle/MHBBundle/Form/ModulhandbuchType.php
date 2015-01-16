@@ -17,7 +17,7 @@ class ModulhandbuchType extends AbstractType
     {
         //TODO wird das ModulhandbuchTyp überhaupt benötigt?
         $builder
-            ->add('beschreibung', 'textarea', array('label' => 'Beschreibung: ', 'required' => true))
+            ->add('beschreibung', 'text', array('label' => 'Beschreibung: ', 'required' => true))
             ->add('gueltigAb', 'entity', array('label' => 'Gueltig ab: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Semester'))
             ->add('reset', 'reset')
             ->add('submit', 'submit');
