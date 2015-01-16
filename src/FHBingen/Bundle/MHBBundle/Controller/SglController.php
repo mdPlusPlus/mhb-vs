@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Validator\Constraints\Date;
 
 class SglController extends Controller
 {
@@ -173,6 +174,32 @@ class SglController extends Controller
 
         foreach ($angebote as $angebot) {
             $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
+        }
+        $mhb= new Entity\Modulhandbuch();
+        $form = $this->createForm(new Form\ModulhandbuchType(), $mhb);
+
+        $request = $this->get('request');
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $mhb->setBeschreibung($form->get('beschreibung')->getData());
+                $mhb->setGueltigAb($form->get('gueltigAb')->getData());
+                $mhb->setGehoertZu($studiengang);
+                $mhb->setErstellungsdatum(new \DateTime());
+                $em = $this->getDoctrine()->getManager();
+                $version = $em
+                    ->createQuery('SELECT MAX(m.Versionsnummer)
+                           FROM  FHBingenMHBBundle:Modulhandbuch m
+                           WHERE m.gehoertZu='.$studiengang->getStudiengangID())
+                    ->getResult();
+                $mhb->setVersionsnummer($version++);
+                $em->persist($mhb);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
+            }
+
         }
 
         return array('studiengang' => $studiengang, 'zuordnung' => $zuordnung, 'pageTitle' => 'Modulhandbucherstellung');
