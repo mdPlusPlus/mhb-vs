@@ -177,6 +177,7 @@ class SglController extends Controller
             $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
         }
         $mhb= new Entity\Modulhandbuch();
+        $mhbID = null;
         $form = $this->createForm(new Form\ModulhandbuchType(), $mhb);
 
         $request = $this->get('request');
@@ -194,16 +195,21 @@ class SglController extends Controller
                            FROM  FHBingenMHBBundle:Modulhandbuch m
                            WHERE m.gehoertZu='.$studiengang->getStudiengangID())
                     ->getResult();
-                $mhb->setVersionsnummer($version++);
+                $version += 1;
+                $mhb->setVersionsnummer($version);
                 $em->persist($mhb);
                 $em->flush();
 
+
+                $mhbID = $mhb->getMHBID();
                 $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
             }
 
         }
 
-        return array('studiengang' => $studiengang, 'zuordnung' => $zuordnung, 'pageTitle' => 'Modulhandbucherstellung');
+
+
+        return array('mhbID' => $mhbID, 'zuordnung' => $zuordnung, 'pageTitle' => 'Modulhandbucherstellung');
     }
 
 
@@ -368,20 +374,28 @@ class SglController extends Controller
     public function mhbErstellungParseAction()
     {
         if (!empty($_POST)) {
+            //TODO: In zwei Masken Aufteilen (eine mit FormType, die andere Drag'n'Drop)
             $angebote = array();
             $em = $this->getDoctrine()->getManager();
 
-            $studiengang = new Entity\Studiengang(); // wird sowieso direkt überschrieben
+            $mhb = new Entity\Modulhandbuch(); //wird direkt überschrieben
 
             foreach ($_POST as $key => $value) {
-                if ($key == 'Studiengang') {
-                    $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneById($value);
+                if ($key == 'mhbID') {
+                    $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneById($value);
                 } else {
                     $angebote[] = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneById($value);
                 }
             }
 
-            //TODO: MHB erstellen usw
+            foreach ($angebote as $angebot) {
+                $zuweisung = new Entity\ModulhandbuchZuweisung();
+                $zuweisung->setMhb($mhb);
+                $zuweisung->setAngebot($angebot);
+                $em->persist($zuweisung);
+            }
+
+            $em->flush();
 
         } else {
             return new Response('$_POST was empty');
