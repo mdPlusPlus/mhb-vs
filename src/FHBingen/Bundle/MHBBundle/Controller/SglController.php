@@ -138,8 +138,9 @@ class SglController extends Controller
             ->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer, d.Titel, d.Nachname, v.Autor
                            FROM  FHBingenMHBBundle:Angebot a
                            JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung = v.Modul_ID
+                            JOIN  FHBingenMHBBundle:ModulhandbuchZuweisung z WITH  z.angebot = a.Angebots_ID
                            JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter = d.Dozenten_ID
-                           AND a.mhb = ' . $id . ' ORDER BY v.Name ASC')
+                           AND z.mhb = ' . $id . ' ORDER BY v.Name ASC')
             ->getResult();
 
         //findet den Namen des MHB um MHB-Kontext im Twig anzeigen zulassen
