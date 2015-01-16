@@ -354,18 +354,14 @@ class DozentController extends Controller
                 $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
                 $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
 
-                //TODO: Testen hier ist unklarheit ob addModul() und addLehrende() benötigt wird
-                //TODO: Scheint zu klappen auch wenn Lehrende vertauscht werden. bzw. Neue hinzu Reihenfolge getauscht usw.
-                $lehrendeArr = $form->get('modul')->getData()->toArray();
+
+
+                $lehrendeArr = $form->get('lehrende')->getData()->toArray();
                 foreach ($lehrendeArr as $lehrend) {
-                    // Modul mit Lehrenden verketten
-                    $modul->addModul($lehrend);
                     // Lehrende mit Veranstaltung verketten
                     $lehrend->setVeranstaltung($modul);
                     // passenden Dozenten aus dem Lehrenden Entity finden
                     $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
-                    // Dozent mit Lehrenden verketten
-                    $dozent->addLehrende($lehrend);
                     // Lehrenden mit Dozent verketten
                     $lehrend->setDozent($dozent);
                     $em->persist($dozent);
@@ -375,12 +371,9 @@ class DozentController extends Controller
                 $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
                 $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
 
-                //TODO: Testen hier ist nicht klar ob vorher Verbindungen zu Veranstaltung und Dozenten gekappt werden müssen
-                //TODO: Doppelte?
+
                 foreach ($dbLehrendeArr as $dbEntry) {
                     if (!in_array($dbEntry, $lehrendeArr)) {
-                        // link von Modul auf Lehrenden löschen
-                        $modul->removeModul($dbEntry);
                         // passenden Dozenten zu dem Lehrenden Etity finden
                         $dozentTmp = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $dbEntry->getDozent()->getDozentenID()));
                         // link von Dozenten zu Lehrenden Entity löschen

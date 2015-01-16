@@ -132,7 +132,7 @@ class SglController extends Controller
     public function mhbModulListe($id)
     {
         $em = $this->getDoctrine()->getManager();
-        //TODO:NEU MACHEN
+
         //findet alle Veranstaltungen die dem MHB zugeordnet sind
         $mhb = $em
             ->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer, d.Titel, d.Nachname, v.Autor
@@ -154,63 +154,7 @@ class SglController extends Controller
     }
 
 
-    /**
-     * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
-     * @Template("FHBingenMHBBundle:SGL:mhbErstellung.html.twig")
-     */
-    public function mhbErstellungAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $sgl = $this->get('security.context')->getToken()->getUser();
 
-        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $sgl));
-        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang));
-
-        $zuordnung = array();
-        $fachgebiete = $em->getRepository('FHBingenMHBBundle:Fachgebiet')->findBy(array('studiengang' => $studiengang));
-
-        foreach ($fachgebiete as $fachgebiet) {
-            $zuordnung[$fachgebiet->getTitel()] = array();
-        }
-
-        foreach ($angebote as $angebot) {
-            $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
-        }
-        $mhb= new Entity\Modulhandbuch();
-        $mhbID = null;
-        $form = $this->createForm(new Form\ModulhandbuchType(), $mhb);
-
-        $request = $this->get('request');
-        $form->handleRequest($request);
-
-        if ($request->getMethod() == 'POST') {
-            if ($form->isValid()) {
-                $mhb->setBeschreibung($form->get('beschreibung')->getData());
-                $mhb->setGueltigAb($form->get('gueltigAb')->getData());
-                $mhb->setGehoertZu($studiengang);
-                $mhb->setErstellungsdatum(new \DateTime());
-                $em = $this->getDoctrine()->getManager();
-                $version = $em
-                    ->createQuery('SELECT MAX(m.Versionsnummer)
-                           FROM  FHBingenMHBBundle:Modulhandbuch m
-                           WHERE m.gehoertZu='.$studiengang->getStudiengangID())
-                    ->getResult();
-                $version += 1;
-                $mhb->setVersionsnummer($version);
-                $em->persist($mhb);
-                $em->flush();
-
-
-                $mhbID = $mhb->getMHBID();
-                $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
-            }
-
-        }
-
-
-
-        return array('mhbID' => $mhbID, 'zuordnung' => $zuordnung, 'pageTitle' => 'Modulhandbucherstellung');
-    }
 
 
     private function createModulBeschreibungen($mhbID)
@@ -368,13 +312,84 @@ class SglController extends Controller
         }
     }
 
+
+     /**
+      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
+     * @Template("FHBingenMHBBundle:SGL:mhbErstellung.html.twig")
+     */
+     public function mhbErstellungAction()
+        {
+        $em = $this->getDoctrine()->getManager();
+        $sgl = $this->get('security.context')->getToken()->getUser();
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $sgl));
+        $mhb= new Entity\Modulhandbuch();
+        $mhbID = null;
+        $form = $this->createForm(new Form\ModulhandbuchType(), $mhb);
+
+        $request = $this->get('request');
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $mhb->setBeschreibung($form->get('beschreibung')->getData());
+                $mhb->setGueltigAb($form->get('gueltigAb')->getData());
+                $mhb->setGehoertZu($studiengang);
+                $mhb->setErstellungsdatum(new \DateTime());
+                $em = $this->getDoctrine()->getManager();
+                $version = $em
+                    ->createQuery('SELECT MAX(m.Versionsnummer )as V
+                           FROM  FHBingenMHBBundle:Modulhandbuch m
+                           WHERE m.gehoertZu='.$studiengang->getStudiengangID())
+                    ->getSingleResult();
+                $version['V']++;
+                $mhb->setVersionsnummer($version['V']);
+                $em->persist($mhb);
+                $em->flush();
+
+                $mhbID = $mhb->getMHBID();
+                $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
+
+                return $this->redirect($this->generateUrl('mhbZusammensetllung', array('mhbID' => $mhbID)));
+            }
+
+        }
+            return $this->render('FHBingenMHBBundle:SGL:mhbErstellung.html.twig', array('form' => $form->createView(), 'mhb' => $mhb, 'pageTitle' => 'Modulhandbuch Erstellung'));
+    }
+
+
+    /**
+     * @Route("/restricted/sgl/mhbZusammensetllung/{mhbID}", name="mhbZusammensetllung")
+     * @Template("FHBingenMHBBundle:SGL:mhbZusammensetllung.html.twig")
+     */
+    public function mhbZusammensetllungAction($mhbID)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sgl = $this->get('security.context')->getToken()->getUser();
+
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $sgl));
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang));
+
+        $zuordnung = array();
+        $fachgebiete = $em->getRepository('FHBingenMHBBundle:Fachgebiet')->findBy(array('studiengang' => $studiengang));
+
+        foreach ($fachgebiete as $fachgebiet) {
+            $zuordnung[$fachgebiet->getTitel()] = array();
+        }
+
+        foreach ($angebote as $angebot) {
+            $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
+        }
+        return array('zuordnung' => $zuordnung,'mhbID' => $mhbID, 'pageTitle' => 'Modulhand Zusammenstellung');
+    }
+
+
     /**
      * @Route("/restricted/sgl/mhbEstellungParsen", name="mhbErstellungParsen")
      */
     public function mhbErstellungParseAction()
     {
         if (!empty($_POST)) {
-            //TODO: In zwei Masken Aufteilen (eine mit FormType, die andere Drag'n'Drop)
+
             $angebote = array();
             $em = $this->getDoctrine()->getManager();
 
