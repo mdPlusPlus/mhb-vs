@@ -1,0 +1,68 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            highlightMe(document.getElementById('eigeneModuleLink'));
+        });
+    </script>
+    <div class="table-responsive">
+        <h3>Deaktivierte Module</h3>
+        <table id="modulverantwortlicher" class="table table-bordered tablesorter">
+            <thead>
+            <tr>
+                <th>Modultitel</th>
+                <th style="min-width: 100px; width: 7%">deaktiviert am</th>
+                <th style="min-width: 130px; width: 12%">freigeben</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for veranstaltung in deaktiv %}
+                <tr>
+                    <td>
+                        <a href="{{ path('modulBearbeiten', {'id': veranstaltung.getModulID()}) }}">{{ veranstaltung.name }}</a>
+                    </td>
+                    {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                    <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
+                    <td><a href="{{ path('planungFreigeben', {'id': veranstaltung.getModulID()}) }}">freigeben</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 style="margin-top: 50px">Angebotene Module im Studiengang</h3>
+        <table id="lehrender" class="table table-bordered tablesorter">
+            <thead>
+            <tr>
+                <th>Modultitel</th>
+                <th style="min-width: 130px; width: 12%">letzte Änderung</th>
+                <th style="min-width: 220px; width: 23%">Modulbeauftragter</th>
+                <th style="min-width: 220px; width: 23%">Studiengang</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for veranstaltung in module %}
+                <tr>
+                    <td>
+                        {{ veranstaltung.name }}
+                    </td>
+                    {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                    <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
+                    <td>{{ veranstaltung.beauftragter }}</td>
+                    <td>
+                        {% set count = 0 %}
+                        {% for name in stgZuModul[count] %}
+                            {{ name }}<br/>
+                            {% set count = count +1 %}
+                        {% endfor %}
+                        <a href=" {{ path('modulDeaktivierung', {'modulID': veranstaltung.getModulID()}) }}">Modul deaktivieren</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include '@FHBingenMHB/flashbags.html.twig' %}
+
+{% endblock %}
