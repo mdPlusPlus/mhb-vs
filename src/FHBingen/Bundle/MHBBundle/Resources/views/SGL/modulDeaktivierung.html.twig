@@ -20,7 +20,7 @@
             {% for veranstaltung in deaktiv %}
                 <tr>
                     <td>
-                        <a href="{{ path('modulBearbeiten', {'id': veranstaltung.getModulID()}) }}">{{ veranstaltung.name }}</a>
+                        {{ veranstaltung.name }}
                     </td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                     <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
@@ -30,7 +30,7 @@
             </tbody>
         </table>
 
-        <h3 style="margin-top: 50px">Angebotene Module im Studiengang</h3>
+        <h3 style="margin-top: 50px">Angebotene Module im Studiengang {{ studiengang }}</h3>
         <table id="lehrender" class="table table-bordered tablesorter">
             <thead>
             <tr>

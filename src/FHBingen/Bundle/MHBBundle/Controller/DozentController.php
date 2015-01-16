@@ -275,7 +275,7 @@ class DozentController extends Controller
         $encoder = new JsonEncoder();
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
-        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => 'Freigegeben'));
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => "freigegeben"));
         $modulHistory= new Entity\VeranstaltungHistory();
 
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
@@ -405,7 +405,7 @@ class DozentController extends Controller
     {
         $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
-        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => 'in Planung'));
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => array('in Planung', 'expired')));
 
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 

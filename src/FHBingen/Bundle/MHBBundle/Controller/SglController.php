@@ -297,15 +297,15 @@ class SglController extends Controller
         foreach ($module as $modul) {
             $name = array();
             $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
-            foreach ($tmp as $studiengang) {
-                $name[] = (string) $studiengang->getStudiengang();
+            foreach ($tmp as $stgang) {
+                $name[] = (string) $stgang->getStudiengang();
             }
             asort($name, SORT_STRING);
 
             $stgZuModul[] = $name;
         }
 
-        return array('deaktiv' => $deaktiv, 'module' => $module, 'stgZuModul' => $stgZuModul);
+        return array('deaktiv' => $deaktiv, 'module' => $module, 'stgZuModul' => $stgZuModul, 'studiengang' => $studiengang);
     }
 
     /**
