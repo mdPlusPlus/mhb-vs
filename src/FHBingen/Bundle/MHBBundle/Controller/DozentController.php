@@ -120,79 +120,13 @@ class DozentController extends Controller
         return $this->redirect($this->generateUrl('planungAnzeigen'));
     }
 
+
     /**
      * @Route("/restricted/dozent/planungErstellen", name="planungErstellen")
-     * @Template("FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig")
      */
     public function planungErstellenAction()
     {
-        $encoder = new JsonEncoder();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $userMail = $user->getUsername();
-        $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-
-        $modul = new Entity\Veranstaltung();
-        $form = $this->createForm(new Form\PlanungType(), $modul);
-
-        $request = $this->get('request');
-        $form->handleRequest($request);
-
-        if ($request->getMethod() == 'POST') {
-            if ($form->isValid()) {
-                //notwendige Einträge
-                $modul->setStatus('in Planung');
-                $modul->setErstellungsdatum(new \DateTime());
-                $modul->setVersionsnummer(0);
-                $modul->setBeauftragter($dozent);
-                $modul->setKuerzel($form->get('kuerzel')->getData());
-                $modul->setName($form->get('name')->getData());
-
-                //optionale Einträge
-                $modul->setNameEn($form->get('nameEN')->getData());
-                $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
-                $modul->setDauer($form->get('dauer')->getData());
-                $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
-                $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
-
-
-                //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
-                $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
-
-
-
-                if ($ms >= 0) {
-                    $modul->setSelbststudium($ms);
-                } else {
-                    $modul->setSelbststudium(0);
-                }
-
-
-                $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
-                $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
-                $modul->setInhalte($form->get('inhalte')->getData());
-                $modul->setSprache($form->get('sprache')->getData());
-                $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
-                $modul->setLiteratur($form->get('literatur')->getData());
-                $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
-                $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
-                $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
-                $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
-                $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
-                $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
-                $modul->setAutor($user->__toString());
-                $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
-                $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
-                $em->persist($modul);
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->add('info', 'Die Planung wurde erfolgreich angelegt.');
-
-                return $this->redirect($this->generateUrl('planungAnzeigen'));
-            }
-        }
-
-        return array('form' => $form->createView(), 'pageTitle' => 'Planungserstellung');
+        return $this->redirect($this->generateUrl('planungBearbeiten', array('id' => -1)));
     }
 
 
@@ -200,14 +134,20 @@ class DozentController extends Controller
      * @Route("/restricted/dozent/planungBearbeiten/{id}", name="planungBearbeiten")
      * @Template("FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig")
      */
-    public function planungBearbeitenAction($id)
+    public function planungAction($id)
     {
+        $modulID = $id; //keine Lust alle Zugriffe in den Templates auf $modulID zu ändern
         $encoder = new JsonEncoder();
-        $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'beauftragter' => $dozent->getDozentenID(), 'Status' => 'in Planung'));
+        $em = $this->getDoctrine()->getManager();
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail)); //müsste auch direkt mit $user gehen
+
+        if ($modulID == -1) {
+            $modul = new Entity\Veranstaltung();
+        } else {
+            $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modulID, 'beauftragter' => $dozent->getDozentenID(), 'Status' => 'in Planung'));
+        }
 
         $form = $this->createForm(new Form\PlanungType(), $modul);
 
@@ -216,10 +156,10 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                //notwendige Einträge
+                $modul->setStatus('in Planung');
                 $modul->setErstellungsdatum(new \DateTime());
-
-                //Änderungen an Einträgen
+                $modul->setVersionsnummer(0);
+                $modul->setBeauftragter($dozent);
                 $modul->setKuerzel($form->get('kuerzel')->getData());
                 $modul->setName($form->get('name')->getData());
                 $modul->setNameEn($form->get('nameEN')->getData());
@@ -227,16 +167,6 @@ class DozentController extends Controller
                 $modul->setDauer($form->get('dauer')->getData());
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
-
-                //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
-                $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
-
-                if ($ms >= 0) {
-                    $modul->setSelbststudium($ms);
-                } else {
-                    $modul->setSelbststudium(0);
-                }
-
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
@@ -249,14 +179,27 @@ class DozentController extends Controller
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
-                $modul->setAutor($user->__toString());
+                $modul->setAutor((string) $user);
                 $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
                 $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
+
+                //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
+                $ms = $form->get('leistungspunkte')->getData()*30 - ($form->get('kontaktzeitVL')->getData() + $form->get('kontaktzeitSonstige')->getData());
+
+                if ($ms >= 0) {
+                    $modul->setSelbststudium($ms);
+                } else {
+                    $modul->setSelbststudium(0);
+                }
 
                 $em->persist($modul);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('info', 'Die Planung wurde erfolgreich bearbeitet.');
+                if ($modulID == -1) {
+                    $this->get('session')->getFlashBag()->add('info', 'Die Planung wurde erfolgreich angelegt.');
+                } else {
+                    $this->get('session')->getFlashBag()->add('info', 'Die Planung wurde erfolgreich bearbeitet.');
+                }
 
                 return $this->redirect($this->generateUrl('planungAnzeigen'));
             }
