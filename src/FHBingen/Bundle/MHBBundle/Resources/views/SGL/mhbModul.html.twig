@@ -210,16 +210,18 @@
                 {% endif %}
             </td>
         </tr>
-        <tr>
-            <td>8</td>
-            <td colspan="6">
-                {# TODO: wenn leer -> key nicht ausgeben #}
-                <div class="key">Verwendung des Moduls (in anderen Studiengängen)</div>
-                {% for studiengang in modulBeschreibung.getFremdeStudiengaenge() %}
-                    {{ studiengang }}<br/>
-                {% endfor %}
-            </td>
-        </tr>
+        {# TODO: wenn leer -> key nicht ausgeben -> testen! #}
+        {% if modulBeschreibung.getFremdeStudiengaenge() is not empty %}
+            <tr>
+                <td>8</td>
+                <td colspan="6">
+                    <div class="key">Verwendung des Moduls (in anderen Studiengängen)</div>
+                    {% for studiengang in modulBeschreibung.getFremdeStudiengaenge() %}
+                        {{ studiengang }}<br/>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endif %}
         <tr>
             <td>9</td>
             <td colspan="6">

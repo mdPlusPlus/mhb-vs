@@ -626,7 +626,7 @@ class DozentController extends Controller
                 $em->persist($angebot);
 
                 $em->flush();
-                //TODO: Erfolgsmeldung fehlt
+
                 $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
 
                 return $this->redirect($this->generateUrl('eigeneModule'));

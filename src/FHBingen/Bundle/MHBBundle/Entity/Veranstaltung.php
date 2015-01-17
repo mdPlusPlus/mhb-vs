@@ -268,6 +268,7 @@ class Veranstaltung
      *      )
      */
     private $modul_;
+    //TODO: super unintitiv, modul_ ist eigentlich die Voraussetzung
 
     /**
      * Constructor
@@ -1026,7 +1027,7 @@ class Veranstaltung
 
         return $this;
     }
-    //TODO: super unintitiv, modul_ ist eigentlich die Voraussetzung
+
 
     /**
      * Remove angebot
@@ -1047,14 +1048,6 @@ class Veranstaltung
     {
         return $this->angebot;
     }
-
-
-    //TODO: Was ist denn das hier schon wieder?
-//    public function __construct_vor()
-//    {
-//        $this->modulVoraussetzung = new \Doctrine\Common\Collections\ArrayCollection();
-//        $this->modul_ = new \Doctrine\Common\Collections\ArrayCollection();
-//    }
 
     /**
      * Get beauftragter

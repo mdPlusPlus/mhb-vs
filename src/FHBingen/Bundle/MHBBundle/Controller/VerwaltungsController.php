@@ -30,6 +30,7 @@ class VerwaltungsController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         //TODO!
+        // - MaDi: Wer hat hier "TODO!" reingeschrieben und was war damit gemeint?
         $entries = $em->getRepository('FHBingenMHBBundle:Dozent')->findALL();
 
         $dozent = array();
