@@ -57,9 +57,8 @@
 
     {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
     <form method="POST" action="{{ path('mhbErstellungParsen') }}">
-        {% if(mhbID is not null ) %}
-            <input type="hidden" name="mhb" value="{{ mhbID }}"/>
-        {% endif %}
+        <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
+        <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
 
         <h4>MHB</h4>
 
