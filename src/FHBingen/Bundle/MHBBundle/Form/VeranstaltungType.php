@@ -24,14 +24,17 @@ class VeranstaltungType extends AbstractType
     {
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
-            ->add('beauftragter', 'entity', array('label' => "Modulbeauftragter [#]: ", 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+            ->add('beauftragter', 'entity', array('label' => "Modulbeauftragte/r [#]: ", 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
             ->add('kuerzel', 'text', array('label' => 'Modulkürzel [#]: ', 'required' => true))
             ->add('name', 'text', array('label' => 'Modulname (deutsch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('nameEN', 'text', array('label' => 'Modulname (englisch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots [#]: ', 'required' => true, 'choices' => ArrayValues::$frequency))
+
+            //TODO: Einheit?
             ->add('dauer', 'integer', array('label' => 'Dauer [#]: ', 'required' => true, 'attr' => array('min' => '1')))
-            ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung [#]: ', 'required' => true, 'attr' => array('min' => '0')))
-            ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige [#]: ', 'required' => true, 'attr' => array('min' => '0')))
+
+            ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('selbststudium', 'integer', array('label' => false, 'required' => true, 'attr' => array('min' => '0', 'hidden' => true)))
             ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
