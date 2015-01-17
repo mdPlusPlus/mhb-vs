@@ -214,6 +214,7 @@ class DozentController extends Controller
      */
     public function modulBearbeitenAction($id)
     {
+        //TODO modulBearbeitenAction + planungFreigebenAction zusammenführen (geht das überhaupt?)
         $encoder = new JsonEncoder();
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
@@ -345,6 +346,7 @@ class DozentController extends Controller
      */
     public function planungFreigebenAction($id)
     {
+        //TODO modulBearbeitenAction + planungFreigebenAction zusammenführen (geht das überhaupt?)
         $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => array('in Planung', 'expired')));
