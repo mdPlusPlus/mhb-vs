@@ -53,4 +53,42 @@ class DefaultController extends Controller
 
         return $semesterArr;
     }
+
+    //von TestUsersController
+    /**
+     * @Route("/create/roles")
+     */
+    public function createRolesAction()
+    {
+        //TODO: In Oberfläche integrieren (AdminController ?)
+        $roleDozent = new Role();
+        $roleDozent->setName("ROLE_DOZENT");
+        $roleDozent->setRole("ROLE_DOZENT");
+
+        $roleSgl = new Role();
+        $roleSgl->setName("ROLE_SGL");
+        $roleSgl->setRole("ROLE_SGL");
+
+        $validator = $this->get('validator');
+
+        $errors = $validator->validate($roleDozent);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+        $errors = $validator->validate($roleSgl);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($roleDozent);
+        $em->persist($roleSgl);
+        $em->flush();
+
+        return new Response("Rollen angelegt");
+    }
 }
