@@ -14,7 +14,8 @@
         <table id="table" class="table table-bordered tablesorter">
             <thead>
                 <tr>
-                    <th>Modulhandbuch</th>
+                    <th>Beschreibung</th>
+                    <th>Studiengang</th>
                     <th>Gültig ab</th>
                     <th>Version</th>
                     <th>Erstellungsdatum</th>
@@ -24,6 +25,7 @@
             {% for entity in mhb|sort %}
                 <tr>
                     <td><a href="{{ path('mhbModulListe', {'id': entity.getMHBID()}) }}">{{ entity.Beschreibung }}</a></td>
+                    <td>{{ entity.getGehoertZu() }}</td>
                     <td>{{ entity.getGueltigAb() }}</td>
                     <td>{{ entity.getVersionsnummer() }}</td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}

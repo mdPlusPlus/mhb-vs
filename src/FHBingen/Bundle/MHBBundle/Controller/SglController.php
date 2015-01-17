@@ -115,7 +115,7 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/mhbUebersicht", name="mhbUebersicht")
-     * @Template("FHBingenMHBBundle:SGL:mhbModulUebersicht.html.twig")
+     * @Template("FHBingenMHBBundle:SGL:mhbUebersicht.html.twig")
      */
     public function mhbUebersichtAction()
     {
@@ -366,7 +366,6 @@ class SglController extends Controller
         $sgl = $this->get('security.context')->getToken()->getUser();
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $sgl));
         $mhb = new Entity\Modulhandbuch();
-        $mhbID = null;
         $form = $this->createForm(new Form\ModulhandbuchType(), $mhb);
 
         $request = $this->get('request');
@@ -390,7 +389,7 @@ class SglController extends Controller
                 $em->flush();
 
                 $mhbID = $mhb->getMHBID();
-                $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
+                //$this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
 
                 return $this->redirect($this->generateUrl('mhbZusammenstellung', array('mhbID' => $mhbID)));
             }
@@ -456,6 +455,7 @@ class SglController extends Controller
             }
 
             $em->flush();
+            $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
 
         } else {
             return new Response('$_POST was empty');
