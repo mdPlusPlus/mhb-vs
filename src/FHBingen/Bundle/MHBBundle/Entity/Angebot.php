@@ -322,9 +322,9 @@ class Angebot
         return $this->zuweisung;
     }
 
-    /**
-     * @return ModulBeschreibung
-     */
+//    /**
+//     * @return ModulBeschreibung
+//     */
 //    public function getModulBeschreibung() {
 //        $modulBeschreibung = new ModulBeschreibung();
 //        $modulBeschreibung->setAngebot($this);
