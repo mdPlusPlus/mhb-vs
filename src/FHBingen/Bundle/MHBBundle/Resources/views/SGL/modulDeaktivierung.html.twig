@@ -41,6 +41,7 @@
             </tr>
             </thead>
             <tbody>
+            {% set count = 0 %}
             {% for veranstaltung in module %}
                 <tr>
                     <td>
@@ -50,14 +51,13 @@
                     <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
                     <td>{{ veranstaltung.beauftragter }}</td>
                     <td>
-                        {% set count = 0 %}
                         {% for name in stgZuModul[count] %}
                             {{ name }}<br/>
-                            {% set count = count +1 %}
                         {% endfor %}
                         <a href=" {{ path('modulDeaktivierung', {'modulID': veranstaltung.getModulID()}) }}">Modul deaktivieren</a>
                     </td>
                 </tr>
+                {% set count = count +1 %}
             {% endfor %}
             </tbody>
         </table>

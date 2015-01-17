@@ -294,7 +294,6 @@ class SglController extends Controller
             $module[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $angebot->getVeranstaltung()));
         }
 
-
         $stgZuModul = array();
         foreach ($module as $modul) {
             $name = array();
