@@ -24,9 +24,8 @@ class InsertController extends Controller
 {
     public function semesterCreate()
     {
-        // legt die Semester-Objekte an und gibt sie als Array zur�ck
+        //legt die Semester-Objekte an und gibt sie als Array zurück
         //TODO: In Oberfäche integieren ?
-        //alternativ:
         $semester0 = new Semester();
         $semester0->setSemester('WS14');
 
