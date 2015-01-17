@@ -139,14 +139,12 @@ class DozentController extends Controller
         $modulID = $id; //keine Lust alle Zugriffe in den Templates auf $modulID zu ändern
         $encoder = new JsonEncoder();
         $user = $this->get('security.context')->getToken()->getUser();
-        $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail)); //müsste auch direkt mit $user gehen
 
         if ($modulID == -1) {
             $modul = new Entity\Veranstaltung();
         } else {
-            $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modulID, 'beauftragter' => $dozent->getDozentenID(), 'Status' => 'in Planung'));
+            $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modulID, 'beauftragter' => $user->getDozentenID(), 'Status' => 'in Planung'));
         }
 
         $form = $this->createForm(new Form\PlanungType(), $modul);
@@ -159,7 +157,7 @@ class DozentController extends Controller
                 $modul->setStatus('in Planung');
                 $modul->setErstellungsdatum(new \DateTime());
                 $modul->setVersionsnummer(0);
-                $modul->setBeauftragter($dozent);
+                $modul->setBeauftragter($user);
                 $modul->setKuerzel($form->get('kuerzel')->getData());
                 $modul->setName($form->get('name')->getData());
                 $modul->setNameEn($form->get('nameEN')->getData());
