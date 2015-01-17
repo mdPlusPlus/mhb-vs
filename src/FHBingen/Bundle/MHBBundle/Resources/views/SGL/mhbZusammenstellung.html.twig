@@ -20,6 +20,10 @@
         .angebote, #mhb, .angebote li, #mhb li {
             border: 1px solid;
         }
+
+        .ui-state-highlight {
+            height: 2em;
+        }
     </style>
 
     <script>
@@ -29,13 +33,15 @@
 
         {# TODO: Sobald man scrollt geht das Feature kaputt. Warum? #}
         $(function () {
-            //$("#mhb").sortable();
             $(".angebote").sortable({
-                connectWith: "#mhb"
-            });
+                connectWith: "#mhb",
+                placeholder: "ui-state-highlight"
+            }).disableSelection();
+
             $("#mhb").sortable({
-                connectWith: "#mhb, .angebote"
-            });
+                connectWith: "#mhb, .angebote",
+                placeholder: "ui-state-highlight"
+            }).disableSelection();
         });
     </script>
 

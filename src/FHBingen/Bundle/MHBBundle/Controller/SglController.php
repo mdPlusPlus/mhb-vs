@@ -408,6 +408,11 @@ class SglController extends Controller
             $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
         }
 
+        //sortieren
+        foreach ($zuordnung as $key => $value) {
+            uasort($zuordnung[$key], array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
+        }
+
         return array(
             'zuordnung' => $zuordnung,
             'mhbGueltigAb' => $mhbGueltigAb,
