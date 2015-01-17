@@ -336,30 +336,30 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     protected $studiengang;
 
     /**
-     * Add modul_admin
+     * Add veranstaltung
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung
      * @return Dozent
      */
-    public function addModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin)
+    public function addModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung)
     {
-        $this->modulbeauftragter[] = $modul_admin;
+        $this->modulbeauftragter[] = $veranstaltung;
     
         return $this;
     }
 
     /**
-     * Remove modul_admin
+     * Remove veranstaltung
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung
      */
-    public function removeModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul_admin)
+    public function removeModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung)
     {
-        $this->modulbeauftragter->removeElement($modul_admin);
+        $this->modulbeauftragter->removeElement($veranstaltung);
     }
 
     /**
-     * Get modul_admin
+     * Get veranstaltung
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
