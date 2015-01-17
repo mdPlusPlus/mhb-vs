@@ -12,8 +12,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+
 class VertiefungType extends AbstractType
 {
+    /*
+     * wird in StudiengangType genutzt
+     */
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 

@@ -11,8 +11,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+
 class LehrendeType extends AbstractType
 {
+    /*
+     * wird von Veranstaltungtype genutzt
+     */
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 

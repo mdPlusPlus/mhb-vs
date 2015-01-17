@@ -13,6 +13,10 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FachgebietType extends AbstractType
 {
+    /*
+     * wird in StuidengangType genutzt
+     */
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
