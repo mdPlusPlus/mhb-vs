@@ -39,6 +39,9 @@
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <table class="table table-bordered">
             {{ form_errors(form) }}
+            <tr>
+                <td colspan="3" style="color:red"> Mit [#] gekennzeichnete Felder sind Pflichtfelder</td>
+            </tr>
             {{ form_row(form.name) }}
             {{ form_row(form.nameEN) }}
             {{ form_row(form.kuerzel) }}
@@ -69,4 +72,3 @@
     {% include '@FHBingenMHB/flashbags.html.twig' %}
 
 {% endblock %}
-
