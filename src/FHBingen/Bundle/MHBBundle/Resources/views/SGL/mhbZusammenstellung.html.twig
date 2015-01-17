@@ -12,7 +12,7 @@
         }
 
         #mhbWrapper {
-
+            margin-left: 325px;
         }
 
         #mhb {
@@ -56,12 +56,13 @@
         /* von http://jsfiddle.net/yU8Ut/ */
         $(function () {
             {#{% for key in zuordnung|keys %}#}
-                {#{% set js = 'jQuery("#' ~ _self.keyReplace(key) ~ '").height(jQuery("#' ~ _self.keyReplace(key) ~ '").height();' %}#}
-                {#{{ js|escape }}#}
+            {#{% set js = 'jQuery("#' ~ _self.keyReplace(key) ~ '").height(jQuery("#' ~ _self.keyReplace(key) ~ '").height();' %}#}
+            {#{{ js|escape }}#}
             {#{% endfor %}#}
 
             jQuery("#angeboteWrapper").height(jQuery("#angeboteWrapper").height());
             jQuery("#mhb").height(jQuery("#angeboteWrapper").height());
+            jQuery("#angeboteWrapper").height(jQuery("#mhbWrapper").height());
 
             $(".angebote").sortable({
                 appendTo: 'body',
@@ -101,21 +102,23 @@
         {% endfor %}
     </div>
 
-    <div id="mhbWrapper">
-        {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
-        <form method="POST" action="{{ path('mhbErstellungParsen') }}">
-            <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
-            <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
 
+    {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
+    <form method="POST" action="{{ path('mhbErstellungParsen') }}">
+        <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
+        <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
+
+        <div id="mhbWrapper">
             <h4>MHB</h4>
             <ul id="mhb">
             </ul>
+        </div>
 
-            <div class="ourButtons">
-                {# <button class="btn btn-default" type="reset">zurücksetzen</button> #}
-                <button class="btn btn-primary" type="submit">abschicken</button>
-            </div>
-        </form>
-    </div>
+        <div class="ourButtons">
+            {# <button class="btn btn-default" type="reset">zurücksetzen</button> #}
+            <button class="btn btn-primary" type="submit">abschicken</button>
+        </div>
+    </form>
+
 
 {% endblock %}
