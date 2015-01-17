@@ -30,7 +30,7 @@ class PlanungType extends AbstractType
             ->add('dauer', 'integer', array('label' => 'Dauer: ', 'required' => false, 'attr' => array('min' => '1')))
             ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung: ', 'required' => false, 'attr' => array('min' => '0')))
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige: ', 'required' => false, 'attr' => array('min' => '0')))
-            ->add('selbststudium', 'integer', array('label' => 'Selbststudium: ', 'required' => false, 'attr' => array('min' => '0'))) //TODO: sieht noch scheiße aus, soll automatisch errechnet werden
+            ->add('selbststudium', 'integer', array('label' => false, 'required' => false, 'attr' => array('min' => '0', 'hidden' => true))) //experimentell: Feld ausgeblendet weil automatisch errechnet
             ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße: ', 'required' => false, 'attr' => array('min' => '0')))
             ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
