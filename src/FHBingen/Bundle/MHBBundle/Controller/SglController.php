@@ -376,7 +376,7 @@ class SglController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $mhb->setBeschreibung($form->get('beschreibung')->getData());
+                $mhb->setBeschreibung($form->get('beschreibung')->getData()); //TODO: Beschreibung automatisch generieren lassen?
                 $mhb->setGueltigAb($form->get('gueltigAb')->getData());
                 $mhb->setGehoertZu($studiengang);
                 $mhb->setErstellungsdatum(new \DateTime());
@@ -395,6 +395,7 @@ class SglController extends Controller
                 //$this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
 
                 return $this->redirect($this->generateUrl('mhbZusammenstellung', array('mhbID' => $mhbID)));
+                //TODO: mhb erst in mhbErstellungParsen wirklich anlegen
             }
 
         }
