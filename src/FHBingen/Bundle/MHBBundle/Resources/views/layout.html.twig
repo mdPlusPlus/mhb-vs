@@ -6,12 +6,15 @@
     {#<meta name="viewport" content="width=device-width, initial-scale=1">#}
     <title>MHB-VS</title>
 
+    <!-- jQuery UI 1.11.2 custom - Sortable, no theme -->
+    <link href="{{ asset('bundles/fhbingenmhb/css/jquery-ui.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/fhbingenmhb/css/jquery-ui.structure.min.css') }}" rel="stylesheet"/>
     <!-- Tablesorter -->
     <link href="{{ asset('bundles/fhbingenmhb/css/tablesorter.css') }}" rel="stylesheet"/>
-    <!-- Bootstrap -->
+    <!-- Bootstrap - die .min Versionen machen hier alles kaputt, wieso? -->
     <link href="{{ asset('bundles/fhbingenmhb/css/bootstrap.css') }}" rel="stylesheet"/>
-    {#<link href="{{ asset('bundles/fhbingenmhb/css/bootstrap-theme.css') }}" rel="stylesheet"/>#}
-        <!-- own styles -->
+    <link href="{{ asset('bundles/fhbingenmhb/css/bootstrap-theme.css') }}" rel="stylesheet"/>
+    <!-- own styles -->
     <link href="{{ asset('bundles/fhbingenmhb/css/style.css') }}" rel="stylesheet"/>
 
     {#
@@ -25,7 +28,7 @@
 
     <!-- jQuery -->
     <script type="text/javascript" src="{{ asset('bundles/fhbingenmhb/js/jquery-2.1.3.min.js') }}"></script>
-    <!-- jQuery UI -->
+    <!-- jQuery UI 1.11.2 custom - Sortable, no theme -->
     <script type="text/javascript" src="{{ asset('bundles/fhbingenmhb/js/jquery-ui.min.js') }}"></script>
     <!-- jQuery Tablesorter -->
     <script type="text/javascript" src="{{ asset('bundles/fhbingenmhb/js/jquery.tablesorter.min.js') }}"></script>

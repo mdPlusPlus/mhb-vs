@@ -8,6 +8,7 @@
             list-style-type: none;
             padding: 5px 0 0 0;
             /*float: left;*/
+            overflow: auto;
         }
 
         .angebote li, #mhb li {
@@ -20,10 +21,6 @@
         .angebote, #mhb, .angebote li, #mhb li {
             border: 1px solid;
         }
-
-        .ui-state-highlight {
-            height: 2em;
-        }
     </style>
 
     <script>
@@ -31,18 +28,48 @@
             highlightMe(document.getElementById('mhbErstellungLink'));
         });
 
-        {# TODO: Sobald man scrollt geht das Feature kaputt. Warum? #}
+        {#
+            TODO: Sobald man scrollt geht das Feature kaputt. Warum?
+            hier gehts O.o http://jsfiddle.net/yU8Ut/217/
+            hat vllt mit jQuery und jQueryUI Version zu tun
+        #}
+
+
+        /* von http://jsfiddle.net/yU8Ut/ */
         $(function () {
-            $(".angebote").sortable({
-                connectWith: "#mhb",
-                placeholder: "ui-state-highlight"
+            var angebote = $(".angebote").sortable({
+                appendTo: 'body',
+                tolerance: 'pointer',
+                connectWith: '#mhb',
+                revert: 'invalid',
+                forceHelperSize: true,
+                helper: 'original',
+                scroll: true
             }).disableSelection();
 
-            $("#mhb").sortable({
-                connectWith: "#mhb, .angebote",
-                placeholder: "ui-state-highlight"
+            var mhb = $("#mhb").sortable({
+                appendTo: 'body',
+                tolerance: 'pointer',
+                connectWith: '#mhb, .angebote',
+                revert: 'invalid',
+                forceHelperSize: true,
+                helper: 'original',
+                scroll: true
             }).disableSelection();
+
+//            for (var i = 0; i < angebote.length; i++) {
+//                angebote[i].on('scroll', function() {
+//                    angebote[i].scrollTop($(this).scrollTop());
+//                });
+//            }
+
+//            mhb.on('scroll', function() {
+//                mhb.scrollTop($(this).scrollTop());
+//            });
+
+
         });
+
     </script>
 
     {% for key in zuordnung|keys %}
