@@ -29,7 +29,6 @@ class DozentController extends Controller
     public function eigeneModuleAction()
     {
         //TODO: Filter auf Versionsnummer
-        //TODO: Abfangen falls keine Module vorhanden sind
 
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
