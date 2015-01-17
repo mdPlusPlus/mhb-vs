@@ -43,6 +43,7 @@ class StudiengangType extends AbstractType
                     )
             ))
 
+            //TODO: Überprüfung auf Mindestlänge fehlt hier (steht in den Asserts)
             ->add('fachgebiete', 'collection', array('label' => false, 'type' => new FachgebietType(),
                 'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
                 'options' => array(
