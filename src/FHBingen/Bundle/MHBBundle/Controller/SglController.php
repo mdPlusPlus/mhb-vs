@@ -356,16 +356,16 @@ class SglController extends Controller
     }
 
 
-     /**
-      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
+    /**
+     * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
      * @Template("FHBingenMHBBundle:SGL:mhbErstellung.html.twig")
      */
-     public function mhbErstellungAction()
-        {
+    public function mhbErstellungAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $sgl = $this->get('security.context')->getToken()->getUser();
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $sgl));
-        $mhb= new Entity\Modulhandbuch();
+        $mhb = new Entity\Modulhandbuch();
         $mhbID = null;
         $form = $this->createForm(new Form\ModulhandbuchType(), $mhb);
 
@@ -380,9 +380,9 @@ class SglController extends Controller
                 $mhb->setErstellungsdatum(new \DateTime());
                 $em = $this->getDoctrine()->getManager();
                 $version = $em
-                    ->createQuery('SELECT MAX(m.Versionsnummer )as V
+                    ->createQuery('SELECT MAX(m.Versionsnummer )AS V
                            FROM  FHBingenMHBBundle:Modulhandbuch m
-                           WHERE m.gehoertZu='.$studiengang->getStudiengangID())
+                           WHERE m.gehoertZu=' . $studiengang->getStudiengangID())
                     ->getSingleResult();
                 $version['V']++;
                 $mhb->setVersionsnummer($version['V']);
@@ -392,19 +392,20 @@ class SglController extends Controller
                 $mhbID = $mhb->getMHBID();
                 $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
 
-                return $this->redirect($this->generateUrl('mhbZusammensetllung', array('mhbID' => $mhbID)));
+                return $this->redirect($this->generateUrl('mhbZusammenstellung', array('mhbID' => $mhbID)));
             }
 
         }
-            return $this->render('FHBingenMHBBundle:SGL:mhbErstellung.html.twig', array('form' => $form->createView(), 'mhb' => $mhb, 'pageTitle' => 'Modulhandbuch Erstellung'));
+
+        return $this->render('FHBingenMHBBundle:SGL:mhbErstellung.html.twig', array('form' => $form->createView(), 'mhb' => $mhb, 'pageTitle' => 'Modulhandbuch-Erstellung'));
     }
 
 
     /**
-     * @Route("/restricted/sgl/mhbZusammensetllung/{mhbID}", name="mhbZusammensetllung")
-     * @Template("FHBingenMHBBundle:SGL:mhbZusammensetllung.html.twig")
+     * @Route("/restricted/sgl/mhbZusammenstellung/{mhbID}", name="mhbZusammenstellung")
+     * @Template("FHBingenMHBBundle:SGL:mhbZusammenstellung.html.twig")
      */
-    public function mhbZusammensetllungAction($mhbID)
+    public function mhbZusammenstellungAction($mhbID)
     {
         $em = $this->getDoctrine()->getManager();
         $sgl = $this->get('security.context')->getToken()->getUser();
@@ -422,7 +423,8 @@ class SglController extends Controller
         foreach ($angebote as $angebot) {
             $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
         }
-        return array('zuordnung' => $zuordnung,'mhbID' => $mhbID, 'pageTitle' => 'Modulhand Zusammenstellung');
+
+        return array('zuordnung' => $zuordnung,'mhbID' => $mhbID, 'pageTitle' => 'Modulhandbuch-Zusammenstellung');
     }
 
 
