@@ -1,10 +1,20 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
+{% macro keyReplace(key) %}
+    {% set fixed = key|replace({' ': '_'}) %}
+    {{ fixed }}
+{% endmacro %}
+
 {% block content %}
     <style>
-        #wrapThisUp {
-            overflow: auto;
+        #angeboteWrapper {
+            float: left;
         }
+
+        #mhbWrapper {
+
+        }
+
         .angebote, #mhb {
             width: 300px;
             min-height: 20px;
@@ -41,8 +51,13 @@
 
         /* von http://jsfiddle.net/yU8Ut/ */
         $(function () {
-            //jQuery("wrapThisUp").height(jQuery("wrapThisUp").height());
-
+            {#{% for key in zuordnung|keys %}#}
+                {#{% set js = 'jQuery("#' ~ _self.keyReplace(key) ~ '").height(jQuery("#' ~ _self.keyReplace(key) ~ '").height();' %}#}
+                {#{{ js|escape }}#}
+            {#{% endfor %}#}
+            jQuery("#angeboteWrapper").height(jQuery("#angeboteWrapper").height());
+            //jQuery("#mhbWrapper").height(jQuery("#angeboteWrapper").height());
+            jQuery("#mhb").height(jQuery("#angeboteWrapper").height());
 
             $(".angebote").sortable({
                 appendTo: 'body',
@@ -51,7 +66,7 @@
                 revert: 'invalid',
                 forceHelperSize: true,
                 helper: 'original',
-                scroll: true,
+                scroll: true
             }).disableSelection();
 
             $("#mhb").sortable({
@@ -61,51 +76,39 @@
                 revert: 'invalid',
                 forceHelperSize: true,
                 helper: 'original',
-                scroll: true,
+                scroll: true
             }).disableSelection();
 
         });
 
     </script>
 
-    <div id="wrapThisUp">
-
+    <div id="angeboteWrapper">
         {% for key in zuordnung|keys %}
-            <div class="list">
-                <h4>{{ key }}</h4>
-                <ul id="{{ key }}" class="angebote {{ key|replace({' ': '_'}) }}">
-                    {% for angebot in zuordnung[key] %}
-                        <li>
-                            <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
-                            {{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')'}} {# Angebotsart hier sinnvoll? #}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endfor %}
-
-        <div class="list">
-            {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
-            <form method="POST" action="{{ path('mhbErstellungParsen') }}">
-                <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
-                <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
-
-
-                <h4>MHB</h4>
-                <ul id="mhb" class="
-                mhb
-                {% for key in zuordnung|keys %}
-                    {{ key|replace({' ': '_'}) }}
+            <h4>{{ key }}</h4>
+            <ul id="{{ key }}" class="angebote {{ _self.keyReplace(key) }}">
+                {% for angebot in zuordnung[key] %}
+                    <li>
+                        <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
+                        {{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')' }} {# Angebotsart hier sinnvoll? #}
+                    </li>
                 {% endfor %}
-                ">
-                    {#<li>test</li>#}
-                </ul>
-
-                {% include '@FHBingenMHB/buttons.html.twig' %}
-
-            </form>
-        </div>
+            </ul>
+        {% endfor %}
     </div>
 
+    <div id="mhbWrapper">
+        {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
+        <form method="POST" action="{{ path('mhbErstellungParsen') }}">
+            <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
+            <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
+
+            <h4>MHB</h4>
+            <ul id="mhb">
+            </ul>
+
+            {% include '@FHBingenMHB/buttons.html.twig' %}
+        </form>
+    </div>
 
 {% endblock %}

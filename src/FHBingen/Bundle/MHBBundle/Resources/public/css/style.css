@@ -96,6 +96,7 @@ body {
 }
 
 div.ourButtons {
+    clear: both;
     margin-top: 50px;
     /* TODO: Bei Gelegenheit ändern */
     margin-bottom: 200px;
