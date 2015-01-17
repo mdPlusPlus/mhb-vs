@@ -463,20 +463,27 @@ class SglController extends Controller
                 }
             }
 
-            $em->persist($mhb);
+            //TODO: if-abfrage testen
+            if (!empty($angebote)) {
+                $em->persist($mhb);
 
-            foreach ($angebote as $angebot) {
-                $zuweisung = new Entity\ModulhandbuchZuweisung();
-                $zuweisung->setMhb($mhb);
-                $zuweisung->setAngebot($angebot);
-                $em->persist($zuweisung);
+                foreach ($angebote as $angebot) {
+                    $zuweisung = new Entity\ModulhandbuchZuweisung();
+                    $zuweisung->setMhb($mhb);
+                    $zuweisung->setAngebot($angebot);
+                    $em->persist($zuweisung);
+                }
+
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
+
+                return $this->redirect($this->generateUrl('mhbUebersicht'));
+            } else {
+                return new Response('Es wurrden keine Angebote übergeben');
             }
 
-            $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
-
-            return $this->redirect($this->generateUrl('mhbUebersicht'));
 
         } else {
             return new Response('$_POST was empty');

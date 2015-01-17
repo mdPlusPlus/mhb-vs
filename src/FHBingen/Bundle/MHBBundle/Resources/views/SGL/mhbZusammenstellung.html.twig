@@ -77,7 +77,7 @@
                     {% for angebot in zuordnung[key] %}
                         <li>
                             <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
-                            {{ angebot }}
+                            {{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')'}} {# Angebotsart hier sinnvoll? #}
                         </li>
                     {% endfor %}
                 </ul>
