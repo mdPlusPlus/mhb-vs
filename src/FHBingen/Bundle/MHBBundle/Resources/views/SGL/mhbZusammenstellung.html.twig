@@ -2,6 +2,9 @@
 
 {% block content %}
     <style>
+        #wrapThisUp {
+            overflow: auto;
+        }
         .angebote, #mhb {
             width: 300px;
             min-height: 20px;
@@ -16,6 +19,7 @@
             padding: 5px;
             font-size: 1.2em;
             width: 288px; /* 300 - 2 * (5px Abstand + 1px Rand) */
+            background-color: white;
         }
 
         .angebote, #mhb, .angebote li, #mhb li {
@@ -37,69 +41,69 @@
 
         /* von http://jsfiddle.net/yU8Ut/ */
         $(function () {
-            var angebote = $(".angebote").sortable({
+            //jQuery("wrapThisUp").height(jQuery("wrapThisUp").height());
+
+
+            $(".angebote").sortable({
                 appendTo: 'body',
                 tolerance: 'pointer',
                 connectWith: '#mhb',
                 revert: 'invalid',
                 forceHelperSize: true,
                 helper: 'original',
-                scroll: true
+                scroll: true,
             }).disableSelection();
 
-            var mhb = $("#mhb").sortable({
+            $("#mhb").sortable({
                 appendTo: 'body',
                 tolerance: 'pointer',
-                connectWith: '#mhb, .angebote',
+                connectWith: '.angebote',
                 revert: 'invalid',
                 forceHelperSize: true,
                 helper: 'original',
-                scroll: true
+                scroll: true,
             }).disableSelection();
-
-//            for (var i = 0; i < angebote.length; i++) {
-//                angebote[i].on('scroll', function() {
-//                    angebote[i].scrollTop($(this).scrollTop());
-//                });
-//            }
-
-//            mhb.on('scroll', function() {
-//                mhb.scrollTop($(this).scrollTop());
-//            });
-
 
         });
 
     </script>
 
-    {% for key in zuordnung|keys %}
-        <h4>{{ key }}</h4>
-        <ul id="{{ key }}" class="angebote {{ key|replace({' ': '_'}) }}">
-            {% for angebot in zuordnung[key] %}
-                <li>
-                    <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
-                    {{ angebot }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endfor %}
+    <div id="wrapThisUp">
 
-    {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
-    <form method="POST" action="{{ path('mhbErstellungParsen') }}">
-        <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
-        <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
+        {% for key in zuordnung|keys %}
+            <div class="list">
+                <h4>{{ key }}</h4>
+                <ul id="{{ key }}" class="angebote {{ key|replace({' ': '_'}) }}">
+                    {% for angebot in zuordnung[key] %}
+                        <li>
+                            <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
+                            {{ angebot }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
 
-        <h4>MHB</h4>
+        <div class="list">
+            {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
+            <form method="POST" action="{{ path('mhbErstellungParsen') }}">
+                <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
+                <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
 
-        <ul id="mhb" class="
-            mhb
-            {% for key in zuordnung|keys %}
-                {{ key|replace({' ': '_'}) }}
-            {% endfor %}
-        ">
-        </ul>
 
-        {% include '@FHBingenMHB/buttons.html.twig' %}
-    </form>
+                <h4>MHB</h4>
+                <ul id="mhb" class="
+                mhb
+                {% for key in zuordnung|keys %}
+                    {{ key|replace({' ': '_'}) }}
+                {% endfor %}
+                ">
+                    <li>test</li>
+                </ul>
+            </form>
+        </div>
+    </div>
+
+    {% include '@FHBingenMHB/buttons.html.twig' %}
 
 {% endblock %}
