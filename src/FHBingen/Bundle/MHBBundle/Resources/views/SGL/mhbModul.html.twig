@@ -34,7 +34,7 @@
             border-collapse: collapse;
         }
 
-        .modul table + th, .modul table td {
+        .modul table th, .modul table td {
             border: 1px solid gray;
             padding: 0 10px;
         }
@@ -82,7 +82,7 @@
                 {% for studienplan in modulBeschreibung.getStudienplaene() %}
                     <tr>
                         <td class="studiensemseter startsemester">{{ studienplan.getStartsemester() }}:</td>
-                        <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': '', ',': '. + '}) }}. Semester</td>
+                        <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': '', ',': '. + '}) ~ '. Semester' }}</td>
                     </tr>
                 {% endfor %}
                 </table>

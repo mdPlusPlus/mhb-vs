@@ -26,4 +26,69 @@ class DefaultController extends Controller
         //'login' ist hier route alias von /login
         return $this->redirect($this->generateUrl('login'));
     }
+
+    //von InsertController
+    public function semesterCreate()
+    {
+        //legt die Semester-Objekte an und gibt sie als Array zurück
+        //TODO: In Oberfäche integieren ?
+        $semester0 = new Semester();
+        $semester0->setSemester('WS14');
+
+        $semester1 = new Semester();
+        $semester1->setSemester('SS15');
+
+        $semester2 = new Semester();
+        $semester2->setSemester('WS15');
+
+        $semester3 = new Semester();
+        $semester3->setSemester('SS16');
+
+        $semesterArr = array(
+            $semester0,
+            $semester1,
+            $semester2,
+            $semester3
+        );
+
+        return $semesterArr;
+    }
+
+    //von TestUsersController
+    /**
+     * @Route("/create/roles")
+     */
+    public function createRolesAction()
+    {
+        //TODO: In Oberfläche integrieren (AdminController ?)
+        $roleDozent = new Role();
+        $roleDozent->setName("ROLE_DOZENT");
+        $roleDozent->setRole("ROLE_DOZENT");
+
+        $roleSgl = new Role();
+        $roleSgl->setName("ROLE_SGL");
+        $roleSgl->setRole("ROLE_SGL");
+
+        $validator = $this->get('validator');
+
+        $errors = $validator->validate($roleDozent);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+        $errors = $validator->validate($roleSgl);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($roleDozent);
+        $em->persist($roleSgl);
+        $em->flush();
+
+        return new Response("Rollen angelegt");
+    }
 }
