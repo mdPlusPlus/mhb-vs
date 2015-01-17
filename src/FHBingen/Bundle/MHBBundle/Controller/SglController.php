@@ -257,7 +257,7 @@ class SglController extends Controller
             'footer-left' => 'Fachhochschule Bingen',
             'footer-center' => $footerText,
             'footer-right' => '[page]/[toPage]',
-            'title' => $mhb->getBeschreibung(),
+            'title' => $mhb->getBeschreibung(), //TODO: Ändern auf $studiengang + $versionsnummer?
             'disable-javascript' => true,
             //'cover' => 'cover.html',
             //'toc' => true,
@@ -269,7 +269,7 @@ class SglController extends Controller
 
         return new Response($pdf, 200, array(
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="' . $mhb->getBeschreibung() . '.pdf"'
+            'Content-Disposition' => 'attachment; filename="' . $mhb->getBeschreibung() . '.pdf"' //TODO: Ändern auf $studiengang + $versionsnummer?
         ));
     }
 
