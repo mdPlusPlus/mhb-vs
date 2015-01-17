@@ -136,7 +136,7 @@ class DozentController extends Controller
      */
     public function planungAction($id)
     {
-        $modulID = $id; //keine Lust alle Zugriffe in den Templates auf $modulID zu ändern
+        $modulID = $id; //keine Lust alle Zugriffe in den Templates von $id auf $modulID zu ändern
         $encoder = new JsonEncoder();
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();

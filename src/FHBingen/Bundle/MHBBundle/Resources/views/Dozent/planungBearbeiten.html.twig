@@ -33,6 +33,8 @@
             <!-- navbar highlighting -->
             highlightMe(document.getElementById('modulplanungLink'));
         });
+
+        {# TODO: JavaScript dass Kontaktzeiten mit Leistungspunkten abgleicht #}
     </script>
 
     <div class="table-responsive">
@@ -50,6 +52,7 @@
             {{ form_row(form.leistungspunkte) }}
             {{ form_row(form.kontaktzeitVL) }}
             {{ form_row(form.kontaktzeitSonstige) }}
+            {# {{ form_row(form.selbststudium) }} #}
             {{ form_row(form.gruppengroesse) }}
             {{ form_row(form.lernergebnisse) }}
             {{ form_row(form.inhalte) }}
