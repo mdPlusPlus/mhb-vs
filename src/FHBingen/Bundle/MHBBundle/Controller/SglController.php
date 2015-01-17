@@ -458,14 +458,14 @@ class SglController extends Controller
                         $mhb->setBeschreibung($value); //TODO: automatisch generieren lassen?
                         break;
                     default:
-                        $angebote[] = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneById($value);
+                        $angebote[] = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('Angebots_ID' =>$value));
                         break;
                 }
             }
 
-            //TODO: if-abfrage testen
             if (!empty($angebote)) {
                 $em->persist($mhb);
+                $em->flush(); //hier notwending!
 
                 foreach ($angebote as $angebot) {
                     $zuweisung = new Entity\ModulhandbuchZuweisung();
@@ -480,7 +480,7 @@ class SglController extends Controller
 
                 return $this->redirect($this->generateUrl('mhbUebersicht'));
             } else {
-                return new Response('Es wurrden keine Angebote übergeben');
+                return new Response('Es wurrden keine Angebote übergeben.');
             }
 
 
