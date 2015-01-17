@@ -134,7 +134,8 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         //findet alle Veranstaltungen die dem MHB zugeordnet sind
-        $mhb = $em
+        //TODO: Warum nicht über die ModulhandbuchZuweisung gehen?
+        $mhbEintraege = $em
             ->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer, d.Titel, d.Nachname, v.Autor
                            FROM  FHBingenMHBBundle:Angebot a
                            JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung = v.Modul_ID
@@ -150,7 +151,9 @@ class SglController extends Controller
                            WHERE m.MHB_ID = ' . $id)
             ->getResult();
 
-        return array('mhb' => $mhb, 'beschreibung' => $mhbBeschreibung, 'pageTitle' => 'Module des Modulhandbuchs');
+        //TODO: Anzeigen welches MHB angezeigt wird (Studiengang, Versionsnummer, Beschreibung)
+
+        return array('mhb' => $mhbEintraege, 'beschreibung' => $mhbBeschreibung, 'pageTitle' => 'Module des Modulhandbuchs');
     }
 
 
