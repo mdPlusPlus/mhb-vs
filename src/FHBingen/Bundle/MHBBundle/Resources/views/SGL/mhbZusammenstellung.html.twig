@@ -1,10 +1,5 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-{% macro keyReplace(key) %}
-    {% set fixed = key|replace({' ': '_'}) %}
-    {{ fixed }}
-{% endmacro %}
-
 {% block content %}
     <style>
         #angeboteWrapper {
@@ -55,10 +50,10 @@
 
         /* von http://jsfiddle.net/yU8Ut/ */
         $(function () {
-            {#{% for key in zuordnung|keys %}#}
-                {#{% set js = 'jQuery("#' ~ _self.keyReplace(key) ~ '").height(jQuery("#' ~ _self.keyReplace(key) ~ '").height();' %}#}
-                {#{{ js|raw  }}#}
-            {#{% endfor %}#}
+            {% for key in zuordnung|keys %}
+                {% set js = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
+                {{ js|raw  }}
+            {% endfor %}
 
             jQuery("#angeboteWrapper").height(jQuery("#angeboteWrapper").height());
             jQuery("#mhb").height(jQuery("#angeboteWrapper").height());
@@ -91,7 +86,7 @@
     <div id="angeboteWrapper">
         {% for key in zuordnung|keys %}
             <h4>{{ key }}</h4>
-            <ul id="{{ key }}" class="angebote {{ _self.keyReplace(key) }}">
+            <ul id="{{ key|replace({' ': '_'}) }}" class="angebote">
                 {% for angebot in zuordnung[key] %}
                     <li>
                         <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
