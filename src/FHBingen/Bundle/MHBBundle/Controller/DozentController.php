@@ -472,19 +472,37 @@ class DozentController extends Controller
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
 
 
-                $lehrendeArr = $form->get('modul')->getData()->toArray();
+                $lehrendeArr = $form->get('lehrende')->getData()->toArray();
+
+
+                $lehrendeArr = $form->get('lehrende')->getData()->toArray();
+
+
+
+                $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
+
 
                 if (!empty($lehrendeArr)) {
 
+//                    foreach ($lehrendeArr as $lehrend) {
+//                        // Modul mit Lehrenden verketten
+//                        $modul->addLehrende($lehrend->getDozent());
+//                        // Lehrende mit Veranstaltung verketten
+//                        $lehrend->setVeranstaltung($modul);
+//                        // passenden Dozenten aus dem Lehrenden Entity finden
+//                        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
+//                        // Dozent mit Lehrenden verketten
+//                        $dozent->addLehrende($lehrend);
+//                        // Lehrenden mit Dozent verketten
+//                        $lehrend->setDozent($dozent);
+//                        $em->persist($dozent);
+//                        $em->persist($lehrend);
+//                    }
                     foreach ($lehrendeArr as $lehrend) {
-                        // Modul mit Lehrenden verketten
-                        $modul->addModul($lehrend);
                         // Lehrende mit Veranstaltung verketten
                         $lehrend->setVeranstaltung($modul);
                         // passenden Dozenten aus dem Lehrenden Entity finden
                         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
-                        // Dozent mit Lehrenden verketten
-                        $dozent->addLehrende($lehrend);
                         // Lehrenden mit Dozent verketten
                         $lehrend->setDozent($dozent);
                         $em->persist($dozent);
@@ -492,12 +510,26 @@ class DozentController extends Controller
                     }
 
                     $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
-                    $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
+/*                    $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
 
                     foreach ($dbLehrendeArr as $dbEntry) {
                         if (!in_array($dbEntry, $lehrendeArr)) {
                             // link von Modul auf Lehrenden löschen
                             $modul->removeModul($dbEntry);
+                            // passenden Dozenten zu dem Lehrenden Etity finden
+                            $dozentTmp = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $dbEntry->getDozent()->getDozentenID()));
+                            // link von Dozenten zu Lehrenden Entity löschen
+                            $dozentTmp->removeLehrende($dbEntry);
+                            // Lehrenden entfernen
+                            $em->remove($dbEntry);
+                            $em->persist($dozentTmp);
+                        }*/
+
+                    $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
+
+
+                    foreach ($dbLehrendeArr as $dbEntry) {
+                        if (!in_array($dbEntry, $lehrendeArr)) {
                             // passenden Dozenten zu dem Lehrenden Etity finden
                             $dozentTmp = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $dbEntry->getDozent()->getDozentenID()));
                             // link von Dozenten zu Lehrenden Entity löschen
