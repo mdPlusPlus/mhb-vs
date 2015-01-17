@@ -28,8 +28,6 @@ class DozentController extends Controller
      */
     public function eigeneModuleAction()
     {
-        //TODO: Filter auf Versionsnummer
-
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
@@ -622,8 +620,8 @@ class DozentController extends Controller
                         'encSS' => $ssEncodedData,
                         'encWS' => $wsEncodedData)));
                 } else {
-                    //TODO: Fehlermeldung fehlt
-                    return new Response('false');
+                    $this->get('session')->getFlashBag()->add('info', 'Bitte geben sie die Regelsemester an.');
+                    //return new Response('false');
                 }
 
             }

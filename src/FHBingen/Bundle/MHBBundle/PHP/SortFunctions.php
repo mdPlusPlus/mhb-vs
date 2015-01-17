@@ -17,9 +17,19 @@ class SortFunctions {
 
     public static function angebotSort(Angebot $angebotA, Angebot $angebotB)
     {
-        //TODO: abweichender name?
-        $a = $angebotA->getVeranstaltung()->getName();
-        $b = $angebotB->getVeranstaltung()->getName();
+        $a = null;
+        if($angebotA->getAbweichenderNameDE() != null){
+            $a = $angebotA->getAbweichenderNameDE();
+        }else{
+            $a = $angebotA->getVeranstaltung()->getName();
+        }
+
+        $b = null;
+        if($angebotB->getAbweichenderNameDE() != null){
+            $b = $angebotB->getAbweichenderNameDE();
+        }else{
+            $b = $angebotB->getVeranstaltung()->getName();
+        }
 
         if ($a == $b) {
             return 0;

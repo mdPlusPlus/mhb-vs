@@ -25,9 +25,12 @@ class Angebot
 
     public function __toString()
     {
-        //TODO: abweichender name?
-        $string = (string) $this->getVeranstaltung();
-
+        $string = null;
+        if($this->getAbweichenderNameDE() != null){
+            $string = $this->getAbweichenderNameDE();
+        }else{
+            $string = (string) $this->getVeranstaltung();
+        }
         return $string;
     }
 
