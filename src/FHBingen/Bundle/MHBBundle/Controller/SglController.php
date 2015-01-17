@@ -110,7 +110,7 @@ class SglController extends Controller
 
         }
 
-        return $this->render('FHBingenMHBBundle:SGL:modulCodeErstellung.html.twig', array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung'));
+        return array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung');
     }
 
     /**
@@ -397,7 +397,7 @@ class SglController extends Controller
 
         }
 
-        return $this->render('FHBingenMHBBundle:SGL:mhbErstellung.html.twig', array('form' => $form->createView(), 'mhb' => $mhb, 'pageTitle' => 'Modulhandbuch-Erstellung'));
+        return array('form' => $form->createView(), 'mhb' => $mhb, 'pageTitle' => 'Modulhandbuch-Erstellung');
     }
 
 
