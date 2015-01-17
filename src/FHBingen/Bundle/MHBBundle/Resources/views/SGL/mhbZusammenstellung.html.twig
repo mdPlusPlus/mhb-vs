@@ -15,6 +15,10 @@
 
         }
 
+        #mhb {
+
+        }
+
         .angebote, #mhb {
             width: 300px;
             min-height: 20px;
@@ -55,8 +59,8 @@
                 {#{% set js = 'jQuery("#' ~ _self.keyReplace(key) ~ '").height(jQuery("#' ~ _self.keyReplace(key) ~ '").height();' %}#}
                 {#{{ js|escape }}#}
             {#{% endfor %}#}
+
             jQuery("#angeboteWrapper").height(jQuery("#angeboteWrapper").height());
-            //jQuery("#mhbWrapper").height(jQuery("#angeboteWrapper").height());
             jQuery("#mhb").height(jQuery("#angeboteWrapper").height());
 
             $(".angebote").sortable({
@@ -107,7 +111,10 @@
             <ul id="mhb">
             </ul>
 
-            {% include '@FHBingenMHB/buttons.html.twig' %}
+            <div class="ourButtons">
+                {# <button class="btn btn-default" type="reset">zurücksetzen</button> #}
+                <button class="btn btn-primary" type="submit">abschicken</button>
+            </div>
         </form>
     </div>
 
