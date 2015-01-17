@@ -263,8 +263,6 @@ class SglController extends Controller
             //'toc' => true,
             //'xsl-style-sheet' => 'toc.xsl'
             //'dump-outline' => 'outline.xml',
-            //'dump-default-toc-xsl' => 'toc.xsl',
-
         ));
 
         return new Response($pdf, 200, array(
