@@ -165,12 +165,13 @@ class SglController extends Controller
         $encoder = new JsonEncoder();
 
         $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
-        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('mhb' => $mhbID));
+        $zuweisungen = $mhb->getZuweisung();
         $studiengang = $mhb->getGehoertZu();
 
         $modulBeschreibungen = array();
 
-        foreach ($angebote as $angebot) {
+        foreach ($zuweisungen as $zuweisung) {
+            $angebot = $zuweisung->getAngebot();
             $veranstaltung = $angebot->getVeranstaltung();
 
             $modulBeschreibung = new ModulBeschreibung();

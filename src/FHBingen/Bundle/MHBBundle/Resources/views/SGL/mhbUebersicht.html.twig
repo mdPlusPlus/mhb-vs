@@ -14,6 +14,7 @@
         <table id="table" class="table table-bordered tablesorter">
             <thead>
                 <tr>
+                    <th>Download</th>
                     <th>Beschreibung</th>
                     <th>Studiengang</th>
                     <th>Gültig ab</th>
@@ -24,6 +25,7 @@
             <tbody>
             {% for entity in mhb|sort %}
                 <tr>
+                    <td><a href="{{ path('pdfErstellen', {'mhbID': entity.getMHBID()}) }}">Download</a></td>
                     <td><a href="{{ path('mhbModulListe', {'id': entity.getMHBID()}) }}">{{ entity.Beschreibung }}</a></td>
                     <td>{{ entity.getGehoertZu() }}</td>
                     <td>{{ entity.getGueltigAb() }}</td>
