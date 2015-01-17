@@ -325,13 +325,11 @@ class SglController extends Controller
 
         $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID));
 
-
         foreach ($angebot as $del) {
             $em->remove($del);
         }
 
         $kernfach = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('veranstaltung' => $modulID));
-
 
         foreach ($kernfach as $del) {
             $em->remove($del);
