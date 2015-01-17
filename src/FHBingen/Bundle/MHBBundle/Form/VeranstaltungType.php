@@ -32,7 +32,7 @@ class VeranstaltungType extends AbstractType
             ->add('dauer', 'integer', array('label' => 'Dauer [#]: ', 'required' => true, 'attr' => array('min' => '1')))
             ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige [#]: ', 'required' => true, 'attr' => array('min' => '0')))
-            ->add('selbststudium', 'integer', array('label' => 'Selbststudium [#]: ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('selbststudium', 'integer', array('label' => false, 'required' => true, 'attr' => array('min' => '0', 'hidden' => true)))
             ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
