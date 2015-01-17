@@ -67,7 +67,7 @@ class SglController extends Controller
 
         //findet die Angebote mit Dummy Modulcode
         $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')
-            ->findBy(array('Code' => 'DUMMY', 'studiengang' => $studiengang), array("Code" => 'asc'));
+            ->findBy(array('Code' => 'DUMMY', 'studiengang' => $studiengang));
         uasort($dummyAngebote, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
 
         //Filtert die Angebote mit DummyModul und aus anderen Studiengängen herraus
@@ -85,13 +85,13 @@ class SglController extends Controller
 
 
     /**
-     * @Route("/restricted/sgl/modulCodeErstellung/{id}", name="modulCodeErstellung")
+     * @Route("/restricted/sgl/modulCodeErstellung/{id}/{studiengangid}", name="modulCodeErstellung")
      * @Template("FHBingenMHBBundle:SGL:modulCodeErstellung.html.twig")
      */
-    public function modulCodeErstellungAction($id)
+    public function modulCodeErstellungAction($id, $studiengangid)
     {
         $em = $this->getDoctrine()->getManager();
-        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('veranstaltung' => $id));
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('veranstaltung' => $id, 'studiengang' => $studiengangid));
         $modul = $angebot->getVeranstaltung();
 
         $form = $this->createForm(new Form\CodeType(), $angebot);

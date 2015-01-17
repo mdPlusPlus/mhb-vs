@@ -24,7 +24,8 @@
             <tbody>
             {% for dummy in dummyAngebote %}
                 <tr>
-                    <td><a href="{{ path('modulCodeErstellung', {'id': dummy.getVeranstaltung().getModulID()}) }}">{{ dummy.getVeranstaltung() }}</a></td>
+                    <td><a href="{{ path('modulCodeErstellung', {'id': dummy.getVeranstaltung().getModulID(),
+                        'studiengangid': dummy.getStudiengang().getStudiengangID()}) }}">{{ dummy.getVeranstaltung() }}</a></td>
                     <td>{{ dummy.getCode() }}</td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                     <td>{{dummy.getVeranstaltung().getErstellungsdatum()|date('d.m.Y')}}</td>
@@ -47,7 +48,8 @@
             <tbody>
             {% for normal in angebote %}
                 <tr>
-                    <td><a href="{{ path('modulCodeErstellung', {'id': normal.getVeranstaltung().getModulID()}) }}">{{ normal.getVeranstaltung() }}</a></td>
+                    <td><a href="{{ path('modulCodeErstellung', {'id': normal.getVeranstaltung().getModulID(),
+                        'studiengangid': normal.getStudiengang().getStudiengangID()}) }}">{{ normal.getVeranstaltung() }}</a></td>
                     <td>{{ normal.getCode() }}</td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                     <td>{{ normal.getVeranstaltung().getErstellungsdatum()|date('d.m.Y') }}</td>
