@@ -71,6 +71,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% set count = 0 %}
                 {% for veranstaltung in modullehrend %}
                     <tr>
                         <td>
@@ -82,11 +83,12 @@
                         <td>{{ veranstaltung.haeufigkeit }}</td>
                         <td>{{ veranstaltung.beauftragter }}</td>
                         <td>
-                            {% for name in stgZuModul[count] %}
+                            {% for name in stgZuModullehrend[count] %}
                                 {{ name }}<br/>
                             {% endfor %}
                         </td>
                     </tr>
+                 {% set count = count +1 %}
                 {% endfor %}
                 </tbody>
             </table>
