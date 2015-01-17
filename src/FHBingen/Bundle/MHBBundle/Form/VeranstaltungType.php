@@ -47,6 +47,8 @@ class VeranstaltungType extends AbstractType
             ->add('PruefungsleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Prüfungsleistung', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
             ->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung', 'required' =>false, 'attr' => array('class' => 'sonstigesClass')))
 
+            //TODO: Was ist mit "Voraussetzungen formal" ?
+
             //Merge mit Lehrenden
 
             ->add('lehrende', 'collection', array('label' => false, 'type' => new LehrendeType(),
