@@ -144,7 +144,7 @@ class SglController extends Controller
                            AND z.mhb = ' . $id . ' ORDER BY v.Name ASC')
             ->getResult();
 
-        //findet den Namen des MHB um MHB-Kontext im Twig anzeigen zulassen
+        //findet die Beschreibung des MHB um MHB-Kontext im Twig anzeigen zulassen
         $mhbBeschreibung = $em
             ->createQuery('SELECT DISTINCT m.Beschreibung
                            FROM  FHBingenMHBBundle:Modulhandbuch m
