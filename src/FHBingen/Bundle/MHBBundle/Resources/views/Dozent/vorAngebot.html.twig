@@ -38,6 +38,11 @@
 {%- endblock form_widget_compound %}
 
 {% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            highlightMe(document.getElementById('eigeneModuleLink'));
+        });
+    </script>
     <h4 style="font-weight: bold">Studiengangswahl für Angebot von {{ modul }}</h4>
     <div class="table-responsive">
         {{ form_start(form) }}
