@@ -64,13 +64,15 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
+
         //findet die Angebote mit Dummy Modulcode
-        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY'), array("Code" => 'asc'));
+        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')
+            ->findBy(array('Code' => 'DUMMY', 'studiengang' => $studiengang), array("Code" => 'asc'));
         uasort($dummyAngebote, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
 
+        //Filtert die Angebote mit DummyModul und aus anderen Studiengängen herraus
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
         $angeboteOhneDummy = array();
-        //Filtert die Angebote mit DummyModul und aus anderen Studiengängen herraus
         foreach ($angebote as $value) {
             if ($value->getCode() != 'DUMMY' && $value->getStudiengang()->getStudiengangID() == $studiengang->getStudiengangID()) {
                 $angeboteOhneDummy[] = $value;
