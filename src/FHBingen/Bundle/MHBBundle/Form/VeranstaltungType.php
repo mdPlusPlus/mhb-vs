@@ -41,8 +41,8 @@ class VeranstaltungType extends AbstractType
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => ArrayValues::$lp))
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('PruefungsleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Prüfungsleistung', 'required' =>false ))
-            ->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung', 'required' =>false ))
+            ->add('PruefungsleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Prüfungsleistung', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
+            ->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung', 'required' =>false, 'attr' => array('class' => 'sonstigesClass')))
 
             //Merge mit Lehrenden
 
