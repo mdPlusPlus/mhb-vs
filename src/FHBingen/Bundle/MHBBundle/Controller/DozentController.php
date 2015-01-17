@@ -122,7 +122,7 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/planungErstellen", name="planungErstellen")
-     * @Template("FHBingenMHBBundle:Dozent:planungErstellen.html.twig")
+     * @Template("FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig")
      */
     public function planungErstellenAction()
     {
