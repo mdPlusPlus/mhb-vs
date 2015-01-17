@@ -13,7 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-//TODO: wo genutzt?
+//TODO: wo genutzt? -> wird automatisch genieriert, kann geköscht werden
 class StudienplanType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
