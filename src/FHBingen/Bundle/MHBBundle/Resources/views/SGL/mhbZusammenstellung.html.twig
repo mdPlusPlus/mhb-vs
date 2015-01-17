@@ -56,8 +56,8 @@
         /* von http://jsfiddle.net/yU8Ut/ */
         $(function () {
             {#{% for key in zuordnung|keys %}#}
-            {#{% set js = 'jQuery("#' ~ _self.keyReplace(key) ~ '").height(jQuery("#' ~ _self.keyReplace(key) ~ '").height();' %}#}
-            {#{{ js|escape }}#}
+                {#{% set js = 'jQuery("#' ~ _self.keyReplace(key) ~ '").height(jQuery("#' ~ _self.keyReplace(key) ~ '").height();' %}#}
+                {#{{ js|raw  }}#}
             {#{% endfor %}#}
 
             jQuery("#angeboteWrapper").height(jQuery("#angeboteWrapper").height());
