@@ -83,6 +83,7 @@ class VerwaltungsController extends Controller
      */
     public function SglCreateUserAction()
     {
+        //TODO: userCreate und updateUsers zusammenführen?
         $dozent = new Entity\Dozent();
         $form = $this->createForm(new Form\DozentType(), $dozent);
 
@@ -118,7 +119,7 @@ class VerwaltungsController extends Controller
      */
     public function SglUpdateUserAction($userid)
     {
-        //TODO: userCreate und updateUsers zusammenführen
+        //TODO: userCreate und updateUsers zusammenführen?
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $userid));
         $form = $this->createForm(new Form\DozentType(), $dozent);
@@ -175,6 +176,7 @@ class VerwaltungsController extends Controller
      */
     public function SglCreateCourseAction()
     {
+        //TODO: createCource + updateCource zusammenlegen?
         $em = $this->getDoctrine()->getManager();
         $studiengang = new Entity\Studiengang();
         $form = $this->createForm(new Form\StudiengangType(), $studiengang);
@@ -230,6 +232,7 @@ class VerwaltungsController extends Controller
      */
     public function SglShowCourseAction($courseID)
     {
+        //TODO: createCource + updateCource zusammenlegen?
 
         $em = $this->getDoctrine()->getManager();
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID' => $courseID));
