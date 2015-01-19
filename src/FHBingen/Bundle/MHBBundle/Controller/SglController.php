@@ -136,25 +136,10 @@ class SglController extends Controller
     public function mhbModulListe($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         //findet alle Veranstaltungen die dem MHB zugeordnet sind
-        //TODO: Warum nicht über die ModulhandbuchZuweisung gehen?
-        $mhbEintraege = $em
-            ->createQuery('SELECT v.Modul_ID, v.Name , v.Kuerzel ,a.Code, v.Haeufigkeit, v.Versionsnummer, d.Titel, d.Nachname, v.Autor
-                           FROM  FHBingenMHBBundle:Angebot a
-                           JOIN  FHBingenMHBBundle:Veranstaltung v WITH  a.veranstaltung = v.Modul_ID
-                            JOIN  FHBingenMHBBundle:ModulhandbuchZuweisung z WITH  z.angebot = a.Angebots_ID
-                           JOIN  FHBingenMHBBundle:Dozent d WITH  v.beauftragter = d.Dozenten_ID
-                           AND z.mhb = ' . $id . ' ORDER BY v.Name ASC')
-            ->getResult();
-
+        $mhbEintraege = $em->getRepository('FHBingenMHBBundle:ModulhandbuchZuweisung')->findAll(array('mhb' => $id));
         //findet die Beschreibung des MHB um MHB-Kontext im Twig anzeigen zulassen
-        $mhbBeschreibung = $em
-            ->createQuery('SELECT DISTINCT m.Beschreibung
-                           FROM  FHBingenMHBBundle:Modulhandbuch m
-                           WHERE m.MHB_ID = ' . $id)
-            ->getResult();
-
+        $mhbBeschreibung =$em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $id));
         //TODO: Anzeigen welches MHB angezeigt wird (Studiengang, Versionsnummer, Beschreibung)
 
         return array('mhb' => $mhbEintraege, 'beschreibung' => $mhbBeschreibung, 'pageTitle' => 'Module des Modulhandbuchs');

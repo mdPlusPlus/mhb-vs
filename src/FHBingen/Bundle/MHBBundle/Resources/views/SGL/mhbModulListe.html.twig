@@ -10,7 +10,7 @@
         });
     </script>
     <div class="table-responsive">
-         <h3>{{ beschreibung[0]['Beschreibung'] }}</h3>
+         <h3>{{ beschreibung.getBeschreibung() }}</h3>
         <table id="table" class="table table-bordered tablesorter">
             <thead>
                 <tr>
@@ -25,12 +25,12 @@
             <tbody>
             {% for entity in mhb %}
                 <tr>
-                    <td><a href="{{ path('modulBearbeiten', {'id': entity['Modul_ID']}) }}">{{ entity['Name'] }}</a></td>
-                    <td>{{ entity['Kuerzel'] }}</td>
-                    <td>{{ entity['Code'] }}</td>
-                    <td>{{ entity['Versionsnummer'] }}</td>
-                    <td>{{ entity['Titel']~' '~entity['Nachname'] }}</td>
-                    <td>{{ entity['Autor'] }}</td>
+                    <td><a href="{{ path('modulBearbeiten', {'id': entity.getAngebot.getVeranstaltung().getModulID()}) }}">{{ entity.getAngebot.getVeranstaltung.getName() }}</a></td>
+                    <td>{{ entity.getAngebot().getVeranstaltung().getKuerzel() }}</td>
+                    <td>{{ entity.getAngebot().getCode() }}</td>
+                    <td>{{ entity.getAngebot().getVeranstaltung().getVersionsnummer() }}</td>
+                    <td>{{ entity.getAngebot().getVeranstaltung().getBeauftragter() }}</td>
+                    <td>{{ entity.getAngebot().getVeranstaltung().getAutor() }}</td>
                 </tr>
             {% endfor %}
             </tbody>
