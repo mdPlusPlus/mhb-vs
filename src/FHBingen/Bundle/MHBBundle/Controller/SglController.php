@@ -139,10 +139,9 @@ class SglController extends Controller
         //findet alle Veranstaltungen die dem MHB zugeordnet sind
         $mhbEintraege = $em->getRepository('FHBingenMHBBundle:ModulhandbuchZuweisung')->findAll(array('mhb' => $id));
         //findet die Beschreibung des MHB um MHB-Kontext im Twig anzeigen zulassen
-        $mhbBeschreibung =$em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $id));
-        //TODO: Anzeigen welches MHB angezeigt wird (Studiengang, Versionsnummer, Beschreibung)
+        $mhb =$em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $id));
 
-        return array('mhb' => $mhbEintraege, 'beschreibung' => $mhbBeschreibung, 'pageTitle' => 'Module des Modulhandbuchs');
+        return array('mhbEintraege' => $mhbEintraege, 'mhb' => $mhb, 'pageTitle' => 'Module des Modulhandbuchs');
     }
 
 

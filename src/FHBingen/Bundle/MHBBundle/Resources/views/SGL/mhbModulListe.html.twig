@@ -10,7 +10,7 @@
         });
     </script>
     <div class="table-responsive">
-         <h3>{{ beschreibung.getBeschreibung() }}</h3>
+         <h3>{{ mhb.getBeschreibung() }} aus {{ mhb.getGehoertZu() }}  in Version {{ mhb.getVersionsnummer() }} </h3>
         <table id="table" class="table table-bordered tablesorter">
             <thead>
                 <tr>
@@ -23,14 +23,14 @@
                 </tr>
             </thead>
             <tbody>
-            {% for entity in mhb %}
+            {% for eintraege in mhbEintraege %}
                 <tr>
-                    <td><a href="{{ path('modulBearbeiten', {'id': entity.getAngebot.getVeranstaltung().getModulID()}) }}">{{ entity.getAngebot.getVeranstaltung.getName() }}</a></td>
-                    <td>{{ entity.getAngebot().getVeranstaltung().getKuerzel() }}</td>
-                    <td>{{ entity.getAngebot().getCode() }}</td>
-                    <td>{{ entity.getAngebot().getVeranstaltung().getVersionsnummer() }}</td>
-                    <td>{{ entity.getAngebot().getVeranstaltung().getBeauftragter() }}</td>
-                    <td>{{ entity.getAngebot().getVeranstaltung().getAutor() }}</td>
+                    <td><a href="{{ path('modulBearbeiten', {'id': eintraege.getAngebot.getVeranstaltung().getModulID()}) }}">{{ eintraege.getAngebot.getVeranstaltung.getName() }}</a></td>
+                    <td>{{ eintraege.getAngebot().getVeranstaltung().getKuerzel() }}</td>
+                    <td>{{ eintraege.getAngebot().getCode() }}</td>
+                    <td>{{ eintraege.getAngebot().getVeranstaltung().getVersionsnummer() }}</td>
+                    <td>{{ eintraege.getAngebot().getVeranstaltung().getBeauftragter() }}</td>
+                    <td>{{ eintraege.getAngebot().getVeranstaltung().getAutor() }}</td>
                 </tr>
             {% endfor %}
             </tbody>
