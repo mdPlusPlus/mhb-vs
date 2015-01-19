@@ -203,7 +203,12 @@
                 <div class="key">Voraussetzungen für die Vergabe von Leistungspunkten</div>
                 {% if modulBeschreibung.getVoraussetzungenLP() is not empty %}
                     {% for voraussetzung in modulBeschreibung.getVoraussetzungenLP() %}
-                        {{ voraussetzung }}<br/>
+                        {{ voraussetzung
+                        {% if voraussetzung = "Prüfungsleistung" AND modulbeschreibung.getPruefungsleistungSonstiges() is not empty %}
+                            (modulbeschreibung.getPruefungsformSonstiges())
+                        {% if voraussetzung = "Studienleistung" AND modulbeschreibung.getStudienleistungSonstiges() is not empty %}
+                            (modulbeschreibung.getStudienleistungSonstiges())
+                        }}<br/>
                     {% endfor %}
                 {% else %}
                     ... {# TODO: Warum "..."? #}
