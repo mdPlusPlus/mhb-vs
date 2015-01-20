@@ -1,5 +1,9 @@
 {% extends 'FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig' %}
 
+{% block formStart %}
+    {{ form_start(form) }}
+{% endblock formStart %}
+
 {% block beauftragter %}
     {{ form_row(form.beauftragter) }}
 {% endblock %}
@@ -8,8 +12,8 @@
      <h4 style="font-weight: bold">Lehrende</h4>
      <ul id="lehrende-fields-list" data-prototype=
      "{% filter escape %}
-                {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.lehrende.vars.prototype } %}
-            {% endfilter %}">
+        {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.lehrende.vars.prototype } %}
+        {% endfilter %}">
 
          {% for lehrendeField in form.lehrende %}
              <li>

@@ -265,8 +265,7 @@ class DozentController extends Controller
                 $modul->setAutor((string) $user);
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
 
-                //TODO: wieder aufnehmen, sobald in Einträge in DB ergänzt!
-                //$modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
+                $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
 
                 $modul->setErstellungsdatum(new \DateTime());
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
@@ -394,8 +393,7 @@ class DozentController extends Controller
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
 
-                //TODO: wieder aufnehmen, sobald in Einträge in DB ergänzt!
-                //$modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
+                $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
 
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());

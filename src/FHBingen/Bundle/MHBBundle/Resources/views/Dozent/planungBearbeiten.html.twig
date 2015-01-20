@@ -38,7 +38,9 @@
     </script>
 
     <div class="table-responsive">
+        {% block formStart %}
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {% endblock formStart %}
         <table class="table table-bordered">
             {{ form_errors(form) }}
             <tr>
