@@ -275,7 +275,7 @@ class DozentController extends Controller
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
 
-                $modul->setDauer($form->get('dauer')->getData().' '.$form->get('einheit')->getData());
+                //TODO: $modul->setDauer($form->get('dauer')->getData().' '.$form->get('einheit')->getData());
 
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
