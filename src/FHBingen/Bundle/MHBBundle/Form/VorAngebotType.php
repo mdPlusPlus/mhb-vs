@@ -37,14 +37,14 @@ class VorAngebotType extends AbstractType
             ->add('angebotsart', 'choice', array('label' => 'Angebotsart:', 'required' => true, 'choices' => ArrayValues::$offerTypes))
 
             ->add('studienplan_ws', 'choice', array(
-                'label' => 'Wintersemester',
+                'label' => 'Regelsemester bei Start in Wintersemester',
                 'required' => true,
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => ArrayValues::$regelsem))
 
             ->add('studienplan_ss', 'choice', array(
-                'label' => 'Sommersemester',
+                'label' => 'Regelsemester bei Start in Sommersemester',
                 'required' => true,
                 'multiple' => true,
                 'expanded' => true,

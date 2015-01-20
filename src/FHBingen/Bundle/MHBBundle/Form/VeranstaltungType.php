@@ -40,7 +40,7 @@ class VeranstaltungType extends AbstractType
             ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('sprache', 'choice', array('label' => 'Sprache [#]: ', 'required' => true, 'choices' => ArrayValues::$lang))
-            ->add('SpracheSonstiges', 'text', array('label' => 'Sprache Sonstiges: ', 'required' => false))
+            ->add('SpracheSonstiges', 'text', array('label' => 'Sprache Sonstiges: ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => ArrayValues::$lp))
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
@@ -64,6 +64,7 @@ class VeranstaltungType extends AbstractType
 
     public function onPreSetData(FormEvent $event)
     {
+        //TODO: zusammen mit onPreSetData von Planungtype auslagern
         $input = $event->getData();
         $form = $event->getForm();
         $encoder = new JsonEncoder();
@@ -73,7 +74,7 @@ class VeranstaltungType extends AbstractType
         $lehrveranstaltungen = $input->getLehrveranstaltungen();
 
         $voraussetzungLPChoiceOptions = array(
-            'label' => 'Voraussetzung für Leistungspunkte: ',
+            'label' => 'Voraussetzung für Leistungspunkte:',
             'choices' => ArrayValues::$voraussetzungLP,
             'multiple' => true,
             'expanded' => true
@@ -87,7 +88,7 @@ class VeranstaltungType extends AbstractType
 
 
         $pruefungsformenChoiceOptions = array(
-            'label' => 'Prüfungsform: ',
+            'label' => 'Prüfungsform:',
             'choices' => ArrayValues::$pruefungsformen,
             'multiple' => true,
             'expanded' => true,
@@ -98,11 +99,11 @@ class VeranstaltungType extends AbstractType
             $pruefungsformenChoiceOptions['data'] = $pruefungsformen;
         }
         $form->add('pruefungsformen', 'choice', $pruefungsformenChoiceOptions);
-        $form->add('PruefungsformSonstiges', 'text', array('label' => 'Pruefungsform Sonstiges: ', 'required' => false));
+        $form->add('PruefungsformSonstiges', 'text', array('label' => 'Sonstige Prüfungsform:', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
 
 
         $lehrveranstaltungenChoiceOptions = array(
-            'label' => 'Lehrveranstaltungen: ',
+            'label' => 'Lehrveranstaltungen:',
             'choices' => ArrayValues::$lehrveranstaltungen,
             'multiple' => true,
             'expanded' => true,
