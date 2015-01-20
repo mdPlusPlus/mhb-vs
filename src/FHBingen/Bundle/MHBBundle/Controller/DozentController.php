@@ -194,10 +194,10 @@ class DozentController extends Controller
 
 
                 //TODO: noch falsch!
-                $lehrende = new Entity\Lehrende();
-                $lehrende->setVeranstaltung($modul);
-                $lehrende->setDozent($user);
-                $em->persist($lehrende);
+                //$lehrende = new Entity\Lehrende();
+                //$lehrende->setVeranstaltung($modul);
+                //$lehrende->setDozent($user);
+                //$em->persist($lehrende);
 
                 $em->flush();
 
