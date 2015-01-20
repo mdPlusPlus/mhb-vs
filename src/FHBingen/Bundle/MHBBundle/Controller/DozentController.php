@@ -591,7 +591,7 @@ class DozentController extends Controller
     public function vorAngebotAction($modulID)
     {
         $em = $this->getDoctrine()->getManager();
-        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($modulID);
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modulID));
 
         $studiengaengeZuModul = array();
         $angebote = $modul->getAngebot();

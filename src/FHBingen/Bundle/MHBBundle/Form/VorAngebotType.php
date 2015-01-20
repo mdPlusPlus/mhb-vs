@@ -17,10 +17,16 @@ use Symfony\Component\Form\FormEvents;
 class VorAngebotType extends AbstractType
 {
     private $studiengangIDs;
+    //private $queryString;
 
     public function __construct($studiengangIDs)
     {
         $this->studiengangIDs = $studiengangIDs;
+        //$this->queryString = "";
+
+        //foreach ($this->$studiengangIDs as $id) {
+//            $this->queryString[] = 's.Studiengang=' . $id .
+//        }
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -35,10 +41,11 @@ class VorAngebotType extends AbstractType
                 'class' => 'FHBingenMHBBundle:Studiengang',
                 //TODO (Ingmar): nur Studiengänge anzeigen, in denen es noch nicht angeboten wird (jedenfalls bei "in weiterem Studiengang anbieten")
                                     'query_builder' => function(EntityRepository $er) {
-                                        $qb= $er->createQueryBuilder('d');
-                                         foreach ($this->studiengangIDs as $id ) {
-                                             $qb->where('d.roles='.$id);
-                                         }
+                                        $qb= $er->createQueryBuilder('s');
+                                        foreach ($this->studiengangIDs as $id) {
+                                             $qb->where('s.Studiengang_ID='.$id);
+                                        }
+
                                         return $qb;
                                     },))
 
