@@ -262,8 +262,6 @@ class DozentController extends Controller
 
                 $em->persist($modulHistory);
 
-
-
                 $modul->setAutor((string) $user);
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
 
@@ -299,6 +297,7 @@ class DozentController extends Controller
 
                 $modul->setSprache($form->get('sprache')->getData());
                 $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
+                //$modul->setStatus
                 $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
                 $modul->setVersionsnummer($modul->getVersionsnummer()+1);
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
@@ -332,6 +331,7 @@ class DozentController extends Controller
                 }
 
                 $em->persist($modul);
+
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich bearbeitet.');
