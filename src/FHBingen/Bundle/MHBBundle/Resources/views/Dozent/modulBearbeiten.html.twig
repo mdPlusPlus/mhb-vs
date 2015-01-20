@@ -1,5 +1,47 @@
 {% extends 'FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig' %}
 
+{% block jsBlock %}
+    <script type="text/javascript">
+        var lehrendeCount = '{{ form.lehrende|length }}';
+
+        jQuery(document).ready(function () {
+            jQuery('#add-another-lehrende').click(function (e) {
+                e.preventDefault();
+                return addAnotherLehrende();
+            });
+
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('eigeneModuleLink'));
+        });
+
+        function addAnotherLehrende(){
+            var lehrendeList = jQuery('#lehrende-fields-list');
+
+            // grab the prototype template
+            var newWidget = lehrendeList.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, lehrendeCount);
+
+            // create a new list element and add it to the list
+            var newLi = jQuery('<li></li>').html(newWidget);
+
+            var link = jQuery('<a href="#">Lehrenden entfernen</a>');
+            link.click(function(e){
+                e.preventDefault();
+                newLi.remove();
+            });
+
+            newLi.append(link);
+            newLi.appendTo(lehrendeList);
+            lehrendeCount++;
+        }
+
+        {# TODO: JavaScript dass Kontaktzeiten mit Leistungspunkten abgleicht #}
+    </script>
+{% endblock jsBlock %}
+
 {% block formStart %}
     {{ form_start(form) }}
 {% endblock formStart %}

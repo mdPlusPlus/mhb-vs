@@ -28,6 +28,7 @@
 {%- endblock form_label %}
 
 {% block content %}
+    {% block jsBlock %}
     <script type="text/javascript">
         jQuery(document).ready(function () {
             <!-- navbar highlighting -->
@@ -36,6 +37,7 @@
 
         {# TODO: JavaScript dass Kontaktzeiten mit Leistungspunkten abgleicht #}
     </script>
+    {% endblock jsBlock %}
 
     <div class="table-responsive">
         {% block formStart %}
