@@ -340,7 +340,7 @@ class DozentController extends Controller
             }
         }
 
-        return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
+        return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
     }
 
 
@@ -354,6 +354,7 @@ class DozentController extends Controller
         $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => array('in Planung', 'expired')));
+        $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 
@@ -509,7 +510,7 @@ class DozentController extends Controller
             }
         }
 
-        return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
+        return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
     }
 
     /**
