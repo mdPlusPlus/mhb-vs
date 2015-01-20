@@ -903,10 +903,10 @@ class Veranstaltung
     /**
      * Add Lehrende
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrende
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
      * @return Veranstaltung
      */
-    public function addLehrende(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrende)
+    public function addLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
     {
         $this->lehrende[] = $lehrende;
 
@@ -916,9 +916,9 @@ class Veranstaltung
     /**
      * Remove Lehrende
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrende
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
      */
-    public function removeLehrende(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrende)
+    public function removeLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
     {
         $this->lehrende->removeElement($lehrende);
     }

@@ -45,26 +45,15 @@ class VeranstaltungType extends AbstractType
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => ArrayValues::$lp))
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('PruefungsleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Prüfungsleistung', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
-            ->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung', 'required' =>false, 'attr' => array('class' => 'sonstigesClass')))
+            ->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung', 'required' =>false, 'attr' => array('class' => 'sonstigesClass')));
 
-            //TODO: Was ist mit "Voraussetzungen formal" ?
+            //TODO: Was ist mit "Voraussetzungen formal" ? --> Tabelle Vorausetzungen
 
-            //Merge mit Lehrenden
 
-            ->add('lehrende', 'collection', array('label' => false, 'type' => new LehrendeType(),
-                'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
-                'options' => array(
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'lehrende'
-                    )
-                )
-            ));
     }
 
     public function onPreSetData(FormEvent $event)
     {
-        //TODO: zusammen mit onPreSetData von Planungtype auslagern
         $input = $event->getData();
         $form = $event->getForm();
         $encoder = new JsonEncoder();
@@ -114,6 +103,30 @@ class VeranstaltungType extends AbstractType
             $lehrveranstaltungenChoiceOptions['data'] = $lehrveranstaltungen;
         }
         $form->add('lehrveranstaltungen', 'choice', $lehrveranstaltungenChoiceOptions);
+
+
+
+
+        $lehrende = $input->getLehrende();
+        $lehrendeOptions = array('label' => false, 'type' => new LehrendeType(),
+            'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+            'options' => array(
+                'required' => false,
+                'attr' => array(
+                    'class' => 'lehrende' //TODO:notwendig oder nur CSS-klasse?
+                )
+            )
+        );
+//        if (!empty($lehrende)) {
+//            $lehrendeOptions['options']['data'] = $input->getBeauftragter();
+//        }
+//        if (is_null($lehrende)) {
+//            $lehrendeOptions['options']['data'] = $input->getBeauftragter();
+//        }
+        $form->add('lehrende', 'collection', $lehrendeOptions);
+
+
+
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

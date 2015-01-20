@@ -189,6 +189,14 @@ class DozentController extends Controller
                 }
 
                 $em->persist($modul);
+
+                //test
+                $lehrende = new Entity\Lehrende();
+                $lehrende->setVeranstaltung($modul);
+                $lehrende->setDozent($user);
+                $em->persist($lehrende);
+                //
+
                 $em->flush();
 
                 if ($modulID == -1) {

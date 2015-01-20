@@ -36,7 +36,6 @@ class PlanungType extends AbstractType
 
     public function onPreSetData(FormEvent $event)
     {
-        //TODO: zusammen mit onPreSetData von Veranstaltungtype auslagern
         $input = $event->getData();
         $form = $event->getForm();
         $encoder = new JsonEncoder();

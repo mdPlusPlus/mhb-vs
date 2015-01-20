@@ -38,7 +38,7 @@ class StudiengangType extends AbstractType
                 'options' => array(
                     'required' => false,
                     'attr' => array(
-                        'class' => 'Vertiefung'
+                        'class' => 'Vertiefung' //TODO:notwendig oder nur CSS-klasse?
                     )
                     )
             ))
@@ -49,7 +49,7 @@ class StudiengangType extends AbstractType
                 'options' => array(
                     'required' => true,
                     'attr' => array(
-                        'class' => 'Fachgebiet'
+                        'class' => 'Fachgebiet' //TODO:notwendig oder nur CSS-klasse?
                     ),
                     )
             ));
