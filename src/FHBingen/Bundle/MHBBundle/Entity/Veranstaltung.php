@@ -268,8 +268,7 @@ class Veranstaltung
      *      )
      */
     private $modul_;
-    //TODO: super unintitiv, modul_ ist eigentlich die Voraussetzung
-
+    //TODO: super unintitiv, modul_ ist eigentlich die Voraussetzung.
     /**
      * Constructor
      */

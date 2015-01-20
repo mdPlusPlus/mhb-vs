@@ -25,6 +25,7 @@ class VorAngebotType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('modulid', 'hidden', array('required' => true))
 
@@ -33,12 +34,16 @@ class VorAngebotType extends AbstractType
                 'required' => true,
                 'class' => 'FHBingenMHBBundle:Studiengang',
                 //TODO (Ingmar): nur Studiengänge anzeigen, in denen es noch nicht angeboten wird (jedenfalls bei "in weiterem Studiengang anbieten")
-                //'query_builder' => function(EntityRepository $er) {
-                    //alle angebote von modul und davon die jeweiligen studiengänge
-                    //return $er->createQueryBuilder('s')->select('')->from()->where('f.studiengang = ' . $this->studiengangID);
-                    //return $er->createQueryBuilder('s')->select('')->from('FHBingenMHBBundle:Angebot', 'a')->where('a.veranstaltung = ' . $this->modulID);
-                //},
-                ))
+                                    'query_builder' => function(EntityRepository $er) {
+                                        $qb= $er->createQueryBuilder('d');
+                                         foreach ($this->studiengangIDs as $id ) {
+                                             $qb->where('d.roles='.$id);
+                                         }
+                                        return $qb;
+                                    },))
+
+
+
 
             ->add('angebotsart', 'choice', array('label' => 'Angebotsart:', 'required' => true, 'choices' => ArrayValues::$offerTypes))
 
