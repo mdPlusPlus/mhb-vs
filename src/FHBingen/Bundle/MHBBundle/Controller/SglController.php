@@ -122,10 +122,40 @@ class SglController extends Controller
      */
     public function mhbUebersichtAction()
     {
+
         $em = $this->getDoctrine()->getManager();
         $mhbs = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
 
         return array('mhb' => $mhbs, 'pageTitle' => 'Modulhandbücher');
+    }
+
+
+    /**
+     * @Route("/restricted/sgl/modulAenderungen", name="modulAenderungen")
+     * @Template("FHBingenMHBBundle:SGL:modulAenderungen.html.twig")
+     */
+    public function modulAenderungenAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $userMail = $user->getUsername();
+        $em = $this->getDoctrine()->getManager();
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
+        $em = $this->getDoctrine()->getManager();
+
+        $mhbs = $em->createQuery('SELECT Max(m.Erstellungsdatum) as Erstellungsdatum
+                                  FROM  FHBingenMHBBundle:Modulhandbuch m
+                                  WHERE m.gehoertZu='.$studiengang->getStudiengangID());
+        $resultMHB =$mhbs->getResult();
+
+        //TODO: richtig nach Erstelldatum filtern mit $resultMHB
+        $veranstaltungenBearbeitet=$em->createQuery('SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,
+                                                     v.Autor
+                                  FROM  FHBingenMHBBundle:Veranstaltung v
+                                  JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang='.$studiengang->getStudiengangID().' And v.Modul_ID = a.veranstaltung
+                                  WHERE v.Erstellungsdatum>2015-01-17');
+        $resultModul =$veranstaltungenBearbeitet->getResult();
+        return array('module' => $resultModul, 'pageTitle' => 'Modulhandbücher');
     }
 
 
