@@ -19,6 +19,13 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class PlanungType extends AbstractType
 {
+    //TODO: vermutlich bullshit
+    private $einheit;
+
+    public function __construct($einheit){
+        $this->einheit = $einheit;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -56,6 +63,8 @@ class PlanungType extends AbstractType
         $dauerOptions = array('label' => 'Dauer:', 'required' => false, 'attr' => array('min' => '1'));
         if ($dauer == null) {
             $dauerOptions['data'] = 1; //default
+        } else {
+            $dauerOptions['data'] = intval(explode(' ', $input->getDauer())[0]); //splitte getDauer()
         }
         $form->add('dauer', 'integer', $dauerOptions);
 

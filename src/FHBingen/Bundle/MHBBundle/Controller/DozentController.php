@@ -141,12 +141,16 @@ class DozentController extends Controller
 
         if ($modulID == -1) {
             $modul = new Entity\Veranstaltung();
+            $einheit = 'Semester';
         } else {
             $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modulID, 'beauftragter' => $user->getDozentenID(), 'Status' => 'in Planung'));
+            $einheit = explode(' ', $modul->getDauer())[1];
         }
 
-        $form = $this->createForm(new Form\PlanungType(), $modul);
-        //$form = $this->createForm(new Form\VeranstaltungType()); //TODO: nur testweise! später wieder auf $modul ändern
+
+
+
+        $form = $this->createForm(new Form\PlanungType($einheit), $modul);
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -162,7 +166,7 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
 
-                $modul->setDauer($form->get('dauer')->getData() . ' ' . $form->get('einheit'));
+                $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']);
 
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
@@ -212,7 +216,7 @@ class DozentController extends Controller
             }
         }
 
-        return array('form' => $form->createView(), 'pageTitle' => 'Modulplanung');
+        return array('form' => $form->createView(), 'pageTitle' => 'Modulplanung', 'einheit' => $einheit);
     }
 
     /**
