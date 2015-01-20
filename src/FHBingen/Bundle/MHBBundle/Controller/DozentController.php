@@ -593,15 +593,23 @@ class DozentController extends Controller
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($modulID);
 
-        $studiengaenge = array();
+        $studiengaengeZuModul = array();
         $angebote = $modul->getAngebot();
         foreach ($angebote as $angebot) {
-            $studiengaenge[] = $angebot->getStudiengang();
+            $studiengaengeZuModul[] = $angebot->getStudiengang();
+        }
+
+        $alleStudiengaenge = $em->getRepository('FHBingenMHBBundle:Studiengang')->findALL();
+        $anzuzeigendeStudiengaenge = array_diff($alleStudiengaenge, $studiengaengeZuModul);
+
+        $studiengangIDs = array();
+        foreach ($anzuzeigendeStudiengaenge as $anzeige) {
+            $studiengangIDs[] = $anzeige->getStudiengangID();
         }
 
 
 
-        $form = $this->createForm(new Form\VorAngebotType($studiengaenge));
+        $form = $this->createForm(new Form\VorAngebotType($studiengangIDs));
 
         $request = $this->get('request');
         $form->handleRequest($request);
