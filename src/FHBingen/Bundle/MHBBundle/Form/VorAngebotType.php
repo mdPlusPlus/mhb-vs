@@ -11,23 +11,31 @@ use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 class VorAngebotType extends AbstractType
 {
     private $studiengangIDs;
-    //private $queryString;
+    private $queryString;
 
     public function __construct($studiengangIDs)
     {
-        $this->studiengangIDs = $studiengangIDs;
-        //$this->queryString = "";
+       $this->studiengangIDs = $studiengangIDs;
+        $this->queryString = "";
 
-        //foreach ($this->$studiengangIDs as $id) {
-//            $this->queryString[] = 's.Studiengang=' . $id .
-//        }
+        $max = sizeof($this->studiengangIDs);
+        for($i = 0; $i < $max;$i++) {
+                    if($i<=$max-2){
+                    $this->queryString=$this->queryString. 's.Studiengang_ID=' . $this->studiengangIDs[$i].' or ';
+                    }else{
+                        $this->queryString =$this->queryString. ' s.Studiengang_ID=' . $this->studiengangIDs[$i];
+                    }
+                }
+
     }
+
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -43,10 +51,10 @@ class VorAngebotType extends AbstractType
                                     'query_builder' => function(EntityRepository $er) {
                                         $qb= $er->createQueryBuilder('s');
                                         foreach ($this->studiengangIDs as $id) {
-                                             $qb->where('s.Studiengang_ID='.$id);
-                                        }
+                                            $qb->where($this->queryString);
 
-                                        return $qb;
+                                        }
+                                         return $qb;
                                     },))
 
 

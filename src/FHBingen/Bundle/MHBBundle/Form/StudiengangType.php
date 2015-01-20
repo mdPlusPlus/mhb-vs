@@ -27,8 +27,8 @@ class StudiengangType extends AbstractType
             ->add('beschreibung', 'text', array('label' => 'Beschreibung: ', 'required' => true))
             ->add('sgl', 'entity', array('label' => 'Studiengangleiter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent',
                 'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('d')
-                        ->where('d.roles=2');
+                    return $er->createQueryBuilder('s')
+                        ->where('s.roles=2');
                 },))
 
             //Ab hier neuer Merge mit VertiefungType und FachgebietType
