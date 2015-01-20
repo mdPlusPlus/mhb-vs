@@ -16,6 +16,12 @@ use Symfony\Component\Form\FormEvents;
 
 class VorAngebotType extends AbstractType
 {
+    private $studiengaenge;
+
+    public function __construct($studiengaenge)
+    {
+        $this->studiengaenge = $studiengaenge;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
