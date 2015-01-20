@@ -31,7 +31,7 @@ class VeranstaltungType extends AbstractType
             ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots [#]: ', 'required' => true, 'choices' => ArrayValues::$frequency))
 
             //TODO: Einheit?
-            ->add('dauer', 'integer', array('label' => 'Dauer [#]: ', 'required' => true, 'attr' => array('min' => '1')))
+            //->add('dauer', 'integer', array('label' => 'Dauer [#]: ', 'required' => true, 'attr' => array('min' => '1')))
 
             ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
@@ -57,6 +57,15 @@ class VeranstaltungType extends AbstractType
         $input = $event->getData();
         $form = $event->getForm();
         $encoder = new JsonEncoder();
+
+        $dauer = $input->getDauer();
+        $dauerOptions = array('label' => 'Dauer:', 'required' => false, 'attr' => array('min' => '1'));
+        if ($dauer == null) {
+            $dauerOptions['data'] = 1; //default
+        } else {
+            $dauerOptions['data'] = intval(explode(' ', $input->getDauer())[0]); //splitte getDauer()
+        }
+        $form->add('dauer', 'integer', $dauerOptions);
 
         $vorausetzungLP = $input->getVoraussetzungLP();
         $pruefungsformen = $input->getPruefungsformen();

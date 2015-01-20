@@ -51,7 +51,6 @@ class PlanungType extends AbstractType
         }
         $form->add('haeufigkeit', 'choice', $haeufigkeitOptions);
 
-        //TODO: Einheit?
         $dauer = $input->getDauer();
         $dauerOptions = array('label' => 'Dauer:', 'required' => false, 'attr' => array('min' => '1'));
         if ($dauer == null) {
