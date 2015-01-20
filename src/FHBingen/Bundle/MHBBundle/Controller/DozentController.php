@@ -192,6 +192,8 @@ class DozentController extends Controller
 
                 $em->persist($modul);
 
+
+                //TODO: noch falsch!
                 $lehrende = new Entity\Lehrende();
                 $lehrende->setVeranstaltung($modul);
                 $lehrende->setDozent($user);
@@ -423,15 +425,6 @@ class DozentController extends Controller
 
 
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
-
-
-                $lehrendeArr = $form->get('lehrende')->getData()->toArray();
-
-
-
-                $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
-
-
                 if (!empty($lehrendeArr)) {
 
 //                    foreach ($lehrendeArr as $lehrend) {
@@ -458,6 +451,8 @@ class DozentController extends Controller
                         $em->persist($dozent);
                         $em->persist($lehrend);
                     }
+
+
 
                     $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
 /*                    $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
