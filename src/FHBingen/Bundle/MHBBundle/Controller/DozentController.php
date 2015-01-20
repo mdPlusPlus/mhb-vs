@@ -144,13 +144,10 @@ class DozentController extends Controller
             $einheit = 'Semester';
         } else {
             $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modulID, 'beauftragter' => $user->getDozentenID(), 'Status' => 'in Planung'));
-            $einheit = explode(' ', $modul->getDauer())[1];
+            $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
         }
 
-
-
-
-        $form = $this->createForm(new Form\PlanungType($einheit), $modul);
+        $form = $this->createForm(new Form\PlanungType(), $modul);
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -165,9 +162,7 @@ class DozentController extends Controller
                 $modul->setName($form->get('name')->getData());
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
-
-                $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']);
-
+                $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
@@ -230,6 +225,8 @@ class DozentController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => "freigegeben"));
+        $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
+
         $modulHistory= new Entity\VeranstaltungHistory();
 
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
@@ -278,9 +275,7 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
-
-                //TODO: $modul->setDauer($form->get('dauer')->getData().' '.$form->get('einheit')->getData());
-
+                $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
 
@@ -305,7 +300,7 @@ class DozentController extends Controller
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
-                $modul->setAutor($user->__toString());
+                $modul->setAutor((string) $user);
                 $modul->setVersionsnummer($modul->getVersionsnummer()+1);
                 $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
                 $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());

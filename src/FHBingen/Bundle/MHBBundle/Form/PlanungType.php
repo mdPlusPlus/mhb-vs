@@ -19,13 +19,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class PlanungType extends AbstractType
 {
-    //TODO: vermutlich bullshit
-    private $einheit;
-
-    public function __construct($einheit){
-        $this->einheit = $einheit;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
