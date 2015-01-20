@@ -31,7 +31,6 @@ class PlanungType extends AbstractType
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('PruefungsformSonstiges', 'text', array('label' => 'Sonstige Prüfungsform:', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
-            ->add('PruefungsleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Prüfungsleistung', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
             ->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
     }
 
@@ -162,6 +161,13 @@ class PlanungType extends AbstractType
             $voraussetzungLPOptions['data'] = array('Prüfungsleistung' => 'Prüfungsleistung'); //default
         }
         $form->add('voraussetzungLP', 'choice', $voraussetzungLPOptions);
+
+        $pruefungsungsleistungSonstiges = $input->getPruefungsleistungSonstiges();
+        $pruefungsungsleistungSonstigesOptions = array('label' => 'weitere Angaben zur Prüfungsleistung', 'required' => false, 'attr' => array('class' => 'sonstigesClass'));
+        if ($pruefungsungsleistungSonstiges == null) {
+            $pruefungsungsleistungSonstigesOptions['data'] = 'Bestandene Modulprüfung'; //default
+        }
+        $form->add('PruefungsleistungSonstiges', 'text', $pruefungsungsleistungSonstigesOptions);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
