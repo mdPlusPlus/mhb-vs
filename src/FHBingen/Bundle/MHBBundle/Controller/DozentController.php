@@ -263,18 +263,30 @@ class DozentController extends Controller
                 $em->persist($modulHistory);
 
 
-                $modul->setErstellungsdatum(new \DateTime());
-                $modul->setKuerzel($form->get('kuerzel')->getData());
-                $modul->setName($form->get('name')->getData());
-                $modul->setNameEn($form->get('nameEN')->getData());
+
+                $modul->setAutor((string) $user);
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
-                $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
 
                 //TODO: wieder aufnehmen, sobald in Einträge in DB ergänzt!
                 //$modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
 
-                $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
+                $modul->setErstellungsdatum(new \DateTime());
+                $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
+                $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
+                $modul->setInhalte($form->get('inhalte')->getData());
+
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
+                $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
+                $modul->setKuerzel($form->get('kuerzel')->getData());
+                $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
+                $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
+                $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
+                $modul->setLiteratur($form->get('literatur')->getData());
+                $modul->setName($form->get('name')->getData());
+                $modul->setNameEn($form->get('nameEN')->getData());
+                $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
+                $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
+                $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
 
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
@@ -285,24 +297,12 @@ class DozentController extends Controller
                     $modul->setSelbststudium(0);
                 }
 
-                $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
-                $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
-                $modul->setInhalte($form->get('inhalte')->getData());
                 $modul->setSprache($form->get('sprache')->getData());
                 $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
-                $modul->setLiteratur($form->get('literatur')->getData());
-                $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
+                $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
+                $modul->setVersionsnummer($modul->getVersionsnummer()+1);
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
-                $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
-                $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
-                $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
-                $modul->setAutor((string) $user);
-                $modul->setVersionsnummer($modul->getVersionsnummer()+1);
-                $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
-                $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
-
-
 
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
                 foreach ($lehrendeArr as $lehrend) {
@@ -318,7 +318,6 @@ class DozentController extends Controller
 
                 $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
                 $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
-
 
                 foreach ($dbLehrendeArr as $dbEntry) {
                     if (!in_array($dbEntry, $lehrendeArr)) {
