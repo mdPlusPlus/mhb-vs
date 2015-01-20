@@ -1,151 +1,23 @@
-{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+{% extends 'FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig' %}
 
-{% form_theme form _self %}
+{% block beauftragter %}
+    {{ form_row(form.beauftragter) }}
+{% endblock %}
 
-{% block form_row %}
-    <tr class="form_row">
-        <td>{{ form_label(form) }}</td>
-        <td>{{ form_widget(form) }}</td>
-        <td>{{ form_errors(form) }}</td>
-    </tr>
-{% endblock form_row %}
-
-{% block form_label -%}
-    {% if label is not sameas(false) -%}
-        {% if not compound -%}
-            {% set label_attr = label_attr|merge({'for': id}) %}
-        {%- endif %}
-        {% if required -%}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-        {%- endif %}
-        {% if label is empty -%}
-            {% set label = name|humanize %}
-        {%- endif -%}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
-        {# added <br /> for nicer layout of checboxes #}
-        <br />
-        {# Der Zeilenumbruck bricht noch das Design von Lehrenden#}
-    {%- endif %}
-{%- endblock form_label %}
-
-{% block form_widget_compound -%}
-    {# notwending, damit es keine divs gibt #}
-    {%- if form.parent is empty -%}
-        {{ form_errors(form) }}
-    {%- endif -%}
-    {{- block('form_rows') -}}
-    {{- form_rest(form) -}}
-{%- endblock form_widget_compound %}
-
-{% block content %}
-    <script type="text/javascript">
-        var lehrendeCount = '{{ form.lehrende|length }}';
-
-        jQuery(document).ready(function () {
-            jQuery('#add-another-lehrende').click(function (e) {
-                e.preventDefault();
-                return addAnotherLehrende();
-            });
-
-            <!-- navbar highlighting -->
-            highlightMe(document.getElementById('eigeneModuleLink'));
-        });
-
-        function addAnotherLehrende(){
-            var lehrendeList = jQuery('#lehrende-fields-list');
-
-            // grab the prototype template
-            var newWidget = lehrendeList.attr('data-prototype');
-            // replace the "__name__" used in the id and name of the prototype
-            // with a number that's unique to your emails
-            // end name attribute looks like name="contact[emails][2]"
-            newWidget = newWidget.replace(/__name__/g, lehrendeCount);
-
-            // create a new list element and add it to the list
-            var newLi = jQuery('<li></li>').html(newWidget);
-
-            var link = jQuery('<a href="#">Lehrenden entfernen</a>');
-            link.click(function(e){
-                e.preventDefault();
-                newLi.remove();
-            });
-
-            newLi.append(link);
-            newLi.appendTo(lehrendeList);
-            lehrendeCount++;
-        }
-
-    </script>
-
-    <h4 style="font-weight: bold">Modulbearbeitung</h4>
-    <div class="table-responsive">
-        {{ form_start(form) }}
-        <table class="table table-bordered">
-            {{ form_errors(form) }}
-            <tr>
-                <td colspan="3" style="color:red"> Mit [#] gekennzeichnete Felder sind Pflichtfelder</td>
-            </tr>
-            {{ form_row(form.name) }}
-            {{ form_row(form.nameEN) }}
-            {{ form_row(form.kuerzel) }}
-            {{ form_row(form.beauftragter) }}
-            {{ form_row(form.haeufigkeit) }}
-
-            <tr>
-                <td>{{ form_label(form.dauer) }}</td>
-                <td>
-                    <table>
-                        <tr>
-                            <td>{{ form_widget(form.dauer) }}</td>
-                            <td>
-                                <INPUT TYPE=RADIO NAME="dauer" VALUE="wochen">Wochen<br />
-                                <INPUT TYPE=RADIO NAME="dauer" VALUE="monate">Monate<br />
-                                <INPUT TYPE=RADIO NAME="dauer" VALUE="semester" CHECKED>Semester
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td>{{ form_errors(form.dauer) }}</td>
-            </tr>
-
-            {{ form_row(form.leistungspunkte) }}
-            {{ form_row(form.kontaktzeitVL) }}
-            {{ form_row(form.kontaktzeitSonstige) }}
-            {{ form_row(form.gruppengroesse) }}
-            {{ form_row(form.lernergebnisse) }}
-            {{ form_row(form.inhalte) }}
-            {{ form_row(form.sprache) }}
-            {{ form_row(form.SpracheSonstiges) }}
-            {{ form_row(form.literatur) }}
-            {{ form_row(form.voraussetzungInh) }}
-            {{ form_row(form.lehrveranstaltungen) }}
-            {{ form_row(form.pruefungsformen) }}
-            {{ form_row(form.PruefungsformSonstiges) }}
-            {{ form_row(form.voraussetzungLP) }}
-            {{ form_row(form.PruefungsleistungSonstiges) }}
-            {{ form_row(form.StudienleistungSonstiges) }}
-        </table>
-
-        <h4 style="font-weight: bold">Lehrende</h4>
-        <ul id="lehrende-fields-list" data-prototype=
-        "{% filter escape %}
+{% block lehrende %}
+     <h4 style="font-weight: bold">Lehrende</h4>
+     <ul id="lehrende-fields-list" data-prototype=
+     "{% filter escape %}
                 {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.lehrende.vars.prototype } %}
             {% endfilter %}">
 
-            {% for lehrendeField in form.lehrende %}
-                <li>
-                    {{ form_errors(lehrendeField) }}
-                    {{ form_widget(lehrendeField) }}
-                    <a href="#" onclick="jQuery(this).parent().remove()">Lehrenden entfernen</a>
-                </li>
-            {% endfor %}
-        </ul>
-        <a id="add-another-lehrende">Lehrenden hinzufügen</a>
-
-        {% include '@FHBingenMHB/buttons.html.twig' %}
-        {{ form_end(form) }}
-    </div>
-
-    {% include '@FHBingenMHB/flashbags.html.twig' %}
-
+         {% for lehrendeField in form.lehrende %}
+             <li>
+                 {{ form_errors(lehrendeField) }}
+                 {{ form_widget(lehrendeField) }}
+                 <a href="#" onclick="jQuery(this).parent().remove()">Lehrenden entfernen</a>
+             </li>
+         {% endfor %}
+     </ul>
+     <a id="add-another-lehrende">Lehrenden hinzufügen</a>
 {% endblock %}

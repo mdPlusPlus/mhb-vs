@@ -13,14 +13,14 @@
 {% block form_label -%}
     {% if label is not sameas(false) -%}
         {% if not compound -%}
-            {% set label_attr = label_attr|merge({'for': id}) %}
-        {%- endif %}
+    {% set label_attr = label_attr|merge({'for': id}) %}
+{%- endif %}
         {% if required -%}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-        {%- endif %}
+    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+{%- endif %}
         {% if label is empty -%}
-            {% set label = name|humanize %}
-        {%- endif -%}
+    {% set label = name|humanize %}
+{%- endif -%}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
         {# added <br /> for nicer layout of checboxes #}
         <br />
@@ -47,6 +47,8 @@
             {{ form_row(form.name) }}
             {{ form_row(form.nameEN) }}
             {{ form_row(form.kuerzel) }}
+            {% block beauftragter %}
+            {% endblock beauftragter %}
             {{ form_row(form.haeufigkeit) }}
 
             <tr>
@@ -56,9 +58,9 @@
                         <tr>
                             <td>{{ form_widget(form.dauer) }}</td>
                             <td>
-                                <INPUT TYPE=RADIO NAME="dauer" VALUE="wochen">Wochen<br />
-                                <INPUT TYPE=RADIO NAME="dauer" VALUE="monate">Monate<br />
-                                <INPUT TYPE=RADIO NAME="dauer" VALUE="semester" CHECKED>Semester
+                                <INPUT TYPE=RADIO NAME="einheit" VALUE="wochen">Wochen<br/>
+                                <INPUT TYPE=RADIO NAME="einheit" VALUE="monate">Monate<br/>
+                                <INPUT TYPE=RADIO NAME="einheit" VALUE="semester" CHECKED>Semester
                             </td>
                         </tr>
                     </table>
@@ -84,6 +86,8 @@
             {{ form_row(form.PruefungsleistungSonstiges) }}
             {{ form_row(form.StudienleistungSonstiges) }}
         </table>
+        {% block lehrende %}
+        {% endblock %}
 
         {% include '@FHBingenMHB/buttons.html.twig' %}
         {{ form_end(form) }}

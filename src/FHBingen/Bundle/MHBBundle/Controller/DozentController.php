@@ -146,6 +146,7 @@ class DozentController extends Controller
         }
 
         $form = $this->createForm(new Form\PlanungType(), $modul);
+        //$form = $this->createForm(new Form\VeranstaltungType()); //TODO: nur testweise! später wieder auf $modul ändern
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -160,7 +161,9 @@ class DozentController extends Controller
                 $modul->setName($form->get('name')->getData());
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
-                $modul->setDauer($form->get('dauer')->getData());
+
+                $modul->setDauer($form->get('dauer')->getData() . ' ' . $form->get('einheit'));
+
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
@@ -271,7 +274,9 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
-                //TODO  $modul->setDauer($form->get('dauer')->getData().' '.$form->get('dauer_wahl')->getData());
+
+                $modul->setDauer($form->get('dauer')->getData().' '.$form->get('einheit')->getData());
+
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
 
