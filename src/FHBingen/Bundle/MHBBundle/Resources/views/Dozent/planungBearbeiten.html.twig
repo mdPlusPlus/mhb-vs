@@ -48,7 +48,24 @@
             {{ form_row(form.nameEN) }}
             {{ form_row(form.kuerzel) }}
             {{ form_row(form.haeufigkeit) }}
-            {{ form_row(form.dauer) }}
+
+            <tr>
+                <td>{{ form_label(form.dauer) }}</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>{{ form_widget(form.dauer) }}</td>
+                            <td>
+                                <INPUT TYPE=RADIO NAME="dauer" VALUE="wochen">Wochen<br />
+                                <INPUT TYPE=RADIO NAME="dauer" VALUE="monate">Monate<br />
+                                <INPUT TYPE=RADIO NAME="dauer" VALUE="semester" CHECKED>Semester
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>{{ form_errors(form.dauer) }}</td>
+            </tr>
+
             {{ form_row(form.leistungspunkte) }}
             {{ form_row(form.kontaktzeitVL) }}
             {{ form_row(form.kontaktzeitSonstige) }}
