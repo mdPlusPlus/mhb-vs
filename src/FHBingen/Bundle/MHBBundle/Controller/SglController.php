@@ -172,7 +172,7 @@ class SglController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         //findet alle Veranstaltungen die dem MHB zugeordnet sind
-        $mhbEintraege = $em->getRepository('FHBingenMHBBundle:ModulhandbuchZuweisung')->findAll(array('mhb' => $id));
+        $mhbEintraege = $em->getRepository('FHBingenMHBBundle:ModulhandbuchZuweisung')->findBy(array('mhb' => $id));
         //findet die Beschreibung des MHB um MHB-Kontext im Twig anzeigen zulassen
         $mhb =$em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $id));
 

@@ -264,6 +264,7 @@ class DozentController extends Controller
 
                 $em->persist($modulHistory);
 
+
                 $modul->setAutor((string) $user);
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
 
@@ -486,7 +487,7 @@ class DozentController extends Controller
                     }
                 } else {
                     $lehr = new Entity\Lehrende();
-                    $modul->addModul($lehr);
+                  //  $modul->addModul($lehr);
                     $lehr->setVeranstaltung($modul);
                     $doz = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $modul->getBeauftragter()->getDozentenID()));
                     $doz->addLehrende($lehr);
