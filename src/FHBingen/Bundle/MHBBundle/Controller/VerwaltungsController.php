@@ -136,6 +136,12 @@ class VerwaltungsController extends Controller
                 $dozent->setEmail($form->get('email')->getData());
                 //TODO: $dozent->setPassword('password'); wieder aufnehmen?
                 $dozent->setRole($form->get('roles')->getData());
+                /*
+                 * TODO:
+                 * Doku: Wenn SGL auf Dozent abgestuft wird, besitzt er immernoch den Studiengang, den er vorher hatte,
+                 * aber da er die rolle ROLE_SGL nicht mehr ausübt, kann er nicht mehr auf die SGl-Funktionen zugreifen,
+                 * da sich diese hinter der /restricted/sgl firewall befinden
+                 */
 
                 $em->persist($dozent);
                 $em->flush();
