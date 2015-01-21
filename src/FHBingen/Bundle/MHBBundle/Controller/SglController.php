@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Validator\Constraints\Date;
 
 class SglController extends Controller
 {
@@ -136,6 +137,7 @@ class SglController extends Controller
      */
     public function modulAenderungenAction()
     {
+        //TODO: Sortierung
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
@@ -147,20 +149,23 @@ class SglController extends Controller
                                   FROM  FHBingenMHBBundle:Modulhandbuch m
                                   WHERE m.gehoertZu='.$studiengang->getStudiengangID());
         $resultMHB =$mhbs->getResult();
-        $datum="";
+
+        //TODO: kommentieren!
+        $datum = new \DateTime();
         foreach ($resultMHB as $value) {
             foreach ($value as $v) {
                 $datum = $v;
             }
         }
+        $datum = new \DateTime($datum);
 
-        $veranstaltungenBearbeitet=$em->createQuery('SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,
-                                                     v.Autor
+        $veranstaltungenBearbeitet = $em->createQuery('SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,v.Autor
                                   FROM  FHBingenMHBBundle:Veranstaltung v
                                   JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang='.$studiengang->getStudiengangID().' And v.Modul_ID = a.veranstaltung
-                                  WHERE v.Erstellungsdatum>'.$datum);
-        $resultModul =$veranstaltungenBearbeitet->getResult();
-        return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module');
+                                  WHERE v.Erstellungsdatum > :mhbDatum')->setParameter('mhbDatum', $datum);
+        $resultModul = $veranstaltungenBearbeitet->getResult();
+
+        return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module', 'dateTime' => $datum);
     }
 
 
