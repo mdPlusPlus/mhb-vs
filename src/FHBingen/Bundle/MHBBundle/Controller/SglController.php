@@ -308,6 +308,9 @@ class SglController extends Controller
      */
     public function eigeneModuleAction()
     {
+        //TODO: Abfrage ja/nein "wollen sie das wirklich?"
+        //TODO: Unterscheidung in ALLEN studiengängen deaktiveren oder nur in eigenem Studiengang
+        //TODO: Vorsortierung (aus DB) der Module des Studiengangs
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $user));
