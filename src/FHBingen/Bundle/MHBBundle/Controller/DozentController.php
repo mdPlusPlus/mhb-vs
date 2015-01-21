@@ -669,7 +669,7 @@ class DozentController extends Controller
                         'encSS' => $ssEncodedData,
                         'encWS' => $wsEncodedData)));
                 } else {
-                    $this->get('session')->getFlashBag()->add('info', 'Bitte geben sie die Regelsemester an.');
+                    $this->get('session')->getFlashBag()->add('info', 'Bitte geben Sie die Regelsemester an.');
                     //return new Response('false');
                 }
 
