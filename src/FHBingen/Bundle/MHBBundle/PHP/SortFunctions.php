@@ -52,15 +52,25 @@ class SortFunctions {
 
     public static function modulBeschreibungSort(ModulBeschreibung $descA, ModulBeschreibung $descB)
     {
-        $a = $descA->getAngebot()->getCode();
-        $b = $descB->getAngebot()->getCode();
+        $fgA = $descA->getAngebot()->getFachgebiet();
+        $fgB = $descB->getAngebot()->getFachgebiet();
 
-        if ($a == $b) {
-            return 0;
+        if ($fgA == $fgB) {
+
+            //return 0;
+            $codeA = $descA->getAngebot()->getCode();
+            $codeB = $descB->getAngebot()->getCode();
+
+            if ($codeA == $codeB) {
+               return 0;
+            }
+
+            return ($codeA < $codeB) ? -1 : 1;
         }
 
-        return ($a < $b) ? -1 : 1;
+        return ($fgA < $fgB) ? -1 : 1;
     }
+
 
     public static function studienplanSort(Studienplan $planA, Studienplan $planB)
     {

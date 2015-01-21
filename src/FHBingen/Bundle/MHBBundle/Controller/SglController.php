@@ -250,8 +250,18 @@ class SglController extends Controller
         $modulBeschreibungen = $this->createModulBeschreibungen($mhbID);
         $htmlArr = array();
 
+
+        $previousFachgebiet = "";
         foreach ($modulBeschreibungen as $modulBeschreibung) {
-            $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibung' => $modulBeschreibung));
+            $currentFachgebiet = $modulBeschreibung->getAngebot()->getFachgebiet()->getTitel();
+            if ($currentFachgebiet != $previousFachgebiet) {
+                $fachgebietHasChanged = true;
+            } else {
+                $fachgebietHasChanged = false;
+            }
+            $previousFachgebiet = $currentFachgebiet;
+
+            $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibung' => $modulBeschreibung, 'fachgebietHasChanged' => $fachgebietHasChanged));
         }
 
         $footerText = "";
