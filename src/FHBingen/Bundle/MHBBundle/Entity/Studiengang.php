@@ -39,10 +39,10 @@ class Studiengang
     /**
      * @ORM\Column(type="integer", nullable=false)
      * @Assert\Range(
-     * min = 1,
-     * max = 2,
-     * minMessage = "Fachbereich {{ limit }} ist Minimum",
-     * maxMessage = "Fachbereich {{ limit }} ist Maximum"
+     *      min = 1,
+     *      max = 2,
+     *      minMessage = "Fachbereich {{ limit }} ist Minimum",
+     *      maxMessage = "Fachbereich {{ limit }} ist Maximum"
      * )
      */
     protected $Fachbereich;
@@ -57,20 +57,20 @@ class Studiengang
      * @ORM\Column(type="string", length=40, nullable=false, unique=true)
      * @Assert\NotBlank(message = "Der Studiengang-Titel darf nicht leer sein.")
      * @Assert\Length(
-     * max = 40,
-     * maxMessage="Ein Studiengang-Titel darf aus maximal {{ limit }} Zeichen bestehen."
+     *      max = 40,
+     *      maxMessage = "Ein Studiengang-Titel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Titel;
 
     /**
      * @ORM\Column(type="string", length=5, nullable=false, unique=true)
-     * @Assert\NotBlank(message = "Das Studiengang-Kuerzel darf nicht leer sein.")
+     * @Assert\NotBlank(message = "Das Studiengang-Kürzel darf nicht leer sein.")
      * @Assert\Length(
-     * min= 2,
-     * max= 5,
-     * minMessage="Ein Studiengang-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * maxMessage="Ein Studiengang-Kuerzel darf aus maximal {{ limit }} Zeichen bestehen."
+     *      min = 2,
+     *      max = 5,
+     *      minMessage = "Ein Studiengang-Kürzel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     *      maxMessage = "Ein Studiengang-Kürzel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Kuerzel;
