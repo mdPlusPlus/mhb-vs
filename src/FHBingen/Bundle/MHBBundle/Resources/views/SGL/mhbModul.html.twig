@@ -94,12 +94,6 @@
             <td>
                 <div class="key">Dauer</div>
                 {{ modulBeschreibung.getAngebot().getVeranstaltung().getDauer() }}
-                {# < 3 sind Semester, >= 3 sind Wochen #}
-                {% if modulBeschreibung.getAngebot().getVeranstaltung().getDauer() < 3 %}
-                    Semester
-                {% else %}
-                    Wochen
-                {% endif %}
             </td>
         </tr>
         <tr>
