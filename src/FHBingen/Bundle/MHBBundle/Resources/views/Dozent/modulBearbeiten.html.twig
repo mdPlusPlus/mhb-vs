@@ -60,7 +60,7 @@
          {% for lehrendeField in form.lehrende %}
              <li>
                  {{ form_errors(lehrendeField) }}
-                 {{ form_widget(lehrendeField) }}
+                 {{ form_widget(lehrendeField) }} {# TODO: break entfernen -> form_widget überschreiben? #}
                  <a href="#" onclick="jQuery(this).parent().remove()">Lehrenden entfernen</a>
              </li>
          {% endfor %}
