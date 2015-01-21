@@ -19,7 +19,8 @@ class AngebotType extends AbstractType
     private $studiengangID;
     private $isWahl;
 
-    public function __construct($studiengangID, $isWahl){
+    public function __construct($studiengangID, $isWahl)
+    {
         $this->studiengangID = $studiengangID;
         $this->isWahl = $isWahl;
     }
