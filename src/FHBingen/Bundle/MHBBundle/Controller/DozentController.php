@@ -614,7 +614,7 @@ class DozentController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        $form->get('modulid')->setData($modulID);
+        //$form->get('modulid')->setData($modulID);
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {

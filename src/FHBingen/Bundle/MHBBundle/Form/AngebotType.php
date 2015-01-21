@@ -31,8 +31,13 @@ class AngebotType extends AbstractType
                 'required' => true,
                 'class' => 'FHBingenMHBBundle:Fachgebiet',
                 'query_builder' => function(EntityRepository $er) {
-                    //SELECT * FROM `Fachgebiet` WHERE `studiengang` = 2
-                    return $er->createQueryBuilder('f')->select('')->where('f.studiengang = ' . $this->studiengangID);
+                    if($this->isWahl){
+                        return $er->createQueryBuilder('f')->select('')
+                        ->where('f.studiengang = ' . $this->studiengangID,'f.Titel like \'%Wahlpflicht%\' ');
+                    }else{
+                        return $er->createQueryBuilder('f')->select('')
+                            ->where('f.studiengang = ' . $this->studiengangID,'f.Titel not like \'%Wahlpflicht%\'');
+                    }
                 },
             ));
 
