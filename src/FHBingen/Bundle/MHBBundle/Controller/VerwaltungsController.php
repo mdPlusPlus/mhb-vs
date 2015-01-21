@@ -143,6 +143,8 @@ class VerwaltungsController extends Controller
                  * da sich diese hinter der /restricted/sgl firewall befinden
                  */
 
+                //TODO: Benutzerdeaktivierung fehlt
+
                 $em->persist($dozent);
                 $em->flush();
 

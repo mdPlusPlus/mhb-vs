@@ -22,9 +22,19 @@ class Role implements RoleInterface
 
     public function __toString()
     {
-        $string = $this->getRole();
-
-        return $string;
+//TODO: Nach Abnahme auskommentieren und testen!
+//        if ($this->getRole() == 'ROLE_SGL') {
+//            $string = 'Studiengangleiter';
+//        } else {
+//            if ($this->getRole() == 'ROLE_DOZENT') {
+//                $string = 'Dozent';
+//            } else {
+//                $string = 'undefined';
+//            }
+//        }
+//
+//        return $string;
+        return $this->getRole();
     }
 
 
