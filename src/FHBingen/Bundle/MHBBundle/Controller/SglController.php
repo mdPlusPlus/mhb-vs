@@ -147,15 +147,21 @@ class SglController extends Controller
                                   FROM  FHBingenMHBBundle:Modulhandbuch m
                                   WHERE m.gehoertZu='.$studiengang->getStudiengangID());
         $resultMHB =$mhbs->getResult();
+        $datum="";
+        foreach ($resultMHB as $value) {
+            foreach ($value as $v) {
+                $datum = $v;
+            }
+        }
 
         //TODO: richtig nach Erstelldatum filtern mit $resultMHB
         $veranstaltungenBearbeitet=$em->createQuery('SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,
                                                      v.Autor
                                   FROM  FHBingenMHBBundle:Veranstaltung v
                                   JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang='.$studiengang->getStudiengangID().' And v.Modul_ID = a.veranstaltung
-                                  WHERE v.Erstellungsdatum>2015-01-17');
+                                  WHERE v.Erstellungsdatum>'.$datum);
         $resultModul =$veranstaltungenBearbeitet->getResult();
-        return array('module' => $resultModul, 'pageTitle' => 'Modulhandbücher');
+        return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module');
     }
 
 
