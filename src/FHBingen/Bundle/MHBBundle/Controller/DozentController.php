@@ -239,6 +239,26 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
+                $valid = true;
+                if ($encoder->encode($form->get('voraussetzungLP')->getData(), 'json') == '[]') {
+                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Voraussetzung für die Vergabe von Leistungspunkten gesetzt sein.');
+                    $valid = false;
+                }
+                if ($encoder->encode($form->get('pruefungsformen')->getData(), 'json') == '[]') {
+                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Prüfungsform gesetzt sein.');
+                    $valid = false;
+                }
+                if ($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json') == '[]') {
+                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Lehrveranstaltungsform gesetzt sein.');
+                    $valid = false;
+                }
+
+                if (!$valid) {
+                    return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
+                }
+
+
+
                 //schreibt den Veranstaltungs Inhalt vor der änderung in die History Tabelle
                 $modulHistory->setAutor($modul->getAutor());
                 $modulHistory->setModulID($modul->getModulID());
@@ -372,7 +392,7 @@ class DozentController extends Controller
 
                 $valid = true;
                 if ($encoder->encode($form->get('voraussetzungLP')->getData(), 'json') == '[]') {
-                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Voraussetzung für die Vergabe von leistungspunkten gesetzt sein.');
+                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Voraussetzung für die Vergabe von Leistungspunkten gesetzt sein.');
                     $valid = false;
                 }
                 if ($encoder->encode($form->get('pruefungsformen')->getData(), 'json') == '[]') {
@@ -385,7 +405,7 @@ class DozentController extends Controller
                 }
 
                 if (!$valid) {
-                    return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung');
+                    return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
                 }
 
 
