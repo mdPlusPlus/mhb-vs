@@ -405,7 +405,7 @@ class DozentController extends Controller
                 }
 
                 if (!$valid) {
-                    return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
+                    return array('form' => $form->createView(), 'pageTitle' => 'Planung freigeben', 'einheit' => $einheit);
                 }
 
 
@@ -528,7 +528,7 @@ class DozentController extends Controller
             }
         }
 
-        return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
+        return array('form' => $form->createView(), 'pageTitle' => 'Planung freigeben', 'einheit' => $einheit);
     }
 
     /**
