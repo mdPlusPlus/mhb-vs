@@ -16,11 +16,11 @@
     <title>{{ titelDE }}</title>
     <style type="text/css">
         .modul {
-
+            /*page-break-after: always;*/
         }
 
         .modul .intro {
-            page-break-before: always;
+            /*page-break-before: always;*/
         }
 
         .modul .key {
@@ -51,6 +51,9 @@
 </head>
 <body>
 <div class="modul">
+    {% if fachgebietHasChanged %}
+        <h2>{{ modulBeschreibung.getAngebot().getFachgebiet().getTitel() }}</h2>
+    {% endif %}
     <p class="intro"><h3>{{ titelDE }} ({{ modulBeschreibung.getAngebot().getCode() }})</h3></p>
     <table>
         <thead>
@@ -94,12 +97,6 @@
             <td>
                 <div class="key">Dauer</div>
                 {{ modulBeschreibung.getAngebot().getVeranstaltung().getDauer() }}
-                {# < 3 sind Semester, >= 3 sind Wochen #}
-                {% if modulBeschreibung.getAngebot().getVeranstaltung().getDauer() < 3 %}
-                    Semester
-                {% else %}
-                    Wochen
-                {% endif %}
             </td>
         </tr>
         <tr>

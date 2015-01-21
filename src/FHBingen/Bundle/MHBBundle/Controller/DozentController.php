@@ -134,6 +134,7 @@ class DozentController extends Controller
      */
     public function planungAction($id)
     {
+        //TODO: auf Beauftragter, Lehrende oder SGl prüfen (?)
         $modulID = $id; //keine Lust alle Zugriffe in den Templates von $id auf $modulID zu ändern
         $encoder = new JsonEncoder();
         $user = $this->get('security.context')->getToken()->getUser();
@@ -224,7 +225,9 @@ class DozentController extends Controller
         $encoder = new JsonEncoder();
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
+        //TODO: auf Beauftragter, Lehrende oder SGl prüfen
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => "freigegeben"));
+
         $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
         $modulHistory= new Entity\VeranstaltungHistory();
@@ -355,6 +358,7 @@ class DozentController extends Controller
         //TODO modulBearbeitenAction + planungFreigebenAction zusammenführen (geht das überhaupt?)
         $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
+        //TODO: auf Beauftragter, Lehrende oder SGl prüfen
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => array('in Planung', 'expired')));
         $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
@@ -513,6 +517,7 @@ class DozentController extends Controller
      */
     public function angebotAction($studiengangID, $modulID, $angebotsart, $encSS, $encWS)
     {
+        //TODO: auf Beauftragter, Lehrende oder SGl prüfen (?)
         $em = $this->getDoctrine()->getManager();
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->find($modulID);
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->find($studiengangID);

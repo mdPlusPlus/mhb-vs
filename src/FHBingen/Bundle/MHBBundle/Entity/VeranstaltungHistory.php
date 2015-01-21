@@ -47,12 +47,16 @@ class VeranstaltungHistory
     protected $Versionsnummer;
 
     /**
-     * @ORM\Column(type="string", length=5, nullable=false)
+     * @ORM\Column(type="string", length=5, nullable=true)
      * @Assert\Length(
      * min= 2,
      * max= 5,
-     * minMessage="Ein Modul-Kuerzel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * maxMessage="Ein Modul-Kuerzel muss aus maximal {{ limit }} Zeichen bestehen."
+     * minMessage="Ein Modulkürzel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     * maxMessage="Ein Modulkürzel muss aus maximal {{ limit }} Zeichen bestehen."
+     * )
+     * @Assert\Regex(
+     *     pattern="/[A-Z0-9]{2,5}/",
+     *     message="Das Modulkürzel darf nur aus Großbuchstaben und Zahlen bestehen"
      * )
      */
     protected $Kuerzel;

@@ -250,8 +250,18 @@ class SglController extends Controller
         $modulBeschreibungen = $this->createModulBeschreibungen($mhbID);
         $htmlArr = array();
 
+
+        $previousFachgebiet = "";
         foreach ($modulBeschreibungen as $modulBeschreibung) {
-            $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibung' => $modulBeschreibung));
+            $currentFachgebiet = $modulBeschreibung->getAngebot()->getFachgebiet()->getTitel();
+            if ($currentFachgebiet != $previousFachgebiet) {
+                $fachgebietHasChanged = true;
+            } else {
+                $fachgebietHasChanged = false;
+            }
+            $previousFachgebiet = $currentFachgebiet;
+
+            $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibung' => $modulBeschreibung, 'fachgebietHasChanged' => $fachgebietHasChanged));
         }
 
         $footerText = "";
@@ -270,7 +280,7 @@ class SglController extends Controller
             'header-font-size' => 10,
             'header-left' => $sgl,
             'header-center' => 'Modulhandbuch ' . $studiengang,
-            'header-right' => '[date]',
+            'header-right' => date('d.m.Y'), //'[date]',
             'header-spacing' => 5, //in mm
             'footer-font-size' => 10,
             'footer-left' => 'Fachhochschule Bingen',
@@ -278,6 +288,7 @@ class SglController extends Controller
             'footer-right' => '[page]/[toPage]',
             'title' => $mhb->getBeschreibung(), //TODO: Ändern auf $studiengang + $versionsnummer?
             'disable-javascript' => true,
+            'no-outline' => true,
             //'cover' => 'cover.html',
             //'toc' => true,
             //'xsl-style-sheet' => 'toc.xsl'
