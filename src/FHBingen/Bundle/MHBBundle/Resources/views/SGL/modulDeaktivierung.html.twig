@@ -3,12 +3,16 @@
 {% block content %}
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#deaktivierte").tablesorter();
+            $("#studiengang").tablesorter();
+
+            <!-- navbar highlighting -->
             highlightMe(document.getElementById('moduldeaktivierungLink'));
         });
     </script>
     <div class="table-responsive">
         <h3>Deaktivierte Module</h3>
-        <table id="modulverantwortlicher" class="table table-bordered tablesorter">
+        <table id="deaktivierte" class="table table-bordered tablesorter">
             <thead>
             <tr>
                 <th>Modultitel</th>
@@ -31,7 +35,7 @@
         </table>
 
         <h3 style="margin-top: 50px">Angebotene Module im Studiengang {{ studiengang }}</h3>
-        <table id="lehrender" class="table table-bordered tablesorter">
+        <table id="studiengang" class="table table-bordered tablesorter">
             <thead>
             <tr>
                 <th>Modultitel</th>
