@@ -112,6 +112,7 @@ class DozentController extends Controller
      */
     public function planungLoeschenAction($id)
     {
+        //TODO: Abfrage: "Wollen Sie das wirklich tun?"
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
