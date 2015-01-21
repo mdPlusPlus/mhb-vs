@@ -270,7 +270,7 @@ class SglController extends Controller
             'header-font-size' => 10,
             'header-left' => $sgl,
             'header-center' => 'Modulhandbuch ' . $studiengang,
-            'header-right' => '[date]',
+            'header-right' => date('d.m.Y'), //'[date]',
             'header-spacing' => 5, //in mm
             'footer-font-size' => 10,
             'footer-left' => 'Fachhochschule Bingen',
