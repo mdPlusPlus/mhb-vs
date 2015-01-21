@@ -28,6 +28,14 @@ class DozentController extends Controller
      */
     public function eigeneModuleAction()
     {
+        /*
+         * TODO:
+         * 1. Filter auf Status 'Freigegeben'
+         * 2. Sortiertung
+         * (3. Wenn mehrmals als Lehrender eingetragen, taucht es auch mehrmals hier auf -> fixen beim Freigeben!)
+         *
+         */
+
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
@@ -60,7 +68,7 @@ class DozentController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
-            asort($name, SORT_STRING);
+            //asort($name, SORT_STRING);
 
             $stgZuModul[] = $name;
         }
@@ -72,11 +80,11 @@ class DozentController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
-            asort($name, SORT_STRING);
+            //asort($name, SORT_STRING);
             $stgZuModullehrend[] = $name;
         }
 
-        asort($modullehrend, SORT_STRING);
+        //asort($modullehrend, SORT_STRING);
 
         return array('modulverantwortung' => $modulverantwortung, 'stgZuModullehrend' => $stgZuModullehrend, 'stgZuModul' => $stgZuModul, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende, 'pageTitle' => 'Eigene Module');
     }
