@@ -78,9 +78,8 @@ class Angebot
      * @ORM\Column(type="string", length=20, nullable=false)
      * @Assert\Length(
      *      min = 9,
-     *      minMessage = "Der Modulcode muss genau {{ limit }} Zeichen lang sein.",
      *      max = 9,
-     *      maxMessage="Der Modulcode muss genau {{ limit }} Zeichen lang sein."
+     *      exactMessage = "Der Modulcode muss genau {{ limit }} Zeichen lang sein."
      * )
      */
     protected	$Code;
