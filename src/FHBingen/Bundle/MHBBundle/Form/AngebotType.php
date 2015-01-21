@@ -31,12 +31,10 @@ class AngebotType extends AbstractType
                 'required' => true,
                 'class' => 'FHBingenMHBBundle:Fachgebiet',
                 'query_builder' => function(EntityRepository $er) {
-                    if($this->isWahl){
-                        return $er->createQueryBuilder('f')->select('')
-                        ->where('f.studiengang = ' . $this->studiengangID,'f.Titel like \'%Wahlpflicht%\' ');
-                    }else{
-                        return $er->createQueryBuilder('f')->select('')
-                            ->where('f.studiengang = ' . $this->studiengangID,'f.Titel not like \'%Wahlpflicht%\'');
+                    if ($this->isWahl) {
+                        return $er->createQueryBuilder('f')->select('')->where('f.studiengang = ' . $this->studiengangID, 'f.Titel like \'%Wahlpflicht%\' ');
+                    } else {
+                        return $er->createQueryBuilder('f')->select('')->where('f.studiengang = ' . $this->studiengangID, 'f.Titel not like \'%Wahlpflicht%\'');
                     }
                 },
             ));
@@ -56,8 +54,8 @@ class AngebotType extends AbstractType
         }
 
         $builder
-            ->add('abweichenderNameDE', 'text', array('label' => 'abweichender Titel (Deutsch): ', 'required' => false))
-            ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false));
+            ->add('abweichenderNameDE', 'text', array('label' => 'abweichender Titel (Deutsch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
+            ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
     }
 
     public function getName()
