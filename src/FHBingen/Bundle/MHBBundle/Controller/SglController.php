@@ -429,6 +429,8 @@ class SglController extends Controller
      */
     public function mhbZusammenstellungAction($mhbGueltigAb, $mhbBeschreibung)
     {
+        //TODO: Button "Alle zu MHB hinzufügen"
+        //TODO: Doku: Reihenfolge der ins MHB aufgenommen Module egal
         $em = $this->getDoctrine()->getManager();
         $sgl = $this->get('security.context')->getToken()->getUser();
 
@@ -465,6 +467,8 @@ class SglController extends Controller
      */
     public function mhbErstellungParseAction()
     {
+        $request = $this->get('request');
+
         if (!empty($_POST)) {
             $em = $this->getDoctrine()->getManager();
 
@@ -476,7 +480,7 @@ class SglController extends Controller
             $mhb->setGehoertZu($studiengang);
 
             $version = $em
-                ->createQuery('SELECT MAX(m.Versionsnummer )AS V
+                ->createQuery('SELECT MAX(m.Versionsnummer) AS V
                            FROM  FHBingenMHBBundle:Modulhandbuch m
                            WHERE m.gehoertZu=' . $studiengang->getStudiengangID())
                 ->getSingleResult();
@@ -489,10 +493,12 @@ class SglController extends Controller
                 //break statements richtig?
                 switch ($key) {
                     case 'mhbGueltigAb':
-                        $mhb->setGueltigAb($em->getRepository('FHBingenMHBBundle:Semester')->findOneBy(array('Semester' => $value)));
+                        $mhbGueltigAb = $em->getRepository('FHBingenMHBBundle:Semester')->findOneBy(array('Semester' => $value));
+                        $mhb->setGueltigAb($mhbGueltigAb);
                         break;
                     case 'mhbBeschreibung':
-                        $mhb->setBeschreibung($value); //TODO: automatisch generieren lassen?
+                        $mhbBeschreibung = $value;
+                        $mhb->setBeschreibung($mhbBeschreibung); //TODO: automatisch generieren lassen?
                         break;
                     default:
                         $angebote[] = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('Angebots_ID' =>$value));
@@ -517,7 +523,9 @@ class SglController extends Controller
 
                 return $this->redirect($this->generateUrl('mhbUebersicht'));
             } else {
-                return new Response('Es wurrden keine Angebote übergeben.');
+                $this->get('session')->getFlashBag()->add('info', 'Es wurden keine Angebote übergeben. Bitte ziehen Sie die gewünschten Angebote in das Feld MHB.');
+
+                return $this->redirect($this->generateUrl('mhbZusammenstellung', array('mhbGueltigAb' => $mhbGueltigAb, 'mhbBeschreibung' => $mhbBeschreibung)));
             }
 
 
