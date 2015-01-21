@@ -154,7 +154,6 @@ class SglController extends Controller
             }
         }
 
-        //TODO: richtig nach Erstelldatum filtern mit $resultMHB
         $veranstaltungenBearbeitet=$em->createQuery('SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,
                                                      v.Autor
                                   FROM  FHBingenMHBBundle:Veranstaltung v

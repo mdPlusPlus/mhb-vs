@@ -22,7 +22,7 @@ class Fachgebiet
 {
     public function __toString()
     {
-        $string = $this->getStudiengang() .' '. $this->getTitel();
+        $string = $this->getTitel();
         return $string;
     }
 
