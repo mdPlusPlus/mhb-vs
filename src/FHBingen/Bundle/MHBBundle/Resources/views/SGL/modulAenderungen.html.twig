@@ -11,6 +11,7 @@
         });
     </script>
     <h4>{{ 'Das neueste Modulhandbuch wurde am ' ~ dateTime.format('d.m.Y') ~ ' generiert.' }}</h4>
+    {% if module is not empty %}
     <table id="table" class="table table-bordered tablesorter" >
         <thead>
         <tr>
@@ -33,6 +34,9 @@
         {% endfor %}
         </tbody>
     </table>
+    {% else %}
+        <p>Seit der Erstellung des letzten Modulhandbuchs Ihres Studienganges wurden keine Module geändert.</p>
+    {% endif %}
   </div>
 
     {% include '@FHBingenMHB/flashbags.html.twig' %}
