@@ -34,10 +34,10 @@ class Semester
      * @ORM\Column(type="string",  length=5, nullable=false, unique=true)
      * @Assert\NotBlank(message = "Die Bezeichnung des Semesters darf nicht leer sein.")
      * @Assert\Length(
-     * min = 4,
-     * max = 5,
-     * minMessage="Ein Semester muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * maxMessage="Ein Semester darf aus maximal {{ limit }} Zeichen bestehen."
+     *      min = 4,
+     *      max = 5,
+     *      minMessage="Ein Semester muss aus mindestens {{ limit }} Zeichen bestehen.",
+     *      maxMessage="Ein Semester darf aus maximal {{ limit }} Zeichen bestehen."
      * )
      */
     protected $Semester;

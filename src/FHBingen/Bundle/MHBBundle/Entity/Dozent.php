@@ -45,8 +45,8 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * @ORM\Column(type="string", length=4, nullable=false)
      * @Assert\Choice(
-     * choices = { "Herr", "Frau" },
-     * message = "Bitte geben Sie eine korrekte Anrede an!"
+     *      choices = { "Herr", "Frau" },
+     *      message = "Bitte geben Sie eine korrekte Anrede an!"
      * )
      */
     protected $Anrede;

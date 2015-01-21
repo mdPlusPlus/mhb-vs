@@ -49,8 +49,8 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
      * @Assert\Choice(
-     * choices = { "in Planung", "Freigegeben", "expired" },
-     * message = "Bitte geben Sie einen korrekten Status an!"
+     *      choices = { "in Planung", "Freigegeben", "expired" },
+     *      message = "Bitte geben Sie einen korrekten Status an!"
      * )
      */
     protected $Status;
@@ -58,14 +58,14 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=5, nullable=true)
      * @Assert\Length(
-     * min= 2,
-     * max= 5,
-     * minMessage="Ein Modulkürzel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * maxMessage="Ein Modulkürzel muss aus maximal {{ limit }} Zeichen bestehen."
+     *      min = 2,
+     *      max = 5,
+     *      minMessage = "Ein Modulkürzel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     *      maxMessage = "Ein Modulkürzel muss aus maximal {{ limit }} Zeichen bestehen."
      * )
      * @Assert\Regex(
-     *     pattern="/[A-Z0-9]{2,5}/",
-     *     message="Das Modulkürzel darf nur aus Großbuchstaben und Zahlen bestehen"
+     *     pattern = "/[A-Z0-9]{2,5}/",
+     *     message = "Das Modulkürzel darf nur aus Großbuchstaben und Zahlen bestehen"
      * )
      */
     protected $Kuerzel;
@@ -73,13 +73,13 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=70, nullable=false)
      * @Assert\Length(
-     * min= 5,
-     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * max = 70,
-     * maxMessage="Der deutsche Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
+     *      min = 5,
+     *      minMessage = "Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     *      max = 70,
+     *      maxMessage = "Der deutsche Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
      * )
      * @Assert\NotBlank(
-     *      message="Der deutsche Modultitel muss gesetzt werden."
+     *      message = "Der deutsche Modultitel muss gesetzt werden."
      * )
      */
     protected $Name;
@@ -87,10 +87,10 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=70, nullable=true)
      * @Assert\Length(
-     * min= 5,
-     * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * max = 70,
-     * maxMessage="Der englische Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
+     *      min = 5,
+     *      minMessage = "Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     *      max = 70,
+     *      maxMessage = "Der englische Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
      * )
      */
     protected $NameEN;
@@ -98,8 +98,8 @@ class Veranstaltung
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      * @Assert\Choice(
-     * choices = { "Wintersemester", "Sommersemester", "wechselnd", "jedes Semester"},
-     * message = "Bitte geben Sie eine korrekte Haeufigkeit an!"
+     *      choices = { "Wintersemester", "Sommersemester", "wechselnd", "jedes Semester"},
+     *      message = "Bitte geben Sie eine korrekte Haeufigkeit an!"
      * )
      */
     protected $Haeufigkeit;
@@ -188,8 +188,8 @@ class Veranstaltung
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Choice(
-     * choices = { "Deutsch", "Englisch" },
-     * message = "Bitte geben Sie eine korrekte Sprache an!"
+     *      choices = { "Deutsch", "Englisch" },
+     *      message = "Bitte geben Sie eine korrekte Sprache an!"
      * )
      */
     protected $Sprache;
@@ -212,8 +212,8 @@ class Veranstaltung
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Choice(
-     * choices = { "3", "6", "9", "12", "15", "30"},
-     * message = "Bitte geben Sie eine korrekte Anzahl an Leistungspunkten an!"
+     *      choices = { "3", "6", "9", "12", "15", "30"},
+     *      message = "Bitte geben Sie eine korrekte Anzahl an Leistungspunkten an!"
      * )
      */
     protected $Leistungspunkte;

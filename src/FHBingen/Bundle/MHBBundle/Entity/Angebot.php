@@ -26,11 +26,12 @@ class Angebot
     public function __toString()
     {
         $string = null;
-        if($this->getAbweichenderNameDE() != null){
+        if ($this->getAbweichenderNameDE() != null) {
             $string = $this->getAbweichenderNameDE();
-        }else{
+        } else {
             $string = (string) $this->getVeranstaltung();
         }
+
         return $string;
     }
 
@@ -68,8 +69,8 @@ class Angebot
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
      * @Assert\Choice(
-     * choices = { "Wahlpflichtfach", "Pflichtfach" },
-     * message = "Bitte geben Sie eine korrekte Angebotsart an!"
+     *      choices = { "Wahlpflichtfach", "Pflichtfach" },
+     *      message = "Bitte geben Sie eine korrekte Angebotsart an!"
      * )
      */
     protected	$Angebotsart;

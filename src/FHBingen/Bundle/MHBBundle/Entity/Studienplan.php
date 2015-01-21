@@ -45,11 +45,12 @@ class Studienplan
     protected $Regelsemester;
 
     /**
-    * @ORM\Column(type="string"), nullable = false
-     * @Assert\Choice{
-     * choices = { "SS", "WS" },
-     * message = "Bitte geben Sie ein korrektes Startsemester!"
-     * */
+     * @ORM\Column(type="string"), nullable = false
+     * @Assert\Choice(
+     *      choices = { "SS", "WS" },
+     *      message = "Bitte geben Sie ein korrektes Startsemester!"
+     * )
+     */
     protected $Startsemester;
 
     /**

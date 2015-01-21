@@ -72,6 +72,10 @@ class Studiengang
      *      minMessage = "Ein Studiengang-Kürzel muss aus mindestens {{ limit }} Zeichen bestehen.",
      *      maxMessage = "Ein Studiengang-Kürzel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
+     * @Assert\Regex(
+     *     pattern="/[A-Z]{2,5}/",
+     *     message="Das Studiengang-Kürzel darf nur aus Großbuchstaben bestehen."
+     * )
      */
     protected $Kuerzel;
 

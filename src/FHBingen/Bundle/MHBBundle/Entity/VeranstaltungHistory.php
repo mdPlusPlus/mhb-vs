@@ -24,7 +24,8 @@ class VeranstaltungHistory
 
     public function __toString()
     {
-        $string = (string)$this->getName();
+        $string = (string) $this->getName();
+
         return $string;
     }
 
@@ -49,14 +50,14 @@ class VeranstaltungHistory
     /**
      * @ORM\Column(type="string", length=5, nullable=true)
      * @Assert\Length(
-     * min= 2,
-     * max= 5,
-     * minMessage="Ein Modulkürzel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * maxMessage="Ein Modulkürzel muss aus maximal {{ limit }} Zeichen bestehen."
+     *      min = 2,
+     *      max = 5,
+     *      minMessage = "Ein Modulkürzel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     *      maxMessage = "Ein Modulkürzel muss aus maximal {{ limit }} Zeichen bestehen."
      * )
      * @Assert\Regex(
-     *     pattern="/[A-Z0-9]{2,5}/",
-     *     message="Das Modulkürzel darf nur aus Großbuchstaben und Zahlen bestehen"
+     *     pattern = "/[A-Z0-9]{2,5}/",
+     *     message = "Das Modulkürzel darf nur aus Großbuchstaben und Zahlen bestehen"
      * )
      */
     protected $Kuerzel;
@@ -64,13 +65,13 @@ class VeranstaltungHistory
     /**
      * @ORM\Column(type="string", length=70, nullable=false)
      * @Assert\Length(
-     * min= 5,
-     * minMessage="Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * max = 70,
-     * maxMessage="Der deutsche Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
+     *      min = 5,
+     *      minMessage = "Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     *      max = 70,
+     *      maxMessage = "Der deutsche Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
      * )
      * @Assert\NotBlank(
-     *      message="Der deutsche Modultitel muss gesetzt werden."
+     *      message = "Der deutsche Modultitel muss gesetzt werden."
      * )
      */
     protected $Name;
@@ -78,10 +79,10 @@ class VeranstaltungHistory
     /**
      * @ORM\Column(type="string", length=70, nullable=false)
      * @Assert\Length(
-     * min= 5,
-     * minMessage="Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     * max = 70,
-     * maxMessage="Der englische Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
+     *      min = 5,
+     *      minMessage = "Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     *      max = 70,
+     *      maxMessage = "Der englische Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
      * )
      */
     protected $NameEN;
@@ -89,8 +90,8 @@ class VeranstaltungHistory
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
      * @Assert\Choice(
-     * choices = { "Wintersemester", "Sommersemester", "wechselnd", "jedes Semester"},
-     * message = "Bitte geben Sie eine korrekte Haeufigkeit an!"
+     *      choices = { "Wintersemester", "Sommersemester", "wechselnd", "jedes Semester"},
+     *      message = "Bitte geben Sie eine korrekte Haeufigkeit an!"
      * )
      */
     protected $Haeufigkeit;
@@ -178,8 +179,8 @@ class VeranstaltungHistory
     /**
      * @ORM\Column(type="text", nullable=false)
      * @Assert\Choice(
-     * choices = { "Deutsch", "Englisch" },
-     * message = "Bitte geben Sie eine korrekte Sprache an!"
+     *      choices = { "Deutsch", "Englisch" },
+     *      message = "Bitte geben Sie eine korrekte Sprache an!"
      * )
      */
     protected $Sprache;
@@ -202,8 +203,8 @@ class VeranstaltungHistory
     /**
      * @ORM\Column(type="integer", nullable=false)
      * @Assert\Choice(
-     * choices = { "3", "6", "9", "12", "15", "30"},
-     * message = "Bitte geben Sie eine korrekte Anzahl an Leistungspunkten an!"
+     *      choices = { "3", "6", "9", "12", "15", "30" },
+     *      message = "Bitte geben Sie eine korrekte Anzahl an Leistungspunkten an!"
      * )
      */
     protected $Leistungspunkte;
