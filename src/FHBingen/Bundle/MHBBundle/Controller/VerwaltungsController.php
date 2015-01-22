@@ -54,8 +54,6 @@ class VerwaltungsController extends Controller
         return array('sgl' => $sgl, 'dozent' => $dozent, 'pageTitle' => 'Nutzerverwaltung');
     }
 
-
-
     /**
      * @Route("/restricted/sgl/passwordReset", name="passwdReset")
      */
@@ -133,10 +131,10 @@ class VerwaltungsController extends Controller
                 $dozent->setName($form->get('name')->getData());
                 $dozent->setNachname($form->get('nachname')->getData());
                 $dozent->setEmail($form->get('email')->getData());
-                //TODO: $dozent->setPassword('password'); wieder aufnehmen?
+                //TODO: $dozent->setPassword('password'); wieder aufnehmen? weg sonst doppelt hash
                 $dozent->setRole($form->get('roles')->getData());
                 /*
-                 * TODO:
+                 * TODO:trigger?
                  * Doku: Wenn SGL auf Dozent abgestuft wird, besitzt er immernoch den Studiengang, den er vorher hatte,
                  * aber da er die rolle ROLE_SGL nicht mehr ausübt, kann er nicht mehr auf die SGl-Funktionen zugreifen,
                  * da sich diese hinter der /restricted/sgl firewall befinden
@@ -162,10 +160,6 @@ class VerwaltungsController extends Controller
      */
     public function SglShowAllCoursesAction()
     {
-        // Da das Sortieren über querys einfacher ist wird der code nicht mehr benötigt
-        /*$em = $this->getDoctrine()->getManager();
-        $entries = $em->getRepository('FHBingenMHBBundle:Studiengang')->findALL();*/
-
         $em = $this->getDoctrine()->getManager();
         $mhb = $em->createQuery('SELECT s.Studiengang_ID,s.Titel as Studiengang,s.Grad,d.Titel, d.Nachname
                                  FROM  FHBingenMHBBundle:Studiengang s
@@ -277,8 +271,7 @@ class VerwaltungsController extends Controller
                 }
 
                 $em->persist($studiengang);
-                $em->flush();
-                //flush() hier vermutlich notwendig, hab' vergessen warum... eventuell mal ohne testen?
+                $em->flush(); // hier notwendig da weiter unten alle Eintrage mit den aktuell gesetzten verglichen werden
 
                 //$studiengang->getRichtung() holt sich die infos NICHT aus der db....
                 //also:

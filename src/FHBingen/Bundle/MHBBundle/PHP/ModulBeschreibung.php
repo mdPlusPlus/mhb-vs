@@ -17,7 +17,6 @@ class ModulBeschreibung {
     private $angebot;
     private $fremdeStudiengaenge;
     private $studienplaene;
-    //private $lehrende;
     private $voraussetzungen;
     private $pruefungsformen;
     private $lehrveranstaltungen;
@@ -70,22 +69,6 @@ class ModulBeschreibung {
     {
         $this->studienplaene = $studienplaene;
     }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getLehrende()
-//    {
-//        return $this->lehrende;
-//    }
-//
-//    /**
-//     * @param mixed $lehrende
-//     */
-//    public function setLehrende($lehrende)
-//    {
-//        $this->lehrende = $lehrende;
-//    }
 
     /**
      * @return mixed
