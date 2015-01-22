@@ -48,7 +48,7 @@ class VeranstaltungHistory
     protected $Versionsnummer;
 
     /**
-     * @ORM\Column(type="string", length=5, nullable=true)
+     * @ORM\Column(type="string", length=5, nullable=false)
      * @Assert\Length(
      *      min = 2,
      *      max = 5,
