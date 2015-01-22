@@ -148,7 +148,7 @@ class SglController extends Controller
                                   WHERE m.gehoertZu='.$studiengang->getStudiengangID());
         $resultMHB =$mhbs->getResult();
 
-        //TODO: kommentieren!
+        //Weil $resultMHB ein verschachteltes Array leifert muss dies für die query in $veranstaltungenBearbeitet in ein String gespeichert werden
         $datum = '01.01.1970';
         foreach ($resultMHB as $value) {
             foreach ($value as $v) {
