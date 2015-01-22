@@ -99,7 +99,7 @@ class SglController extends Controller
 
         $request = $this->get('request');
         $form->handleRequest($request);
-        //Spiechert den neune Modulcode in der Angebots Tabelle
+        //Speichert den neuen Modulcode in der Angebotstabelle
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
                 $angebot->setCode($form->get('code')->getData());
@@ -123,7 +123,6 @@ class SglController extends Controller
      */
     public function mhbUebersichtAction()
     {
-
         $em = $this->getDoctrine()->getManager();
         $mhbs = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findAll();
 
@@ -220,7 +219,7 @@ class SglController extends Controller
             $modulBeschreibung->setStudienplaene($studienplaeneZuStudiengang);
 
             $fremdeStudiengaenge = array();
-            //hole ALLE angebote, in denen das Modul steckt und hole davon die jeweiligen Studiengänge
+            //hole ALLE Angebote, in denen das Modul steckt und hole davon die jeweiligen Studiengänge
             $modulAngebote = $veranstaltung->getAngebot();
             foreach ($modulAngebote as $modulAngebot) {
                 if ($modulAngebot->getStudiengang() != $studiengang) {
@@ -311,7 +310,7 @@ class SglController extends Controller
      * @Route("/restricted/sgl/deaktivierungAlleModule", name="deaktivierungAlleModule")
      * @Template("FHBingenMHBBundle:SGL:modulDeaktivierung.html.twig")
      */
-    public function eigeneModuleAction()
+    public function deaktivierungModuleAction()
     {
         //TODO: Abfrage ja/nein "wollen sie das wirklich?"
         //TODO: Unterscheidung in ALLEN studiengängen deaktiveren oder nur in eigenem Studiengang
@@ -528,8 +527,6 @@ class SglController extends Controller
 
                 return $this->redirect($this->generateUrl('mhbZusammenstellung', array('mhbGueltigAb' => $mhbGueltigAb, 'mhbBeschreibung' => $mhbBeschreibung)));
             }
-
-
 
         } else {
             return new Response('$_POST was empty');
