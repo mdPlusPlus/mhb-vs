@@ -202,13 +202,6 @@ class DozentController extends Controller
 
                 $em->persist($modul);
 
-
-                //TODO: noch falsch!
-                //$lehrende = new Entity\Lehrende();
-                //$lehrende->setVeranstaltung($modul);
-                //$lehrende->setDozent($user);
-                //$em->persist($lehrende);
-
                 $em->flush();
 
                 if ($modulID == -1) {
@@ -236,7 +229,7 @@ class DozentController extends Controller
         $em = $this->getDoctrine()->getManager();
         //TODO: auf Beauftragter, Lehrende oder SGl prüfen
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => "freigegeben"));
-
+        $modulAlt = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => "freigegeben"));
         $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
         $modulHistory= new Entity\VeranstaltungHistory();
@@ -269,30 +262,30 @@ class DozentController extends Controller
 
 
                 //schreibt den Veranstaltungs Inhalt vor der änderung in die History Tabelle
-                $modulHistory->setAutor($modul->getAutor());
-                $modulHistory->setModulID($modul->getModulID());
-                $modulHistory->setVersionsnummer($modul->getVersionsnummer());
-                $modulHistory->setDauer($modul->getDauer());
-                $modulHistory->setName($modul->getName());
-                $modulHistory->setNameEN($modul->getNameEN());
-                $modulHistory->setKuerzel($modul->getKuerzel());
-                $modulHistory->setErstellungsdatum($modul->getErstellungsdatum());
-                $modulHistory->setGruppengroesse($modul->getGruppengroesse());
-                $modulHistory->setHaeufigkeit($modul->getHaeufigkeit());
-                $modulHistory->setInhalte($modul->getInhalte());
-                $modulHistory->setKontaktzeitSonstige($modul->getKontaktzeitSonstige());
-                $modulHistory->setKontaktzeitVL($modul->getKontaktzeitVL());
-                $modulHistory->setSelbststudium($modul->getSelbststudium());
-                $modulHistory->setLernergebnisse($modul->getLernergebnisse());
-                $modulHistory->setSprache($modul->getSprache());
-                $modulHistory->setSpracheSonstiges($modul->getSpracheSonstiges());
-                $modulHistory->setLiteratur($modul->getLiteratur());
-                $modulHistory->setLeistungspunkte($modul->getLeistungspunkte());
-                $modulHistory->setVoraussetzungInh($modul->getVoraussetzungInh());
-                $modulHistory->setPruefungsformSonstiges($modul->getPruefungsformSonstiges());
-                $modulHistory->setVoraussetzungLP($encoder->encode($modul->getVoraussetzungLP(), 'json'));
-                $modulHistory->setPruefungsformen($encoder->encode($modul->getPruefungsformen(), 'json'));
-                $modulHistory->setLehrveranstaltungen($encoder->encode($modul->getLehrveranstaltungen(), 'json'));
+                $modulHistory->setAutor($modulAlt->getAutor());
+                $modulHistory->setModulID($modulAlt->getModulID());
+                $modulHistory->setVersionsnummer($modulAlt->getVersionsnummer());
+                $modulHistory->setDauer($modulAlt->getDauer());
+                $modulHistory->setName($modulAlt->getName());
+                $modulHistory->setNameEN($modulAlt->getNameEN());
+                $modulHistory->setKuerzel($modulAlt->getKuerzel());
+                $modulHistory->setErstellungsdatum($modulAlt->getErstellungsdatum());
+                $modulHistory->setGruppengroesse($modulAlt->getGruppengroesse());
+                $modulHistory->setHaeufigkeit($modulAlt->getHaeufigkeit());
+                $modulHistory->setInhalte($modulAlt->getInhalte());
+                $modulHistory->setKontaktzeitSonstige($modulAlt->getKontaktzeitSonstige());
+                $modulHistory->setKontaktzeitVL($modulAlt->getKontaktzeitVL());
+                $modulHistory->setSelbststudium($modulAlt->getSelbststudium());
+                $modulHistory->setLernergebnisse($modulAlt->getLernergebnisse());
+                $modulHistory->setSprache($modulAlt->getSprache());
+                $modulHistory->setSpracheSonstiges($modulAlt->getSpracheSonstiges());
+                $modulHistory->setLiteratur($modulAlt->getLiteratur());
+                $modulHistory->setLeistungspunkte($modulAlt->getLeistungspunkte());
+                $modulHistory->setVoraussetzungInh($modulAlt->getVoraussetzungInh());
+                $modulHistory->setPruefungsformSonstiges($modulAlt->getPruefungsformSonstiges());
+                $modulHistory->setVoraussetzungLP($encoder->encode($modulAlt->getVoraussetzungLP(), 'json'));
+                $modulHistory->setPruefungsformen($encoder->encode($modulAlt->getPruefungsformen(), 'json'));
+                $modulHistory->setLehrveranstaltungen($encoder->encode($modulAlt->getLehrveranstaltungen(), 'json'));
 
                 $em->persist($modulHistory);
 
@@ -387,7 +380,7 @@ class DozentController extends Controller
         //TODO modulBearbeitenAction + planungFreigebenAction zusammenführen (geht das überhaupt?)
         $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
-        //TODO: auf Beauftragter, Lehrende oder SGl prüfen
+        //TODO: auf Beauftragter, Lehrende oder SGl prüfen --> Lehrendentabelle auslesen
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => array('in Planung', 'expired')));
         $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
@@ -461,20 +454,6 @@ class DozentController extends Controller
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
                 if (!empty($lehrendeArr)) {
 
-//                    foreach ($lehrendeArr as $lehrend) {
-//                        // Modul mit Lehrenden verketten
-//                        $modul->addLehrende($lehrend->getDozent());
-//                        // Lehrende mit Veranstaltung verketten
-//                        $lehrend->setVeranstaltung($modul);
-//                        // passenden Dozenten aus dem Lehrenden Entity finden
-//                        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
-//                        // Dozent mit Lehrenden verketten
-//                        $dozent->addLehrende($lehrend);
-//                        // Lehrenden mit Dozent verketten
-//                        $lehrend->setDozent($dozent);
-//                        $em->persist($dozent);
-//                        $em->persist($lehrend);
-//                    }
                     foreach ($lehrendeArr as $lehrend) {
                         // Lehrende mit Veranstaltung verketten
                         $lehrend->setVeranstaltung($modul);
@@ -486,26 +465,9 @@ class DozentController extends Controller
                         $em->persist($lehrend);
                     }
 
-
-
                     $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
-/*                    $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
-
-                    foreach ($dbLehrendeArr as $dbEntry) {
-                        if (!in_array($dbEntry, $lehrendeArr)) {
-                            // link von Modul auf Lehrenden löschen
-                            $modul->removeModul($dbEntry);
-                            // passenden Dozenten zu dem Lehrenden Etity finden
-                            $dozentTmp = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $dbEntry->getDozent()->getDozentenID()));
-                            // link von Dozenten zu Lehrenden Entity löschen
-                            $dozentTmp->removeLehrende($dbEntry);
-                            // Lehrenden entfernen
-                            $em->remove($dbEntry);
-                            $em->persist($dozentTmp);
-                        }*/
 
                     $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
-
 
                     foreach ($dbLehrendeArr as $dbEntry) {
                         if (!in_array($dbEntry, $lehrendeArr)) {
@@ -520,7 +482,6 @@ class DozentController extends Controller
                     }
                 } else {
                     $lehr = new Entity\Lehrende();
-                  //  $modul->addModul($lehr);
                     $lehr->setVeranstaltung($modul);
                     $doz = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $modul->getBeauftragter()->getDozentenID()));
                     $doz->addLehrende($lehr);
@@ -530,8 +491,6 @@ class DozentController extends Controller
                 }
                 $em->persist($modul);
                 $em->flush();
-
-                //$this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich freigegeben.');
 
                 return $this->redirect($this->generateUrl('vorAngebot', array('modulID' => $id)));
             }
@@ -649,8 +608,6 @@ class DozentController extends Controller
         $request = $this->get('request');
         $form->handleRequest($request);
 
-        //$form->get('modulid')->setData($modulID);
-
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
                 $encoder = new JsonEncoder();
@@ -679,7 +636,6 @@ class DozentController extends Controller
                         'encWS' => $wsEncodedData)));
                 } else {
                     $this->get('session')->getFlashBag()->add('info', 'Bitte geben Sie die Regelsemester an.');
-                    //return new Response('false');
                 }
 
             }
