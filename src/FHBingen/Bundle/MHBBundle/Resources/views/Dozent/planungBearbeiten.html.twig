@@ -61,7 +61,7 @@
                     <table>
                         <tr>
                             <td>{{ form_widget(form.dauer) }}</td>
-                            <td>
+                            <td style="padding-left:20px">
                                 {% if einheit == 'Wochen' %}
                                     <input type="radio" name="einheit" value="Wochen" checked>Wochen<br/>
                                 {% else %}
@@ -87,7 +87,6 @@
             {{ form_row(form.leistungspunkte) }}
             {{ form_row(form.kontaktzeitVL) }}
             {{ form_row(form.kontaktzeitSonstige) }}
-            {# {{ form_row(form.selbststudium) }} #}
             {{ form_row(form.gruppengroesse) }}
             {{ form_row(form.lernergebnisse) }}
             {{ form_row(form.inhalte) }}
