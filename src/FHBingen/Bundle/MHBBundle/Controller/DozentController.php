@@ -229,10 +229,37 @@ class DozentController extends Controller
         $em = $this->getDoctrine()->getManager();
         //TODO: auf Beauftragter, Lehrende oder SGl prüfen
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => "freigegeben"));
-        $modulAlt = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => "freigegeben"));
+
         $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
         $modulHistory= new Entity\VeranstaltungHistory();
+
+        //schreibt den Veranstaltungs Inhalt vor der änderung in die History Tabelle
+        $modulAlt = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => "freigegeben"));
+        $modulHistory->setAutor($modulAlt->getAutor());
+        $modulHistory->setModulID($modulAlt->getModulID());
+        $modulHistory->setVersionsnummer($modulAlt->getVersionsnummer());
+        $modulHistory->setDauer($modulAlt->getDauer());
+        $modulHistory->setName($modulAlt->getName());
+        $modulHistory->setNameEN($modulAlt->getNameEN());
+        $modulHistory->setKuerzel($modulAlt->getKuerzel());
+        $modulHistory->setErstellungsdatum($modulAlt->getErstellungsdatum());
+        $modulHistory->setGruppengroesse($modulAlt->getGruppengroesse());
+        $modulHistory->setHaeufigkeit($modulAlt->getHaeufigkeit());
+        $modulHistory->setInhalte($modulAlt->getInhalte());
+        $modulHistory->setKontaktzeitSonstige($modulAlt->getKontaktzeitSonstige());
+        $modulHistory->setKontaktzeitVL($modulAlt->getKontaktzeitVL());
+        $modulHistory->setSelbststudium($modulAlt->getSelbststudium());
+        $modulHistory->setLernergebnisse($modulAlt->getLernergebnisse());
+        $modulHistory->setSprache($modulAlt->getSprache());
+        $modulHistory->setSpracheSonstiges($modulAlt->getSpracheSonstiges());
+        $modulHistory->setLiteratur($modulAlt->getLiteratur());
+        $modulHistory->setLeistungspunkte($modulAlt->getLeistungspunkte());
+        $modulHistory->setVoraussetzungInh($modulAlt->getVoraussetzungInh());
+        $modulHistory->setPruefungsformSonstiges($modulAlt->getPruefungsformSonstiges());
+        $modulHistory->setVoraussetzungLP($encoder->encode($modulAlt->getVoraussetzungLP(), 'json'));
+        $modulHistory->setPruefungsformen($encoder->encode($modulAlt->getPruefungsformen(), 'json'));
+        $modulHistory->setLehrveranstaltungen($encoder->encode($modulAlt->getLehrveranstaltungen(), 'json'));
 
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 
@@ -258,34 +285,6 @@ class DozentController extends Controller
                 if (!$valid) {
                     return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
                 }
-
-
-
-                //schreibt den Veranstaltungs Inhalt vor der änderung in die History Tabelle
-                $modulHistory->setAutor($modulAlt->getAutor());
-                $modulHistory->setModulID($modulAlt->getModulID());
-                $modulHistory->setVersionsnummer($modulAlt->getVersionsnummer());
-                $modulHistory->setDauer($modulAlt->getDauer());
-                $modulHistory->setName($modulAlt->getName());
-                $modulHistory->setNameEN($modulAlt->getNameEN());
-                $modulHistory->setKuerzel($modulAlt->getKuerzel());
-                $modulHistory->setErstellungsdatum($modulAlt->getErstellungsdatum());
-                $modulHistory->setGruppengroesse($modulAlt->getGruppengroesse());
-                $modulHistory->setHaeufigkeit($modulAlt->getHaeufigkeit());
-                $modulHistory->setInhalte($modulAlt->getInhalte());
-                $modulHistory->setKontaktzeitSonstige($modulAlt->getKontaktzeitSonstige());
-                $modulHistory->setKontaktzeitVL($modulAlt->getKontaktzeitVL());
-                $modulHistory->setSelbststudium($modulAlt->getSelbststudium());
-                $modulHistory->setLernergebnisse($modulAlt->getLernergebnisse());
-                $modulHistory->setSprache($modulAlt->getSprache());
-                $modulHistory->setSpracheSonstiges($modulAlt->getSpracheSonstiges());
-                $modulHistory->setLiteratur($modulAlt->getLiteratur());
-                $modulHistory->setLeistungspunkte($modulAlt->getLeistungspunkte());
-                $modulHistory->setVoraussetzungInh($modulAlt->getVoraussetzungInh());
-                $modulHistory->setPruefungsformSonstiges($modulAlt->getPruefungsformSonstiges());
-                $modulHistory->setVoraussetzungLP($encoder->encode($modulAlt->getVoraussetzungLP(), 'json'));
-                $modulHistory->setPruefungsformen($encoder->encode($modulAlt->getPruefungsformen(), 'json'));
-                $modulHistory->setLehrveranstaltungen($encoder->encode($modulAlt->getLehrveranstaltungen(), 'json'));
 
                 $em->persist($modulHistory);
 
