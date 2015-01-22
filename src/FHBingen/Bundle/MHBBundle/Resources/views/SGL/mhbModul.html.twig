@@ -20,7 +20,7 @@
         }
 
         .modul .intro {
-            /*page-break-before: always;*/
+            page-break-before: always;
         }
 
         .modul .key {
@@ -42,6 +42,7 @@
         .modul .studiensemseter {
             border: none;
             padding: 0 10px 0 0;
+            /*white-space: nowrap;*/ /*funktioniert iwie nicht*/
         }
 
         .modul .startsemester{
@@ -51,10 +52,12 @@
 </head>
 <body>
 <div class="modul">
+    <p class="intro">
     {% if fachgebietHasChanged %}
-        <h2>{{ modulBeschreibung.getAngebot().getFachgebiet().getTitel() }}</h2>
+        <h3>{{ modulBeschreibung.getAngebot().getFachgebiet().getTitel() }}</h3>
     {% endif %}
-    <p class="intro"><h3>{{ titelDE }} ({{ modulBeschreibung.getAngebot().getCode() }})</h3></p>
+        <h3>{{ titelDE }} ({{ modulBeschreibung.getAngebot().getCode() }})</h3>
+    </p>
     <table>
         <thead>
         <tr>
@@ -239,7 +242,7 @@
                 <div class="key">Modulbeauftragte/r und hauptamtlich Lehrende</div>
                 <span class="key">Modulbeauftragter:</span> {{ modulBeschreibung.getAngebot().getVeranstaltung().getBeauftragter() }}<br/>
                 {% if modulBeschreibung.getAngebot().getVeranstaltung().getLehrende() is not empty %}
-                    <span class="key">weitere Lehrende:</span>
+                    <span class="key">Lehrende:</span>
                     {% for lehrender in modulBeschreibung.getAngebot().getVeranstaltung().getLehrende() %}
                         {% if lehrender.getDozent().getNachname() == 'Alle Dozenten möglich' %}
                             Alle Dozenten des Studiengangs {{ modulBeschreibung.getAngebot().getStudiengang() }}
