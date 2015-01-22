@@ -149,7 +149,7 @@ class SglController extends Controller
         $resultMHB =$mhbs->getResult();
 
         //TODO: kommentieren!
-        $datum = new \DateTime();
+        $datum = '01.01.1970';
         foreach ($resultMHB as $value) {
             foreach ($value as $v) {
                 $datum = $v;
@@ -356,7 +356,6 @@ class SglController extends Controller
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modulID));
 
         $modul->setStatus('expired');
-        $modul->setBeauftragter(null);
         $modul->setErstellungsdatum(new \DateTime());
         $em->persist($modul);
 
