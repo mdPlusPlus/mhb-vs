@@ -68,7 +68,7 @@ class DozentController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
-            //asort($name, SORT_STRING);
+            asort($name, SORT_STRING);
 
             $stgZuModul[] = $name;
         }
@@ -80,11 +80,11 @@ class DozentController extends Controller
             foreach ($tmp as $studiengang) {
                 $name[] = (string) $studiengang->getStudiengang();
             }
-            //asort($name, SORT_STRING);
+            asort($name, SORT_STRING);
             $stgZuModullehrend[] = $name;
         }
 
-        //asort($modullehrend, SORT_STRING);
+        asort($modullehrend, SORT_STRING);
 
         return array('modulverantwortung' => $modulverantwortung, 'stgZuModullehrend' => $stgZuModullehrend, 'stgZuModul' => $stgZuModul, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende, 'pageTitle' => 'Eigene Module');
     }

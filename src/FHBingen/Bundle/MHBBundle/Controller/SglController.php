@@ -137,7 +137,6 @@ class SglController extends Controller
      */
     public function modulAenderungenAction()
     {
-        //TODO: Sortierung
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
@@ -162,7 +161,8 @@ class SglController extends Controller
         $veranstaltungenBearbeitet = $em->createQuery('SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,v.Autor
                                   FROM  FHBingenMHBBundle:Veranstaltung v
                                   JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang='.$studiengang->getStudiengangID().' And v.Modul_ID = a.veranstaltung
-                                  WHERE v.Erstellungsdatum > :mhbDatum')->setParameter('mhbDatum', $datum);
+                                  WHERE v.Erstellungsdatum > :mhbDatum'
+                                 .' ORDER BY v.Name ASC')->setParameter('mhbDatum', $datum) ;
         $resultModul = $veranstaltungenBearbeitet->getResult();
 
         return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module', 'dateTime' => $datum);
@@ -329,6 +329,7 @@ class SglController extends Controller
         foreach ($angebote as $angebot) {
             $module[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $angebot->getVeranstaltung()));
         }
+        asort($module, SORT_STRING);
 
         $stgZuModul = array();
         foreach ($module as $modul) {

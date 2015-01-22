@@ -84,7 +84,11 @@
                         <td>{{ veranstaltung.beauftragter }}</td>
                         <td>
                             {% for name in stgZuModullehrend[count] %}
-                                {{ name }}<br/>
+                                {#{% if stgZuModullehrend[count] is not empty  %}#}
+                                    {{ name }}<br/>
+{#                                {% else %}
+                                    {{ Keinem Studiengang zugeordnet }}<br/>
+                                {% endif %}#}
                             {% endfor %}
                         </td>
                     </tr>

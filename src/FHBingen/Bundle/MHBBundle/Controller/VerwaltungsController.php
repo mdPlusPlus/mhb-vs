@@ -29,8 +29,7 @@ class VerwaltungsController extends Controller
         //alle Nutzer sortieren
 
         $em = $this->getDoctrine()->getManager();
-        //TODO!
-        // - MaDi: Wer hat hier "TODO!" reingeschrieben und was war damit gemeint?
+        //TODO! Sortierung
         $entries = $em->getRepository('FHBingenMHBBundle:Dozent')->findALL();
 
         $dozent = array();
