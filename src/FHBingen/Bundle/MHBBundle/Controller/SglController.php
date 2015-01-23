@@ -94,7 +94,7 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('veranstaltung' => $id, 'studiengang' => $studiengangid));
         $modul = $angebot->getVeranstaltung();
-
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID' => $studiengangid));
         $form = $this->createForm(new Form\CodeType(), $angebot);
 
         $request = $this->get('request');
@@ -113,7 +113,7 @@ class SglController extends Controller
 
         }
 
-        return array('form' => $form->createView(), 'modul' => $modul, 'pageTitle' => 'Modulcodeerstellung');
+        return array('form' => $form->createView(), 'modul' => $modul,'studiengang' => $studiengang, 'pageTitle' => 'Modulcodeerstellung');
     }
 
 
@@ -170,6 +170,7 @@ class SglController extends Controller
         );
         $resultMHB =$mhbs->getResult();
 
+        //TODO: kommentieren!
         $datum = '01.01.1970';
         foreach ($resultMHB as $value) {
             foreach ($value as $v) {

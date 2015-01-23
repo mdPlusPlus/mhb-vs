@@ -39,6 +39,8 @@
                         {% for name in stgZuModul[count] %}
                             {{ name }}<br/>
                         {% endfor %}
+                        <a href=" {{ path('vorAngebot', {'modulID': veranstaltung.getModulID()}) }}">In weiterem
+                            Studiengang anbieten</a>
                     </td>
                 </tr>
                 {% set count = count +1 %}
