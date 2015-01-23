@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Lehrende
 {
-
     public function __toString()
     {
         $string = (string) $this->dozent . ' ' .(string) $this->veranstaltung;
@@ -31,13 +30,6 @@ class Lehrende
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $Lehrende_ID;
-
-
-    /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="lehrende")
      * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
      */
@@ -45,20 +37,11 @@ class Lehrende
 
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="lehrende")
      * @ORM\JoinColumn(name="dozent", referencedColumnName="Dozenten_ID", nullable=false)
      */
     protected $dozent;
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getLehrende_ID()
-    {
-        return $this->Lehrende_ID;
-    }
 
     /**
      * Set module
