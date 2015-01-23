@@ -136,26 +136,13 @@ class SglController extends Controller
      */
     public function modulAenderungenAction()
     {
+        $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
-        $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
-        $em = $this->getDoctrine()->getManager();
 
-        $mhbs = $em->createQuery('SELECT Max(m.Erstellungsdatum) as Erstellungsdatum
-                                  FROM  FHBingenMHBBundle:Modulhandbuch m
-                                  WHERE m.gehoertZu='.$studiengang->getStudiengangID());
-        $resultMHB =$mhbs->getResult();
-
-        //TODO: kommentieren!
-        $datum = '01.01.1970';
-        foreach ($resultMHB as $value) {
-            foreach ($value as $v) {
-                $datum = $v;
-            }
-        }
-        $datum = new \DateTime($datum);
+        $datum = $this->getNewestMHBDateForMyCourse();
 
         $veranstaltungenBearbeitet = $em->createQuery('SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,v.Autor
                                   FROM  FHBingenMHBBundle:Veranstaltung v
@@ -165,6 +152,32 @@ class SglController extends Controller
         $resultModul = $veranstaltungenBearbeitet->getResult();
 
         return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module', 'dateTime' => $datum);
+    }
+
+    private function getNewestMHBDateForMyCourse()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $userMail = $user->getUsername();
+        $em = $this->getDoctrine()->getManager();
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
+        $em = $this->getDoctrine()->getManager();
+
+        $mhbs = $em->createQuery(
+            'SELECT Max(m.Erstellungsdatum) as Erstellungsdatum
+            FROM  FHBingenMHBBundle:Modulhandbuch m
+            WHERE m.gehoertZu='.$studiengang->getStudiengangID()
+        );
+        $resultMHB =$mhbs->getResult();
+
+        $datum = '01.01.1970';
+        foreach ($resultMHB as $value) {
+            foreach ($value as $v) {
+                $datum = $v;
+            }
+        }
+
+        return new \DateTime($datum);
     }
 
 
@@ -452,7 +465,10 @@ class SglController extends Controller
             uasort($zuordnung[$key], array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
         }
 
+        $datum = $this->getNewestMHBDateForMyCourse();
+
         return array(
+            'neuestesMHBDateTime' => $datum,
             'zuordnung' => $zuordnung,
             'mhbGueltigAb' => $mhbGueltigAb,
             'mhbBeschreibung' => $mhbBeschreibung, //TODO: automatisch generieren lassen?
