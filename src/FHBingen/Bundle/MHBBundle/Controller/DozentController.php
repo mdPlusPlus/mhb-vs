@@ -329,15 +329,28 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
+
+
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
-                //
+
+                //fuck war das ein stück scheiße
                 $lehrendeArr = array_unique($lehrendeArr);
 
-                $lol = $modul->getLehrende();
-                foreach ($lol as $l) {
-                    $modul->removeLehrende($l);
+
+                //TODO: den fick wieder raus
+                $lehrendeAuto = $modul->getLehrende();
+                foreach ($lehrendeAuto as $l) {
+                    $resultArray = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent' => $l->getDozent(), 'veranstaltung' => $l->getVeranstaltung()));
+                    if (!empty($resultArray)) {
+                        $modul->removeLehrende($l);
+                        $em->remove($l);
+                    }
                 }
+                $em->persist($modul);
+                $em->flush();//kA ob notwendig
+
                 //
+
 
                 foreach ($lehrendeArr as $lehrend) {
                     // Lehrende mit Veranstaltung verketten
@@ -366,7 +379,7 @@ class DozentController extends Controller
                     }
                 }
 
-                $em->persist($modul);
+
 
                 $em->flush();
 
