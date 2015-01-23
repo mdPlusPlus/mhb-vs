@@ -24,7 +24,8 @@ class Lehrende
 
     public function __toString()
     {
-        $string = (string) $this->dozent.' '.$this->veranstaltung;
+        $string = (string) $this->dozent . ' ' .(string) $this->veranstaltung;
+
         return $string;
     }
 
@@ -65,9 +66,9 @@ class Lehrende
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
      * @return Lehrende
      */
-    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
+    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul)
     {
-        $this->veranstaltung = $module;
+        $this->veranstaltung = $modul;
     
         return $this;
     }
@@ -88,7 +89,7 @@ class Lehrende
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender
      * @return Lehrende
      */
-    public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender = null)
+    public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender)
     {
         $this->dozent = $lehrender;
     

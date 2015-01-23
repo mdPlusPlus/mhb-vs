@@ -334,7 +334,6 @@ class DozentController extends Controller
 
 
 
-
                 foreach ($lehrendeArr as $lehrend) {
                     // Lehrende mit Veranstaltung verketten
                     $lehrend->setVeranstaltung($modul);
