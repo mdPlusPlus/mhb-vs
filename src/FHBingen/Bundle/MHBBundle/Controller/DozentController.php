@@ -330,9 +330,14 @@ class DozentController extends Controller
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
+                //
+                $lehrendeArr = array_unique($lehrendeArr);
 
-
-
+                $lol = $modul->getLehrende();
+                foreach ($lol as $l) {
+                    $modul->removeLehrende($l);
+                }
+                //
 
                 foreach ($lehrendeArr as $lehrend) {
                     // Lehrende mit Veranstaltung verketten
