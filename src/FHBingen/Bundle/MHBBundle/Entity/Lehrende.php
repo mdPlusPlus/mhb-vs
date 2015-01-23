@@ -22,11 +22,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Lehrende
 {
 
-//    public function __toString()
-//    {
-//        $string = (string) $this->getId();
-//        return $string;
-//    }
+    public function __toString()
+    {
+        $string = (string) $this->dozent.' '.$this->veranstaltung;
+        return $string;
+    }
 
     /**
      * @ORM\Id

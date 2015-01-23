@@ -330,6 +330,11 @@ class DozentController extends Controller
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
+
+
+
+
+
                 foreach ($lehrendeArr as $lehrend) {
                     // Lehrende mit Veranstaltung verketten
                     $lehrend->setVeranstaltung($modul);
@@ -337,6 +342,7 @@ class DozentController extends Controller
                     $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
                     // Lehrenden mit Dozent verketten
                     $lehrend->setDozent($dozent);
+
                     $em->persist($dozent);
                     $em->persist($lehrend);
                 }
