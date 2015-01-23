@@ -12,6 +12,7 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 use FHBingen\Bundle\MHBBundle\Entity;
@@ -334,21 +335,23 @@ class DozentController extends Controller
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
 
                 //fuck war das ein stück scheiße
-                $lehrendeArr = array_unique($lehrendeArr);
-
-
-                //TODO: den fick wieder raus
-                $lehrendeAuto = $modul->getLehrende();
-                foreach ($lehrendeAuto as $l) {
-                    $resultArray = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent' => $l->getDozent(), 'veranstaltung' => $l->getVeranstaltung()));
-                    if (!empty($resultArray)) {
-                        $modul->removeLehrende($l);
-                        $em->remove($l);
+                //TODO: try/catch funktioniert nicht ...
+                try {
+                    $lehrendeArr = array_unique($lehrendeArr);
+                    $lehrendeAuto = $modul->getLehrende();
+                    foreach ($lehrendeAuto as $l) {
+                        $resultArray = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent' => $l->getDozent(), 'veranstaltung' => $l->getVeranstaltung()));
+                        if (!empty($resultArray)) {
+                            $modul->removeLehrende($l);
+                            $em->remove($l);
+                        }
                     }
-                }
-                $em->persist($modul);
-                $em->flush();//kA ob notwendig
+                    $em->persist($modul);
+                    $em->flush();//kA ob notwendig
+                } catch (Exception $e) {
 
+                    return new Response('Caught exception: ', $e->getMessage(), "\n");
+                }
                 //
 
 
