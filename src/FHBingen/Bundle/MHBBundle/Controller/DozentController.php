@@ -35,7 +35,7 @@ class DozentController extends Controller
          * 1. Filter auf Status 'Freigegeben'
          * 2. Sortiertung
          * (3. Wenn mehrmals als Lehrender eingetragen, taucht es auch mehrmals hier auf -> fixen beim Freigeben!)
-         *
+         * sdfgnsjgnlskdgsnlkg
          */
 
         $user = $this->get('security.context')->getToken()->getUser();
