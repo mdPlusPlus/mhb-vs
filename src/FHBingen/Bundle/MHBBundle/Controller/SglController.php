@@ -306,9 +306,9 @@ class SglController extends Controller
             'footer-right' => '[page]/[toPage]',
             'title' => $mhb->getBeschreibung(), //TODO: Ändern auf $studiengang + $versionsnummer?
             'disable-javascript' => true,
-            'no-outline' => true,
+            //'no-outline' => true,
             //'cover' => 'cover.html',
-            //'toc' => true,
+            'toc' => true,
             //'xsl-style-sheet' => 'toc.xsl'
             //'dump-outline' => 'outline.xml',
         ));
