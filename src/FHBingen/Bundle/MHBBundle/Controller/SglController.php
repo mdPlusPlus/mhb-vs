@@ -309,7 +309,7 @@ class SglController extends Controller
             //'no-outline' => true,
             //'cover' => 'cover.html',
             'toc' => true,
-            //'xsl-style-sheet' => 'toc.xsl'
+            'xsl-style-sheet' => 'toc.xsl'
             //'dump-outline' => 'outline.xml',
         ));
 
