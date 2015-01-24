@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Security\Http\Firewall;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Http\AccessMapInterface;
@@ -18,6 +19,7 @@ use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterfac
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 
 /**
  * AccessListener enforces access control rules.
@@ -67,7 +69,9 @@ class AccessListener implements ListenerInterface
         }
 
         if (!$this->accessDecisionManager->decide($token, $attributes, $request)) {
-            throw new AccessDeniedException();
+            //TODO: Überbrückung der AccessDeniedException()
+            $event->setResponse(new RedirectResponse('/restricted/dozent/eigeneModule'));
+            //throw new AccessDeniedException();
         }
     }
 }
