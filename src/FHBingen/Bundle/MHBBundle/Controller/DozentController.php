@@ -14,7 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
-
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
 use Symfony\Component\Validator\Constraints\Null;
@@ -330,41 +331,23 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
-
-
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
-
-                //fuck war das ein stück scheiße
-                //TODO: try/catch funktioniert nicht ...
-                try {
-                    $lehrendeArr = array_unique($lehrendeArr);
-                    $lehrendeAuto = $modul->getLehrende();
-                    foreach ($lehrendeAuto as $l) {
-                        $resultArray = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent' => $l->getDozent(), 'veranstaltung' => $l->getVeranstaltung()));
-                        if (!empty($resultArray)) {
-                            $modul->removeLehrende($l);
-                            $em->remove($l);
-                        }
-                    }
-                    $em->persist($modul);
-                    $em->flush();//kA ob notwendig
-                } catch (Exception $e) {
-
-                    return new Response('Caught exception: ', $e->getMessage(), "\n");
-                }
-                //
 
 
                 foreach ($lehrendeArr as $lehrend) {
-                    // Lehrende mit Veranstaltung verketten
-                    $lehrend->setVeranstaltung($modul);
-                    // passenden Dozenten aus dem Lehrenden Entity finden
-                    $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
-                    // Lehrenden mit Dozent verketten
-                    $lehrend->setDozent($dozent);
+                    try {
+                        // Lehrende mit Veranstaltung verketten
+                        $lehrend->setVeranstaltung($modul);
+                        // passenden Dozenten aus dem Lehrenden Entity finden
+                        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
+                        // Lehrenden mit Dozent verketten
+                        $lehrend->setDozent($dozent);
+                        $em->persist($dozent);
+                        $em->persist($lehrend);
+                    }catch (\Doctrine\DBAL\DBALException\UniqueConstraintViolationException $e) {
 
-                    $em->persist($dozent);
-                    $em->persist($lehrend);
+                        return new Response('Caught exception: ', $e->getMessage(), "\n");
+                    }
                 }
 
                 $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
