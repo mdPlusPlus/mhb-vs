@@ -74,7 +74,7 @@ class PlanungType extends AbstractType
         $kontaktzeitVL = $input->getKontaktzeitVL();
         $kontaktzeitVLOptions = array('label' => 'Kontaktzeit Vorlesung (in Stunden):', 'required' => false, 'attr' => array('min' => '0'));
         if ($kontaktzeitVL == null) {
-           $kontaktzeitVLOptions['data'] = 45; //default
+           $kontaktzeitVLOptions['data'] = 30; //default
         }
         $form->add('kontaktzeitVL', 'integer', $kontaktzeitVLOptions);
 
