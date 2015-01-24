@@ -121,6 +121,7 @@ class VeranstaltungType extends AbstractType
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
             'options' => array(
                 'required' => false,
+                //'mapped' => false,
                 'attr' => array(
                     'class' => 'lehrende' //TODO:notwendig oder nur CSS-klasse?
                 )

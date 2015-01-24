@@ -21,22 +21,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Lehrende
 {
+    public function __toString()
+    {
+        $string = (string) $this->dozent . ' ' .(string) $this->veranstaltung;
 
-//    public function __toString()
-//    {
-//        $string = (string) $this->getId();
-//        return $string;
-//    }
+        return $string;
+    }
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $Lehrende_ID;
-
-
-    /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="lehrende")
      * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
      */
@@ -44,20 +37,11 @@ class Lehrende
 
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="lehrende")
      * @ORM\JoinColumn(name="dozent", referencedColumnName="Dozenten_ID", nullable=false)
      */
     protected $dozent;
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getLehrende_ID()
-    {
-        return $this->Lehrende_ID;
-    }
 
     /**
      * Set module
@@ -65,9 +49,9 @@ class Lehrende
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
      * @return Lehrende
      */
-    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
+    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul)
     {
-        $this->veranstaltung = $module;
+        $this->veranstaltung = $modul;
     
         return $this;
     }
@@ -88,7 +72,7 @@ class Lehrende
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender
      * @return Lehrende
      */
-    public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender = null)
+    public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender)
     {
         $this->dozent = $lehrender;
     

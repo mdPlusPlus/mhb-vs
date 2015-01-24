@@ -12,6 +12,7 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 use FHBingen\Bundle\MHBBundle\Entity;
@@ -328,7 +329,31 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
+
+
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
+
+                //fuck war das ein stück scheiße
+                //TODO: try/catch funktioniert nicht ...
+                try {
+                    $lehrendeArr = array_unique($lehrendeArr);
+                    $lehrendeAuto = $modul->getLehrende();
+                    foreach ($lehrendeAuto as $l) {
+                        $resultArray = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent' => $l->getDozent(), 'veranstaltung' => $l->getVeranstaltung()));
+                        if (!empty($resultArray)) {
+                            $modul->removeLehrende($l);
+                            $em->remove($l);
+                        }
+                    }
+                    $em->persist($modul);
+                    $em->flush();//kA ob notwendig
+                } catch (Exception $e) {
+
+                    return new Response('Caught exception: ', $e->getMessage(), "\n");
+                }
+                //
+
+
                 foreach ($lehrendeArr as $lehrend) {
                     // Lehrende mit Veranstaltung verketten
                     $lehrend->setVeranstaltung($modul);
@@ -336,6 +361,7 @@ class DozentController extends Controller
                     $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
                     // Lehrenden mit Dozent verketten
                     $lehrend->setDozent($dozent);
+
                     $em->persist($dozent);
                     $em->persist($lehrend);
                 }
@@ -355,7 +381,7 @@ class DozentController extends Controller
                     }
                 }
 
-                $em->persist($modul);
+
 
                 $em->flush();
 
