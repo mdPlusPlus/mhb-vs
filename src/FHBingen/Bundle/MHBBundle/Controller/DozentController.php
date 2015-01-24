@@ -12,9 +12,7 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
@@ -334,7 +332,7 @@ class DozentController extends Controller
 
 
                 foreach ($lehrendeArr as $lehrend) {
-                    try {
+
                         // Lehrende mit Veranstaltung verketten
                         $lehrend->setVeranstaltung($modul);
                         // passenden Dozenten aus dem Lehrenden Entity finden
@@ -343,11 +341,8 @@ class DozentController extends Controller
                         $lehrend->setDozent($dozent);
                         $em->persist($dozent);
                         $em->persist($lehrend);
-                    }catch (\Doctrine\DBAL\DBALException\UniqueConstraintViolationException $e) {
-
-                        return new Response('Caught exception: ', $e->getMessage(), "\n");
                     }
-                }
+
 
                 $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
                 $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
@@ -362,11 +357,16 @@ class DozentController extends Controller
                         $em->remove($dbEntry);
                         $em->persist($dozentTmp);
                     }
+
                 }
 
-
+                try {
 
                 $em->flush();
+                }catch (UniqueConstraintViolationException $e) {
+                    $this->get('session')->getFlashBag()->add('info', 'Bitte nicht zweimal den gleichen Lehrenden auswählen');
+                    return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
+                }
 
                 $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich bearbeitet.');
 
