@@ -61,7 +61,9 @@
                     <td>{{ veranstaltung.beauftragter }}</td>
                     <td>
                         {% for name in stgZuModul[count] %}
-                            {{ name }}<br/>
+                        <a href=" {{ path('modulDeaktivierungStg',
+                        {'modulID': veranstaltung.getModulID(),'studiengangID': name.getStudiengangID()}) }}">In {{ name.__toString() }}
+                            deaktivieren</a><br/>
                         {% endfor %}
                         <a href=" {{ path('modulDeaktivierung', {'modulID': veranstaltung.getModulID()}) }}">Modul deaktivieren</a>
                     </td>

@@ -349,7 +349,7 @@ class SglController extends Controller
             $name = array();
             $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
             foreach ($tmp as $stgang) {
-                $name[] = (string) $stgang->getStudiengang();
+                $name[] = $stgang->getStudiengang();
             }
             asort($name, SORT_STRING);
 
@@ -394,6 +394,32 @@ class SglController extends Controller
         $lehrende = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $modulID));
 
         foreach ($lehrende as $del) {
+            $em->remove($del);
+        }
+
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich deaktiviert.');
+
+        return $this->redirect($this->generateUrl('deaktivierungAlleModule'));
+    }
+
+    /**
+     * @Route("/restricted/sgl/modulDeaktivierungStg/{modulID}/{studiengangID}", name="modulDeaktivierungStg")
+     */
+    public function modulDeaktivierungStgAction($modulID,$studiengangID)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID,'studiengang'=>$studiengangID));
+
+        foreach ($angebot as $del) {
+            $em->remove($del);
+        }
+
+        $studienplan = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array('veranstaltung' => $modulID,'studiengang'=>$studiengangID));
+
+        foreach ($studienplan as $del) {
             $em->remove($del);
         }
 
