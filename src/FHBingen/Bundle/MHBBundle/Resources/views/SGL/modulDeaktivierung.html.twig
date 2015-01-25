@@ -65,7 +65,7 @@
                         {'modulID': veranstaltung.getModulID(),'studiengangID': name.getStudiengangID()}) }}">In {{ name.__toString() }}
                             deaktivieren</a><br/>
                         {% endfor %}
-                        <a href=" {{ path('modulDeaktivierung', {'modulID': veranstaltung.getModulID()}) }}">Modul deaktivieren</a>
+                        <a href=" {{ path('modulDeaktivierung', {'modulID': veranstaltung.getModulID()}) }}">Modul deaktivieren alle Studiengänge</a>
                     </td>
                 </tr>
                 {% set count = count +1 %}
