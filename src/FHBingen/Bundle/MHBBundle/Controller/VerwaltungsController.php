@@ -244,6 +244,8 @@ class VerwaltungsController extends Controller
     /**
      * @Route("/restricted/sgl/updateCourse/{courseID}", name="studiengangBearbeiten")
      * @Template("FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig")
+     *
+     * Updatet einen Studiengang nach den angegebenen Daten
      */
     public function SglShowCourseAction($courseID)
     {
@@ -285,7 +287,8 @@ class VerwaltungsController extends Controller
                 }
 
                 $em->persist($studiengang);
-                $em->flush(); // hier notwendig da weiter unten alle Eintrage mit den aktuell gesetzten verglichen werden
+                // hier notwendig da weiter unten alle Eintrage mit den aktuell gesetzten verglichen werden
+                $em->flush();
 
                 //$studiengang->getRichtung() holt sich die infos NICHT aus der db....
                 //also:
@@ -295,11 +298,15 @@ class VerwaltungsController extends Controller
                 $fachgebietRepository = $em->getRepository('FHBingenMHBBundle:Fachgebiet');
                 $dbFachgebietArr = $fachgebietRepository->findby(array('studiengang' => $courseID));
 
+
+                //löscht alle Vertiefungsrichtungen aus der DB, die nicht angegeben/gelöscht wurden
                 foreach ($dbVertiefungArr as $dbEntry) {
                     if (!in_array($dbEntry, $vertiefungArr)) {
                         $em->remove($dbEntry);
                     }
                 }
+
+                //löscht alle Fachgebiete aus der DB, die nicht angegeben/gelöscht wurden
                 foreach ($dbFachgebietArr as $dbEntry) {
                     if (!in_array($dbEntry, $fachgebietArr)) {
                         $em->remove($dbEntry);
