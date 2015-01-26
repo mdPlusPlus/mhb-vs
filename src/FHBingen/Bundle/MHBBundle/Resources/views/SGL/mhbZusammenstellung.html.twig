@@ -1,95 +1,111 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block content %}
-    <style>
-        #angeboteWrapper {
+    <style type="text/css">
+
+        #mhbWrapper {
             float: left;
         }
 
-        #mhbWrapper {
-            margin-left: 325px;
+        #angeboteDiv {
+            padding: 5px 5px 0 5px;
+            margin: 5px 0 0 0;
         }
 
-        #mhb {
+        .angebotDiv {
 
         }
 
-        .angebote, #mhb {
-            width: 300px;
-            min-height: 20px;
+        .angebot {
             list-style-type: none;
-            padding: 5px 0 0 0;
-            /*float: left;*/
-            overflow: auto;
+            margin: 0 0 5px 0;
+            padding: 5px 5px 0 5px;
         }
 
-        .angebote li, #mhb li {
-            margin: 0 5px 5px 5px;
-            padding: 5px;
-            font-size: 1.2em;
-            width: 288px; /* 300 - 2 * (5px Abstand + 1px Rand) */
-            background-color: white;
+        .angebot li {
+            margin: 0 0 5px 0;
+            text-align: center;
+            background: url('{{ asset('bundles/fhbingenmhb/images/bg-white.jpg')}} ') top left repeat;
+
         }
 
-        .angebote, #mhb, .angebote li, #mhb li {
-            border: 1px solid;
+        .angebot, .angebot li {
+            min-height: 42px;
         }
+
+        .angebot, .angebot li, #angeboteDiv {
+            border: 1px solid gray;
+
+        }
+
+        #nichtMhbWrapper {
+            /*float: right;*/
+            margin-left: 55%;
+        }
+
+        #mhbWrapper, #nichtMhbWrapper {
+            text-align: center;
+        }
+
+
     </style>
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
             highlightMe(document.getElementById('mhbErstellungLink'));
         });
 
-        {#
-            TODO: Sobald man scrollt geht das Feature kaputt. Warum?
-            hier gehts O.o http://jsfiddle.net/yU8Ut/217/
-            hat vllt mit jQuery und jQueryUI Version zu tun
-        #}
-
-
-        /* von http://jsfiddle.net/yU8Ut/ */
         $(function () {
             {% for key in zuordnung|keys %}
-                {% set js = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
-                {{ js|raw  }}
+            {% set js = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
+            {{ js|raw  }}
             {% endfor %}
 
-            jQuery("#angeboteWrapper").height(jQuery("#angeboteWrapper").height());
-            jQuery("#mhb").height(jQuery("#angeboteWrapper").height());
-            jQuery("#angeboteWrapper").height(jQuery("#mhbWrapper").height());
+            //jQuery("#angeboteWrapper").height(jQuery("#angeboteWrapper").height());
+            //jQuery("#mhb").height(jQuery("#angeboteWrapper").height());
+            //jQuery("#angeboteWrapper").height(jQuery("#mhbWrapper").height());
 
-            $(".angebote").sortable({
+            $(".angebot").sortable({
                 appendTo: 'body',
                 tolerance: 'pointer',
-                connectWith: '#mhb',
+                //connectWith: '#mhb',
                 revert: 'invalid',
                 forceHelperSize: true,
                 helper: 'original',
+                placeholder: "angebot li",
                 scroll: true
             }).disableSelection();
 
-            $("#mhb").sortable({
-                appendTo: 'body',
-                tolerance: 'pointer',
-                connectWith: '.angebote',
-                revert: 'invalid',
-                forceHelperSize: true,
-                helper: 'original',
-                scroll: true
-            }).disableSelection();
-
+            /*
+             $("#mhb").sortable({
+             appendTo: 'body',
+             tolerance: 'pointer',
+             connectWith: '.angebot',
+             revert: 'invalid',
+             forceHelperSize: true,
+             helper: 'original',
+             scroll: true
+             }).disableSelection();
+             */
         });
 
     </script>
 
-    <div id="angeboteWrapper">
-        {% for key in zuordnung|keys %}
-            <h4>{{ key }}</h4>
-            <ul id="{{ key|replace({' ': '_'}) }}" class="angebote">
-                {% for angebot in zuordnung[key] %}
-                    <li>
-                        <label>
+    {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
+    <form method="POST" action="{{ path('mhbErstellungParsen') }}">
+        <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
+        <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
+
+        <div id="mhbWrapper">
+            <h3>Modulhandbuch</h3>
+            <div id="angeboteDiv">
+            {% for key in zuordnung|keys %}
+                <div class="angebotDiv">
+                <h4>{{ key }}</h4>
+                <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
+                    {% for angebot in zuordnung[key] %}
+                        <li>
+                            {#<label>#}
                             <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
                             {{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')' }} {# Angebotsart hier sinnvoll? #}
                             {# if Veranstaltung des Angebots seit letzter MHB-Erstullung geändert #}
@@ -98,23 +114,13 @@
                                 {# then Angebot als geändert markieren #}
                                 <span style="color: red">{{ 'GEÄNDERT' }}</span>
                             {% endif %}
-                        </label>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    </div>
-
-
-    {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
-    <form method="POST" action="{{ path('mhbErstellungParsen') }}">
-        <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
-        <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
-
-        <div id="mhbWrapper">
-            <h4>MHB</h4>
-            <ul id="mhb">
-            </ul>
+                            {#</label>#}
+                        </li>
+                    {% endfor %}
+                </ul>
+                </div>
+            {% endfor %}
+            </div>
         </div>
 
         <div class="ourButtons">
@@ -122,6 +128,12 @@
             <button class="btn btn-primary" type="submit">abschicken</button>
         </div>
     </form>
+
+    <div id="nichtMhbWrapper">
+        <h3>NICHT_MHB</h3>
+        <ul>
+        </ul>
+    </div>
 
     {% include '@FHBingenMHB/flashbags.html.twig' %}
 
