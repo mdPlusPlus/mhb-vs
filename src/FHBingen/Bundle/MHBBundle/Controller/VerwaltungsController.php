@@ -29,28 +29,28 @@ class VerwaltungsController extends Controller
     public function SglShowUsersAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $entries = $em->getRepository('FHBingenMHBBundle:Dozent')->findALL();
-
+        $entries = $em->getRepository('FHBingenMHBBundle:Dozent')->findBy(array('isActive'=>1));
+        $deaktivierteNutzer = $em->getRepository('FHBingenMHBBundle:Dozent')->findBy(array('isActive'=>0));
         $dozent = array();
         $sgl = array();
 
         foreach ($entries as $e) {
-            //wenn nicht "Alle" oder "N.N." wird zwischen SGL und Dozent unterschieden und sortiert
-            if ($e->getName()!='Dummy') {
-                if (in_array('ROLE_SGL', $e->getRoles())) {
-                    $sgl[] = $e;
-                } else {
-                    if (in_array('ROLE_DOZENT', $e->getRoles())) {
-                        $dozent[] = $e;
+                //wenn nicht "Alle" oder "N.N." wird zwischen SGL und Dozent unterschieden und sortiert
+                if ($e->getName()!='Dummy') {
+                    if (in_array('ROLE_SGL', $e->getRoles())) {
+                        $sgl[] = $e;
+                    } else {
+                        if (in_array('ROLE_DOZENT', $e->getRoles())) {
+                            $dozent[] = $e;
+                        }
                     }
                 }
-            }
         }
 
         uasort($sgl, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'dozentSort'));
         uasort($dozent, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions','dozentSort'));
 
-        return array('sgl' => $sgl, 'dozent' => $dozent, 'pageTitle' => 'Nutzerverwaltung');
+        return array('sgl' => $sgl, 'dozent' => $dozent,'deaktivierteNutzer'=>$deaktivierteNutzer, 'pageTitle' => 'Nutzerverwaltung');
     }
 
     /**
@@ -322,5 +322,40 @@ class VerwaltungsController extends Controller
 
         return array('form' => $form->createView(),'studiengang'=>$studiengang, 'pageTitle' => 'Studiengangverwaltung');
     }
+
+
+    /**
+     * @Route("/restricted/sgl/SglUserDeactivation/{userid}", name="SglUserDeactivation")
+     *
+     * Deaktiviert den User
+     */
+    public function SglUserDeactivation($userid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $userid));
+        $dozent->setIsActive(0);
+        $em->persist($dozent);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('info', 'Der User wurde Deaktiviert');
+        return $this->redirect($this->generateUrl('benutzerVerwaltung'));
+    }
+
+    /**
+     * @Route("/restricted/sgl/SglUserActivation/{userid}", name="SglUserActivation")
+     *
+     * Aktiviert den User
+     */
+    public function SglUserActivation($userid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $userid));
+        $dozent->setIsActive(1);
+        $em->persist($dozent);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('info', 'Der User wurde Aktiviert');
+        return $this->redirect($this->generateUrl('benutzerVerwaltung'));
+    }
+
+
 
 }
