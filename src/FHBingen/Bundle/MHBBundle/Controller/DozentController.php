@@ -25,15 +25,12 @@ class DozentController extends Controller
     /**
      * @Route("/restricted/dozent/eigeneModule", name="eigeneModule")
      * @Template("FHBingenMHBBundle:Dozent:eigeneModule.html.twig")
+     *
+     * Hier werden alle Module als Tabelle ausgegeben, welche der aktuell eingeloggte Benutzer
+     * verwaltet, bzw. unterrichtet.
      */
     public function eigeneModuleAction()
     {
-        /*
-         * TODO:
-         * 1. Filter auf Status 'Freigegeben'
-         * 2. Sortiertung
-         * (3. Wenn mehrmals als Lehrender eingetragen, taucht es auch mehrmals hier auf -> fixen beim Freigeben!)
-         */
 
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
@@ -42,6 +39,7 @@ class DozentController extends Controller
         $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'Status' => 'Freigegeben'),
             array("Name" => 'asc'));
 
+        //mLehrende bekommt jeweils ein Array $name mit allen Lehrenden des aktuellen Moduls übergeben
         $mLehrende = array();
         foreach ($modulverantwortung as $m) {
             $name = array();
@@ -55,11 +53,13 @@ class DozentController extends Controller
 
         $entries = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent' => $dozent->getDozentenID()));
 
+        //$modullehrend ist ein Array mit allen Modulen, welche der aktuelle Benutzer unterrichtet
         $modullehrend = array();
         foreach ($entries as $modul) {
             $modullehrend[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modul->getVeranstaltung()));
         }
 
+        //Studiengänge zu Modulen für den aktuellen Benutzer in der Rolle des Modulverantwortlichen
         $stgZuModul = array();
         foreach ($modulverantwortung as $modul) {
             $name = array();
@@ -72,6 +72,7 @@ class DozentController extends Controller
             $stgZuModul[] = $name;
         }
 
+        //Studiengänge zu Modulen für den aktuellen Benutzer in der Rolle des Unterrichtenden
         $stgZuModullehrend = array();
         foreach ($modullehrend as $modul) {
             $name = array();
@@ -93,6 +94,8 @@ class DozentController extends Controller
     /**
      * @Route("/restricted/dozent/planungAnzeigen", name="planungAnzeigen")
      * @Template("FHBingenMHBBundle:Dozent:planungUebersicht.html.twig")
+     *
+     * Hier werden alle aktuellen Planungen des aktuellen Benutzers ausgegeben
      */
     public function planungAnzeigenAction()
     {
@@ -108,6 +111,8 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/planungLoeschen/{id}", name="planungLoeschen")
+     *
+     * Hier wird eine Planung anhand von der ID gelöscht
      */
     public function planungLoeschenAction($id)
     {
@@ -129,6 +134,8 @@ class DozentController extends Controller
 
     /**
      * @Route("/restricted/dozent/planungErstellen", name="planungErstellen")
+     *
+     * Hier erfolgt eine Weiterleitung auf die planungAction mit der ID = -1 um eine neue Planung anzulegen
      */
     public function planungErstellenAction()
     {
@@ -139,6 +146,11 @@ class DozentController extends Controller
     /**
      * @Route("/restricted/dozent/planungBearbeiten/{id}", name="planungBearbeiten")
      * @Template("FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig")
+     *
+     * Hier wird eine Planung angelegt, bzw. bearbeitet.
+     * Ausschlaggebend hierfür ist der Wert des übergebenen Parameters ID:
+     * Ist die ID = -1 wir eine neue Planung angelegt
+     * Ist die ID = positiver Wert wird eine Planung bearbeitet
      */
     public function planungAction($id)
     {
