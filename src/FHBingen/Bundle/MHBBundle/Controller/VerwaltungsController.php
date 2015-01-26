@@ -199,17 +199,19 @@ class VerwaltungsController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                /*
-                 * TODO:
-                 * - überprüfen ob Vertiefungsrichtung oder Fachgebiet doppelt in Feldern steht
-                 * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
-                 */
+
                 $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice
                 $studiengang->setGrad($form->get('grad')->getData());                   //choice
                 $studiengang->setTitel($form->get('titel')->getData());                 //text
                 $studiengang->setKuerzel($form->get('kuerzel')->getData());             //text
                 $studiengang->setBeschreibung($form->get('beschreibung')->getData());   //text
                 $studiengang->setSgl($form->get('sgl')->getData());                     //entity
+
+                /*
+              * TODO:
+              * - überprüfen ob Vertiefungsrichtung oder Fachgebiet doppelt in Feldern steht
+              * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
+              */
 
                 //hier keine Collection, sondern "nur" array
                 $vertiefungArr = $form->get('richtung')->getData();
