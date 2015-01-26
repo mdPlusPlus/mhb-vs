@@ -343,17 +343,17 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
-                if($form->get('modulVoraussetzung')->getData()!= NULL){
+                if($form->get('modul_')->getData()!= NULL){
                     $tmpVorussetzung = $modul->getModulVoraussetzung();
                     $tmpCheck = true;
                     foreach($tmpVorussetzung as $entry){
-                        if($entry->getModulID() != $form->get('modulVoraussetzung')->getData()->getModulID()){
+                        if($entry->getModulID() != $form->get('modul_')->getData()->getModulID()){
                             $modul->removeModulVoraussetzung($entry);
                         }
                         else{ $tmpCheck= false;}
                     }
                     if($tmpCheck){
-                        $modul->addModulVoraussetzung();
+                        $modul->addModulVoraussetzung($form->get('modul_')->getData());
                     }
                 }
 
