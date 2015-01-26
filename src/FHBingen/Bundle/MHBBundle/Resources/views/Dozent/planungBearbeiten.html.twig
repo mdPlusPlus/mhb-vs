@@ -34,8 +34,6 @@
             <!-- navbar highlighting -->
             highlightMe(document.getElementById('modulplanungLink'));
         });
-
-        {# TODO: JavaScript dass Kontaktzeiten mit Leistungspunkten abgleicht #}
     </script>
     {% endblock jsBlock %}
 
@@ -138,7 +136,7 @@
                 <td>{{ form_errors(form.PruefungsleistungSonstiges) }}</td>
             </tr>
             {{ form_row(form.PruefungsleistungSonstiges) }}
-            {{ form_row(form.StudienleistungSonstiges) }}
+            {#{{ form_row(form.StudienleistungSonstiges) }}#}
         </table>
         {% block lehrende %}
         {% endblock lehrende %}

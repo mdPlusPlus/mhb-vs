@@ -100,8 +100,8 @@ class ArrayValues {
      * Voraussetzungen für die Vergabe von Leistungspunkten
      */
     public static $voraussetzungLP = array(
-        'Prüfungsleistung' => 'Prüfungsleistung',
-        'Studienleistung' => 'Studienleistung',
+        'Prüfungsleistung' => 'bestandene Prüfungsleistung',
+        'Studienleistung' => 'bestandene Studienleistung',
     );
 
     /**
