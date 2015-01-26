@@ -24,20 +24,22 @@ class SglController extends Controller
      * @Route("/restricted/sgl/alleModule", name="alleModule")
      * @Template("FHBingenMHBBundle:SGL:alleModule.html.twig")
      *
+     * Sucht alle Module die nicht in Planung oder Expired sind.
+     * Zusätzlich werden die Studiengänge angezeigt in denen sie Angeboten werden
      */
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
         $em = $this->getDoctrine()->getManager();
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
 
-        //filtert die Module die in Planung sind herraus
+        //Filtert die Module die in Planung sind herraus
         $nichtInPlanung = array();
         foreach ($module as $value) {
             if ($value->getStatus() != 'in Planung' && $value->getStatus() != 'expired') {
                 $nichtInPlanung[] = $value;
             }
         }
-        asort($nichtInPlanung, SORT_STRING);//Sortiert die Veranstaltungen nach name
+        asort($nichtInPlanung, SORT_STRING);//Sortiert die Veranstaltungen nach Name
 
         //Sucht die Studeingänge für die Module herraus
         $stgZuModul = array();
@@ -58,6 +60,9 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/modulCodeUebersicht", name="modulCodeUebersicht")
      * @Template("FHBingenMHBBundle:SGL:modulCodeUebersicht.html.twig")
+     *
+     * Zeigt alle Angebote mit Dummy Modulcode an aus dem Studiengangs des Angemeldeten SGLs
+     * Zeigt zusätzlich die Angebote die einen sinvollen vom SGL vergebenen Modulcode haben
      */
     public function modulCodeUebersichtAction()
     {
@@ -89,6 +94,8 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/modulCodeErstellung/{id}/{studiengangid}", name="modulCodeErstellung")
      * @Template("FHBingenMHBBundle:SGL:modulCodeErstellung.html.twig")
+     *
+     * updatet einen bestimmten Modulcode anhand der angegebenen Daten
      */
     public function modulCodeErstellungAction($id, $studiengangid)
     {
@@ -121,6 +128,8 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/mhbUebersicht", name="mhbUebersicht")
      * @Template("FHBingenMHBBundle:SGL:mhbUebersicht.html.twig")
+     *
+     * Zeigt alle Modulhandbücher an
      */
     public function mhbUebersichtAction()
     {
@@ -134,6 +143,8 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/modulAenderungen", name="modulAenderungen")
      * @Template("FHBingenMHBBundle:SGL:modulAenderungen.html.twig")
+     *
+     * Zeigt die Veranstaltungen die sich seit anlegen des letzten MHBs in dem Studiengang des SGLs geändert haben
      */
     public function modulAenderungenAction()
     {
@@ -142,9 +153,9 @@ class SglController extends Controller
         $userMail = $user->getUsername();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
-
+        //Sucht das neuste Erstelldatum der MHBs des Studiengangs herraus
         $datum = $this->getNewestMHBDateForMyCourse();
-
+        //prüft welche Veranstaltungen ein Änderungsdatum haben das Aktueller als das des neusten MHBs sind
         $veranstaltungenBearbeitet = $em->createQuery('SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,v.Autor
                                   FROM  FHBingenMHBBundle:Veranstaltung v
                                   JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang='.$studiengang->getStudiengangID().' And v.Modul_ID = a.veranstaltung
@@ -155,6 +166,7 @@ class SglController extends Controller
         return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module', 'dateTime' => $datum);
     }
 
+
     private function getNewestMHBDateForMyCourse()
     {
         $user = $this->get('security.context')->getToken()->getUser();
@@ -163,7 +175,7 @@ class SglController extends Controller
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
         $em = $this->getDoctrine()->getManager();
-
+        //Sucht das neuste Erstelldatum der MHBs des Studiengangs herraus
         $mhbs = $em->createQuery(
             'SELECT Max(m.Erstellungsdatum) as Erstellungsdatum
             FROM  FHBingenMHBBundle:Modulhandbuch m
@@ -171,7 +183,8 @@ class SglController extends Controller
         );
         $resultMHB =$mhbs->getResult();
 
-        //TODO: kommentieren!
+        //Da das return Value des QueryBuilers ein zweifach verschachteltes Array ist und wir das Ergebnis weiter Verwebdeb wollen
+        //macht es Sin das Datum direkt als String in einer Variable zu speichern
         $datum = '01.01.1970';
         foreach ($resultMHB as $value) {
             foreach ($value as $v) {
@@ -186,6 +199,9 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
      * @Template("FHBingenMHBBundle:SGL:mhbModulListe.html.twig")
+     *
+     * Zeigt die Veranstaltungen die dem MHB zugeordnet sind als MHB-PDF an
+     * TODO: Durch Link auf PDF ersetzen
      */
     public function mhbModulListe($id)
     {
@@ -198,7 +214,7 @@ class SglController extends Controller
         return array('mhbEintraege' => $mhbEintraege, 'mhb' => $mhb, 'pageTitle' => 'Module des Modulhandbuchs');
     }
 
-
+    //Erstellt die Modulbeschreibung für das Modulhandbuch
     private function createModulBeschreibungen($mhbID)
     {
         $em = $this->getDoctrine()->getManager();
@@ -257,6 +273,8 @@ class SglController extends Controller
     /**
      * PDF-Export Test
      * @Route("/restricted/sgl/pdfErstellen/{mhbID}", name="pdfErstellen")
+     *
+     * Erstellt das Modulhanbduch mit hilfe der Daten aus der Datenbank und erstellt das MHB-PDF
      */
     public function pdfErstellenAction($mhbID)
     {
@@ -324,12 +342,12 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/deaktivierungAlleModule", name="deaktivierungAlleModule")
      * @Template("FHBingenMHBBundle:SGL:modulDeaktivierung.html.twig")
+     *
+     * Zeigt die Veranstalltung aus dem eigenen Studiengang und gibt die möglichkeit diese zu Deaktivieren.
      */
     public function deaktivierungModuleAction()
     {
         //TODO: Abfrage ja/nein "wollen sie das wirklich?"
-        //TODO: Unterscheidung in ALLEN studiengängen deaktiveren oder nur in eigenem Studiengang
-        //TODO: Vorsortierung (aus DB) der Module des Studiengangs
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $user));
@@ -363,6 +381,8 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/modulDeaktivierung/{modulID}", name="modulDeaktivierung")
+     *
+     * Deaktiviert eine Veranstalltung kommplet.
      */
     public function modulDeaktivierungAction($modulID)
     {
@@ -407,6 +427,8 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/modulDeaktivierungStg/{modulID}/{studiengangID}", name="modulDeaktivierungStg")
+     *
+     * Deaktiviert eine Veranstalltung nur für bestimmte Studiengänge.
      */
     public function modulDeaktivierungStgAction($modulID,$studiengangID)
     {
@@ -435,6 +457,8 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/mhbErstellung", name="mhbErstellung")
      * @Template("FHBingenMHBBundle:SGL:mhbErstellung.html.twig")
+     *
+     * Erstellt ein Modulhandbuch
      */
     public function mhbErstellungAction()
     {
@@ -466,6 +490,8 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/mhbZusammenstellung/{mhbGueltigAb}/{mhbBeschreibung}", name="mhbZusammenstellung")
      * @Template("FHBingenMHBBundle:SGL:mhbZusammenstellung.html.twig")
+     *
+     * Ermöglicht dem User das hinzufügen von Angeboten in ein Modulhandbuch
      */
     public function mhbZusammenstellungAction($mhbGueltigAb, $mhbBeschreibung)
     {
@@ -507,6 +533,8 @@ class SglController extends Controller
 
     /**
      * @Route("/restricted/sgl/mhbEstellungParsen", name="mhbErstellungParsen")
+     *
+     * Speichert die Angebote in ein Modulhandbuch
      */
     public function mhbErstellungParseAction()
     {

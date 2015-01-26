@@ -99,17 +99,29 @@
                 </td>
                 <td>{{ form_errors(form.dauer) }}</td>
             </tr>
+            <tr class="form_row">
+                <td>{{ form_label(form.leistungspunkte) }}</td>
+                <td title="Default-Wert kann bei Bedarf geändert werden">{{ form_widget(form.leistungspunkte) }}</td>
+                <td>{{ form_errors(form.leistungspunkte) }}</td>
+            </tr>
+            <tr class="form_row">
+                <td>{{ form_label(form.kontaktzeitVL) }}</td>
+                <td title="Default-Wert kann bei Bedarf geändert werden">{{ form_widget(form.kontaktzeitVL) }}</td>
+                <td>{{ form_errors(form.kontaktzeitVL) }}</td>
+            </tr>
+            <tr class="form_row">
+                <td>{{ form_label(form.kontaktzeitSonstige) }}</td>
+                <td title="Default-Wert kann bei Bedarf geändert werden">{{ form_widget(form.kontaktzeitSonstige) }}</td>
+                <td>{{ form_errors(form.kontaktzeitSonstige) }}</td>
+            </tr>
 
-            {{ form_row(form.leistungspunkte) }}
-            {{ form_row(form.kontaktzeitVL) }}
-            {{ form_row(form.kontaktzeitSonstige) }}
             {{ form_row(form.gruppengroesse) }}
             {{ form_row(form.lernergebnisse) }}
             {{ form_row(form.inhalte) }}
             {{ form_row(form.sprache) }}
             <tr class="form_row">
                 <td>{{ form_label(form.SpracheSonstiges) }}</td>
-                <td title="Default Werte können bei bedarf gelöscht werden">{{ form_widget(form.SpracheSonstiges) }}</td>
+                <td title="Default-Wert kann bei Bedarf gelöscht werden">{{ form_widget(form.SpracheSonstiges) }}</td>
                 <td>{{ form_errors(form.SpracheSonstiges) }}</td>
             </tr>
             {{ form_row(form.literatur) }}
@@ -120,7 +132,7 @@
             {{ form_row(form.voraussetzungLP) }}
             <tr class="form_row">
                 <td>{{ form_label(form.PruefungsleistungSonstiges) }}</td>
-                <td title="Default Werte muss gelöscht werden, falls nicht Notwendig">{{ form_widget(form.PruefungsleistungSonstiges) }}</td>
+                <td title="Defaul-Wert kann bei Bedarf gelöscht werden">{{ form_widget(form.PruefungsleistungSonstiges) }}</td>
                 <td>{{ form_errors(form.PruefungsleistungSonstiges) }}</td>
             </tr>
             {{ form_row(form.PruefungsleistungSonstiges) }}
