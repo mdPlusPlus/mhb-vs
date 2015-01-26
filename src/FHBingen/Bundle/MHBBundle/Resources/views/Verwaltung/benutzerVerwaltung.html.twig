@@ -9,11 +9,14 @@
     </script>
 
     <div class="table-responsive">
+            <ul>
+                <li><a href="{{ path('benutzerErstellen') }}">Nutzer anlegen</a></li>
+            </ul>
+
         <table class="table table-bordered">
             <tr>
                 <th>Dozenten</th>
                 <th>Studiengangleiter</th>
-                <th>Neuer Nutzer</th>
                 <th>Nutzer Reaktivieren</th>
             </tr>
 
@@ -38,11 +41,6 @@
                             </tr>
                         {% endfor %}
                     </table>
-                </td>
-                <td>
-                    <ul>
-                        <li><a href="{{ path('benutzerErstellen') }}">Nutzer anlegen</a></li>
-                    </ul>
                 </td>
                 <td>
                 <table>
