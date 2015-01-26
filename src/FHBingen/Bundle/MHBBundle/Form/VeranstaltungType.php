@@ -29,10 +29,6 @@ class VeranstaltungType extends AbstractType
             ->add('name', 'text', array('label' => 'Modulname (deutsch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('nameEN', 'text', array('label' => 'Modulname (englisch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots [#]: ', 'required' => true, 'choices' => ArrayValues::$frequency))
-
-            //TODO: Einheit?
-            //->add('dauer', 'integer', array('label' => 'Dauer [#]: ', 'required' => true, 'attr' => array('min' => '1')))
-
             ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('selbststudium', 'integer', array('label' => false, 'required' => true, 'attr' => array('min' => '0', 'hidden' => true)))
@@ -44,9 +40,9 @@ class VeranstaltungType extends AbstractType
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => ArrayValues::$lp))
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('PruefungsleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Prüfungsleistung', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
-            ->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung', 'required' =>false, 'attr' => array('class' => 'sonstigesClass')));
-
+            ->add('PruefungsleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Prüfungsleistung :', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
+            ->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung :', 'required' =>false, 'attr' => array('class' => 'sonstigesClass')))
+            ->add('modul_', 'entity', array('label' => 'Vorausgesetztes Modul :', 'required'=> false, 'class' => 'FHBingenMHBBundle:Veranstaltung'));
             //TODO: Was ist mit "Voraussetzungen formal" ? --> Tabelle Vorausetzungen
 
 
@@ -121,18 +117,11 @@ class VeranstaltungType extends AbstractType
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
             'options' => array(
                 'required' => false,
-                //'mapped' => false,
                 'attr' => array(
                     'class' => 'lehrende' //TODO:notwendig oder nur CSS-klasse?
                 )
             )
         );
-//        if (!empty($lehrende)) {
-//            $lehrendeOptions['options']['data'] = $input->getBeauftragter();
-//        }
-//        if (is_null($lehrende)) {
-//            $lehrendeOptions['options']['data'] = $input->getBeauftragter();
-//        }
         $form->add('lehrende', 'collection', $lehrendeOptions);
 
 
