@@ -7,6 +7,7 @@
  */
 namespace FHBingen\Bundle\MHBBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -22,7 +23,12 @@ class LehrendeType extends AbstractType
     {
 
         $builder
-            ->add('dozent', 'entity', array('label' => 'Dozent [#]:', 'required' => false, 'class' => 'FHBingenMHBBundle:Dozent'));
+            ->add('dozent', 'entity', array('label' => 'Dozent [#]:', 'required' => false, 'class' => 'FHBingenMHBBundle:Dozent',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('d')
+                        ->OrderBy('d.Nachname', 'ASC');
+                },));
+
             //->add('veranstaltung', 'entity', array('label' => false, 'required' => false, 'class' => 'FHBingenMHBBundle:Veranstaltung'));
     }
 
