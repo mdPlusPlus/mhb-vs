@@ -343,8 +343,21 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
-                $lehrendeArr = $form->get('lehrende')->getData()->toArray();
+                if($form->get('modulVoraussetzung')->getData()!= NULL){
+                    $tmpVorussetzung = $modul->getModulVoraussetzung();
+                    $tmpCheck = true;
+                    foreach($tmpVorussetzung as $entry){
+                        if($entry->getModulID() != $form->get('modulVoraussetzung')->getData()->getModulID()){
+                            $modul->removeModulVoraussetzung($entry);
+                        }
+                        else{ $tmpCheck= false;}
+                    }
+                    if($tmpCheck){
+                        $modul->addModulVoraussetzung();
+                    }
+                }
 
+                $lehrendeArr = $form->get('lehrende')->getData()->toArray();
 
                 foreach ($lehrendeArr as $lehrend) {
 
@@ -460,7 +473,6 @@ class DozentController extends Controller
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
                 $modul->setSelbststudium($ms);
 
-
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
@@ -474,6 +486,19 @@ class DozentController extends Controller
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
 
+                if($form->get('modulVoraussetzung')->getData()!= NULL){
+                    $tmpVorussetzung = $modul->getModulVoraussetzung();
+                    $tmpCheck = true;
+                    foreach($tmpVorussetzung as $entry){
+                        if($entry->getModulID() != $form->get('modulVoraussetzung')->getData()->getModulID()){
+                            $modul->removeModulVoraussetzung($entry);
+                        }
+                        else{ $tmpCheck= false;}
+                    }
+                    if($tmpCheck){
+                        $modul->addModulVoraussetzung();
+                    }
+                }
 
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
                 if (!empty($lehrendeArr)) {
