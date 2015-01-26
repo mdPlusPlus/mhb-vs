@@ -27,7 +27,7 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('login'));
     }
 
-    //von InsertController
+    //Initialerstellung von Semestern
     public function semesterCreate()
     {
         //legt die Semester-Objekte an und gibt sie als Array zurück
@@ -54,7 +54,7 @@ class DefaultController extends Controller
         return $semesterArr;
     }
 
-    //von TestUsersController
+    //Initialerstellung von Userrollen
     /**
      * @Route("/create/roles")
      */
