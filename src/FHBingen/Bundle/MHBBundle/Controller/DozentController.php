@@ -39,7 +39,7 @@ class DozentController extends Controller
         $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'Status' => 'Freigegeben'),
             array("Name" => 'asc'));
 
-        //mLehrende bekommt jeweils ein Array $name mit allen Lehrenden des aktuellen Moduls übergeben
+        //$mLehrende bekommt jeweils ein Array $name mit allen Lehrenden des aktuellen Moduls übergeben
         $mLehrende = array();
         foreach ($modulverantwortung as $m) {
             $name = array();
