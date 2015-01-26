@@ -343,16 +343,17 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
-                if($form->get('modul_')->getData()!= NULL){
+                if ($form->get('modul_')->getData()!= null) {
                     $tmpVorussetzung = $modul->getModulVoraussetzung();
                     $tmpCheck = true;
-                    foreach($tmpVorussetzung as $entry){
-                        if($entry->getModulID() != $form->get('modul_')->getData()->getModulID()){
+                    foreach ($tmpVorussetzung as $entry) {
+                        if ($entry->getModulID() != $form->get('modul_')->getData()->getModulID()) {
                             $modul->removeModulVoraussetzung($entry);
+                        } else {
+                            $tmpCheck= false;
                         }
-                        else{ $tmpCheck= false;}
                     }
-                    if($tmpCheck){
+                    if ($tmpCheck) {
                         $modul->addModulVoraussetzung($form->get('modul_')->getData());
                     }
                 }
@@ -360,16 +361,15 @@ class DozentController extends Controller
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
 
                 foreach ($lehrendeArr as $lehrend) {
-
-                        // Lehrende mit Veranstaltung verketten
-                        $lehrend->setVeranstaltung($modul);
-                        // passenden Dozenten aus dem Lehrenden Entity finden
-                        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
-                        // Lehrenden mit Dozent verketten
-                        $lehrend->setDozent($dozent);
-                        $em->persist($dozent);
-                        $em->persist($lehrend);
-                    }
+                    // Lehrende mit Veranstaltung verketten
+                    $lehrend->setVeranstaltung($modul);
+                    // passenden Dozenten aus dem Lehrenden Entity finden
+                    $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
+                    // Lehrenden mit Dozent verketten
+                    $lehrend->setDozent($dozent);
+                    $em->persist($dozent);
+                    $em->persist($lehrend);
+                }
 
 
                 $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
@@ -391,8 +391,9 @@ class DozentController extends Controller
                 try {
 
                 $em->flush();
-                }catch (UniqueConstraintViolationException $e) {
+                } catch (UniqueConstraintViolationException $e) {
                     $this->get('session')->getFlashBag()->add('info', 'Bitte nicht zweimal den gleichen Lehrenden auswählen');
+
                     return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
                 }
 
@@ -486,23 +487,23 @@ class DozentController extends Controller
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
 
-                if($form->get('modul_')->getData()!= NULL){
+                if ($form->get('modul_')->getData()!= null) {
                     $tmpVorussetzung = $modul->getModulVoraussetzung();
                     $tmpCheck = true;
-                    foreach($tmpVorussetzung as $entry){
-                        if($entry->getModulID() != $form->get('modul_')->getData()->getModulID()){
+                    foreach ($tmpVorussetzung as $entry) {
+                        if ($entry->getModulID() != $form->get('modul_')->getData()->getModulID()) {
                             $modul->removeModulVoraussetzung($entry);
+                        } else {
+                            $tmpCheck= false;
                         }
-                        else{ $tmpCheck= false;}
                     }
-                    if($tmpCheck){
+                    if ($tmpCheck) {
                         $modul->addModulVoraussetzung();
                     }
                 }
 
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
                 if (!empty($lehrendeArr)) {
-
                     foreach ($lehrendeArr as $lehrend) {
                         // Lehrende mit Veranstaltung verketten
                         $lehrend->setVeranstaltung($modul);
@@ -653,8 +654,6 @@ class DozentController extends Controller
         foreach ($anzuzeigendeStudiengaenge as $anzeige) {
             $studiengangIDs[] = $anzeige->getStudiengangID();
         }
-
-
 
         $form = $this->createForm(new Form\VorAngebotType($studiengangIDs));
 

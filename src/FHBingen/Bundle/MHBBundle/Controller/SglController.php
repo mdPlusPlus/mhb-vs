@@ -73,8 +73,7 @@ class SglController extends Controller
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
 
         //findet die Angebote mit Dummy Modulcode
-        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')
-            ->findBy(array('Code' => 'DUMMY', 'studiengang' => $studiengang));
+        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY', 'studiengang' => $studiengang));
         uasort($dummyAngebote, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
 
         //Filtert die Angebote mit DummyModul und aus anderen Studiengängen herraus
@@ -185,8 +184,9 @@ class SglController extends Controller
         );
         $resultMHB =$mhbs->getResult();
 
-        //Da das return Value des QueryBuilers ein zweifach verschachteltes Array ist und wir das Ergebnis weiter Verwebdeb wollen
-        //macht es Sin das Datum direkt als String in einer Variable zu speichern
+        //Da das return Value des QueryBuilers ein zweifach verschachteltes Array ist und wir das Ergebnis weiter verwenden wollen,
+        //macht es Sinn, das Datum direkt als String in einer Variable zu speichern
+        //TODO: so wie bei Versionsnummer ändern ['Erstellungsdatum']
         $datum = '01.01.1970';
         foreach ($resultMHB as $value) {
             foreach ($value as $v) {
@@ -216,7 +216,7 @@ class SglController extends Controller
         return array('mhbEintraege' => $mhbEintraege, 'mhb' => $mhb, 'pageTitle' => 'Module des Modulhandbuchs');
     }
 
-    //Erstellt die Modulbeschreibung für das Modulhandbuch
+    //Erstellt die Modulbeschreibungen für das Modulhandbuch
     private function createModulBeschreibungen($mhbID)
     {
         $em = $this->getDoctrine()->getManager();
@@ -480,9 +480,7 @@ class SglController extends Controller
                     'mhbGueltigAb' => $mhbGueltigAb,
                     'mhbBeschreibung' => $mhbBeschreibung, //TODO: automatisch generieren lassen?
                 )));
-
             }
-
         }
 
         return array('form' => $form->createView(), 'pageTitle' => 'Modulhandbuch-Erstellung');
@@ -552,10 +550,10 @@ class SglController extends Controller
             $mhb->setErstellungsdatum(new \DateTime());
             $mhb->setGehoertZu($studiengang);
 
-            $version = $em
-                ->createQuery('SELECT MAX(m.Versionsnummer) AS V
-                           FROM  FHBingenMHBBundle:Modulhandbuch m
-                           WHERE m.gehoertZu=' . $studiengang->getStudiengangID())
+            $version = $em->createQuery(
+                'SELECT MAX(m.Versionsnummer) AS V
+                FROM  FHBingenMHBBundle:Modulhandbuch m
+                WHERE m.gehoertZu=' . $studiengang->getStudiengangID())
                 ->getSingleResult();
             $version['V']++;
             $mhb->setVersionsnummer($version['V']);

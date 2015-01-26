@@ -27,7 +27,9 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('login'));
     }
 
-    //Initialerstellung von Semestern
+    /**
+     * Initialerstellung von Semestern
+     */
     public function semesterCreate()
     {
         //legt die Semester-Objekte an und gibt sie als Array zurück
@@ -54,8 +56,9 @@ class DefaultController extends Controller
         return $semesterArr;
     }
 
-    //Initialerstellung von Userrollen
     /**
+     * Initialerstellung von Userrollen
+     *
      * @Route("/create/roles")
      */
     public function createRolesAction()
@@ -92,18 +95,18 @@ class DefaultController extends Controller
         return new Response("Rollen angelegt");
     }
 
-    /**
-     * @Route("/create/vor")
-     */
-    public function voraussetzungAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $test = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>153));
-
-        $test->addModulVoraussetzung($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>1)));
-        $em->persist($test);
-        $em->flush();
-        return new Response("Data updated");
-    }
+//    /**
+//     * @Route("/create/vor")
+//     */
+//    public function voraussetzungAction()
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $test = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>153));
+//
+//        $test->addModulVoraussetzung($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>1)));
+//        $em->persist($test);
+//        $em->flush();
+//        return new Response("Data updated");
+//    }
 }

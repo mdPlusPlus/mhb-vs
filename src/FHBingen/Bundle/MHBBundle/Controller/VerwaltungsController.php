@@ -171,10 +171,11 @@ class VerwaltungsController extends Controller
     public function SglShowAllCoursesAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $mhb = $em->createQuery('SELECT s.Studiengang_ID,s.Titel as Studiengang,s.Grad,d.Titel, d.Nachname
-                                 FROM  FHBingenMHBBundle:Studiengang s
-                                 JOIN  FHBingenMHBBundle:Dozent d WITH  s.sgl =  d.Dozenten_ID
-                                 ORDER BY Studiengang ASC '
+        $mhb = $em->createQuery(
+            'SELECT s.Studiengang_ID,s.Titel as Studiengang,s.Grad,d.Titel, d.Nachname
+            FROM  FHBingenMHBBundle:Studiengang s
+            JOIN  FHBingenMHBBundle:Dozent d WITH  s.sgl =  d.Dozenten_ID
+            ORDER BY Studiengang ASC'
         );
         $result = $mhb->getResult();
 
@@ -208,10 +209,10 @@ class VerwaltungsController extends Controller
                 $studiengang->setSgl($form->get('sgl')->getData());                     //entity
 
                 /*
-              * TODO:
-              * - überprüfen ob Vertiefungsrichtung oder Fachgebiet doppelt in Feldern steht
-              * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
-              */
+                 * TODO:
+                 * - überprüfen ob Vertiefungsrichtung oder Fachgebiet doppelt in Feldern steht
+                 * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
+                 */
 
                 //hier keine Collection, sondern "nur" array
                 $vertiefungArr = $form->get('richtung')->getData();
@@ -337,6 +338,7 @@ class VerwaltungsController extends Controller
         $em->persist($dozent);
         $em->flush();
         $this->get('session')->getFlashBag()->add('info', 'Der User wurde Deaktiviert');
+
         return $this->redirect($this->generateUrl('benutzerVerwaltung'));
     }
 
@@ -353,6 +355,7 @@ class VerwaltungsController extends Controller
         $em->persist($dozent);
         $em->flush();
         $this->get('session')->getFlashBag()->add('info', 'Der User wurde Aktiviert');
+
         return $this->redirect($this->generateUrl('benutzerVerwaltung'));
     }
 
