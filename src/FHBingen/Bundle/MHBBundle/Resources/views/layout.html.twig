@@ -72,9 +72,11 @@
             <div class="page-header">
                 <h3>{{ pageTitle|default }}</h3>
             </div>
+            <div id="content">
             {% block content %}
                 {# wird von anderen Templates überschrieben #}
             {% endblock %}
+            </div>
         </div>
     </div>
 </div>
