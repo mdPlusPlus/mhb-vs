@@ -14,32 +14,44 @@
                 <th>Dozenten</th>
                 <th>Studiengangleiter</th>
                 <th>Neuer Nutzer</th>
+                <th>Nutzer Reaktivieren</th>
             </tr>
 
             <tr>
                 <td>
-                    <ul>
+                    <table>
                         {% for person in dozent %}
-                            <li>
-                                <a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                            <tr>
+                                <td><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
+                                <td><a href="{{ path('SglUserDeactivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">deaktivieren</button></a></td>
+                              </tr>
+
+                           {% endfor %}
+                        </table>
                 </td>
                 <td>
-                    <ul>
+                    <table>
                         {% for person in sgl %}
-                            <li>
-                                <a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a>
-                            </li>
+                            <tr>
+                                <td><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
+                                <td><a href="{{ path('SglUserDeactivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">deaktivieren</button></a></td>
+                            </tr>
                         {% endfor %}
-                    </ul>
+                    </table>
                 </td>
                 <td>
                     <ul>
                         <li><a href="{{ path('benutzerErstellen') }}">Nutzer anlegen</a></li>
                     </ul>
                 </td>
+                <table>
+                    {% for person in deaktivierteNutzer %}
+                        <tr>
+                            <td><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
+                            <td><a href="{{ path('SglUserActivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">deaktivieren</button></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </tr>
         </table>
         {# TODO: Passwort-Reset ist experimentell, Abfrage fehlt #}
