@@ -89,6 +89,19 @@
 
         });
 
+        function resetFunc(){
+            {% for key in zuordnung|keys %}
+            {% set resetJS =
+                'var fachgebietTo = $("#' ~ key|replace({' ': '_'}) ~ '");
+                var fachgebietListItems = $("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").children("li");
+                for (var i = 0; i< fachgebietListItems.length; i++) {
+                    fachgebietTo.append(fachgebietListItems[i]);
+                }'
+            %}
+            {{ resetJS|raw }}
+            {% endfor %}
+        }
+
     </script>
 
     <div id="mhbWrapper">
@@ -123,7 +136,8 @@
                 {% endfor %}
             </div>
             <div class="ourButtons">
-                {# <button class="btn btn-default" type="reset">zurücksetzen</button> #}
+                {# nicht type="reset", weil form nicht wirklich resetet wird #}
+                <button class="btn btn-default" type="button" onclick="resetFunc()">zurücksetzen</button>
                 <button class="btn btn-primary" type="submit">abschicken</button>
             </div>
         </form>
