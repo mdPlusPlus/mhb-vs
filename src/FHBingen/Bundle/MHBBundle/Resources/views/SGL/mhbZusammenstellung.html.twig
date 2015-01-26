@@ -8,7 +8,7 @@
             width: 45%;
         }
 
-        div#angeboteDiv {
+        div#angeboteDiv, div#nichtMhbDiv {
             /*padding: 5px 5px 0 5px;*/
             /*margin: 5px 0 0 0;*/
         }
@@ -17,21 +17,20 @@
 
         }
 
-        ul.angebot {
+        ul.angebot, ul#nichtMhb {
             list-style-type: none;
             margin: 0 0 5px 0;
             padding: 5px 5px 0 5px;
         }
 
-        ul.angebot li {
+        ul.angebot li, ul#nichtMhb li {
             margin: 0 0 5px 0;
             text-align: center;
             background: url('{{ asset('bundles/fhbingenmhb/images/bg-white.jpg')}} ') top left repeat;
             min-height: 42px;
         }
 
-        /*ul.angebot,*/
-        ul.angebot li, div#angeboteDiv {
+        div#angeboteDiv, div#nichtMhbDiv, /*ul.angebot, ul#nichtMhb,*/ ul.angebot li, ul#nichtMhb li {
             border: 1px solid gray;
 
         }
@@ -72,6 +71,10 @@
             //jQuery("#mhb").height(jQuery("#angeboteWrapper").height());
             //jQuery("#angeboteWrapper").height(jQuery("#mhbWrapper").height());
 
+            jQuery("#mhbWrapper").height(jQuery("#mhbWrapper").height());
+            jQuery("#nichtMhbWrapper").height(jQuery("#mhbWrapper").height());
+            jQuery("#nichtMhb").height(jQuery("#angeboteDiv").height());
+
             $(".angebot").sortable({
                 appendTo: 'body',
                 tolerance: 'pointer',
@@ -83,17 +86,17 @@
                 scroll: true
             }).disableSelection();
 
-            /*
-             $("#mhb").sortable({
-             appendTo: 'body',
-             tolerance: 'pointer',
-             connectWith: '.angebot',
-             revert: 'invalid',
-             forceHelperSize: true,
-             helper: 'original',
-             scroll: true
-             }).disableSelection();
-             */
+
+            $("#nichtMhb").sortable({
+                appendTo: 'body',
+                tolerance: 'pointer',
+                connectWith: '.angebot',
+                revert: 'invalid',
+                forceHelperSize: true,
+                helper: 'original',
+                scroll: true
+            }).disableSelection();
+
         });
 
     </script>
@@ -197,16 +200,22 @@
             </div>
         </div>
 
-        <div class="ourButtons">
-            {# <button class="btn btn-default" type="reset">zurücksetzen</button> #}
-            <button class="btn btn-primary" type="submit">abschicken</button>
-        </div>
+        {#<div class="ourButtons">#}
+            {#&#123;&#35; <button class="btn btn-default" type="reset">zurücksetzen</button> &#35;&#125;#}
+            {#<button class="btn btn-primary" type="submit">abschicken</button>#}
+        {#</div>#}
     </form>
 
     <div id="nichtMhbWrapper">
         <h3>NICHT_MHB</h3>
-        <ul>
-        </ul>
+
+            <div id="nichtMhbDiv">
+                <ul id="nichtMhb">
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                </ul>
+            </div>
     </div>
 
     {% include '@FHBingenMHB/flashbags.html.twig' %}
