@@ -220,6 +220,7 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * TODO: Choice
      */
     protected $VoraussetzungLP;
 
