@@ -8,7 +8,6 @@
             width: 45%;
         }
 
-
         ul.angebot {
             list-style-type: none;
             margin: 0 0 5px 0;
@@ -51,65 +50,42 @@
 
         $(function () {
             {% for key in zuordnung|keys %}
-                {% set js = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
-                {% set js_NICHT_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
+            {% set js = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
+            {% set js_NICHT_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
 
-                {{ js|raw  }}
-                {{ js_NICHT_MHB|raw }}
+            {{ js|raw  }}
+            {{ js_NICHT_MHB|raw }}
 
 
-                {% set connectLeftToRight =
-                    '$("#' ~ key|replace({' ': '_'}) ~ '").sortable({
-                        appendTo: "body",
-                        tolerance: "pointer",
-                        connectWith: "#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB",
-                        revert: "invalid",
-                        forceHelperSize: true,
-                        helper: "original",
-                        placeholder: "angebot li",
-                        scroll: true
-                    }).disableSelection();'
-                %}
-                {% set connectRightToLeft =
-                    '$("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").sortable({
-                        appendTo: "body",
-                        tolerance: "pointer",
-                        connectWith: "#' ~ key|replace({' ': '_'}) ~ '",
-                        revert: "invalid",
-                        forceHelperSize: true,
-                        helper: "original",
-                        placeholder: "angebot li",
-                        scroll: true
-                    }).disableSelection();'
-                %}
+            {% set connectLeftToRight =
+                '$("#' ~ key|replace({' ': '_'}) ~ '").sortable({
+                    appendTo: "body",
+                    tolerance: "pointer",
+                    connectWith: "#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB",
+                    revert: "invalid",
+                    forceHelperSize: true,
+                    helper: "original",
+                    placeholder: "angebot li",
+                    scroll: true
+                }).disableSelection();'
+            %}
+            {% set connectRightToLeft =
+                '$("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").sortable({
+                    appendTo: "body",
+                    tolerance: "pointer",
+                    connectWith: "#' ~ key|replace({' ': '_'}) ~ '",
+                    revert: "invalid",
+                    forceHelperSize: true,
+                    helper: "original",
+                    placeholder: "angebot li",
+                    scroll: true
+                }).disableSelection();'
+            %}
 
-                {{ connectLeftToRight|raw }}
-                {{ connectRightToLeft|raw }}
+            {{ connectLeftToRight|raw }}
+            {{ connectRightToLeft|raw }}
 
             {% endfor %}
-
-
-//            $(".angebot").sortable({
-//                appendTo: "body",
-//                tolerance: "pointer",
-//                connectWith: "#nichtMhb",
-//                revert: "invalid",
-//                forceHelperSize: true,
-//                helper: "original",
-//                placeholder: "angebot li",
-//                scroll: true
-//            }).disableSelection();
-//
-//
-//            $("#nichtMhb").sortable({
-//                appendTo: "body",
-//                tolerance: "pointer",
-//                connectWith: ".angebot",
-//                revert: "invalid",
-//                forceHelperSize: true,
-//                helper: "original",
-//                scroll: true
-//            }).disableSelection();
 
         });
 
@@ -158,14 +134,14 @@
         <h3>NICHT_MHB</h3>
 
         <div id="nichtMhbDiv">
-                {% for key in zuordnung|keys %}
-                    <div class="angebotDiv">
-                        <h4>{{ key }}</h4>
-                        <ul id="{{ key|replace({' ': '_'}) ~ '_NICHT_MHB' }}" class="angebot">
+            {% for key in zuordnung|keys %}
+                <div class="angebotDiv">
+                    <h4>{{ key }}</h4>
+                    <ul id="{{ key|replace({' ': '_'}) ~ '_NICHT_MHB' }}" class="angebot">
 
-                        </ul>
-                    </div>
-                {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
         </div>
     </div>
 
