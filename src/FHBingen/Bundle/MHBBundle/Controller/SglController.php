@@ -163,7 +163,7 @@ class SglController extends Controller
                                  .' ORDER BY v.Name ASC')->setParameter('mhbDatum', $datum) ;
         $resultModul = $veranstaltungenBearbeitet->getResult();
 
-        return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module', 'dateTime' => $datum);
+        return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module aus '.$studiengang->__toString(), 'dateTime' => $datum);
     }
 
 

@@ -35,16 +35,16 @@ class VerwaltungsController extends Controller
         $sgl = array();
 
         foreach ($entries as $e) {
-                //wenn nicht "Alle" oder "N.N." wird zwischen SGL und Dozent unterschieden und sortiert
-                if ($e->getName()!='Dummy') {
-                    if (in_array('ROLE_SGL', $e->getRoles())) {
-                        $sgl[] = $e;
-                    } else {
-                        if (in_array('ROLE_DOZENT', $e->getRoles())) {
-                            $dozent[] = $e;
-                        }
+            //wenn nicht "Alle" oder "N.N." wird zwischen SGL und Dozent unterschieden und sortiert
+            if ($e->getName()!='Dummy') {
+                if (in_array('ROLE_SGL', $e->getRoles())) {
+                    $sgl[] = $e;
+                } else {
+                    if (in_array('ROLE_DOZENT', $e->getRoles())) {
+                        $dozent[] = $e;
                     }
                 }
+            }
         }
 
         uasort($sgl, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'dozentSort'));

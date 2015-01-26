@@ -206,7 +206,7 @@ class DozentController extends Controller
                 $modul->setSprache($form->get('sprache')->getData());
                 $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
                 $modul->setStatus('in Planung');
-                $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
+               // $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
                 $modul->setVersionsnummer(0);
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
@@ -338,7 +338,7 @@ class DozentController extends Controller
                 $modul->setSprache($form->get('sprache')->getData());
                 $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
                 //$modul->setStatus
-                $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
+               // $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
                 $modul->setVersionsnummer($modul->getVersionsnummer()+1);
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
