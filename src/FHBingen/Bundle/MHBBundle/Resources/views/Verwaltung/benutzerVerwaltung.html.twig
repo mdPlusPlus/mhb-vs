@@ -44,14 +44,16 @@
                         <li><a href="{{ path('benutzerErstellen') }}">Nutzer anlegen</a></li>
                     </ul>
                 </td>
+                <td>
                 <table>
                     {% for person in deaktivierteNutzer %}
                         <tr>
                             <td><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
-                            <td><a href="{{ path('SglUserActivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">deaktivieren</button></a></td>
+                            <td><a href="{{ path('SglUserActivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">reaktivieren</button></a></td>
                         </tr>
                     {% endfor %}
                 </table>
+                </td>
             </tr>
         </table>
         {# TODO: Passwort-Reset ist experimentell, Abfrage fehlt #}
