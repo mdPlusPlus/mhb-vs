@@ -231,6 +231,8 @@ class DozentController extends Controller
     /**
      * @Route("/restricted/dozent/modulBearbeiten/{id}", name="modulBearbeiten")
      * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")
+     *
+     * Hier wird ein bereits freigegebenes Modul bearbeitet und eine Schattenkopie in die VeranstaltungsHistory eingepflegt
      */
     public function modulBearbeitenAction($id)
     {
@@ -245,7 +247,7 @@ class DozentController extends Controller
 
         $modulHistory= new Entity\VeranstaltungHistory();
 
-        //schreibt den Veranstaltungs Inhalt vor der änderung in die History Tabelle
+        //schreibt den Veranstaltungsinhalt vor der Änderung in die Historytabelle
         $modulHistory->setAutor($modul->getAutor());
         $modulHistory->setModulID($modul->getModulID());
         $modulHistory->setVersionsnummer($modul->getVersionsnummer());
@@ -271,6 +273,7 @@ class DozentController extends Controller
         $modulHistory->setPruefungsformen($encoder->encode($modul->getPruefungsformen(), 'json'));
         $modulHistory->setLehrveranstaltungen($encoder->encode($modul->getLehrveranstaltungen(), 'json'));
 
+        //ab hier beginnt das eigentliche Formular mit Validierung
         $form = $this->createForm(new Form\VeranstaltungType(), $modul);
 
         $request = $this->get('request');
@@ -278,7 +281,12 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
+                //Validierung für Checkboxen
                 $valid = true;
+                if ($form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData() <=0) {
+                    $this->get('session')->getFlashBag()->add('info', 'Ihre Angaben zu den Kontaktzeiten lassen keine Zeiten für das Selbststudium zu.');
+                    $valid = false;
+                }
                 if ($encoder->encode($form->get('voraussetzungLP')->getData(), 'json') == '[]') {
                     $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Voraussetzung für die Vergabe von Leistungspunkten gesetzt sein.');
                     $valid = false;
@@ -324,12 +332,8 @@ class DozentController extends Controller
 
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
+                $modul->setSelbststudium($ms);
 
-                if ($ms >= 0) {
-                    $modul->setSelbststudium($ms);
-                } else {
-                    $modul->setSelbststudium(0);
-                }
 
                 $modul->setSprache($form->get('sprache')->getData());
                 $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
@@ -392,6 +396,9 @@ class DozentController extends Controller
     /**
      * @Route("/restricted/dozent/planungFreigeben/{id}", name="planungFreigeben")
      * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")
+     *
+     * Hier wird eine bereits vorhandene Planung um alle notwendigen angaben ergänzt und freigegeben
+     * Die Freigabe erfolgt erst in der weitergeleiteten angebotAction
      */
     public function planungFreigebenAction($id)
     {
@@ -411,6 +418,10 @@ class DozentController extends Controller
             if ($form->isValid()) {
 
                 $valid = true;
+                if ($form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData() <=0) {
+                    $this->get('session')->getFlashBag()->add('info', 'Ihre Angaben zu den Kontaktzeiten lassen keine Zeiten für das Selbststudium zu.');
+                    $valid = false;
+                }
                 if ($encoder->encode($form->get('voraussetzungLP')->getData(), 'json') == '[]') {
                     $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Voraussetzung für die Vergabe von Leistungspunkten gesetzt sein.');
                     $valid = false;
@@ -447,12 +458,7 @@ class DozentController extends Controller
 
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
-
-                if ($ms >= 0) {
-                    $modul->setSelbststudium($ms);
-                } else {
-                    $modul->setSelbststudium(0);
-                }
+                $modul->setSelbststudium($ms);
 
 
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
@@ -499,6 +505,7 @@ class DozentController extends Controller
                         }
                     }
                 } else {
+                    //falls kein Lehrender ausgewählt wurde wird der Modulbeauftragte zum Lehrenden
                     $lehr = new Entity\Lehrende();
                     $lehr->setVeranstaltung($modul);
                     $doz = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $modul->getBeauftragter()->getDozentenID()));
@@ -520,6 +527,8 @@ class DozentController extends Controller
     /**
      * @Route("/restricted/dozent/angebot/{studiengangID}/{modulID}/{angebotsart}/{encSS}/{encWS}", name="angebot")
      * @Template("FHBingenMHBBundle:Dozent:angebot.html.twig")
+     *
+     * Hier wird ein Initialangebot für einen Studiengang erstellt und das freizugebende Modul endgültig freigegeben
      */
     public function angebotAction($studiengangID, $modulID, $angebotsart, $encSS, $encWS)
     {
@@ -549,6 +558,7 @@ class DozentController extends Controller
                 $angebot->setAbweichenderNameEN($form->get('abweichenderNameEN')->getData());
                 $angebot->setFachgebiet($form->get('fachgebiet')->getData());
 
+                //falls es sich um ein Wahlpflichtfach handelt und es Kernfächer gibt
                 if ($isWahl) {
                     $kernfachData = $form->get('kernfach')->getData()->toArray();
                     if (!empty($kernfachData)) {
