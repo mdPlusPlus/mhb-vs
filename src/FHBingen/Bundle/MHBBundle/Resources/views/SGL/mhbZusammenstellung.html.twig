@@ -50,14 +50,14 @@
 
         $(function () {
             {% for key in zuordnung|keys %}
-            {% set js = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
+            {% set js_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
             {% set js_NICHT_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
 
-            {{ js|raw  }}
+            {{ js_MHB|raw  }}
             {{ js_NICHT_MHB|raw }}
 
 
-            {% set connectLeftToRight =
+            {% set connectLeftWithRight =
                 '$("#' ~ key|replace({' ': '_'}) ~ '").sortable({
                     appendTo: "body",
                     tolerance: "pointer",
@@ -69,7 +69,7 @@
                     scroll: true
                 }).disableSelection();'
             %}
-            {% set connectRightToLeft =
+            {% set connectRightWithLeft =
                 '$("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").sortable({
                     appendTo: "body",
                     tolerance: "pointer",
@@ -82,8 +82,8 @@
                 }).disableSelection();'
             %}
 
-            {{ connectLeftToRight|raw }}
-            {{ connectRightToLeft|raw }}
+            {{ connectLeftWithRight|raw }}
+            {{ connectRightWithLeft|raw }}
 
             {% endfor %}
 
