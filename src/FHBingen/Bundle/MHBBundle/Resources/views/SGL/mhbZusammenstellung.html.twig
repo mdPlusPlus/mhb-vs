@@ -17,7 +17,7 @@
 
         }
 
-        ul.angebot, ul#nichtMhb {
+        ul.angebot {
             list-style-type: none;
             margin: 0 0 5px 0;
             padding: 5px 5px 0 5px;
@@ -30,7 +30,8 @@
             min-height: 42px;
         }
 
-        div#angeboteDiv, div#nichtMhbDiv, /*ul.angebot, ul#nichtMhb,*/ ul.angebot li, ul#nichtMhb li {
+        div#angeboteDiv, div#nichtMhbDiv, ul.angebot,
+        ul.angebot li, ul#nichtMhb li {
             border: 1px solid gray;
 
         }
@@ -63,116 +64,76 @@
 
         $(function () {
             {% for key in zuordnung|keys %}
-            {% set js = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
-            {{ js|raw  }}
+                {% set js = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
+                {% set js_NICHT_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
+
+                {{ js|raw  }}
+                {{ js_NICHT_MHB|raw }}
+
+
+                {% set connectLeftToRight =
+                    '$("#' ~ key|replace({' ': '_'}) ~ '").sortable({
+                        appendTo: "body",
+                        tolerance: "pointer",
+                        connectWith: "#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB",
+                        revert: "invalid",
+                        forceHelperSize: true,
+                        helper: "original",
+                        placeholder: "angebot li",
+                        scroll: true
+                    }).disableSelection();'
+                %}
+                {% set connectRightToLeft =
+                    '$("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").sortable({
+                        appendTo: "body",
+                        tolerance: "pointer",
+                        connectWith: "#' ~ key|replace({' ': '_'}) ~ '",
+                        revert: "invalid",
+                        forceHelperSize: true,
+                        helper: "original",
+                        placeholder: "angebot li",
+                        scroll: true
+                    }).disableSelection();'
+                %}
+
+                {{ connectLeftToRight|raw }}
+                {{ connectRightToLeft|raw }}
+
             {% endfor %}
 
-            //jQuery("#angeboteWrapper").height(jQuery("#angeboteWrapper").height());
-            //jQuery("#mhb").height(jQuery("#angeboteWrapper").height());
-            //jQuery("#angeboteWrapper").height(jQuery("#mhbWrapper").height());
 
-            jQuery("#mhbWrapper").height(jQuery("#mhbWrapper").height());
-            jQuery("#nichtMhbWrapper").height(jQuery("#mhbWrapper").height());
-            jQuery("#nichtMhb").height(jQuery("#angeboteDiv").height());
-
-            $(".angebot").sortable({
-                appendTo: 'body',
-                tolerance: 'pointer',
-                connectWith: '#nichtMhb',
-                revert: 'invalid',
-                forceHelperSize: true,
-                helper: 'original',
-                placeholder: "angebot li",
-                scroll: true
-            }).disableSelection();
-
-
-            $("#nichtMhb").sortable({
-                appendTo: 'body',
-                tolerance: 'pointer',
-                connectWith: '.angebot',
-                revert: 'invalid',
-                forceHelperSize: true,
-                helper: 'original',
-                scroll: true
-            }).disableSelection();
+//            $(".angebot").sortable({
+//                appendTo: "body",
+//                tolerance: "pointer",
+//                connectWith: "#nichtMhb",
+//                revert: "invalid",
+//                forceHelperSize: true,
+//                helper: "original",
+//                placeholder: "angebot li",
+//                scroll: true
+//            }).disableSelection();
+//
+//
+//            $("#nichtMhb").sortable({
+//                appendTo: "body",
+//                tolerance: "pointer",
+//                connectWith: ".angebot",
+//                revert: "invalid",
+//                forceHelperSize: true,
+//                helper: "original",
+//                scroll: true
+//            }).disableSelection();
 
         });
 
     </script>
 
-    {# TODO: vllt vorher $_POST leeren? wegen zurück button im browser #}
-    <form method="POST" action="{{ path('mhbErstellungParsen') }}">
-        <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
-        <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
+    <div id="mhbWrapper">
 
-        {#<table class="aussen tableBorder">#}
-        {#<thead>#}
-        {#<tr>#}
-        {#<th class="tableWidth" style="width: 45%; text-align: center;"><h3>Modulhandbuch</h3></th>#}
-        {#<th class="tableWidth" style="width: 45%; text-align: center;"><h3>NICHT_MHB</h3></th>#}
-        {#</tr>#}
-        {#</thead>#}
-        {#<tbody>#}
-        {#<tr>#}
-        {#<td>#}
-        {#<table>#}
-        {#<thead>#}
+        <form method="POST" action="{{ path('mhbErstellungParsen') }}">
+            <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
+            <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
 
-        {#</thead>#}
-        {#<tbody>#}
-        {#{% set rows = 0 %}#}
-        {#{% for key in zuordnung|keys %}#}
-        {#<tr>#}
-        {#<td>#}
-        {#<h4>{{ key }}</h4>#}
-        {#<ul id="{{ key|replace({' ': '_'}) }}" class="angebot">#}
-        {#{% for angebot in zuordnung[key] %}#}
-        {#<li>#}
-        {#&#123;&#35;<label>&#35;&#125;#}
-        {#<input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>#}
-        {#{{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')' }} &#123;&#35; Angebotsart hier sinnvoll? &#35;&#125;#}
-        {#&#123;&#35; if Veranstaltung des Angebots seit letzter MHB-Erstullung geändert &#35;&#125;#}
-        {#{% if angebot.getVeranstaltung().getErstellungsdatum().getTimestamp() > neuestesMHBDateTime.getTimestamp() %}#}
-        {#&#123;&#35; TODO: Achtung! Es wird nur auf das Datum, nicht auf Stunde, Minute, Sekunde überprüft &#35;&#125;#}
-        {#&#123;&#35; then Angebot als geändert markieren &#35;&#125;#}
-        {#<span style="color: red">{{ 'GEÄNDERT' }}</span>#}
-        {#{% endif %}#}
-        {#&#123;&#35;</label>&#35;&#125;#}
-        {#</li>#}
-        {#{% endfor %}#}
-        {#</ul>#}
-        {#</td>#}
-        {#</tr>#}
-        {#{% set rows = rows + 1 %}#}
-        {#{% endfor %}#}
-        {#</tbody>#}
-        {#</table>#}
-        {#</td>#}
-        {#<td>#}
-        {#<table>#}
-        {#<thead>#}
-
-        {#</thead>#}
-        {#<tbody>#}
-        {#<tr>#}
-        {#<td>#}
-        {#<ul>#}
-        {#<li>test</li>#}
-        {#<li>test</li>#}
-        {#<li>test</li>#}
-        {#</ul>#}
-        {#</td>#}
-        {#</tr>#}
-        {#</tbody>#}
-        {#</table>#}
-        {#</td>#}
-        {#</tr>#}
-        {#</tbody>#}
-        {#</table>#}
-
-
-        <div id="mhbWrapper">
             <h3>Modulhandbuch</h3>
 
             <div id="angeboteDiv">
@@ -198,24 +159,27 @@
                     </div>
                 {% endfor %}
             </div>
-        </div>
+            <div class="ourButtons">
+                {# <button class="btn btn-default" type="reset">zurücksetzen</button> #}
+                <button class="btn btn-primary" type="submit">abschicken</button>
+            </div>
+        </form>
 
-        <div class="ourButtons">
-            {# <button class="btn btn-default" type="reset">zurücksetzen</button> #}
-            <button class="btn btn-primary" type="submit">abschicken</button>
-        </div>
-    </form>
+    </div>
 
     <div id="nichtMhbWrapper">
         <h3>NICHT_MHB</h3>
 
-            <div id="nichtMhbDiv">
-                <ul id="nichtMhb">
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                </ul>
-            </div>
+        <div id="nichtMhbDiv">
+                {% for key in zuordnung|keys %}
+                    <div class="angebotDiv">
+                        <h4>{{ key }}</h4>
+                        <ul id="{{ key|replace({' ': '_'}) ~ '_NICHT_MHB' }}" class="angebot">
+
+                        </ul>
+                    </div>
+                {% endfor %}
+        </div>
     </div>
 
     {% include '@FHBingenMHB/flashbags.html.twig' %}
