@@ -3,48 +3,55 @@
 {% block content %}
     <style type="text/css">
 
-        #mhbWrapper {
+        div#mhbWrapper {
             float: left;
+            width: 45%;
         }
 
-        #angeboteDiv {
-            padding: 5px 5px 0 5px;
-            margin: 5px 0 0 0;
+        div#angeboteDiv {
+            /*padding: 5px 5px 0 5px;*/
+            /*margin: 5px 0 0 0;*/
         }
 
-        .angebotDiv {
+        div.angebotDiv {
 
         }
 
-        .angebot {
+        ul.angebot {
             list-style-type: none;
             margin: 0 0 5px 0;
             padding: 5px 5px 0 5px;
         }
 
-        .angebot li {
+        ul.angebot li {
             margin: 0 0 5px 0;
             text-align: center;
             background: url('{{ asset('bundles/fhbingenmhb/images/bg-white.jpg')}} ') top left repeat;
-
-        }
-
-        .angebot, .angebot li {
             min-height: 42px;
         }
 
-        .angebot, .angebot li, #angeboteDiv {
+        /*ul.angebot,*/
+        ul.angebot li, div#angeboteDiv {
             border: 1px solid gray;
 
         }
 
-        #nichtMhbWrapper {
+        div#nichtMhbWrapper {
             /*float: right;*/
             margin-left: 55%;
         }
 
-        #mhbWrapper, #nichtMhbWrapper {
+        div#mhbWrapper, div#nichtMhbWrapper {
             text-align: center;
+        }
+
+        table.aussen th, table.aussen td {
+            border: 1px solid gray;
+            border-collapse: collapse;
+        }
+
+        .tableWidth {
+            width: 45%;
         }
 
 
@@ -68,7 +75,7 @@
             $(".angebot").sortable({
                 appendTo: 'body',
                 tolerance: 'pointer',
-                //connectWith: '#mhb',
+                connectWith: '#nichtMhb',
                 revert: 'invalid',
                 forceHelperSize: true,
                 helper: 'original',
@@ -96,30 +103,97 @@
         <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
         <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
 
+        {#<table class="aussen tableBorder">#}
+        {#<thead>#}
+        {#<tr>#}
+        {#<th class="tableWidth" style="width: 45%; text-align: center;"><h3>Modulhandbuch</h3></th>#}
+        {#<th class="tableWidth" style="width: 45%; text-align: center;"><h3>NICHT_MHB</h3></th>#}
+        {#</tr>#}
+        {#</thead>#}
+        {#<tbody>#}
+        {#<tr>#}
+        {#<td>#}
+        {#<table>#}
+        {#<thead>#}
+
+        {#</thead>#}
+        {#<tbody>#}
+        {#{% set rows = 0 %}#}
+        {#{% for key in zuordnung|keys %}#}
+        {#<tr>#}
+        {#<td>#}
+        {#<h4>{{ key }}</h4>#}
+        {#<ul id="{{ key|replace({' ': '_'}) }}" class="angebot">#}
+        {#{% for angebot in zuordnung[key] %}#}
+        {#<li>#}
+        {#&#123;&#35;<label>&#35;&#125;#}
+        {#<input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>#}
+        {#{{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')' }} &#123;&#35; Angebotsart hier sinnvoll? &#35;&#125;#}
+        {#&#123;&#35; if Veranstaltung des Angebots seit letzter MHB-Erstullung geändert &#35;&#125;#}
+        {#{% if angebot.getVeranstaltung().getErstellungsdatum().getTimestamp() > neuestesMHBDateTime.getTimestamp() %}#}
+        {#&#123;&#35; TODO: Achtung! Es wird nur auf das Datum, nicht auf Stunde, Minute, Sekunde überprüft &#35;&#125;#}
+        {#&#123;&#35; then Angebot als geändert markieren &#35;&#125;#}
+        {#<span style="color: red">{{ 'GEÄNDERT' }}</span>#}
+        {#{% endif %}#}
+        {#&#123;&#35;</label>&#35;&#125;#}
+        {#</li>#}
+        {#{% endfor %}#}
+        {#</ul>#}
+        {#</td>#}
+        {#</tr>#}
+        {#{% set rows = rows + 1 %}#}
+        {#{% endfor %}#}
+        {#</tbody>#}
+        {#</table>#}
+        {#</td>#}
+        {#<td>#}
+        {#<table>#}
+        {#<thead>#}
+
+        {#</thead>#}
+        {#<tbody>#}
+        {#<tr>#}
+        {#<td>#}
+        {#<ul>#}
+        {#<li>test</li>#}
+        {#<li>test</li>#}
+        {#<li>test</li>#}
+        {#</ul>#}
+        {#</td>#}
+        {#</tr>#}
+        {#</tbody>#}
+        {#</table>#}
+        {#</td>#}
+        {#</tr>#}
+        {#</tbody>#}
+        {#</table>#}
+
+
         <div id="mhbWrapper">
             <h3>Modulhandbuch</h3>
+
             <div id="angeboteDiv">
-            {% for key in zuordnung|keys %}
-                <div class="angebotDiv">
-                <h4>{{ key }}</h4>
-                <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
-                    {% for angebot in zuordnung[key] %}
-                        <li>
-                            {#<label>#}
-                            <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
-                            {{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')' }} {# Angebotsart hier sinnvoll? #}
-                            {# if Veranstaltung des Angebots seit letzter MHB-Erstullung geändert #}
-                            {% if angebot.getVeranstaltung().getErstellungsdatum().getTimestamp() > neuestesMHBDateTime.getTimestamp() %}
-                                {# TODO: Achtung! Es wird nur auf das Datum, nicht auf Stunde, Minute, Sekunde überprüft #}
-                                {# then Angebot als geändert markieren #}
-                                <span style="color: red">{{ 'GEÄNDERT' }}</span>
-                            {% endif %}
-                            {#</label>#}
-                        </li>
-                    {% endfor %}
-                </ul>
-                </div>
-            {% endfor %}
+                {% for key in zuordnung|keys %}
+                    <div class="angebotDiv">
+                        <h4>{{ key }}</h4>
+                        <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
+                            {% for angebot in zuordnung[key] %}
+                                <li>
+                                    {#<label>#}
+                                    <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
+                                    {{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')' }} {# Angebotsart hier sinnvoll? #}
+                                    {# if Veranstaltung des Angebots seit letzter MHB-Erstullung geändert #}
+                                    {% if angebot.getVeranstaltung().getErstellungsdatum().getTimestamp() > neuestesMHBDateTime.getTimestamp() %}
+                                        {# TODO: Achtung! Es wird nur auf das Datum, nicht auf Stunde, Minute, Sekunde überprüft #}
+                                        {# then Angebot als geändert markieren #}
+                                        <span style="color: red">{{ 'GEÄNDERT' }}</span>
+                                    {% endif %}
+                                    {#</label>#}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
             </div>
         </div>
 
