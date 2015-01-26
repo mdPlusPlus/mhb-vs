@@ -155,6 +155,7 @@ class SglController extends Controller
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
         //Sucht das neuste Erstelldatum der MHBs des Studiengangs herraus
         $datum = $this->getNewestMHBDateForMyCourse();
+
         //prüft welche Veranstaltungen ein Änderungsdatum haben das Aktueller als das des neusten MHBs sind
         $veranstaltungenBearbeitet = $em->createQuery('SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,v.Autor
                                   FROM  FHBingenMHBBundle:Veranstaltung v
