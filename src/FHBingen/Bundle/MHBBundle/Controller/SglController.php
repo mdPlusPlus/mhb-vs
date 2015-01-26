@@ -23,6 +23,7 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
      * @Template("FHBingenMHBBundle:SGL:alleModule.html.twig")
+     *
      */
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
