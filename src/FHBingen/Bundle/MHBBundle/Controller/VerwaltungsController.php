@@ -23,20 +23,19 @@ class VerwaltungsController extends Controller
     /**
      * @Route("/restricted/sgl/showUsers", name="benutzerVerwaltung")
      * @Template("FHBingenMHBBundle:Verwaltung:benutzerVerwaltung.html.twig")
+     *
+     * Unterscheidet zwischen SGL und Dozent und gibt diese jeweils sortiert in einem Array zurück
      */
     public function SglShowUsersAction()
     {
-        //alle Nutzer sortieren
-
         $em = $this->getDoctrine()->getManager();
-        //TODO! Sortierung
         $entries = $em->getRepository('FHBingenMHBBundle:Dozent')->findALL();
 
         $dozent = array();
         $sgl = array();
 
         foreach ($entries as $e) {
-            //wenn nicht "Alle" oder "N.N."
+            //wenn nicht "Alle" oder "N.N." wird zwischen SGL und Dozent unterschieden und sortiert
             if ($e->getName()!='Dummy') {
                 if (in_array('ROLE_SGL', $e->getRoles())) {
                     $sgl[] = $e;
@@ -56,6 +55,8 @@ class VerwaltungsController extends Controller
 
     /**
      * @Route("/restricted/sgl/passwordReset", name="passwdReset")
+     *
+     * setzt das Passwort bei allen Dozenten auf "testpass"
      */
     public function resetAction()
     {
@@ -77,7 +78,10 @@ class VerwaltungsController extends Controller
     /**
      * @Route("/restricted/sgl/createUsers", name="benutzerErstellen")
      * @Template("FHBingenMHBBundle:Verwaltung:benutzerErstellen.html.twig")
+     *
+     * Legt einen neuen Dozenten mit den eingegebenen Daten an
      */
+
     public function SglCreateUserAction()
     {
         //TODO: userCreate und updateUsers zusammenführen?
@@ -113,7 +117,10 @@ class VerwaltungsController extends Controller
     /**
      * @Route("/restricted/sgl/updateUsers/{userid}", name="benutzerBearbeiten")
      * @Template("FHBingenMHBBundle:Verwaltung:benutzerErstellen.html.twig")
+     *
+     * updatet einen bestimmten Dozent anhand der angegebenen Daten
      */
+
     public function SglUpdateUserAction($userid)
     {
         //TODO: userCreate und updateUsers zusammenführen?
@@ -157,7 +164,10 @@ class VerwaltungsController extends Controller
     /**
      * @Route("/restricted/sgl/showAllCourses", name="studiengangVerwaltung")
      * @Template("FHBingenMHBBundle:Verwaltung:alleStudiengaenge.html.twig")
+     *
+     * Sucht alle angelegten Studiengänge und gibt diese sortiert aus
      */
+
     public function SglShowAllCoursesAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -174,6 +184,8 @@ class VerwaltungsController extends Controller
     /**
      * @Route("/restricted/sgl/createCourse", name="studiengangErstellen")
      * @Template("FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig")
+     *
+     * Legt einen Studiengang anhand der angegebenen Daten an. Dazu gehören auch Fachgebiete und Vertiefungsrichtungen
      */
     public function SglCreateCourseAction()
     {
@@ -187,17 +199,19 @@ class VerwaltungsController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                /*
-                 * TODO:
-                 * - überprüfen ob Vertiefungsrichtung oder Fachgebiet doppelt in Feldern steht
-                 * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
-                 */
+
                 $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice
                 $studiengang->setGrad($form->get('grad')->getData());                   //choice
                 $studiengang->setTitel($form->get('titel')->getData());                 //text
                 $studiengang->setKuerzel($form->get('kuerzel')->getData());             //text
                 $studiengang->setBeschreibung($form->get('beschreibung')->getData());   //text
                 $studiengang->setSgl($form->get('sgl')->getData());                     //entity
+
+                /*
+              * TODO:
+              * - überprüfen ob Vertiefungsrichtung oder Fachgebiet doppelt in Feldern steht
+              * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
+              */
 
                 //hier keine Collection, sondern "nur" array
                 $vertiefungArr = $form->get('richtung')->getData();
