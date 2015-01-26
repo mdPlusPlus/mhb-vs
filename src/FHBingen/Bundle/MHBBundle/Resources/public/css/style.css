@@ -103,6 +103,6 @@ body {
 }
 
 div.ourButtons {
-    clear: both;
+    /*clear: both;*/
     margin-top: 50px;
 }
