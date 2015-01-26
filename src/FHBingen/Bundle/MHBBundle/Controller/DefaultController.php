@@ -91,4 +91,19 @@ class DefaultController extends Controller
 
         return new Response("Rollen angelegt");
     }
+
+    /**
+     * @Route("/create/vor")
+     */
+    public function voraussetzungAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $test = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>153));
+
+        $test->addModulVoraussetzung($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>1)));
+        $em->persist($test);
+        $em->flush();
+        return new Response("Data updated");
+    }
 }

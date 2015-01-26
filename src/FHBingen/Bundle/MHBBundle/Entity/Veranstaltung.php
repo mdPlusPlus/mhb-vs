@@ -1089,6 +1089,11 @@ class Veranstaltung
         return $this;
     }
 
+    public function addModul(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
+    {
+        return $this->addModulVoraussetzung($modulVoraussetzung);
+    }
+
     /*Studienplan*/
 
     /**
@@ -1113,6 +1118,11 @@ class Veranstaltung
     {
         //return $this->modulVoraussetzung;
         return $this->modul_;
+    }
+
+    public function getModul()
+    {
+        return $this->getModulVoraussetzung();
     }
 
     /**
