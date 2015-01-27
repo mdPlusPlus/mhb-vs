@@ -70,6 +70,7 @@ class Veranstaltung
      */
     protected $Kuerzel;
 
+    //TODO: Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
      * @ORM\Column(type="string", length=70, nullable=false)
      * @Assert\Length(
@@ -84,6 +85,7 @@ class Veranstaltung
      */
     protected $Name;
 
+    //TODO: Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
      * @ORM\Column(type="string", length=70, nullable=true)
      * @Assert\Length(
