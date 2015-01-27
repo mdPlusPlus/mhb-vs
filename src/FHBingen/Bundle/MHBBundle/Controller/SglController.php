@@ -21,10 +21,10 @@ use Symfony\Component\Validator\Constraints\Date;
 
 class SglController extends Controller
 {
-//    /**
-//     * legt fest wo die Modulhandbücher als PDF gespeichert werden
-//     */
-//    const MHB_PATH = 'mhb' . DIRECTORY_SEPARATOR;
+    /**
+     * legt fest wo die Modulhandbücher als PDF gespeichert werden
+     */
+    const MHB_PATH = 'mhb';
 
     /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
@@ -294,7 +294,7 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
 
-        $pdfPath = self::MHB_PATH . $mhb->getMhbTitel() . '.pdf';
+        $pdfPath = self::MHB_PATH . DIRECTORY_SEPARATOR . $mhb->getMhbTitel() . '.pdf';
 
         return new BinaryFileResponse($pdfPath);
     }
@@ -345,8 +345,8 @@ class SglController extends Controller
             $footerText = 'Fachbereich 2 - Technik, Informatik und Wirtschaft';
         }
 
-        //$pfad = self::MHB_PATH; //Konstante
-        $pfad = 'mhb' . DIRECTORY_SEPARATOR;
+        $pfad = self::MHB_PATH . DIRECTORY_SEPARATOR; //Konstante
+        //$pfad = 'mhb' . DIRECTORY_SEPARATOR;
         $titel = $mhb->getMhbTitel(); //TODO: Wichtig! Studiengangkürzel darf nicht mehr änderbar sein, sonst findet man den DL-Link nicht mehr!
         $output =  $pfad . $titel. '.pdf';
 
