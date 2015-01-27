@@ -21,10 +21,10 @@ use Symfony\Component\Validator\Constraints\Date;
 
 class SglController extends Controller
 {
-    /**
-     * legt fest wo die Modulhandbücher als PDF gespeichert werden
-     */
-    //const MHB_PATH = 'mhb' . DIRECTORY_SEPARATOR;
+//    /**
+//     * legt fest wo die Modulhandbücher als PDF gespeichert werden
+//     */
+//    const MHB_PATH = 'mhb' . DIRECTORY_SEPARATOR;
 
     /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
