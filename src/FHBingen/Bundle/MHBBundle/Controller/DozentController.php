@@ -487,21 +487,6 @@ class DozentController extends Controller
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
                 $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
 
-                if ($form->get('modul_')->getData()!= null) {
-                    $tmpVorussetzung = $modul->getModulVoraussetzung();
-                    $tmpCheck = true;
-                    foreach ($tmpVorussetzung as $entry) {
-                        if ($entry->getModulID() != $form->get('modul_')->getData()->getModulID()) {
-                            $modul->removeModulVoraussetzung($entry);
-                        } else {
-                            $tmpCheck= false;
-                        }
-                    }
-                    if ($tmpCheck) {
-                        $modul->addModulVoraussetzung();
-                    }
-                }
-
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
                 if (!empty($lehrendeArr)) {
                     foreach ($lehrendeArr as $lehrend) {
