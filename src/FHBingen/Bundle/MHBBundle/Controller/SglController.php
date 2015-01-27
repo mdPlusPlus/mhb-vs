@@ -21,6 +21,11 @@ use Symfony\Component\Validator\Constraints\Date;
 class SglController extends Controller
 {
     /**
+     * legt fest wo die Modulhandbücher als PDF gespeichert werden
+     */
+    const MHB_PATH = 'mhb' . DIRECTORY_SEPARATOR;
+
+    /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
      * @Template("FHBingenMHBBundle:SGL:alleModule.html.twig")
      *
@@ -312,8 +317,8 @@ class SglController extends Controller
             $footerText = 'Fachbereich 2 - Technik, Informatik und Wirtschaft';
         }
 
-        $pfad = 'mhb' . DIRECTORY_SEPARATOR;
-        $titel = 'MHB_' . $studiengang->getKuerzel() . '_' . $mhb->getGueltigAb() . '_V' . $mhb->getVersionsnummer();
+        $pfad = self::MHB_PATH; //Konstante
+        $titel = $this->getMhbTitle($mhb);
         $output =  $pfad . $titel. '.pdf';
 
         $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($htmlArr, $output, array(
@@ -324,7 +329,7 @@ class SglController extends Controller
             'header-font-size' => 10,
             'header-left' => $sgl,
             'header-center' => 'Modulhandbuch ' . $studiengang,
-            'header-right' => date('d.m.Y'), //'[date]',
+            'header-right' => date('d.m.Y'),
             'header-spacing' => 5, //in mm
             'footer-font-size' => 10,
             'footer-left' => 'Fachhochschule Bingen',
@@ -335,8 +340,8 @@ class SglController extends Controller
             //'no-outline' => true,
             //'dump-outline' => 'outline.xml',
             //'cover' => 'cover.html',
-            //'toc' => true,
-            //'xsl-style-sheet' => 'toc.xsl'
+            //'toc' => true,                    //auf VM aktivieren!
+            //'xsl-style-sheet' => 'toc.xsl'    //auf VM aktivieren!
         ), true); //overwrite
 
         /*
@@ -347,6 +352,13 @@ class SglController extends Controller
         */
 
         return new Response('PDF ' . $output . ' erstellt.');
+    }
+
+    private function getMhbTitle(Entity\Modulhandbuch $mhb)
+    {
+        $titel = 'MHB_' . $mhb->getGehoertZu()->getKuerzel() . '_' . $mhb->getGueltigAb() . '_V' . $mhb->getVersionsnummer();
+
+        return $titel;
     }
 
 
