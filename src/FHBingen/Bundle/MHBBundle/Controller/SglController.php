@@ -159,7 +159,7 @@ class SglController extends Controller
         $veranstaltungenBearbeitet = $em->createQuery(
             'SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,v.Autor
             FROM  FHBingenMHBBundle:Veranstaltung v
-            JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang='.$studiengang->getStudiengangID().' And v.Modul_ID = a.veranstaltung
+            JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang='.$studiengang->getStudiengangID().' AND v.Modul_ID = a.veranstaltung
             WHERE v.Erstellungsdatum > :mhbDatum ORDER BY v.Name ASC')
             ->setParameter('mhbDatum', $datum);
         $resultModul = $veranstaltungenBearbeitet->getResult();
@@ -178,7 +178,7 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         //Sucht das neuste Erstelldatum der MHBs des Studiengangs herraus
         $mhbs = $em->createQuery(
-            'SELECT Max(m.Erstellungsdatum) as Erstellungsdatum
+            'SELECT MAX(m.Erstellungsdatum) AS Erstellungsdatum
             FROM  FHBingenMHBBundle:Modulhandbuch m
             WHERE m.gehoertZu='.$studiengang->getStudiengangID()
         );
@@ -186,7 +186,7 @@ class SglController extends Controller
 
         //Da das return Value des QueryBuilers ein zweifach verschachteltes Array ist und wir das Ergebnis weiter verwenden wollen,
         //macht es Sinn, das Datum direkt als String in einer Variable zu speichern
-        //TODO: so wie bei Versionsnummer ändern ['Erstellungsdatum']
+        //TODO: so wie bei Versionsnummer ändern getSingleResult und  ['Erstellungsdatum']
         $datum = '01.01.1970';
         foreach ($resultMHB as $value) {
             foreach ($value as $v) {

@@ -172,7 +172,7 @@ class VerwaltungsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $mhb = $em->createQuery(
-            'SELECT s.Studiengang_ID,s.Titel as Studiengang,s.Grad,d.Titel, d.Nachname
+            'SELECT s.Studiengang_ID,s.Titel AS Studiengang,s.Grad,d.Titel, d.Nachname
             FROM  FHBingenMHBBundle:Studiengang s
             JOIN  FHBingenMHBBundle:Dozent d WITH  s.sgl =  d.Dozenten_ID
             ORDER BY Studiengang ASC'
