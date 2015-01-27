@@ -8,6 +8,7 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -59,6 +60,12 @@ class Modulhandbuch
      * @Assert\NotBlank(message = "Die Modulhandbuchbeschreibung darf nicht leer sein.")
      */
     protected $Beschreibung;
+
+    public function __construct()
+    {
+        $this->zuweisung = new ArrayCollection();
+        //TODO: funktioniert das?
+    }
 
     /**
      * Get MHB_ID
