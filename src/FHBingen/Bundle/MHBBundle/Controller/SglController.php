@@ -53,7 +53,7 @@ class SglController extends Controller
             $name = array();
             $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
             foreach ($tmp as $studiengang) {
-                $name[] = (string) $studiengang->getStudiengang();
+                $name[] = (string)$studiengang->getStudiengang();
             }
             asort($name, SORT_STRING);//Sortiert die Studiengänge nach name
             $stgZuModul[] = $name;
@@ -126,7 +126,7 @@ class SglController extends Controller
 
         }
 
-        return array('form' => $form->createView(), 'modul' => $modul,'studiengang' => $studiengang, 'pageTitle' => 'Modulcodeerstellung');
+        return array('form' => $form->createView(), 'modul' => $modul, 'studiengang' => $studiengang, 'pageTitle' => 'Modulcodeerstellung');
     }
 
 
@@ -165,12 +165,12 @@ class SglController extends Controller
         $veranstaltungenBearbeitet = $em->createQuery(
             'SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,v.Autor
             FROM  FHBingenMHBBundle:Veranstaltung v
-            JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang='.$studiengang->getStudiengangID().' AND v.Modul_ID = a.veranstaltung
+            JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang=' . $studiengang->getStudiengangID() . ' AND v.Modul_ID = a.veranstaltung
             WHERE v.Erstellungsdatum > :mhbDatum ORDER BY v.Name ASC')
             ->setParameter('mhbDatum', $datum);
         $resultModul = $veranstaltungenBearbeitet->getResult();
 
-        return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module aus '.$studiengang->__toString(), 'dateTime' => $datum);
+        return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module aus ' . $studiengang->__toString(), 'dateTime' => $datum);
     }
 
 
@@ -186,9 +186,9 @@ class SglController extends Controller
         $mhbs = $em->createQuery(
             'SELECT MAX(m.Erstellungsdatum) AS Erstellungsdatum
             FROM  FHBingenMHBBundle:Modulhandbuch m
-            WHERE m.gehoertZu='.$studiengang->getStudiengangID()
+            WHERE m.gehoertZu=' . $studiengang->getStudiengangID()
         );
-        $resultMHB =$mhbs->getResult();
+        $resultMHB = $mhbs->getResult();
 
         //Da das return Value des QueryBuilers ein zweifach verschachteltes Array ist und wir das Ergebnis weiter verwenden wollen,
         //macht es Sinn, das Datum direkt als String in einer Variable zu speichern
@@ -219,7 +219,7 @@ class SglController extends Controller
         //findet alle Veranstaltungen die dem MHB zugeordnet sind
         $mhbEintraege = $em->getRepository('FHBingenMHBBundle:ModulhandbuchZuweisung')->findBy(array('mhb' => $id));
         //findet die Beschreibung des MHB um MHB-Kontext im Twig anzeigen zulassen
-        $mhb =$em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $id));
+        $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $id));
 
         return array('mhbEintraege' => $mhbEintraege, 'mhb' => $mhb, 'pageTitle' => 'Module des Modulhandbuchs');
     }
@@ -304,7 +304,15 @@ class SglController extends Controller
 
         $pdfPath = self::MHB_PATH . DIRECTORY_SEPARATOR . $mhb->getMhbTitel() . '.pdf';
 
-        return new BinaryFileResponse($pdfPath);
+        //return new BinaryFileResponse($pdfPath);
+        return new BinaryFileResponse(
+            $pdfPath,
+            200,
+            array(
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="'. $mhb->getMhbTitel() .'.pdf"',
+            )
+        );
     }
 
 
