@@ -224,7 +224,14 @@ class SglController extends Controller
         return array('mhbEintraege' => $mhbEintraege, 'mhb' => $mhb, 'pageTitle' => 'Module des Modulhandbuchs');
     }
 
-    //Erstellt die Modulbeschreibungen für das Modulhandbuch
+
+    /**
+     * Erstellt die Modulbeschreibungen für das Modulhandbuch
+     *
+     * @param int $mhbID
+     *
+     * @return array
+     */
     private function createModulBeschreibungen($mhbID)
     {
         $em = $this->getDoctrine()->getManager();
