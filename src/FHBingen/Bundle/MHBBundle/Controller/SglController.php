@@ -273,7 +273,7 @@ class SglController extends Controller
 
 
     /**
-     * PDF-Export Test
+     * PDF-Export
      * @Route("/restricted/sgl/pdfErstellen/{mhbID}", name="pdfErstellen")
      *
      * Erstellt das Modulhanbduch mit hilfe der Daten aus der Datenbank und erstellt das MHB-PDF
@@ -312,7 +312,12 @@ class SglController extends Controller
             $footerText = 'Fachbereich 2 - Technik, Informatik und Wirtschaft';
         }
 
-        $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($htmlArr, array(
+        $pfad = 'mhb' . DIRECTORY_SEPARATOR;
+        $titel = 'MHB_' . $studiengang->getKuerzel() . '_' . $mhb->getGueltigAb() . '_V' . $mhb->getVersionsnummer();
+        $output =  $pfad . $titel. '.pdf';
+
+        $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($htmlArr, $output, array(
+        //$pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($htmlArr, array(
             'lowquality' => false,
             'orientation' => 'Portrait',
             'encoding' => 'utf8',
@@ -325,19 +330,23 @@ class SglController extends Controller
             'footer-left' => 'Fachhochschule Bingen',
             'footer-center' => $footerText,
             'footer-right' => '[page]/[toPage]',
-            'title' => $mhb->getBeschreibung(), //TODO: Ändern auf $studiengang + $versionsnummer?
+            'title' => $titel,
             'disable-javascript' => true,
             //'no-outline' => true,
-            //'cover' => 'cover.html',
-            'toc' => true,
-            'xsl-style-sheet' => 'toc.xsl'
             //'dump-outline' => 'outline.xml',
-        ));
+            //'cover' => 'cover.html',
+            //'toc' => true,
+            //'xsl-style-sheet' => 'toc.xsl'
+        ), true); //overwrite
 
+        /*
         return new Response($pdf, 200, array(
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="' . $mhb->getBeschreibung() . '.pdf"' //TODO: Ändern auf $studiengang + $versionsnummer?
+            'Content-Disposition' => 'attachment; filename="' . $title . 'pdf',
         ));
+        */
+
+        return new Response('PDF ' . $output . ' erstellt.');
     }
 
 

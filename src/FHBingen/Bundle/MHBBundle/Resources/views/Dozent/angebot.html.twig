@@ -38,6 +38,12 @@
 {%- endblock form_widget_compound %}
 
 {% block content %}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('modulplanungLink')); {# TODO: eigeneModule wie bei vorAngebot? oder modulplanung wie Herr Schmidt in S3 angemerkt hat? #}
+        });
+    </script>
     <h4 style="font-weight: bold">Angebotserstellung für {{ modul }} in {{ studiengang }}</h4>
     <div class="table-responsive">
         {{ form_start(form) }}
