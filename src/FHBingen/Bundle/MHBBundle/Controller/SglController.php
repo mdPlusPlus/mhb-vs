@@ -300,7 +300,7 @@ class SglController extends Controller
     }
 
 
-//  TODO: falls MHBs manuell erzeugt werden müssen, diese Zeilen einpflegen und mhbuerbischt.html.twig anpassen
+//  TODO: falls MHBs manuell erzeugt werden müssen, diese Zeilen einpflegen und mhbUerbischt.html.twig anpassen
 //   * @Route("/restricted/sgl/pdfErstellen/{mhbID}", name="pdfErstellen")
 //  public function pdfErstellenAction($mhbID)
 //  return new Response('done');
