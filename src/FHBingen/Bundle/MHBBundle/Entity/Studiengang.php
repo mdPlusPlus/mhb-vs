@@ -63,6 +63,13 @@ class Studiengang
      */
     protected $Titel;
 
+//  TODO:
+//  wurde vorerst entfertnt, weil aktuelle Kürzel nicht der Regel entsprechen und die Kürzel derzeit nicht geändert weren dürfen,
+//  da sonst der PDF-Download nicht mehr funktioniert
+//   * @Assert\Regex(
+//   *     pattern="/[A-Z]{2,5}/",
+//   *     message="Das Studiengang-Kürzel darf nur aus Großbuchstaben bestehen."
+//   * )
     /**
      * @ORM\Column(type="string", length=5, nullable=false, unique=true)
      * @Assert\NotBlank(message = "Das Studiengang-Kürzel darf nicht leer sein.")
@@ -71,10 +78,6 @@ class Studiengang
      *      max = 5,
      *      minMessage = "Ein Studiengang-Kürzel muss aus mindestens {{ limit }} Zeichen bestehen.",
      *      maxMessage = "Ein Studiengang-Kürzel darf aus maximal {{ limit }} Zeichen bestehen."
-     * )
-     * @Assert\Regex(
-     *     pattern="/[A-Z]{2,5}/",
-     *     message="Das Studiengang-Kürzel darf nur aus Großbuchstaben bestehen."
      * )
      */
     protected $Kuerzel;

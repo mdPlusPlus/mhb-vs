@@ -30,6 +30,11 @@ class Modulhandbuch
         return $string;
     }
 
+    public function getMhbTitel()
+    {
+        return 'MHB_' . $this->getGehoertZu()->getKuerzel() . '_' . $this->getGueltigAb() . '_V' . $this->getVersionsnummer();
+    }
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\ID

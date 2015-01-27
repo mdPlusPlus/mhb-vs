@@ -14,6 +14,7 @@ use FHBingen\Bundle\MHBBundle\PHP\ModulBeschreibung;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Validator\Constraints\Date;
@@ -204,6 +205,8 @@ class SglController extends Controller
 
 
     /**
+     * @deprecated
+     *
      * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
      * @Template("FHBingenMHBBundle:SGL:mhbModulListe.html.twig")
      *
@@ -278,12 +281,36 @@ class SglController extends Controller
 
 
     /**
+     * PDF-Download
+     *
+     * @param int $mhbID
+     *
+     * @return BinaryFileResponse
+     *
+     * @Route("/restricted/sgl/pdfDownload/{mhbID}", name="pdfDownload")
+     */
+    public function pdfDownloadAction($mhbID)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
+
+        $pdfPath = self::MHB_PATH . $mhb->getMhbTitel() . '.pdf';
+
+        return new BinaryFileResponse($pdfPath);
+    }
+
+
+// TODO: falls MHBs manuell erzeugt werden müssen, diese Zeilen einpflegen und mhbuerbischt.html.twig anpassen
+//   * @Route("/restricted/sgl/pdfErstellen/{mhbID}", name="pdfErstellen")
+//  public function pdfErstellenAction($mhbID)
+//  return new Response('done');
+
+    /**
      * PDF-Export
-     * @Route("/restricted/sgl/pdfErstellen/{mhbID}", name="pdfErstellen")
      *
      * Erstellt das Modulhanbduch mit hilfe der Daten aus der Datenbank und erstellt das MHB-PDF
      */
-    public function pdfErstellenAction($mhbID)
+    private function pdfErstellenAction($mhbID)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -318,7 +345,7 @@ class SglController extends Controller
         }
 
         $pfad = self::MHB_PATH; //Konstante
-        $titel = $this->getMhbTitle($mhb);
+        $titel = $mhb->getMhbTitel(); //TODO: Wichtig! Studiengangkürzel darf nicht mehr änderbar sein, sonst findet man den DL-Link nicht mehr!
         $output =  $pfad . $titel. '.pdf';
 
         $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($htmlArr, $output, array(
@@ -343,22 +370,6 @@ class SglController extends Controller
             //'toc' => true,                    //auf VM aktivieren!
             //'xsl-style-sheet' => 'toc.xsl'    //auf VM aktivieren!
         ), true); //overwrite
-
-        /*
-        return new Response($pdf, 200, array(
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="' . $title . 'pdf',
-        ));
-        */
-
-        return new Response('PDF ' . $output . ' erstellt.');
-    }
-
-    private function getMhbTitle(Entity\Modulhandbuch $mhb)
-    {
-        $titel = 'MHB_' . $mhb->getGehoertZu()->getKuerzel() . '_' . $mhb->getGueltigAb() . '_V' . $mhb->getVersionsnummer();
-
-        return $titel;
     }
 
 
@@ -610,6 +621,8 @@ class SglController extends Controller
                 }
 
                 $em->flush();
+
+                $this->pdfErstellenAction($mhb->getMHBID()); //schreibt das PDF
 
                 $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
 
