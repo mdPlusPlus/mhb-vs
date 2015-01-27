@@ -24,7 +24,7 @@ class SglController extends Controller
     /**
      * legt fest wo die Modulhandbücher als PDF gespeichert werden
      */
-    const MHB_PATH = 'mhb' . DIRECTORY_SEPARATOR;
+    //const MHB_PATH = 'mhb' . DIRECTORY_SEPARATOR;
 
     /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
@@ -345,7 +345,8 @@ class SglController extends Controller
             $footerText = 'Fachbereich 2 - Technik, Informatik und Wirtschaft';
         }
 
-        $pfad = self::MHB_PATH; //Konstante
+        //$pfad = self::MHB_PATH; //Konstante
+        $pfad = 'mhb' . DIRECTORY_SEPARATOR;
         $titel = $mhb->getMhbTitel(); //TODO: Wichtig! Studiengangkürzel darf nicht mehr änderbar sein, sonst findet man den DL-Link nicht mehr!
         $output =  $pfad . $titel. '.pdf';
 
