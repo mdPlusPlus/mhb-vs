@@ -26,6 +26,7 @@ Deployment
 - toc argument wieder aufnehmen
 - parameters.yml
 - assets:install
+- SQL-DB, ggf. Rollen und Semester anlegen (DefaultController)
 
 Voraussetzungen
 ----------------
