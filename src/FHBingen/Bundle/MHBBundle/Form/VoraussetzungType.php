@@ -1,10 +1,11 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: mohammad
- * Date: 08.12.2014
- * Time: 15:23
+ * User: Christian
+ * Date: 28.01.2015
+ * Time: 11:32
  */
+
 namespace FHBingen\Bundle\MHBBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
@@ -12,22 +13,16 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-
-class LehrendeType extends AbstractType
+class VoraussetzungType extends AbstractType
 {
-    /*
-     * wird von Veranstaltungtype genutzt
-     */
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
-            ->add('dozent', 'entity', array('label' => 'Dozent [#]:', 'required' => false, 'class' => 'FHBingenMHBBundle:Dozent',
+            ->add('modulVoraussetzung', 'entity', array('label' => 'Vorrausgesetztes Modul :', 'required'=> false, 'class' => 'FHBingenMHBBundle:Veranstaltung',
                 'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('d')
-                        ->OrderBy('d.Nachname', 'ASC');
-                },));
+                    return $er->createQueryBuilder('v')
+                        ->OrderBy('v.Name', 'ASC');
+                }));
     }
 
     /**
@@ -36,12 +31,12 @@ class LehrendeType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Lehrende'
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Veranstaltung'
         ));
     }
 
     public function getName()
     {
-        return 'lehrende';
+        return 'Voraussetzungen';
     }
 }

@@ -266,6 +266,7 @@ class Veranstaltung
      * @ORM\ManyToMany(targetEntity="Veranstaltung", mappedBy="modul_")
      */
     private $modulVoraussetzung;
+    //TODO: Dies wird benötigt um Voraussetzungen abzubilden
 
     /**
      * @ORM\ManyToMany(targetEntity="Veranstaltung", inversedBy="modulVoraussetzung")

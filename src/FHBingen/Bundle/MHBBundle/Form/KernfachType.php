@@ -11,7 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-//TODO: wo wird kernfachtype genutzt?
+//TODO: wo wird kernfachtype genutzt? kann raus
 class KernfachType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
