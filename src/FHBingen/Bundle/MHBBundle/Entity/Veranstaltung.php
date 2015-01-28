@@ -263,9 +263,9 @@ class Veranstaltung
     protected $kernfach;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Veranstaltung", mappedBy="modul_")
+     * @ORM\ManyToMany(targetEntity="Veranstaltung", mappedBy="modulX")
      */
-    private $modulVoraussetzung;
+    protected $modulVoraussetzung;
     //TODO: Dies wird benötigt um Voraussetzungen abzubilden
 
     /**
@@ -275,7 +275,7 @@ class Veranstaltung
      *      inverseJoinColumns={@ORM\JoinColumn(name="modulVoraussetzung", referencedColumnName="Modul_ID")}
      *      )
      */
-    private $modul_;
+    protected $modulX;
     //TODO: super unintitiv, modul_ ist eigentlich die Voraussetzung.
     /**
      * Constructor
@@ -287,7 +287,7 @@ class Veranstaltung
         $this->modul_kernfach = new ArrayCollection();
         $this->angebot = new ArrayCollection();
         $this->modulVoraussetzung = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->modul_ = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->modulX = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -1085,17 +1085,12 @@ class Veranstaltung
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung
      * @return Veranstaltung
      */
-    public function addModulVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
+    public function addModulX(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
     {
         //$this->modulVoraussetzung[] = $modulVoraussetzung;
-        $this->modul_[] = $modulVoraussetzung;
+        $this->modulX[] = $modulVoraussetzung;
 
         return $this;
-    }
-
-    public function addModul(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
-    {
-        return $this->addModulVoraussetzung($modulVoraussetzung);
     }
 
     /*Studienplan*/
@@ -1105,10 +1100,10 @@ class Veranstaltung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung
      */
-    public function removeModulVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
+    public function removeModulX(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
     {
         //$this->modulVoraussetzung->removeElement($modulVoraussetzung);
-        $this->modul_->removeElement($modulVoraussetzung);
+        $this->modulX->removeElement($modulVoraussetzung);
     }
 
     /*Kernfach*/
@@ -1118,16 +1113,12 @@ class Veranstaltung
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getModulVoraussetzung()
+    public function getModulX()
     {
         //return $this->modulVoraussetzung;
-        return $this->modul_;
+        return $this->modulX;
     }
 
-    public function getModul()
-    {
-        return $this->getModulVoraussetzung();
-    }
 
     /**
      * Add studienplan_modul

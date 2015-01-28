@@ -123,8 +123,6 @@
                 <td>{{ form_errors(form.SpracheSonstiges) }}</td>
             </tr>
             {{ form_row(form.literatur) }}
-            {% block voraussetzung %}
-            {% endblock voraussetzung %}
             {{ form_row(form.voraussetzungInh) }}
             {{ form_row(form.lehrveranstaltungen) }}
             {{ form_row(form.pruefungsformen) }}
@@ -138,6 +136,8 @@
             {{ form_row(form.PruefungsleistungSonstiges) }}
             {#{{ form_row(form.StudienleistungSonstiges) }}#}
         </table>
+        {% block voraussetzung %}
+        {% endblock voraussetzung %}
         {% block lehrende %}
         {% endblock lehrende %}
 

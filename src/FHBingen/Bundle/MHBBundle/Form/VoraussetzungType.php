@@ -18,11 +18,7 @@ class VoraussetzungType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('modulVoraussetzung', 'entity', array('label' => 'Vorrausgesetztes Modul :', 'required'=> false, 'class' => 'FHBingenMHBBundle:Veranstaltung',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('v')
-                        ->OrderBy('v.Name', 'ASC');
-                }));
+            ->add('modulX', 'entity', array('label' => 'Vorrausgesetztes Modul:', 'required'=> false, 'class' => 'FHBingenMHBBundle:Veranstaltung'));
     }
 
     /**

@@ -343,21 +343,6 @@ class DozentController extends Controller
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
-                if ($form->get('modulVoraussetzung')->getData()!= null) {
-                    $tmpVorussetzung = $modul->getModulVoraussetzung();
-                    $tmpCheck = true;
-                    foreach ($tmpVorussetzung as $entry) {
-                        if ($entry->getModulID() != $form->get('modulVoraussetzung')->getData()->getModulID()) {
-                            $modul->removeModulVoraussetzung($entry);
-                        } else {
-                            $tmpCheck= false;
-                        }
-                    }
-                    if ($tmpCheck) {
-                        $modul->addModulVoraussetzung($form->get('modulVoraussetzung')->getData());
-                    }
-                }
-
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();
 
                 foreach ($lehrendeArr as $lehrend) {
@@ -386,6 +371,15 @@ class DozentController extends Controller
                         $em->persist($dozentTmp);
                     }
 
+                }
+
+                $voraussetzungArr = $form->get('modulX')->getData()->toArray();
+//                $vorTmp = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array(array('Modul_ID' => $id, 'Status' => "freigegeben")))->getModulVoraussetzung();
+//                    for($i = sizeof($vorTmp); $i>0; $i--) {
+//                        $modul->removeModulVoraussetzung($vorTmp[i]);
+//                    }
+                foreach ($voraussetzungArr as $vor) {
+                    $modul->addModulX($vor);
                 }
 
                 try {

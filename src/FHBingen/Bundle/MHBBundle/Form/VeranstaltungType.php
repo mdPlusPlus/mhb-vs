@@ -42,8 +42,6 @@ class VeranstaltungType extends AbstractType
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('PruefungsleistungSonstiges', 'text', array('label' => 'Erläuterungen:', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
             //->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung :', 'required' =>false, 'attr' => array('class' => 'sonstigesClass')))
-            //->add('modulVoraussetzung', 'entity', array('label' => 'Vorrausgesetztes Modul :', 'required'=> false, 'class' => 'FHBingenMHBBundle:Veranstaltung'));
-            //TODO: Was ist mit "Voraussetzungen formal" ? --> Tabelle Vorausetzungen
 
 
     }
@@ -124,7 +122,7 @@ class VeranstaltungType extends AbstractType
         );
         $form->add('lehrende', 'collection', $lehrendeOptions);
 
-        $voraussetzung =$input->getModulVoraussetzung();
+        $voraussetzung =$input->getModulX();
         $voraussetzungOptions = array('label' => false, 'type' => new VoraussetzungType(),
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
             'options' => array(
@@ -134,6 +132,7 @@ class VeranstaltungType extends AbstractType
                 )
             )
         );
+        $form->add('modulX', 'collection', $voraussetzungOptions);
 
     }
 
