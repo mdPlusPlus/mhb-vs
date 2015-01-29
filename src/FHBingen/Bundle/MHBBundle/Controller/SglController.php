@@ -30,10 +30,10 @@ class SglController extends Controller
      */
     const WKHTMLTOPDF_BIN_WIN = '"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"';
 
-    /**
-     * Pfad zur Linux-Binary von wkhtmltopdf
-     */
-    const WKHTMLTOPDF_BIN_LIN = '/home/proj/symfony/vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64'; //TODO
+//    /**
+//     * Pfad zur Linux-Binary von wkhtmltopdf
+//     */
+//    const WKHTMLTOPDF_BIN_LIN = '/home/proj/symfony/vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64'; //TODO
 
 
     /**
@@ -400,7 +400,7 @@ class SglController extends Controller
         //OS check
         if (strpos(php_uname(), 'Windows') === false) {
             //not windows
-            $this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary(self::WKHTMLTOPDF_BIN_LIN);
+            //$this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary(self::WKHTMLTOPDF_BIN_LIN);
             $wkthmltopdfOptions['toc'] = true;                      //auf VM aktivieren!
             $wkthmltopdfOptions['xsl-style-sheet'] = 'toc.xsl';     //auf VM aktivieren!
         } else {
