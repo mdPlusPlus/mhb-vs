@@ -121,18 +121,4 @@ class DefaultController extends Controller
 
         return new Response($result);
     }
-
-
-    /**
-     * Nur ein Test
-     *
-     * @Route("/bin")
-     */
-    public function binAction()
-    {
-        $this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary('"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"');
-        $string = $this->get('knp_snappy.pdf')->getInternalGenerator()->getBinary();
-
-        return new Response($string);
-    }
 }
