@@ -27,6 +27,17 @@ class SglController extends Controller
     const MHB_PATH = 'mhb';
 
     /**
+     * Pfad zur Windows-Binary von wkhtmltopdf
+     */
+    const WKHTMLTOPDF_BIN_WIN = '"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"';
+
+    /**
+     * Pfad zur Linux-Binary von wkhtmltopdf
+     */
+    const WKHTMLTOPDF_BIN_LIN = '/home/proj/symfony/vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64'; //TODO
+
+
+    /**
      * @Route("/restricted/sgl/alleModule", name="alleModule")
      * @Template("FHBingenMHBBundle:SGL:alleModule.html.twig")
      *
@@ -53,7 +64,7 @@ class SglController extends Controller
             $name = array();
             $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
             foreach ($tmp as $studiengang) {
-                $name[] = (string)$studiengang->getStudiengang();
+                $name[] = (string) $studiengang->getStudiengang();
             }
             asort($name, SORT_STRING);//Sortiert die Studiengänge nach name
             $stgZuModul[] = $name;
@@ -250,7 +261,8 @@ class SglController extends Controller
 
             $modulBeschreibung = new ModulBeschreibung();
             $modulBeschreibung->setAngebot($angebot);
-            $modulBeschreibung->setVoraussetzungen($veranstaltung->getModulVoraussetzung());
+            //$modulBeschreibung->setVoraussetzungen($veranstaltung->getModulVoraussetzung());
+            $modulBeschreibung->setVoraussetzungen($veranstaltung->getModulX());
             $modulBeschreibung->setPruefungsformen($encoder->decode($veranstaltung->getPruefungsformen(), 'json'));
             $modulBeschreibung->setLehrveranstaltungen($encoder->decode($veranstaltung->getLehrveranstaltungen(), 'json'));
             $modulBeschreibung->setVoraussetzungenLP($encoder->decode($veranstaltung->getVoraussetzungLP(), 'json'));
@@ -366,8 +378,7 @@ class SglController extends Controller
         $titel = $mhb->getMhbTitel(); //TODO: Wichtig! Studiengangkürzel darf nicht mehr änderbar sein, sonst findet man den DL-Link nicht mehr!
         $output =  $pfad . $titel. '.pdf';
 
-        $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($htmlArr, $output, array(
-        //$pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($htmlArr, array(
+        $wkthmltopdfOptions = array(
             'lowquality' => false,
             'orientation' => 'Portrait',
             'encoding' => 'utf8',
@@ -385,9 +396,20 @@ class SglController extends Controller
             //'no-outline' => true,
             //'dump-outline' => 'outline.xml',
             //'cover' => 'cover.html',
-            //'toc' => true,                    //auf VM aktivieren!
-            //'xsl-style-sheet' => 'toc.xsl'    //auf VM aktivieren!
-        ), true); //overwrite
+        );
+
+        //OS check
+        if (strpos(php_uname(), 'Windows') === false) {
+            //not windows
+            $this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary(self::WKHTMLTOPDF_BIN_LIN);
+            $wkthmltopdfOptions['toc'] = true;                      //auf VM aktivieren!
+            $wkthmltopdfOptions['xsl-style-sheet'] = 'toc.xsl';     //auf VM aktivieren!
+        } else {
+            //windows
+            $this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary(self::WKHTMLTOPDF_BIN_WIN);
+        }
+
+        $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($htmlArr, $output, $wkthmltopdfOptions, true); //overwrite
     }
 
 
