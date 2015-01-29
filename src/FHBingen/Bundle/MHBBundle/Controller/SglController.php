@@ -401,8 +401,10 @@ class SglController extends Controller
         if (strpos(php_uname(), 'Windows') === false) {
             //not windows
             $this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary(self::WKHTMLTOPDF_BIN_LIN);
-            $wkthmltopdfOptions['toc'] = true;                      //auf VM aktivieren!
-            //$wkthmltopdfOptions['xsl-style-sheet'] = 'toc.xsl';     //auf VM aktivieren!
+
+            //funktioniert unter windows nicht
+            $wkthmltopdfOptions['toc'] = true;
+            $wkthmltopdfOptions['xsl-style-sheet'] = 'bundles/fhbingenmhb/xsl/toc.xsl';
         } else {
             //windows
             $this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary(self::WKHTMLTOPDF_BIN_WIN);
