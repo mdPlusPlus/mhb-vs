@@ -27,7 +27,7 @@
           ul ul {font-size: 80%; }
           ul {padding-left: 0em;}
           ul ul {padding-left: 1em;}
-          a {text-decoration:none; color: black;}
+          a {text-decoration:none; color: black;}		  		  a.fachgebiet {text-decoration:none; color: black; font-weight: bold;}
         </style>
       </head>
       <body>
@@ -46,7 +46,7 @@
             </xsl:if>
             <xsl:if test="@backLink">
               <xsl:attribute name="name"><xsl:value-of select="@backLink"/></xsl:attribute>
-            </xsl:if>
+            </xsl:if>						<xsl:if test="contains(@title, '(')">              <xsl:attribute name="class">fachgebiet</xsl:attribute>            </xsl:if>
             <xsl:value-of select="@title" /> 
           </a>
           <span> <xsl:value-of select="@page" /> </span>
