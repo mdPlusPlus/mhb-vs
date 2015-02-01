@@ -2,6 +2,7 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
+use FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -102,18 +103,19 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $test = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>153));
+        $test = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>156));
 
-        $test->addModulX($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>1)));
-        $test->addModulX($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>4)));
-        $test->addModulX($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>3)));
-
-        $em->persist($test);
-        $em->flush();
-
-        $entries = $test->getModulX();
-
+//        $mv = new Modulvoraussetzung();
+//        $mv->setModul($test);
+//        $mv->setVoraussetzung($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>5)));
+//        $test->addForderung($mv);
         $result ="";
+//
+//        $em->persist($mv);
+//        $em->persist($test);
+//        $em->flush();
+
+        $entries = $test->getLehrende();
 
         foreach ($entries as $entry) {
             $result= $result."+++".$entry;
