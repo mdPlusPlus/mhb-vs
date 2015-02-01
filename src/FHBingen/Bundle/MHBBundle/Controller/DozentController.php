@@ -370,13 +370,15 @@ class DozentController extends Controller
 
                 }
 
-                $voraussetzungArr = $form->get('modulX')->getData()->toArray();
+                $voraussetzungArr = $form->get('forderung')->getData()->toArray();
 //                $vorTmp = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array(array('Modul_ID' => $id, 'Status' => "freigegeben")))->getModulVoraussetzung();
 //                    for($i = sizeof($vorTmp); $i>0; $i--) {
 //                        $modul->removeModulVoraussetzung($vorTmp[i]);
 //                    }
-                foreach ($voraussetzungArr as $vor) {
-                    $modul->addModulX($vor);
+                foreach ($voraussetzungArr as $vor){
+                    $vor->setModul($modul);
+                    $em->persist($modul);
+                    $em->persist($vor);
                 }
 
                 try {

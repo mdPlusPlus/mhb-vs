@@ -18,7 +18,7 @@ class VoraussetzungType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('modulX', 'entity', array('label' => 'Vorrausgesetztes Modul:', 'required'=> false, 'class' => 'FHBingenMHBBundle:Veranstaltung'));
+            ->add('voraussetzung', 'entity', array('label' => 'Vorrausgesetztes Modul:', 'required'=> false, 'class' => 'FHBingenMHBBundle:Veranstaltung'));
     }
 
     /**
@@ -27,12 +27,12 @@ class VoraussetzungType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Veranstaltung'
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung'
         ));
     }
 
     public function getName()
     {
-        return 'Voraussetzungen';
+        return 'forderung';
     }
 }

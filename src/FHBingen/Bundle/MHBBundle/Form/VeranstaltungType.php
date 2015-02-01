@@ -110,7 +110,7 @@ class VeranstaltungType extends AbstractType
 
 
 
-        $lehrende = $input->getLehrende();
+        //$lehrende = $input->getLehrende();
         $lehrendeOptions = array('label' => false, 'type' => new LehrendeType(),
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
             'options' => array(
@@ -122,7 +122,7 @@ class VeranstaltungType extends AbstractType
         );
         $form->add('lehrende', 'collection', $lehrendeOptions);
 
-        $voraussetzung =$input->getModulX();
+        //$voraussetzung =$input->getForderung();
         $voraussetzungOptions = array('label' => false, 'type' => new VoraussetzungType(),
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
             'options' => array(
@@ -132,7 +132,7 @@ class VeranstaltungType extends AbstractType
                 )
             )
         );
-        $form->add('modulX', 'collection', $voraussetzungOptions);
+        $form->add('forderung', 'collection', $voraussetzungOptions);
 
     }
 

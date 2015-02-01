@@ -263,20 +263,32 @@ class Veranstaltung
     protected $kernfach;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Veranstaltung", mappedBy="modulX")
+     * @ORM\OneToMany(targetEntity="Modulvoraussetzung", mappedBy="modul", cascade={"all"})
      */
-    protected $modulVoraussetzung;
-    //TODO: Dies wird benötigt um Voraussetzungen abzubilden
+    private $grundmodul;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Veranstaltung", inversedBy="modulVoraussetzung")
-     * @ORM\JoinTable(name="Voraussetzungen",
-     *      joinColumns={@ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="modulVoraussetzung", referencedColumnName="Modul_ID")}
-     *      )
+     * @ORM\OneToMany(targetEntity="Modulvoraussetzung", mappedBy="voraussetzung", cascade={"all"})
      */
-    protected $modulX;
-    //TODO: super unintitiv, modul_ ist eigentlich die Voraussetzung.
+    private $forderung;
+
+
+//    /**
+//     * @ORM\ManyToMany(targetEntity="Veranstaltung", mappedBy="modulX")
+//     */
+//    protected $modulVoraussetzung;
+//    //TODO: Dies wird benötigt um Voraussetzungen abzubilden
+//
+//    /**
+//     * @ORM\ManyToMany(targetEntity="Veranstaltung", inversedBy="modulVoraussetzung")
+//     * @ORM\JoinTable(name="Voraussetzungen",
+//     *      joinColumns={@ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID")},
+//     *      inverseJoinColumns={@ORM\JoinColumn(name="modulVoraussetzung", referencedColumnName="Modul_ID")}
+//     *      )
+//     */
+//    protected $modulX;
+//    //TODO: super unintitiv, modul_ ist eigentlich die Voraussetzung.
+
     /**
      * Constructor
      */
@@ -286,8 +298,10 @@ class Veranstaltung
         $this->semesterplan = new ArrayCollection();
         $this->modul_kernfach = new ArrayCollection();
         $this->angebot = new ArrayCollection();
-        $this->modulVoraussetzung = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->modulX = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->basis = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->forderung = new \Doctrine\Common\Collections\ArrayCollection();
+//        $this->modulVoraussetzung = new \Doctrine\Common\Collections\ArrayCollection();
+//        $this->modulX = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -300,47 +314,16 @@ class Veranstaltung
         return $string;
     }
 
-    /**
-     * Get Name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->Name;
-    }
 
-    /**
-     * Set Name
-     *
-     * @param string $name
-     * @return Veranstaltung
-     */
-    public function setName($name)
-    {
-        $this->Name = $name;
-
-        return $this;
-    }
 
     /**
      * Get Modul_ID
      *
-     * @return integer
+     * @return integer 
      */
     public function getModulID()
     {
         return $this->Modul_ID;
-    }
-
-    /**
-     * Get Erstellungsdatum
-     *
-     * @return \DateTime
-     */
-    public function getErstellungsdatum()
-    {
-        return $this->Erstellungsdatum;
     }
 
     /**
@@ -352,41 +335,41 @@ class Veranstaltung
     public function setErstellungsdatum($erstellungsdatum)
     {
         $this->Erstellungsdatum = $erstellungsdatum;
-
+    
         return $this;
     }
 
     /**
-     * Get Versionsnummer_Modul
+     * Get Erstellungsdatum
      *
-     * @return integer
+     * @return \DateTime 
+     */
+    public function getErstellungsdatum()
+    {
+        return $this->Erstellungsdatum;
+    }
+
+    /**
+     * Set Versionsnummer
+     *
+     * @param integer $versionsnummer
+     * @return Veranstaltung
+     */
+    public function setVersionsnummer($versionsnummer)
+    {
+        $this->Versionsnummer = $versionsnummer;
+    
+        return $this;
+    }
+
+    /**
+     * Get Versionsnummer
+     *
+     * @return integer 
      */
     public function getVersionsnummer()
     {
         return $this->Versionsnummer;
-    }
-
-    /**
-     * Set Versionsnummer_Modul
-     *
-     * @param integer $versionsnummerModul
-     * @return Veranstaltung
-     */
-    public function setVersionsnummer($versionsnummerModul)
-    {
-        $this->Versionsnummer = $versionsnummerModul;
-
-        return $this;
-    }
-
-    /**
-     * Get Status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->Status;
     }
 
     /**
@@ -398,18 +381,18 @@ class Veranstaltung
     public function setStatus($status)
     {
         $this->Status = $status;
-
+    
         return $this;
     }
 
     /**
-     * Get Kuerzel
+     * Get Status
      *
-     * @return string
+     * @return string 
      */
-    public function getKuerzel()
+    public function getStatus()
     {
-        return $this->Kuerzel;
+        return $this->Status;
     }
 
     /**
@@ -421,41 +404,64 @@ class Veranstaltung
     public function setKuerzel($kuerzel)
     {
         $this->Kuerzel = $kuerzel;
-
+    
         return $this;
     }
 
     /**
-     * Get Name_en
+     * Get Kuerzel
      *
-     * @return string
+     * @return string 
      */
-    public function getNameEn()
+    public function getKuerzel()
     {
-        return $this->NameEN;
+        return $this->Kuerzel;
     }
 
     /**
-     * Set Name_en
+     * Set Name
      *
-     * @param string $nameEn
+     * @param string $name
      * @return Veranstaltung
      */
-    public function setNameEn($nameEn)
+    public function setName($name)
     {
-        $this->NameEN = $nameEn;
-
+        $this->Name = $name;
+    
         return $this;
     }
 
     /**
-     * Get Haeufigkeit
+     * Get Name
      *
-     * @return string
+     * @return string 
      */
-    public function getHaeufigkeit()
+    public function getName()
     {
-        return $this->Haeufigkeit;
+        return $this->Name;
+    }
+
+    /**
+     * Set NameEN
+     *
+     * @param string $nameEN
+     * @return Veranstaltung
+     */
+    public function setNameEN($nameEN)
+    {
+        $this->NameEN = $nameEN;
+    
+        return $this;
+    }
+
+    /**
+     * Get NameEN
+     *
+     * @return string 
+     */
+    public function getNameEN()
+    {
+        return $this->NameEN;
     }
 
     /**
@@ -467,41 +473,41 @@ class Veranstaltung
     public function setHaeufigkeit($haeufigkeit)
     {
         $this->Haeufigkeit = $haeufigkeit;
+    
+        return $this;
+    }
 
+    /**
+     * Get Haeufigkeit
+     *
+     * @return string 
+     */
+    public function getHaeufigkeit()
+    {
+        return $this->Haeufigkeit;
+    }
+
+    /**
+     * Set Dauer
+     *
+     * @param string $dauer
+     * @return Veranstaltung
+     */
+    public function setDauer($dauer)
+    {
+        $this->Dauer = $dauer;
+    
         return $this;
     }
 
     /**
      * Get Dauer
      *
-     * @return integer
+     * @return string 
      */
     public function getDauer()
     {
         return $this->Dauer;
-    }
-
-    /**
-     * Set Dauer
-     *
-     * @param integer $dauer
-     * @return Veranstaltung
-     */
-    public function setDauer($dauer)
-    {
-        $this->Dauer = $dauer;
-
-        return $this;
-    }
-
-    /**
-     * Get Lehrveranstaltungen
-     *
-     * @return string
-     */
-    public function getLehrveranstaltungen()
-    {
-        return $this->Lehrveranstaltungen;
     }
 
     /**
@@ -513,22 +519,22 @@ class Veranstaltung
     public function setLehrveranstaltungen($lehrveranstaltungen)
     {
         $this->Lehrveranstaltungen = $lehrveranstaltungen;
-
+    
         return $this;
     }
 
     /**
-     * Get Kontaktzeit_VL
+     * Get Lehrveranstaltungen
      *
-     * @return integer
+     * @return string 
      */
-    public function getKontaktzeitVL()
+    public function getLehrveranstaltungen()
     {
-        return $this->KontaktzeitVL;
+        return $this->Lehrveranstaltungen;
     }
 
     /**
-     * Set Kontaktzeit_VL
+     * Set KontaktzeitVL
      *
      * @param integer $kontaktzeitVL
      * @return Veranstaltung
@@ -536,22 +542,22 @@ class Veranstaltung
     public function setKontaktzeitVL($kontaktzeitVL)
     {
         $this->KontaktzeitVL = $kontaktzeitVL;
-
+    
         return $this;
     }
 
     /**
-     * Get Kontaktzeit_sonstige
+     * Get KontaktzeitVL
      *
-     * @return integer
+     * @return integer 
      */
-    public function getKontaktzeitSonstige()
+    public function getKontaktzeitVL()
     {
-        return $this->KontaktzeitSonstige;
+        return $this->KontaktzeitVL;
     }
 
     /**
-     * Set Kontaktzeit_sonstige
+     * Set KontaktzeitSonstige
      *
      * @param integer $kontaktzeitSonstige
      * @return Veranstaltung
@@ -559,18 +565,18 @@ class Veranstaltung
     public function setKontaktzeitSonstige($kontaktzeitSonstige)
     {
         $this->KontaktzeitSonstige = $kontaktzeitSonstige;
-
+    
         return $this;
     }
 
     /**
-     * Get Selbststudium
+     * Get KontaktzeitSonstige
      *
-     * @return integer
+     * @return integer 
      */
-    public function getSelbststudium()
+    public function getKontaktzeitSonstige()
     {
-        return $this->Selbststudium;
+        return $this->KontaktzeitSonstige;
     }
 
     /**
@@ -582,18 +588,18 @@ class Veranstaltung
     public function setSelbststudium($selbststudium)
     {
         $this->Selbststudium = $selbststudium;
-
+    
         return $this;
     }
 
     /**
-     * Get Gruppengroesse
+     * Get Selbststudium
      *
-     * @return integer
+     * @return integer 
      */
-    public function getGruppengroesse()
+    public function getSelbststudium()
     {
-        return $this->Gruppengroesse;
+        return $this->Selbststudium;
     }
 
     /**
@@ -605,18 +611,18 @@ class Veranstaltung
     public function setGruppengroesse($gruppengroesse)
     {
         $this->Gruppengroesse = $gruppengroesse;
-
+    
         return $this;
     }
 
     /**
-     * Get Lernergebnisse
+     * Get Gruppengroesse
      *
-     * @return string
+     * @return integer 
      */
-    public function getLernergebnisse()
+    public function getGruppengroesse()
     {
-        return $this->Lernergebnisse;
+        return $this->Gruppengroesse;
     }
 
     /**
@@ -628,18 +634,18 @@ class Veranstaltung
     public function setLernergebnisse($lernergebnisse)
     {
         $this->Lernergebnisse = $lernergebnisse;
-
+    
         return $this;
     }
 
     /**
-     * Get Inhalte
+     * Get Lernergebnisse
      *
-     * @return string
+     * @return string 
      */
-    public function getInhalte()
+    public function getLernergebnisse()
     {
-        return $this->Inhalte;
+        return $this->Lernergebnisse;
     }
 
     /**
@@ -651,18 +657,18 @@ class Veranstaltung
     public function setInhalte($inhalte)
     {
         $this->Inhalte = $inhalte;
-
+    
         return $this;
     }
 
     /**
-     * Get Pruefungsformen
+     * Get Inhalte
      *
-     * @return string
+     * @return string 
      */
-    public function getPruefungsformen()
+    public function getInhalte()
     {
-        return $this->Pruefungsformen;
+        return $this->Inhalte;
     }
 
     /**
@@ -674,14 +680,37 @@ class Veranstaltung
     public function setPruefungsformen($pruefungsformen)
     {
         $this->Pruefungsformen = $pruefungsformen;
-
+    
         return $this;
     }
 
     /**
-     * Get PruefungsformenSonstiges
+     * Get Pruefungsformen
      *
-     * @return string
+     * @return string 
+     */
+    public function getPruefungsformen()
+    {
+        return $this->Pruefungsformen;
+    }
+
+    /**
+     * Set PruefungsformSonstiges
+     *
+     * @param string $pruefungsformSonstiges
+     * @return Veranstaltung
+     */
+    public function setPruefungsformSonstiges($pruefungsformSonstiges)
+    {
+        $this->PruefungsformSonstiges = $pruefungsformSonstiges;
+    
+        return $this;
+    }
+
+    /**
+     * Get PruefungsformSonstiges
+     *
+     * @return string 
      */
     public function getPruefungsformSonstiges()
     {
@@ -689,72 +718,49 @@ class Veranstaltung
     }
 
     /**
-     * Set PruefungsformSonstiges
-     *
-     * @param string $pruefungsformen
-     * @return Veranstaltung
-     */
-    public function setPruefungsformSonstiges($pruefungsformSonst)
-    {
-        $this->PruefungsformSonstiges = $pruefungsformSonst;
-
-        return $this;
-    }
-
-    /**
-     * Get Sprache
-     *
-     * @return string
-     */
-    public function getSprache()
-    {
-        return $this->Sprache;
-    }
-
-    /**
      * Set PruefungsleistungSonstiges
      *
-     * @param string $pruefungsleistungSonst
+     * @param string $pruefungsleistungSonstiges
      * @return Veranstaltung
      */
-    public function setPruefungsleistungSonstiges($pruefungsleistungSonst)
+    public function setPruefungsleistungSonstiges($pruefungsleistungSonstiges)
     {
-        $this->PruefungsleistungSonstiges = $pruefungsleistungSonst;
-
-        return $this;
-    }
-
-    /**
-     * Get StudienleistungSonstiges
-     *
-     * @return string
-     */
-    public function getStudienleistungSonstiges()
-    {
-        return $this->StudienleistungSonstiges;
-    }
-
-    /**
-     * Set PruefungsleistungSonstiges
-     *
-     * @param string $StudienleistungSonstiges
-     * @return Veranstaltung
-     */
-    public function setStudienleistungSonstiges($StudienleistungSonst)
-    {
-        $this->StudienleistungSonstiges = $StudienleistungSonst;
-
+        $this->PruefungsleistungSonstiges = $pruefungsleistungSonstiges;
+    
         return $this;
     }
 
     /**
      * Get PruefungsleistungSonstiges
      *
-     * @return string
+     * @return string 
      */
     public function getPruefungsleistungSonstiges()
     {
         return $this->PruefungsleistungSonstiges;
+    }
+
+    /**
+     * Set StudienleistungSonstiges
+     *
+     * @param string $studienleistungSonstiges
+     * @return Veranstaltung
+     */
+    public function setStudienleistungSonstiges($studienleistungSonstiges)
+    {
+        $this->StudienleistungSonstiges = $studienleistungSonstiges;
+    
+        return $this;
+    }
+
+    /**
+     * Get StudienleistungSonstiges
+     *
+     * @return string 
+     */
+    public function getStudienleistungSonstiges()
+    {
+        return $this->StudienleistungSonstiges;
     }
 
     /**
@@ -766,18 +772,41 @@ class Veranstaltung
     public function setSprache($sprache)
     {
         $this->Sprache = $sprache;
-
+    
         return $this;
     }
 
     /**
      * Get Sprache
      *
-     * @return string
+     * @return string 
      */
-    public function getAutor()
+    public function getSprache()
     {
-        return $this->Autor;
+        return $this->Sprache;
+    }
+
+    /**
+     * Set SpracheSonstiges
+     *
+     * @param string $spracheSonstiges
+     * @return Veranstaltung
+     */
+    public function setSpracheSonstiges($spracheSonstiges)
+    {
+        $this->SpracheSonstiges = $spracheSonstiges;
+    
+        return $this;
+    }
+
+    /**
+     * Get SpracheSonstiges
+     *
+     * @return string 
+     */
+    public function getSpracheSonstiges()
+    {
+        return $this->SpracheSonstiges;
     }
 
     /**
@@ -789,40 +818,18 @@ class Veranstaltung
     public function setAutor($autor)
     {
         $this->Autor = $autor;
-
+    
         return $this;
     }
 
     /**
-     * Get SpracheSonstiges
+     * Get Autor
      *
-     * @return string
+     * @return string 
      */
-    public function getSpracheSonstiges()
+    public function getAutor()
     {
-        return $this->SpracheSonstiges;
-    }
-
-    /**
-     * Set SpracheSonstiges
-     * @param string $sprache
-     * @return Veranstaltung
-     */
-    public function setSpracheSonstiges($sprache)
-    {
-        $this->SpracheSonstiges = $sprache;
-
-        return $this;
-    }
-
-    /**
-     * Get Literatur
-     *
-     * @return string
-     */
-    public function getLiteratur()
-    {
-        return $this->Literatur;
+        return $this->Autor;
     }
 
     /**
@@ -834,18 +841,18 @@ class Veranstaltung
     public function setLiteratur($literatur)
     {
         $this->Literatur = $literatur;
-
+    
         return $this;
     }
 
     /**
-     * Get Leistungspunkte
+     * Get Literatur
      *
-     * @return integer
+     * @return string 
      */
-    public function getLeistungspunkte()
+    public function getLiteratur()
     {
-        return $this->Leistungspunkte;
+        return $this->Literatur;
     }
 
     /**
@@ -857,22 +864,22 @@ class Veranstaltung
     public function setLeistungspunkte($leistungspunkte)
     {
         $this->Leistungspunkte = $leistungspunkte;
-
+    
         return $this;
     }
 
     /**
-     * Get Voraussetzung_LP
+     * Get Leistungspunkte
      *
-     * @return string
+     * @return integer 
      */
-    public function getVoraussetzungLP()
+    public function getLeistungspunkte()
     {
-        return $this->VoraussetzungLP;
+        return $this->Leistungspunkte;
     }
 
     /**
-     * Set Voraussetzung_LP
+     * Set VoraussetzungLP
      *
      * @param string $voraussetzungLP
      * @return Veranstaltung
@@ -880,64 +887,41 @@ class Veranstaltung
     public function setVoraussetzungLP($voraussetzungLP)
     {
         $this->VoraussetzungLP = $voraussetzungLP;
-
+    
         return $this;
     }
 
     /**
-     * Set Voraussetzung_inh
+     * Get VoraussetzungLP
      *
-     * @param string $voraussetzungInh
+     * @return string 
+     */
+    public function getVoraussetzungLP()
+    {
+        return $this->VoraussetzungLP;
+    }
+
+    /**
+     * Set VoraussetzungInhalte
+     *
+     * @param string $voraussetzungInhalte
      * @return Veranstaltung
      */
-    public function setVoraussetzungInh($voraussetzungInh)
+    public function setVoraussetzungInh($voraussetzungInhalte)
     {
-        $this->VoraussetzungInhalte = $voraussetzungInh;
-
+        $this->VoraussetzungInhalte = $voraussetzungInhalte;
+    
         return $this;
     }
 
     /**
-     * Get Voraussetzung_inh
+     * Get VoraussetzungInhalte
      *
-     * @return string
+     * @return string 
      */
     public function getVoraussetzungInh()
     {
         return $this->VoraussetzungInhalte;
-    }
-
-    /**
-     * Add Lehrende
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
-     * @return Veranstaltung
-     */
-    public function addLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
-    {
-        $this->lehrende[] = $lehrende;
-
-        return $this;
-    }
-
-    /**
-     * Remove Lehrende
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
-     */
-    public function removeLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
-    {
-        $this->lehrende->removeElement($lehrende);
-    }
-
-    /**
-     * Get Lehrende
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLehrende()
-    {
-        return $this->lehrende;
     }
 
     /**
@@ -949,16 +933,9 @@ class Veranstaltung
     public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
     {
         $this->semesterplan[] = $semesterplan;
-
+    
         return $this;
     }
-
-
-
-    /*Abhaengigkeiten*/
-
-
-    /*Semesterplan*/
 
     /**
      * Remove semesterplan
@@ -970,56 +947,14 @@ class Veranstaltung
         $this->semesterplan->removeElement($semesterplan);
     }
 
-    /*Angebot*/
-
     /**
      * Get semesterplan
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getSemesterplan()
     {
         return $this->semesterplan;
-    }
-
-    /* Lehrende*/
-
-    /**
-     * Add modul_kernfach
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Kernfach $modulKernfach
-     * @return Veranstaltung
-     */
-    public function addModulKernfach(\FHBingen\Bundle\MHBBundle\Entity\Kernfach $modulKernfach)
-    {
-        $this->modul_kernfach[] = $modulKernfach;
-
-        return $this;
-    }
-
-
-    /*Modulbeauftragter (Dozent/Modul)*/
-
-    /**
-     * Remove modul_kernfach
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Kernfach $modulKernfach
-     */
-    public function removeModulKernfach(\FHBingen\Bundle\MHBBundle\Entity\Kernfach $modulKernfach)
-    {
-        $this->modul_kernfach->removeElement($modulKernfach);
-    }
-
-    /*Voraussetzung*/
-
-    /**
-     * Get modul_kernfach
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getModulKernfach()
-    {
-        return $this->modul_kernfach;
     }
 
     /**
@@ -1031,10 +966,9 @@ class Veranstaltung
     public function addAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
     {
         $this->angebot[] = $angebot;
-
+    
         return $this;
     }
-
 
     /**
      * Remove angebot
@@ -1049,7 +983,7 @@ class Veranstaltung
     /**
      * Get angebot
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getAngebot()
     {
@@ -1057,9 +991,55 @@ class Veranstaltung
     }
 
     /**
+     * Add lehrende
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
+     * @return Veranstaltung
+     */
+    public function addLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
+    {
+        $this->lehrende[] = $lehrende;
+    
+        return $this;
+    }
+
+    /**
+     * Remove lehrende
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
+     */
+    public function removeLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
+    {
+        $this->lehrende->removeElement($lehrende);
+    }
+
+    /**
+     * Get lehrende
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLehrende()
+    {
+        return $this->lehrende;
+    }
+
+    /**
+     * Set beauftragter
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $beauftragter
+     * @return Veranstaltung
+     */
+    public function setBeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Dozent $beauftragter)
+    {
+        $this->beauftragter = $beauftragter;
+    
+        return $this;
+    }
+
+    /**
      * Get beauftragter
      *
-     * @return \FHBingen\Bundle\MHBBundle\Entity\Dozent
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Dozent 
      */
     public function getBeauftragter()
     {
@@ -1067,61 +1047,7 @@ class Veranstaltung
     }
 
     /**
-     * Set beauftragter
-     *
-     * @param string $erstelltVon
-     * @return Veranstaltung
-     */
-    public function setBeauftragter($beauftragter = null)
-    {
-        $this->beauftragter = $beauftragter;
-
-        return $this;
-    }
-
-    /**
-     * Add modul_voraussetzung
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung
-     * @return Veranstaltung
-     */
-    public function addModulX(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
-    {
-        //$this->modulVoraussetzung[] = $modulVoraussetzung;
-        $this->modulX[] = $modulVoraussetzung;
-
-        return $this;
-    }
-
-    /*Studienplan*/
-
-    /**
-     * Remove modul_voraussetzung
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung
-     */
-    public function removeModulX(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
-    {
-        //$this->modulVoraussetzung->removeElement($modulVoraussetzung);
-        $this->modulX->removeElement($modulVoraussetzung);
-    }
-
-    /*Kernfach*/
-
-    /**
-     * Get modul_voraussetzung
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getModulX()
-    {
-        //return $this->modulVoraussetzung;
-        return $this->modulX;
-    }
-
-
-    /**
-     * Add studienplan_modul
+     * Add studienplanModul
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul
      * @return Veranstaltung
@@ -1129,12 +1055,12 @@ class Veranstaltung
     public function addStudienplanModul(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul)
     {
         $this->studienplanModul[] = $studienplanModul;
-
+    
         return $this;
     }
 
     /**
-     * Remove studienplan_modul
+     * Remove studienplanModul
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul
      */
@@ -1144,9 +1070,9 @@ class Veranstaltung
     }
 
     /**
-     * Get studienplan_modul
+     * Get studienplanModul
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getStudienplanModul()
     {
@@ -1162,7 +1088,7 @@ class Veranstaltung
     public function addKernfach(\FHBingen\Bundle\MHBBundle\Entity\Kernfach $kernfach)
     {
         $this->kernfach[] = $kernfach;
-
+    
         return $this;
     }
 
@@ -1179,10 +1105,165 @@ class Veranstaltung
     /**
      * Get kernfach
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getKernfach()
     {
         return $this->kernfach;
+    }
+
+//    /**
+//     * Add modulVoraussetzung
+//     *
+//     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung
+//     * @return Veranstaltung
+//     */
+//    public function addModulVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
+//    {
+//        $this->modulVoraussetzung[] = $modulVoraussetzung;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove modulVoraussetzung
+//     *
+//     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung
+//     */
+//    public function removeModulVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
+//    {
+//        $this->modulVoraussetzung->removeElement($modulVoraussetzung);
+//    }
+//
+//    /**
+//     * Get modulVoraussetzung
+//     *
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getModulVoraussetzung()
+//    {
+//        return $this->modulVoraussetzung;
+//    }
+//
+//    /**
+//     * Add modulX
+//     *
+//     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulX
+//     * @return Veranstaltung
+//     */
+//    public function addModulX(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulX)
+//    {
+//        $this->modulX[] = $modulX;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove modulX
+//     *
+//     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulX
+//     */
+//    public function removeModulX(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulX)
+//    {
+//        $this->modulX->removeElement($modulX);
+//    }
+//
+//    /**
+//     * Get modulX
+//     *
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getModulX()
+//    {
+//        return $this->modulX;
+//    }
+
+    /**
+     * Set VoraussetzungInhalte
+     *
+     * @param string $voraussetzungInhalte
+     * @return Veranstaltung
+     */
+    public function setVoraussetzungInhalte($voraussetzungInhalte)
+    {
+        $this->VoraussetzungInhalte = $voraussetzungInhalte;
+    
+        return $this;
+    }
+
+    /**
+     * Get VoraussetzungInhalte
+     *
+     * @return string 
+     */
+    public function getVoraussetzungInhalte()
+    {
+        return $this->VoraussetzungInhalte;
+    }
+
+    /**
+     * Add forderung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $forderung
+     * @return Veranstaltung
+     */
+    public function addForderung(\FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $forderung)
+    {
+        $this->forderung[] = $forderung;
+    
+        return $this;
+    }
+
+    /**
+     * Remove forderung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $forderung
+     */
+    public function removeForderung(\FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $forderung)
+    {
+        $this->forderung->removeElement($forderung);
+    }
+
+    /**
+     * Get forderung
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getForderung()
+    {
+        return $this->forderung;
+    }
+
+    /**
+     * Add grundmodul
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $grundmodul
+     * @return Veranstaltung
+     */
+    public function addGrundmodul(\FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $grundmodul)
+    {
+        $this->grundmodul[] = $grundmodul;
+    
+        return $this;
+    }
+
+    /**
+     * Remove grundmodul
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $grundmodul
+     */
+    public function removeGrundmodul(\FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $grundmodul)
+    {
+        $this->grundmodul->removeElement($grundmodul);
+    }
+
+    /**
+     * Get grundmodul
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGrundmodul()
+    {
+        return $this->grundmodul;
     }
 }
