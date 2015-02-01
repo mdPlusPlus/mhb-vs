@@ -261,7 +261,7 @@ class SglController extends Controller
             $modulBeschreibung = new ModulBeschreibung();
             $modulBeschreibung->setAngebot($angebot);
             //$modulBeschreibung->setVoraussetzungen($veranstaltung->getModulVoraussetzung());
-            $modulBeschreibung->setVoraussetzungen($veranstaltung->getModulX());
+//            $modulBeschreibung->setVoraussetzungen($veranstaltung->getModulX()); //TODO!
             $modulBeschreibung->setPruefungsformen($encoder->decode($veranstaltung->getPruefungsformen(), 'json'));
             $modulBeschreibung->setLehrveranstaltungen($encoder->decode($veranstaltung->getLehrveranstaltungen(), 'json'));
             $modulBeschreibung->setVoraussetzungenLP($encoder->decode($veranstaltung->getVoraussetzungLP(), 'json'));
@@ -347,21 +347,8 @@ class SglController extends Controller
         $sgl = $studiengang->getSgl();
 
         $modulBeschreibungen = $this->createModulBeschreibungen($mhbID);
-        $htmlArr = array();
 
-
-        $previousFachgebiet = "";
-        foreach ($modulBeschreibungen as $modulBeschreibung) {
-            $currentFachgebiet = $modulBeschreibung->getAngebot()->getFachgebiet()->getTitel();
-            if ($currentFachgebiet != $previousFachgebiet) {
-                $fachgebietHasChanged = true;
-            } else {
-                $fachgebietHasChanged = false;
-            }
-            $previousFachgebiet = $currentFachgebiet;
-
-            $htmlArr[] = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibung' => $modulBeschreibung, 'fachgebietHasChanged' => $fachgebietHasChanged));
-        }
+        $html = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibungen' => $modulBeschreibungen));
 
         $footerText = "";
 
@@ -410,7 +397,7 @@ class SglController extends Controller
             $this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary(self::WKHTMLTOPDF_BIN_WIN);
         }
 
-        $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($htmlArr, $output, $wkthmltopdfOptions, true); //overwrite
+        $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($html, $output, $wkthmltopdfOptions, true); //overwrite
     }
 
 
