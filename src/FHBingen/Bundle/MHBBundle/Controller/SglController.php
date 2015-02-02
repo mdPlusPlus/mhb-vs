@@ -393,7 +393,7 @@ class SglController extends Controller
             //$wkthmltopdfOptions['xsl-style-sheet'] = 'bundles/fhbingenmhb/xsl/toc.xsl';
 
             //test
-            $wkthmltopdfOptions['xsl-style-sheet'] = 'lalala/lululu/blubb.xsl';
+            $wkthmltopdfOptions['xsl-style-sheet'] = 'bundles/fhbingenmhb/xsl/default.xsl';
         } else {
             //windows
             $this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary(self::WKHTMLTOPDF_BIN_WIN);
