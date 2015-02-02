@@ -271,7 +271,7 @@ class DozentController extends Controller
         $modulHistory->setLehrveranstaltungen($encoder->encode($modul->getLehrveranstaltungen(), 'json'));
 
         //ab hier beginnt das eigentliche Formular mit Validierung
-        $form = $this->createForm(new Form\VeranstaltungType(), $modul);
+        $form = $this->createForm(new Form\VeranstaltungType($id), $modul);
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -428,7 +428,7 @@ class DozentController extends Controller
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => array('in Planung', 'expired')));
         $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
-        $form = $this->createForm(new Form\VeranstaltungType(), $modul);
+        $form = $this->createForm(new Form\VeranstaltungType($id), $modul);
 
         $request = $this->get('request');
         $form->handleRequest($request);
@@ -530,8 +530,40 @@ class DozentController extends Controller
                     $em->persist($lehr);
                     $em->persist($doz);
                 }
+
+                $voraussetzungArr = $form->get('grundmodul')->getData()->toArray();
+                foreach ($voraussetzungArr as $vor){
+                    $vor->setModul($modul);
+                    $em->persist($vor);
+                }
+
+                $vorRepository = $em->getRepository('FHBingenMHBBundle:Modulvoraussetzung');
+                $dbVorArr = $vorRepository->findby(array('modul' => $id));
+
+                foreach ($dbVorArr as $dbEntry) {
+                    if (!in_array($dbEntry, $voraussetzungArr)) {
+                        // Voraussetzung identifizieren
+                        $modulTmp = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $dbEntry->getVoraussetzung()->getModulID()));
+                        // link zur Veranstaltung löschen
+                        $modulTmp->removeForderung($dbEntry);
+                        // Lehrenden entfernen
+                        $em->remove($dbEntry);
+                        $em->persist($modulTmp);
+                    }
+
+                }
+
                 $em->persist($modul);
-                $em->flush();
+
+                try {
+
+                    $em->flush();
+
+                } catch (UniqueConstraintViolationException $e) {
+                    $this->get('session')->getFlashBag()->add('info', 'Bitte nicht zweimal den gleichen Lehrenden bzw. gleiche Veranstaltung auswählen');
+
+                    return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
+                }
 
                 return $this->redirect($this->generateUrl('vorAngebot', array('modulID' => $id)));
             }

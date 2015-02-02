@@ -20,6 +20,13 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class VeranstaltungType extends AbstractType
 {
+    private $modulID;
+
+    public function __construct($modulID)
+    {
+        $this->modulID = $modulID;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -41,8 +48,6 @@ class VeranstaltungType extends AbstractType
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => ArrayValues::$lp))
             ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('PruefungsleistungSonstiges', 'text', array('label' => 'Erläuterungen:', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
-            //->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung :', 'required' =>false, 'attr' => array('class' => 'sonstigesClass')))
-
 
     }
 
@@ -123,7 +128,7 @@ class VeranstaltungType extends AbstractType
         $form->add('lehrende', 'collection', $lehrendeOptions);
 
         //$voraussetzung =$input->getForderung();
-        $voraussetzungOptions = array('label' => false, 'type' => new VoraussetzungType(),
+        $voraussetzungOptions = array('label' => false, 'type' => new VoraussetzungType($this->modulID),
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
             'options' => array(
                 'required' => false,
