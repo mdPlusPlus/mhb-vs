@@ -31,7 +31,7 @@ class Modulvoraussetzung {
 
         return $string;
     }
-//TODO tauschen
+
     /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="grundmodul")
