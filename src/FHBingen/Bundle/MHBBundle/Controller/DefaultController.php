@@ -107,15 +107,15 @@ class DefaultController extends Controller
 
 //        $mv = new Modulvoraussetzung();
 //        $mv->setModul($test);
-//        $mv->setVoraussetzung($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>5)));
+//        $mv->setVoraussetzung($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>9)));
 //        $test->addForderung($mv);
         $result ="";
 //
-//        $em->persist($mv);
-//        $em->persist($test);
+//       $em->persist($mv);
+//       $em->persist($test);
 //        $em->flush();
 
-        $entries = $test->getLehrende();
+        $entries = $test->getGrundmodul();
 
         foreach ($entries as $entry) {
             $result= $result."+++".$entry;

@@ -370,22 +370,34 @@ class DozentController extends Controller
 
                 }
 
-                $voraussetzungArr = $form->get('forderung')->getData()->toArray();
-//                $vorTmp = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array(array('Modul_ID' => $id, 'Status' => "freigegeben")))->getModulVoraussetzung();
-//                    for($i = sizeof($vorTmp); $i>0; $i--) {
-//                        $modul->removeModulVoraussetzung($vorTmp[i]);
-//                    }
+                $voraussetzungArr = $form->get('grundmodul')->getData()->toArray();
                 foreach ($voraussetzungArr as $vor){
                     $vor->setModul($modul);
-                    $em->persist($modul);
                     $em->persist($vor);
                 }
 
+                $vorRepository = $em->getRepository('FHBingenMHBBundle:Modulvoraussetzung');
+                $dbVorArr = $vorRepository->findby(array('modul' => $id));
+
+                foreach ($dbVorArr as $dbEntry) {
+                    if (!in_array($dbEntry, $voraussetzungArr)) {
+                        // Voraussetzung identifizieren
+                        $modulTmp = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $dbEntry->getVoraussetzung()->getModulID()));
+                        // link zur Veranstaltung löschen
+                        $modulTmp->removeForderung($dbEntry);
+                        // Lehrenden entfernen
+                        $em->remove($dbEntry);
+                        $em->persist($modulTmp);
+                    }
+
+                }
+
+                $em->persist($modul);
                 try {
 
                 $em->flush();
                 } catch (UniqueConstraintViolationException $e) {
-                    $this->get('session')->getFlashBag()->add('info', 'Bitte nicht zweimal den gleichen Lehrenden auswählen');
+                    $this->get('session')->getFlashBag()->add('info', 'Bitte nicht zweimal den gleichen Lehrenden/Veranstaltung auswählen');
 
                     return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
                 }

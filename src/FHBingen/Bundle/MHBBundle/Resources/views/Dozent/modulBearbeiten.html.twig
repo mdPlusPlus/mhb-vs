@@ -3,7 +3,7 @@
 {% block jsBlock %}
     <script type="text/javascript">
         var lehrendeCount = '{{ form.lehrende|length }}';
-        var voraussetzungCount = '{{ form.forderung|length }}';
+        var voraussetzungCount = '{{ form.grundmodul|length }}';
 
         jQuery(document).ready(function () {
             jQuery('#add-another-lehrende').click(function (e) {
@@ -80,13 +80,13 @@
 {% endblock beauftragter %}
 
 {% block voraussetzung %}
-    <h4 style="font-weight: bold">Modulvoraussetzungen (formal) {{ form.forderung|length }}</h4>
+    <h4 style="font-weight: bold">Modulvoraussetzungen (formal)</h4>
     <ul id="voraussetzung-fields-list" data-prototype=
     "{% filter escape %}
-        {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.forderung.vars.prototype } %}
+        {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.grundmodul.vars.prototype } %}
         {% endfilter %}">
 
-        {% for voraussetzungField in form.forderung %}
+        {% for voraussetzungField in form.grundmodul %}
             <li>
                 {{ form_errors(voraussetzungField) }}
                 {{ form_widget(voraussetzungField) }} {# TODO: break entfernen -> form_widget überschreiben? #}
@@ -98,7 +98,7 @@
 {% endblock voraussetzung %}
 
 {% block lehrende %}
-     <h4 style="font-weight: bold">Lehrende {{ form.lehrende|length }}</h4>
+     <h4 style="font-weight: bold">Lehrende</h4>
      <ul id="lehrende-fields-list" data-prototype=
      "{% filter escape %}
         {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.lehrende.vars.prototype } %}

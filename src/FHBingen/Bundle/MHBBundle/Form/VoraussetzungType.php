@@ -33,6 +33,6 @@ class VoraussetzungType extends AbstractType
 
     public function getName()
     {
-        return 'forderung';
+        return 'grundmodul';
     }
 }

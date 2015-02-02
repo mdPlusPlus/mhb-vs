@@ -132,7 +132,7 @@ class VeranstaltungType extends AbstractType
                 )
             )
         );
-        $form->add('forderung', 'collection', $voraussetzungOptions);
+        $form->add('grundmodul', 'collection', $voraussetzungOptions);
 
     }
 
