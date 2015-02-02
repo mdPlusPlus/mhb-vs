@@ -260,8 +260,7 @@ class SglController extends Controller
 
             $modulBeschreibung = new ModulBeschreibung();
             $modulBeschreibung->setAngebot($angebot);
-            //$modulBeschreibung->setVoraussetzungen($veranstaltung->getModulVoraussetzung());
-//            $modulBeschreibung->setVoraussetzungen($veranstaltung->getModulX()); //TODO!
+            $modulBeschreibung->setVoraussetzungen($veranstaltung->getGrundmodul());
             $modulBeschreibung->setPruefungsformen($encoder->decode($veranstaltung->getPruefungsformen(), 'json'));
             $modulBeschreibung->setLehrveranstaltungen($encoder->decode($veranstaltung->getLehrveranstaltungen(), 'json'));
             $modulBeschreibung->setVoraussetzungenLP($encoder->decode($veranstaltung->getVoraussetzungLP(), 'json'));

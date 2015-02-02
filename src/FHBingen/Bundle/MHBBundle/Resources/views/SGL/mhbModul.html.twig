@@ -168,24 +168,22 @@
                 <td>5</td>
                 <td colspan="6">
                     <div class="key">Teilnahmevoraussetzungen</div>
-                    {# TODO: wieder aufnehmen
                     Formal:
                     {% if modulBeschreibung.getVoraussetzungen() is not empty %}
-                        {% for modul in modulBeschreibung.getVoraussetzungen() %}
-                            {{ modul }}<br/>
+                        {% for modulvoraussetzung in modulBeschreibung.getVoraussetzungen() %}
+                            {{ modulvoraussetzung.getVoraussetzung().getName() }}<br />
                         {% endfor %}
                     {% else %}
                         {% if modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() == "BACH" %}
-                            Bestehen aller anderen Studienveranstaltunge laut Studienplan<br/>
+                            Bestehen aller anderen Studienveranstaltunge laut Studienplan<br />
                         {% endif %}
                         {% if modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() == "PRAX" %}
-                            Alle veranstaltunge der ersten sechs Semester<br/>
+                            Alle veranstaltunge der ersten sechs Semester<br />
                         {% endif %}
                         {% if (modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() != "PRAX") and (modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() != "BACH") %}
-                            keine<br/>
+                            keine<br />
                         {% endif %}
                     {% endif %}
-                    #}
                     Inhaltlich:
                     {% if modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInh() != "" %}
                         {{ modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInh() }}
