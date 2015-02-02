@@ -53,9 +53,21 @@
             {% if wahlpflichtfach %}
                 {{ form_row(form.kernfach) }}
             {% endif %}
-            {{ form_row(form.abweichenderNameDE) }}
-            {{ form_row(form.abweichenderNameEN) }}
-
+            <tr>
+                <td style="font-weight: bold">optional:</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.abweichenderNameDE) }}</td>
+                <td>{{ form_widget(form.abweichenderNameDE) }}</td>
+                <td>{{ form_errors(form.abweichenderNameDE) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.abweichenderNameEN) }}</td>
+                <td>{{ form_widget(form.abweichenderNameEN) }}</td>
+                <td>{{ form_errors(form.abweichenderNameEN) }}</td>
+            </tr>
         </table>
 
         {% include '@FHBingenMHB/buttons.html.twig' %}
