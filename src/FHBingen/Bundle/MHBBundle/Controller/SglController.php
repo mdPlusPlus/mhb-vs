@@ -42,6 +42,8 @@ class SglController extends Controller
      *
      * Sucht alle Module die nicht in Planung oder Expired sind.
      * Zusätzlich werden die Studiengänge angezeigt in denen sie Angeboten werden
+     *
+     * @return array
      */
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
@@ -80,6 +82,7 @@ class SglController extends Controller
      *
      * Zeigt alle Angebote mit Dummy Modulcode an aus dem Studiengangs des Angemeldeten SGLs
      * Zeigt zusätzlich die Angebote die einen sinvollen vom SGL vergebenen Modulcode haben
+     * @return array
      */
     public function modulCodeUebersichtAction()
     {
@@ -146,6 +149,7 @@ class SglController extends Controller
      * @Template("FHBingenMHBBundle:SGL:mhbUebersicht.html.twig")
      *
      * Zeigt alle Modulhandbücher an
+     * @return array
      */
     public function mhbUebersichtAction()
     {
@@ -184,7 +188,9 @@ class SglController extends Controller
         return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module aus ' . $studiengang->__toString(), 'dateTime' => $datum);
     }
 
-
+    /**
+     * @return \DateTime
+     */
     private function getNewestMHBDateForMyCourse()
     {
         $user = $this->get('security.context')->getToken()->getUser();
@@ -314,6 +320,8 @@ class SglController extends Controller
      * PDF-Export
      *
      * Erstellt das Modulhanbduch mit Hilfe der Daten aus der Datenbank und erstellt das MHB-PDF
+     *
+     * @param int $mhbID
      */
     private function pdfErstellenAction($mhbID)
     {
@@ -422,9 +430,13 @@ class SglController extends Controller
 
 
     /**
+     * @param int $modulID
+     *
      * @Route("/restricted/sgl/modulDeaktivierung/{modulID}", name="modulDeaktivierung")
      *
      * Deaktiviert eine Veranstalltung komplett.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function modulDeaktivierungAction($modulID)
     {
@@ -468,9 +480,14 @@ class SglController extends Controller
     }
 
     /**
+     * @param int $modulID
+     * @param int $studiengangID
+     *
      * @Route("/restricted/sgl/modulDeaktivierungStg/{modulID}/{studiengangID}", name="modulDeaktivierungStg")
      *
      * Deaktiviert eine Veranstaltung nur für bestimmte Studiengänge.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function modulDeaktivierungStgAction($modulID,$studiengangID)
     {
@@ -501,6 +518,8 @@ class SglController extends Controller
      * @Template("FHBingenMHBBundle:SGL:mhbErstellung.html.twig")
      *
      * Erstellt ein Modulhandbuch
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function mhbErstellungAction()
     {
@@ -528,12 +547,17 @@ class SglController extends Controller
 
 
     /**
+     * @param Entity\Semester $mhbGueltigAb
+     * @param string          $mhbBeschreibung
+     *
      * @Route("/restricted/sgl/mhbZusammenstellung/{mhbGueltigAb}/{mhbBeschreibung}", name="mhbZusammenstellung")
      * @Template("FHBingenMHBBundle:SGL:mhbZusammenstellung.html.twig")
      *
      * Ermöglicht dem User das hinzufügen von Angeboten in ein Modulhandbuch
+     *
+     * @return array
      */
-    public function mhbZusammenstellungAction($mhbGueltigAb, $mhbBeschreibung)
+    public function mhbZusammenstellungAction(Entity\Semester $mhbGueltigAb, $mhbBeschreibung)
     {
         //TODO: Doku: Reihenfolge der ins MHB aufgenommen Module egal
         $em = $this->getDoctrine()->getManager();
@@ -574,6 +598,8 @@ class SglController extends Controller
      * @Route("/restricted/sgl/mhbEstellungParsen", name="mhbErstellungParsen")
      *
      * Speichert die Angebote in ein Modulhandbuch
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function mhbErstellungParseAction()
     {
