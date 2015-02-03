@@ -578,6 +578,8 @@ class SglController extends Controller
      */
     public function mhbErstellungParseAction()
     {
+
+        //TODO: $request statt $_POST
         $request = $this->get('request');
 
         if (!empty($_POST)) {
