@@ -18,6 +18,13 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
+/**
+ * Class SglController
+ *
+ * Beinhaltet alle Funktionen für Studiengangleiter
+ *
+ * @package FHBingen\Bundle\MHBBundle\Controller
+ */
 class SglController extends Controller
 {
     /**
