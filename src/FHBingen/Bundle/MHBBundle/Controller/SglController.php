@@ -51,6 +51,7 @@ class SglController extends Controller
         //Filtert die Module die in Planung sind herraus
         $nichtInPlanung = array();
         foreach ($module as $value) {
+            //TODO: warum nicht einfach auf 'freigegeben' prüfen?
             if ($value->getStatus() != 'in Planung' && $value->getStatus() != 'expired') {
                 $nichtInPlanung[] = $value;
             }
