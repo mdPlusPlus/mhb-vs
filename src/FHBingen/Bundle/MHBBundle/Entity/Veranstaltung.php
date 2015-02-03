@@ -13,13 +13,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+/*
+ * TODO:
+ * @UniqueEntity(fields="Kuerzel", message="Es existiert bereits eine Veranstaltung mit diesem Kürzel.")
+ * wirft fehler wegen MAT2
+ */
 /**
  * Class Veranstaltung
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @UniqueEntity(fields="Name",    message="Es existiert bereits eine Veranstaltung mit diesem deutschen Namen.")
  * @UniqueEntity(fields="NameEN",  message="Es existiert bereits eine Veranstaltung mit diesem englischen Namen.")
- * @UniqueEntity(fields="Kuerzel", message="Es existiert bereits eine Veranstaltung mit diesem Kürzel.")
  * @ORM\Table(name="Veranstaltung")
  * @ORM\HasLifecycleCallbacks
  */
@@ -53,8 +57,9 @@ class Veranstaltung
      */
     protected $Status;
 
+    //TODO: unique, siehe oben
     /**
-     * @ORM\Column(type="string", length=5, nullable=true, unique=true)
+     * @ORM\Column(type="string", length=5, nullable=true)
      * @Assert\Length(
      *      min = 2,
      *      max = 5,
