@@ -536,7 +536,6 @@ class SglController extends Controller
      */
     public function mhbZusammenstellungAction($mhbGueltigAb, $mhbBeschreibung)
     {
-        //TODO: Button "Alle zu MHB hinzufügen"
         //TODO: Doku: Reihenfolge der ins MHB aufgenommen Module egal
         $em = $this->getDoctrine()->getManager();
         $sgl = $this->get('security.context')->getToken()->getUser();
