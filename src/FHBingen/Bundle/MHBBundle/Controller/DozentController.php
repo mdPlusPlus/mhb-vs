@@ -33,56 +33,55 @@ class DozentController extends Controller
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        $modulverantwortung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'Status' => 'Freigegeben'),
+        $beauftragteModule = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'Status' => 'Freigegeben'),
             array("Name" => 'asc'));
 
         //$mLehrende bekommt jeweils ein Array $name mit allen Lehrenden des aktuellen Moduls übergeben
         $mLehrende = array();
-        foreach ($modulverantwortung as $m) {
+        foreach ($beauftragteModule as $modul) {
             $name = array();
-            $tmp = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $m->getModulID()));
-
-            foreach ($tmp as $lehrend) {
+            $lehrende = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $modul->getModulID()));
+            foreach ($lehrende as $lehrend) {
                 $name[] = (string) $lehrend->getDozent();
             }
             $mLehrende[] = $name;
         }
 
-        $entries = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent' => $dozent->getDozentenID()));
-
-        //$modullehrend ist ein Array mit allen Modulen, welche der aktuelle Benutzer unterrichtet
-        $modullehrend = array();
-        foreach ($entries as $modul) {
-            $modullehrend[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modul->getVeranstaltung()));
-        }
-
         //Studiengänge zu Modulen für den aktuellen Benutzer in der Rolle des Modulverantwortlichen
         $stgZuModul = array();
-        foreach ($modulverantwortung as $modul) {
+        foreach ($beauftragteModule as $modul) {
             $name = array();
-            $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
-            foreach ($tmp as $studiengang) {
-                $name[] = (string) $studiengang->getStudiengang();
+            $angebote = $modul->getAngebot();
+            foreach ($angebote as $angebot) {
+                $name[] = (string) $angebot->getStudiengang();
             }
             asort($name, SORT_STRING);
             $stgZuModul[] = $name;
         }
 
+
+        $lehrendeVonDozent = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('dozent' => $dozent->getDozentenID()));
+        //$dozentLehrt ist ein Array mit allen Modulen, welche der aktuelle Benutzer unterrichtet
+        $dozentLehrt = array();
+        foreach ($lehrendeVonDozent as $lehrende) {
+            $dozentLehrt[] = $lehrende->getVeranstaltung();
+        }
+
         //Studiengänge zu Modulen für den aktuellen Benutzer in der Rolle des Unterrichtenden
         $stgZuModullehrend = array();
-        foreach ($modullehrend as $modul) {
+        foreach ($dozentLehrt as $modul) {
             $name = array();
-            $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
-            foreach ($tmp as $studiengang) {
-                $name[] = (string) $studiengang->getStudiengang();
+            $angebote = $modul->getAngebot();
+            foreach ($angebote as $angebot) {
+                $name[] = (string) $angebot->getStudiengang();
             }
             asort($name, SORT_STRING);
             $stgZuModullehrend[] = $name;
         }
 
-        asort($modullehrend, SORT_STRING);
+        asort($dozentLehrt, SORT_STRING);
 
-        return array('modulverantwortung' => $modulverantwortung, 'stgZuModullehrend' => $stgZuModullehrend, 'stgZuModul' => $stgZuModul, 'modullehrend' => $modullehrend, 'mLehrende' => $mLehrende, 'pageTitle' => 'Eigene Module');
+        return array('modulverantwortung' => $beauftragteModule, 'stgZuModullehrend' => $stgZuModullehrend, 'stgZuModul' => $stgZuModul, 'modullehrend' => $dozentLehrt, 'mLehrende' => $mLehrende, 'pageTitle' => 'Eigene Module');
     }
 
 
