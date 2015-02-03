@@ -193,7 +193,7 @@ class Veranstaltung
 
 
 
-    /////TODO: Beide Felder in eines zusammenzeihen -> Erläuterungen zu Voraussetzungen für LP
+    /////TODO: Beide Felder in eines zusammenziehen -> Erläuterungen zu Voraussetzungen für LP
     /**
      * @ORM\Column(type="text", nullable=true)
      */
