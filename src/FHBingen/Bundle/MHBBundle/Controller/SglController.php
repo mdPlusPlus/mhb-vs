@@ -118,7 +118,7 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('veranstaltung' => $id, 'studiengang' => $studiengangid));
         $modul = $angebot->getVeranstaltung();
-        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID' => $studiengangid));
+        $studiengang = $angebot->getStudiengang();
         $form = $this->createForm(new Form\CodeType(), $angebot);
 
         $request = $this->get('request');
