@@ -28,7 +28,6 @@ class DozentController extends Controller
      */
     public function eigeneModuleAction()
     {
-
         $user = $this->get('security.context')->getToken()->getUser();
         $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
