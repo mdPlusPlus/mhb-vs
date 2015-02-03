@@ -16,7 +16,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Studiengang
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
- * @UniqueEntity(fields="Titel", message="Dieser Studiengang/Kuerzel ist bereits in die Datenbank eingepflegt worden.")
+ * @UniqueEntity(fields="Titel", message="Es existiert bereits ein Studiengang mit diesem Titel.")
+ * @UniqueEntity(fields="Kuerzel", message="Es existiert bereits ein Studiengang mit diesem Kürzel.")
  * @ORM\Table(name="Studiengang")
  * @ORM\HasLifecycleCallbacks
  */
@@ -63,13 +64,6 @@ class Studiengang
      */
     protected $Titel;
 
-//  TODO:
-//  wurde vorerst entfertnt, weil aktuelle Kürzel nicht der Regel entsprechen und die Kürzel derzeit nicht geändert weren dürfen,
-//  da sonst der PDF-Download nicht mehr funktioniert
-//   * @Assert\Regex(
-//   *     pattern="/[A-Z]{2,5}/",
-//   *     message="Das Studiengang-Kürzel darf nur aus Großbuchstaben bestehen."
-//   * )
     /**
      * @ORM\Column(type="string", length=5, nullable=false, unique=true)
      * @Assert\NotBlank(message = "Das Studiengang-Kürzel darf nicht leer sein.")
@@ -78,6 +72,10 @@ class Studiengang
      *      max = 5,
      *      minMessage = "Ein Studiengang-Kürzel muss aus mindestens {{ limit }} Zeichen bestehen.",
      *      maxMessage = "Ein Studiengang-Kürzel darf aus maximal {{ limit }} Zeichen bestehen."
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[BM]\-[A-Z]{2,2}/",
+     *     message = "Bitte verwenden Sie folgendes Muster für das Studiengangkürzel: z.B. B-IN, M-IS"
      * )
      */
     protected $Kuerzel;
