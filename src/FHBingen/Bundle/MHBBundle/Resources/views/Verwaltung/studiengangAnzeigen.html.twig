@@ -93,6 +93,7 @@
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <table class="table table-bordered">
             {{ form_errors(form) }}
+            {{ form_errors(form.sgl) }} {# notwenig, wird sonst nicht ausgegeben #}
             {{ form_row(form.fachbereich) }}
             {{ form_row(form.grad) }}
             {{ form_row(form.titel) }}

@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @UniqueEntity(fields="Titel", message="Es existiert bereits ein Studiengang mit diesem Titel.")
  * @UniqueEntity(fields="Kuerzel", message="Es existiert bereits ein Studiengang mit diesem Kürzel.")
+ * @UniqueEntity(fields="sgl", message="Es existiert bereits ein Studiengang mit diesem Studiengangleiter.")
  * @ORM\Table(name="Studiengang")
  * @ORM\HasLifecycleCallbacks
  */
@@ -282,7 +283,7 @@ class Studiengang
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="studiengang")
-     * @ORM\JoinColumn(name="sgl", referencedColumnName="Dozenten_ID", nullable=false)
+     * @ORM\JoinColumn(name="sgl", referencedColumnName="Dozenten_ID", nullable=false, unique=true)
      */
     protected $sgl;
 
