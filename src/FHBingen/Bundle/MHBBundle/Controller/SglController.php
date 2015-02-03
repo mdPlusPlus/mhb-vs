@@ -192,7 +192,6 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
-        $em = $this->getDoctrine()->getManager();
         //Sucht das neuste Erstelldatum der MHBs des Studiengangs herraus
         $mhbs = $em->createQuery(
             'SELECT MAX(m.Erstellungsdatum) AS Erstellungsdatum
