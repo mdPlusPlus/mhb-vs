@@ -214,28 +214,6 @@ class SglController extends Controller
         return new \DateTime($datum);
     }
 
-
-    /**
-     * @deprecated
-     *
-     * @Route("/restricted/sgl/mhbModulListe/{id}", name="mhbModulListe")
-     * @Template("FHBingenMHBBundle:SGL:mhbModulListe.html.twig")
-     *
-     * Zeigt die Veranstaltungen die dem MHB zugeordnet sind als MHB-PDF an
-     * TODO: Durch Link auf PDF ersetzen
-     */
-    public function mhbModulListe($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        //findet alle Veranstaltungen die dem MHB zugeordnet sind
-        $mhbEintraege = $em->getRepository('FHBingenMHBBundle:ModulhandbuchZuweisung')->findBy(array('mhb' => $id));
-        //findet die Beschreibung des MHB um MHB-Kontext im Twig anzeigen zulassen
-        $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $id));
-
-        return array('mhbEintraege' => $mhbEintraege, 'mhb' => $mhb, 'pageTitle' => 'Module des Modulhandbuchs');
-    }
-
-
     /**
      * Erstellt die Modulbeschreibungen für das Modulhandbuch
      *

@@ -27,7 +27,6 @@
                 <tr>
                     {#<td><a href="{{ path('pdfErstellen', {'mhbID': entity.getMHBID()}) }}">Download</a></td>#} {# TODO: wenn manuelle PDF-Erstellung erwünscht wieder aktivieren #}
                     <td><a href="{{ path('pdfDownload', {'mhbID': entity.getMHBID()}) }}">Download</a></td>
-                    {#<td><a href="{{ path('mhbModulListe', {'id': entity.getMHBID()}) }}"></a></td>#} {# TODO: deprecated, löschen #}
                     <td>{{ entity.Beschreibung }}</td>
                     <td>{{ entity.getGehoertZu() }}</td>
                     <td>{{ entity.getGueltigAb() }}</td>
