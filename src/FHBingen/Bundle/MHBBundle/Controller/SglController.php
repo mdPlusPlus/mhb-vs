@@ -46,14 +46,14 @@ class SglController extends Controller
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
         $em = $this->getDoctrine()->getManager();
-        $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
+        $alleModule = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
 
         //Filtert die Module die in Planung sind herraus
         $nichtInPlanung = array();
-        foreach ($module as $value) {
+        foreach ($alleModule as $modul) {
             //TODO: warum nicht einfach auf 'freigegeben' prüfen?
-            if ($value->getStatus() != 'in Planung' && $value->getStatus() != 'expired') {
-                $nichtInPlanung[] = $value;
+            if ($modul->getStatus() != 'in Planung' && $modul->getStatus() != 'expired') {
+                $nichtInPlanung[] = $modul;
             }
         }
         asort($nichtInPlanung, SORT_STRING);//Sortiert die Veranstaltungen nach Name
@@ -62,9 +62,9 @@ class SglController extends Controller
         $stgZuModul = array();
         foreach ($nichtInPlanung as $modul) {
             $name = array();
-            $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
-            foreach ($tmp as $studiengang) {
-                $name[] = (string) $studiengang->getStudiengang();
+            $angebote = $modul->getAngebote();
+            foreach ($angebote as $angebot) {
+                $name[] = (string) $angebot->getStudiengang();
             }
             asort($name, SORT_STRING);//Sortiert die Studiengänge nach name
             $stgZuModul[] = $name;
