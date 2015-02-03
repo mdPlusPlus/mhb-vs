@@ -40,11 +40,17 @@
                             {% for name in mLehrende[count] %}
                                 {{ name }}<br/>
                             {% endfor %}
+                            {#{% for lehrende in veranstaltung.getLehrende() %}#}
+                                {#{{ lehrende.getDozent() }}<br>#}
+                            {#{% endfor %}#}
                         </td>
                         <td>
                             {% for name in stgZuModul[count] %}
                                 {{ name }}<br/>
                             {% endfor %}
+                            {#{% for angebot in veranstaltung.getAngebot() %}#}
+                                {#{{ angebot.getStudiengang() }}<br>#}
+                            {#{% endfor %}#}
                             <a href=" {{ path('vorAngebot', {'modulID': veranstaltung.getModulID()}) }}">In weiterem
                                 Studiengang anbieten</a>
                         </td>

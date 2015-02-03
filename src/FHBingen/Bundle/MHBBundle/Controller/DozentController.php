@@ -65,7 +65,6 @@ class DozentController extends Controller
                 $name[] = (string) $studiengang->getStudiengang();
             }
             asort($name, SORT_STRING);
-
             $stgZuModul[] = $name;
         }
 
