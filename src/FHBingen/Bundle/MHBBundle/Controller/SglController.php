@@ -177,6 +177,8 @@ class SglController extends Controller
      * @Template("FHBingenMHBBundle:SGL:modulAenderungen.html.twig")
      *
      * Zeigt die Veranstaltungen die sich seit anlegen des letzten MHBs in dem Studiengang des SGLs geändert haben
+     *
+     * @return array
      */
     public function modulAenderungenAction()
     {
@@ -406,6 +408,8 @@ class SglController extends Controller
      * @Template("FHBingenMHBBundle:SGL:modulDeaktivierung.html.twig")
      *
      * Zeigt die Veranstaltung aus dem eigenen Studiengang und gibt die Möglichkeit diese zu deaktivieren.
+     *
+     * @return array
      */
     public function deaktivierungModuleAction()
     {
