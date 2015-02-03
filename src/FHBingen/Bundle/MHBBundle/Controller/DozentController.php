@@ -532,7 +532,7 @@ class DozentController extends Controller
                 }
 
                 $voraussetzungArr = $form->get('grundmodul')->getData()->toArray();
-                foreach ($voraussetzungArr as $vor){
+                foreach ($voraussetzungArr as $vor) {
                     $vor->setModul($modul);
                     $em->persist($vor);
                 }
