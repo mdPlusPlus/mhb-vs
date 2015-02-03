@@ -505,7 +505,7 @@ class SglController extends Controller
      */
     public function mhbErstellungAction()
     {
-        $form = $this->createForm(new Form\ModulhandbuchType(), new Entity\Modulhandbuch());
+        $form = $this->createForm(new Form\ModulhandbuchType(), new Entity\Modulhandbuch()); //TODO: Warum neues Entity übergeben?
 
         $request = $this->get('request');
         $form->handleRequest($request);
