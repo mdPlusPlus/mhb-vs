@@ -314,7 +314,7 @@ class SglController extends Controller
     /**
      * PDF-Export
      *
-     * Erstellt das Modulhanbduch mit hilfe der Daten aus der Datenbank und erstellt das MHB-PDF
+     * Erstellt das Modulhanbduch mit Hilfe der Daten aus der Datenbank und erstellt das MHB-PDF
      */
     private function pdfErstellenAction($mhbID)
     {
@@ -386,7 +386,7 @@ class SglController extends Controller
      * @Route("/restricted/sgl/deaktivierungAlleModule", name="deaktivierungAlleModule")
      * @Template("FHBingenMHBBundle:SGL:modulDeaktivierung.html.twig")
      *
-     * Zeigt die Veranstalltung aus dem eigenen Studiengang und gibt die möglichkeit diese zu Deaktivieren.
+     * Zeigt die Veranstaltung aus dem eigenen Studiengang und gibt die Möglichkeit diese zu deaktivieren.
      */
     public function deaktivierungModuleAction()
     {
@@ -402,16 +402,16 @@ class SglController extends Controller
 
         $module = array();
         foreach ($angebote as $angebot) {
-            $module[] = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $angebot->getVeranstaltung()));
+            $module[] = $angebot->getVeranstaltung();
         }
         asort($module, SORT_STRING);
 
         $stgZuModul = array();
         foreach ($module as $modul) {
             $name = array();
-            $tmp = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modul->getModulID()));
-            foreach ($tmp as $stgang) {
-                $name[] = $stgang->getStudiengang();
+            $angebote = $modul->getAngebot();
+            foreach ($angebote as $angebot) {
+                $name[] = $angebot->getStudiengang();
             }
             asort($name, SORT_STRING);
 
@@ -425,7 +425,7 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/modulDeaktivierung/{modulID}", name="modulDeaktivierung")
      *
-     * Deaktiviert eine Veranstalltung kommplet.
+     * Deaktiviert eine Veranstalltung komplett.
      */
     public function modulDeaktivierungAction($modulID)
     {
@@ -471,7 +471,7 @@ class SglController extends Controller
     /**
      * @Route("/restricted/sgl/modulDeaktivierungStg/{modulID}/{studiengangID}", name="modulDeaktivierungStg")
      *
-     * Deaktiviert eine Veranstalltung nur für bestimmte Studiengänge.
+     * Deaktiviert eine Veranstaltung nur für bestimmte Studiengänge.
      */
     public function modulDeaktivierungStgAction($modulID,$studiengangID)
     {
