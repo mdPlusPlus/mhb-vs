@@ -22,7 +22,7 @@ class Role implements RoleInterface
 
     public function __toString()
     {
-//TODO: Nach Abnahme auskommentieren und testen!
+//TODO: Nach Abnahme de-kommentieren und testen!
 //        if ($this->getRole() == 'ROLE_SGL') {
 //            $string = 'Studiengangleiter';
 //        } else {
