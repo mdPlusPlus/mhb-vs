@@ -8,25 +8,23 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Class Veranstaltung
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
+ * @UniqueEntity(fields="Name",    message="Es existiert bereits eine Veranstaltung mit diesem deutschen Namen.")
+ * @UniqueEntity(fields="NameEN",  message="Es existiert bereits eine Veranstaltung mit diesem englischen Namen.")
+ * @UniqueEntity(fields="Kuerzel", message="Es existiert bereits eine Veranstaltung mit diesem Kürzel.")
  * @ORM\Table(name="Veranstaltung")
  * @ORM\HasLifecycleCallbacks
  */
 class Veranstaltung
 {
-    /*
-     * TODO:
-     * - Dauer (Unterscheidung Semster/Wochen/Monate)
-     * - VoraussetzungLP (SL Sonstiges, PL Sonstiges)
-     */
-
     /**
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\ID
@@ -56,7 +54,7 @@ class Veranstaltung
     protected $Status;
 
     /**
-     * @ORM\Column(type="string", length=5, nullable=true)
+     * @ORM\Column(type="string", length=5, nullable=true, unique=true)
      * @Assert\Length(
      *      min = 2,
      *      max = 5,
@@ -65,14 +63,14 @@ class Veranstaltung
      * )
      * @Assert\Regex(
      *     pattern = "/[A-Z0-9]{2,5}/",
-     *     message = "Das Modulkürzel darf nur aus Großbuchstaben und Zahlen bestehen"
+     *     message = "Das Modulkürzel darf nur aus Großbuchstaben und Zahlen bestehen."
      * )
      */
     protected $Kuerzel;
 
-    //TODO: Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
+    //Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
-     * @ORM\Column(type="string", length=70, nullable=false)
+     * @ORM\Column(type="string", length=70, nullable=false, unique=true)
      * @Assert\Length(
      *      min = 5,
      *      minMessage = "Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
@@ -82,17 +80,25 @@ class Veranstaltung
      * @Assert\NotBlank(
      *      message = "Der deutsche Modultitel muss gesetzt werden."
      * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß0-9 \-]{5,70}/",
+     *     message = "Der deutsche Name darf nur aus Buchstaben, Zahlen, Leerzeichen und Bindestrichen bestehen."
+     * )
      */
     protected $Name;
 
-    //TODO: Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
+    //Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
-     * @ORM\Column(type="string", length=70, nullable=true)
+     * @ORM\Column(type="string", length=70, nullable=true, unique=true)
      * @Assert\Length(
      *      min = 5,
      *      minMessage = "Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
      *      max = 70,
      *      maxMessage = "Der englische Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß0-9 \-]{5,70}/",
+     *     message = "Der englische Name darf nur aus Buchstaben, Zahlen, Leerzeichen und Bindestrichen bestehen."
      * )
      */
     protected $NameEN;
@@ -108,6 +114,10 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
+     * @Assert\Regex(
+     *     pattern = "/[0-9]{1,2}[ ](\bWochen\b|\bSemester\b|\bMonate\b)/",
+     *     message = "Bitte verwenden Sie folgendes muster für die Dauer: z.B. 12 Wochen, 1 Semster, 3 Monate"
+     * )
      */
     protected $Dauer;
 
@@ -176,6 +186,9 @@ class Veranstaltung
      */
     protected $PruefungsformSonstiges;
 
+
+
+    /////TODO: Beide Felder in eines zusammenzeihen -> Erläuterungen zu Voraussetzungen für LP
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -185,6 +198,8 @@ class Veranstaltung
      * @ORM\Column(type="text", nullable=true)
      */
     protected $StudienleistungSonstiges;
+    /////
+
 
 
     /**
@@ -201,6 +216,8 @@ class Veranstaltung
      */
     protected $SpracheSonstiges;
 
+
+    //TODO: Vielleicht als Fremdschlüssel auf Dozent
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -222,7 +239,6 @@ class Veranstaltung
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * TODO: Choice
      */
     protected $VoraussetzungLP;
 
@@ -252,6 +268,8 @@ class Veranstaltung
      */
     protected $beauftragter;
 
+
+    //TODO: Wirklich Veranstaltung in Studienplan eintragen? Nicht vielleicht Angebot?
     /**
      * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="veranstaltung", cascade={"all"})
      */
@@ -273,22 +291,6 @@ class Veranstaltung
     private $forderung;
 
 
-//    /**
-//     * @ORM\ManyToMany(targetEntity="Veranstaltung", mappedBy="modulX")
-//     */
-//    protected $modulVoraussetzung;
-//    //TODO: Dies wird benötigt um Voraussetzungen abzubilden
-//
-//    /**
-//     * @ORM\ManyToMany(targetEntity="Veranstaltung", inversedBy="modulVoraussetzung")
-//     * @ORM\JoinTable(name="Voraussetzungen",
-//     *      joinColumns={@ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID")},
-//     *      inverseJoinColumns={@ORM\JoinColumn(name="modulVoraussetzung", referencedColumnName="Modul_ID")}
-//     *      )
-//     */
-//    protected $modulX;
-//    //TODO: super unintitiv, modul_ ist eigentlich die Voraussetzung.
-
     /**
      * Constructor
      */
@@ -300,8 +302,6 @@ class Veranstaltung
         $this->angebot = new ArrayCollection();
         $this->basis = new \Doctrine\Common\Collections\ArrayCollection();
         $this->forderung = new \Doctrine\Common\Collections\ArrayCollection();
-//        $this->modulVoraussetzung = new \Doctrine\Common\Collections\ArrayCollection();
-//        $this->modulX = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -313,8 +313,6 @@ class Veranstaltung
 
         return $string;
     }
-
-
 
     /**
      * Get Modul_ID

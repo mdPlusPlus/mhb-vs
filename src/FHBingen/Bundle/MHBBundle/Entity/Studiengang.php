@@ -27,6 +27,7 @@ class Studiengang
     public function __toString()
     {
         $string = $this->getGrad().' '.$this->getTitel();
+
         return $string;
     }
 
@@ -50,7 +51,7 @@ class Studiengang
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
-     * @Assert\Choice(choices = {"Bachelor", "Master"}, message = "Waehlen Sie einen gueltigen Bildungsgrad")
+     * @Assert\Choice(choices = {"Bachelor", "Master"}, message = "Wählen Sie einen gültigen Bildungsgrad")
      */
     protected $Grad;
 
@@ -58,8 +59,14 @@ class Studiengang
      * @ORM\Column(type="string", length=40, nullable=false, unique=true)
      * @Assert\NotBlank(message = "Der Studiengang-Titel darf nicht leer sein.")
      * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Ein Studiengang-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
      *      max = 40,
      *      maxMessage = "Ein Studiengang-Titel darf aus maximal {{ limit }} Zeichen bestehen."
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß \-]{2,40}/",
+     *     message = "Der Studiengang-Titel darf nur aus Buchstaben, Leerzeichen und Bindestrichen bestehen."
      * )
      */
     protected $Titel;

@@ -10,12 +10,15 @@ namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FHBingen\Bundle\MHBBundle\PHP\ModulBeschreibung;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Angebot
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
+ * @UniqueEntity(fields="AbweichenderNameDe", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen deutschen Titel.")
+ * @UniqueEntity(fields="AbweichenderNameEN", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen englischen Titel.")
  * @ORM\Table(name="Angebot")
  * @ORM\HasLifecycleCallbacks
  */
@@ -82,25 +85,41 @@ class Angebot
      *      max = 9,
      *      exactMessage = "Der Modulcode muss genau {{ limit }} Zeichen lang sein."
      * )
+     * @Assert\Regex(
+     *     pattern = "/[BM]\-[A-Z]{2,2}\-[A-Z]{1,2}[0-9]{2,2}/",
+     *     message = "Bitte verwenden Sie folgendes Muster für den Modulcode: z.B. B-IN-MN01, B-IN-V05"
+     * )
      */
     protected	$Code;
 
-    //TODO: Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
+    // Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
-     * @ORM\Column(type="string", length=70, nullable=true)
+     * @ORM\Column(type="string", length=70, nullable=true, unique=true)
      * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "Der abweichende deutsche Name muss mindestens {{ limit }} Zeichen lang sein.",
      *      max = 70,
      *      maxMessage = "Der abweichende deutsche Name darf maximal {{ limit }} Zeichen lang sein."
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß0-9 \-]{5,70}/",
+     *     message = "Der studiengangspezifische deutsche Name darf nur aus Buchstaben, Zahlen, Leerzeichen und Bindestrichen bestehen."
      * )
      */
     protected	$AbweichenderNameDE;
 
-    //TODO: Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
+    //Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
-     * @ORM\Column(type="string", length=70, nullable=true)
+     * @ORM\Column(type="string", length=70, nullable=true, unique=true)
      * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "Der abweichende englische Name muss mindestens {{ limit }} Zeichen lang sein.",
      *      max = 70,
      *      maxMessage = "Der abweichende englische Name darf maximal {{ limit }} Zeichen lang sein."
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß0-9 \-]{5,70}/",
+     *     message = "Der studiengangspezifische englische Name darf nur aus Buchstaben, Zahlen, Leerzeichen und Bindestrichen bestehen."
      * )
      */
     protected	$AbweichenderNameEN;

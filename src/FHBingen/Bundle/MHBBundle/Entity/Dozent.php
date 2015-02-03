@@ -57,6 +57,10 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      *      max = 50,
      *      maxMessage = "Der Titel darf nicht länger als {{ limit }} Zeichen sein."
      * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß. ()\-]{1,50}/",
+     *     message = "Der Titel darf nur aus Buchstaben, Leerzeichen, Bindestrichen, Klammern und Punkten bestehen."
+     * )
      */
     protected $Titel;
 
@@ -69,6 +73,10 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * @Assert\NotBlank(
      *      message="Der Vorname darf nicht leer sein."
      * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß \-]{1,20}/",
+     *     message = "Der Vorname darf nur aus Buchstaben, Leerzeichen und Bindestrichen bestehen."
+     * )
      */
     protected $Name;
 
@@ -80,6 +88,10 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * )
      * @Assert\NotBlank(
      *      message="Der Nachname darf nicht leer sein."
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß \-]{1,30}/",
+     *     message = "Der Nachname darf nur aus Buchstaben, Leerzeichen und Bindestrichen bestehen."
      * )
      */
     protected $Nachname;

@@ -18,6 +18,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\Table(name="VeranstaltungHistory")
  * @ORM\HasLifecycleCallbacks
+ *
+ * TODO: Bei Gelegenheit von Veranstaltung ableiten und nur benötigte Änderungen im Code machen
  */
 class VeranstaltungHistory
 {

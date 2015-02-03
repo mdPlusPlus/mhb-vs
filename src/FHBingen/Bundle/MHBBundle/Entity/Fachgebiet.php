@@ -43,6 +43,10 @@ class Fachgebiet
      *      max = 50,
      *      maxMessage = "Der Fachgebietstitel darf aus maximal {{ limit }} Zeichen bestehen."
      * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß \-]{4,50}/",
+     *     message = "Der Fachgebietstitel darf nur aus Buchstaben, Leerzeichen und Bindestrichen bestehen."
+     * )
      */
     protected $Titel;
 

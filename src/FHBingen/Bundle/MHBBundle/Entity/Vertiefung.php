@@ -42,8 +42,14 @@ class Vertiefung
      * @ORM\Column(type="string", length=30, unique=true, nullable=false)
      * @Assert\NotBlank(message = "Ein Vertiefungsrichtungstitel darf nicht leer sein.")
      * @Assert\Length(
+     *      min = 4,
+     *      minMessage = "Ein Vertiefungsrichtungstitel darf aus maximal {{ limit }} Zeichen bestehen.",
      *      max = 30,
      *      maxMessage = "Ein Vertiefungsrichtungstitel darf aus maximal {{ limit }} Zeichen bestehen."
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß \-]{4,30}/",
+     *     message = "Ein Vertiefungsrichtungstitel darf nur aus Buchstaben, Leerzeichen und Bindestrichen bestehen."
      * )
      */
     protected $Name;

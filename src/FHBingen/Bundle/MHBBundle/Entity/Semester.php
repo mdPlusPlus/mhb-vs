@@ -31,13 +31,16 @@ class Semester
 
     /**
      * @ORM\ID
-     * @ORM\Column(type="string",  length=5, nullable=false, unique=true)
+     * @ORM\Column(type="string",  length=4, nullable=false, unique=true)
      * @Assert\NotBlank(message = "Die Bezeichnung des Semesters darf nicht leer sein.")
      * @Assert\Length(
      *      min = 4,
-     *      max = 5,
-     *      minMessage="Ein Semester muss aus mindestens {{ limit }} Zeichen bestehen.",
-     *      maxMessage="Ein Semester darf aus maximal {{ limit }} Zeichen bestehen."
+     *      max = 4,
+     *      exactMessage = "Der Semestername muss aus genau {{ limit }} Zeichen bestehen."
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[SW][S][0-9]{2,2}/",
+     *     message = "Bitte verwenden Sie folgendes Muster für den Semesternamen: z.B. SS01, WS17"
      * )
      */
     protected $Semester;

@@ -87,13 +87,14 @@
                     {{ modulBeschreibung.getAngebot().getVeranstaltung().getLeistungspunkte() }}
                 </td>
                 <td colspan="2">
-                    <div class="key">Studiensemeseter</div>
+                    <div class="key">Studiensemeseter bei Studienbeginn</div>
                     <table>
                         {% for studienplan in modulBeschreibung.getStudienplaene() %}
                             <tr>
                                 <td class="studiensemseter startsemester">{{ studienplan.getStartsemester() }}:</td>
                                 {# TODO: wird auf VM als zwei Zeilen ausgegeben, warum? #}
-                                <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': '', ',': '. + '}) ~ '. Semester' }}</td>
+                                {# TODO: Auf VM testen ob gefixt #}
+                                <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': ''}) }}</td>
                             </tr>
                         {% endfor %}
                     </table>

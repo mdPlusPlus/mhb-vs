@@ -118,6 +118,7 @@
                         <h4>{{ key }}</h4>
                         <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
                             {% for angebot in zuordnung[key] %}
+                                {# TODO: Wenn Modulcode 'DUMMY', dann highlighten, oder nicht aufführen, oder abschicken unmöglich machen #}
                                 <li>
                                     {#<label>#}
                                     <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>

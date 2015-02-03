@@ -40,8 +40,8 @@ class Semesterplan
      * @Assert\Range(
      *      min = 0,
      *      max = 10,
-     *      minMessage = "Ein Modul braucht mindestens {{ limit }}SWS Übung",
-     *      maxMessage = "Ein Modul darf nicht mehr als {{ limit }}SWS Übung haben"
+     *      minMessage = "Ein Modul braucht mindestens {{ limit }} SWS Übung",
+     *      maxMessage = "Ein Modul darf nicht mehr als {{ limit }} SWS Übung haben"
      * )
      */
     protected $SWSUebung;
@@ -51,8 +51,8 @@ class Semesterplan
      * @Assert\Range(
      *      min = 0,
      *      max = 10,
-     *      minMessage = "Ein Modul braucht mindestens {{ limit }}SWS Vorlesung",
-     *      maxMessage = "Ein Modul darf nicht mehr als {{ limit }}SWS Vorlesung haben"
+     *      minMessage = "Ein Modul braucht mindestens {{ limit }} SWS Vorlesung",
+     *      maxMessage = "Ein Modul darf nicht mehr als {{ limit }} SWS Vorlesung haben"
      * )
      */
     protected $SWSVorlesung;
@@ -76,6 +76,7 @@ class Semesterplan
      *      minMessage = "Eine Übungsgruppe muss aus mindestens {{ limit }} Studenten bestehen",
      *      maxMessage = "Eine Übungsgruppe darf aus nicht mehr als {{ limit }} Studenten bestehen"
      * )
+     * TODO: Welche Übungsgruppengröße sinnvoll?
      */
     protected $GroesseUebungsgruppen;
 
