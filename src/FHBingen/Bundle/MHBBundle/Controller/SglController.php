@@ -118,10 +118,15 @@ class SglController extends Controller
 
 
     /**
+     * @param int $id
+     * @param int $studiengangid
+     *
      * @Route("/restricted/sgl/modulCodeErstellung/{id}/{studiengangid}", name="modulCodeErstellung")
      * @Template("FHBingenMHBBundle:SGL:modulCodeErstellung.html.twig")
      *
      * updatet einen bestimmten Modulcode anhand der angegebenen Daten
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function modulCodeErstellungAction($id, $studiengangid)
     {
