@@ -62,7 +62,7 @@ class SglController extends Controller
         $stgZuModul = array();
         foreach ($nichtInPlanung as $modul) {
             $name = array();
-            $angebote = $modul->getAngebote();
+            $angebote = $modul->getAngebot();
             foreach ($angebote as $angebot) {
                 $name[] = (string) $angebot->getStudiengang();
             }
