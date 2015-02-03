@@ -25,6 +25,7 @@ class DozentController extends Controller
      *
      * Hier werden alle Module als Tabelle ausgegeben, welche der aktuell eingeloggte Benutzer
      * verwaltet, bzw. unterrichtet.
+     * Die Vorgehensweise ist hier spaltenweise. Im Template werden dann die Spalten-Arrays mit Zeilen-Index aufgerufen.
      */
     public function eigeneModuleAction()
     {
