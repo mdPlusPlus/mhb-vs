@@ -94,10 +94,10 @@ class SglController extends Controller
         uasort($dummyAngebote, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
 
         //Filtert die Angebote mit DummyModul und aus anderen Studiengängen herraus
-        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang));
         $angeboteOhneDummy = array();
         foreach ($angebote as $value) {
-            if ($value->getCode() != 'DUMMY' && $value->getStudiengang()->getStudiengangID() == $studiengang->getStudiengangID()) {
+            if ($value->getCode() != 'DUMMY') {
                 $angeboteOhneDummy[] = $value;
             }
         }
