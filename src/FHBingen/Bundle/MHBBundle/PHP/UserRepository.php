@@ -15,8 +15,21 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
+/**
+ * Class UserRepository
+ *
+ * @package FHBingen\Bundle\MHBBundle\PHP
+ */
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
+    /**
+     * @param string $username
+     *
+     * @return UserInterface
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     * @inheritDoc UserProviderInterface
+     */
     public function loadUserByUsername($username)
     {
         $q = $this
@@ -42,6 +55,13 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $user;
     }
 
+    /**
+     * @param UserInterface $user
+     *
+     * @return null|UserInterface
+     *
+     * @inheritDoc UserProviderInterface
+     */
     public function refreshUser(UserInterface $user)
     {
         $class = get_class($user);
@@ -60,9 +80,15 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $this->find($user->getDozentenID());
     }
 
+    /**
+     * @param string $class
+     *
+     * @return bool
+     *
+     * @inheritDoc UserProviderInterface
+     */
     public function supportsClass($class)
     {
-        return $this->getEntityName() === $class
-        || is_subclass_of($class, $this->getEntityName());
+        return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
     }
 }
