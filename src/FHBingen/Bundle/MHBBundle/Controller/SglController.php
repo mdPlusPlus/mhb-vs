@@ -599,6 +599,7 @@ class SglController extends Controller
         }
 
         foreach ($angebote as $angebot) {
+            //TODO: hier noch DUMMY Module abfangen oder bei Zusammenstellung kenntlich machen
             $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
         }
 
