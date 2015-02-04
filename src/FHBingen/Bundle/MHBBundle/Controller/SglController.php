@@ -523,6 +523,14 @@ class SglController extends Controller
             $em->remove($del);
         }
 
+        if($studiengangID==2){
+            $kernfach = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('veranstaltung' => $modulID));
+
+            foreach ($kernfach as $del) {
+                $em->remove($del);
+            }
+        }
+
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich deaktiviert.');
