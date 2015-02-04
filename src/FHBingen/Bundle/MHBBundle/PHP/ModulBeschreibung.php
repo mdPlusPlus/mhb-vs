@@ -10,9 +10,16 @@ namespace FHBingen\Bundle\MHBBundle\PHP;
 
 
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
-use FHBingen\Bundle\MHBBundle\Entity\Studiengang;
 
-class ModulBeschreibung {
+/**
+ * Class ModulBeschreibung
+ *
+ * wird als Container für das Generieren des Modulhandbuch-PDF verwendet
+ *
+ * @package FHBingen\Bundle\MHBBundle\PHP
+ */
+class ModulBeschreibung
+{
 
     private $angebot;
     private $fremdeStudiengaenge;
@@ -23,7 +30,7 @@ class ModulBeschreibung {
     private $voraussetzungenLP;
 
     /**
-     * @return Angebot
+     * @return mixed
      */
     public function getAngebot()
     {
@@ -63,9 +70,9 @@ class ModulBeschreibung {
     }
 
     /**
-     * @param mixed $studienplaene
+     * @param array $studienplaene
      */
-    public function setStudienplaene($studienplaene)
+    public function setStudienplaene(array $studienplaene)
     {
         $this->studienplaene = $studienplaene;
     }
@@ -79,9 +86,9 @@ class ModulBeschreibung {
     }
 
     /**
-     * @param mixed $voraussetzungen
+     * @param array $voraussetzungen
      */
-    public function setVoraussetzungen($voraussetzungen)
+    public function setVoraussetzungen(array $voraussetzungen)
     {
         $this->voraussetzungen = $voraussetzungen;
     }
@@ -95,9 +102,9 @@ class ModulBeschreibung {
     }
 
     /**
-     * @param mixed $pruefungsformen
+     * @param array $pruefungsformen
      */
-    public function setPruefungsformen($pruefungsformen)
+    public function setPruefungsformen(array $pruefungsformen)
     {
         $this->pruefungsformen = $pruefungsformen;
     }
@@ -111,9 +118,9 @@ class ModulBeschreibung {
     }
 
     /**
-     * @param mixed $lehrveranstaltungen
+     * @param array $lehrveranstaltungen
      */
-    public function setLehrveranstaltungen($lehrveranstaltungen)
+    public function setLehrveranstaltungen(array $lehrveranstaltungen)
     {
         $this->lehrveranstaltungen = $lehrveranstaltungen;
     }
@@ -127,9 +134,9 @@ class ModulBeschreibung {
     }
 
     /**
-     * @param mixed $voraussetzungenLP
+     * @param array $voraussetzungenLP
      */
-    public function setVoraussetzungenLP($voraussetzungenLP)
+    public function setVoraussetzungenLP(array $voraussetzungenLP)
     {
         $this->voraussetzungenLP = $voraussetzungenLP;
     }
