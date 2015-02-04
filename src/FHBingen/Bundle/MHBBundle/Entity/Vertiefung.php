@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Studiengang
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
- * @UniqueEntity(fields="Name", message="Diese Vertiefungsrichtung wurde bereits in die Datenbank eingetragen.")
  * @ORM\Table(name="Vertiefung")
  * @ORM\HasLifecycleCallbacks
  */
