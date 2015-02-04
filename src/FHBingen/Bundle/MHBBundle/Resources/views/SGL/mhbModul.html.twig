@@ -92,8 +92,6 @@
                         {% for studienplan in modulBeschreibung.getStudienplaene() %}
                             <tr>
                                 <td class="studiensemseter startsemester">{{ studienplan.getStartsemester() }}:</td>
-                                {# TODO: wird auf VM als zwei Zeilen ausgegeben, warum? #}
-                                {# TODO: Auf VM testen ob gefixt #}
                                 <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': ''}) }}</td>
                             </tr>
                         {% endfor %}
@@ -176,7 +174,7 @@
                         {% endfor %}
                     {% else %}
                         {% if modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() == "BACH" %}
-                            Bestehen aller anderen Studienveranstaltunge laut Studienplan<br />
+                            Bestehen aller anderen Studienveranstaltungen laut Studienplan<br />
                         {% endif %}
                         {% if modulBeschreibung.getAngebot().getVeranstaltung().getKuerzel() == "PRAX" %}
                             Alle veranstaltunge der ersten sechs Semester<br />

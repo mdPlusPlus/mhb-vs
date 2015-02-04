@@ -9,7 +9,9 @@
 namespace FHBingen\Bundle\MHBBundle\PHP;
 
 
+use Doctrine\ORM\PersistentCollection;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
+
 
 /**
  * Class ModulBeschreibung
@@ -86,11 +88,11 @@ class ModulBeschreibung
     }
 
     /**
-     * @param array $voraussetzungen
+     * @param PersistentCollection $grundmodul
      */
-    public function setVoraussetzungen(array $voraussetzungen)
+    public function setVoraussetzungen(PersistentCollection $grundmodul)
     {
-        $this->voraussetzungen = $voraussetzungen;
+        $this->voraussetzungen = $grundmodul;
     }
 
     /**
