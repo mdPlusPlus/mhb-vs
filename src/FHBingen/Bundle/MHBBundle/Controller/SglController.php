@@ -589,6 +589,7 @@ class SglController extends Controller
         $sgl = $this->get('security.context')->getToken()->getUser();
 
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $sgl));
+        //TODO: hier noch DUMMY Module abfangen oder bei Zusammenstellung kenntlich machen
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang));
 
         $zuordnung = array();
@@ -599,7 +600,6 @@ class SglController extends Controller
         }
 
         foreach ($angebote as $angebot) {
-            //TODO: hier noch DUMMY Module abfangen oder bei Zusammenstellung kenntlich machen
             $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
         }
 
