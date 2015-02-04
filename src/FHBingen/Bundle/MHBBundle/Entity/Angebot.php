@@ -81,9 +81,10 @@ class Angebot
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
      * @Assert\Length(
-     *      min = 9,
+     *      min = 8,
+     *      minMessage = "Der Modulcode muss mindestens {{ limit }} Zeichen lang sein.",
      *      max = 9,
-     *      exactMessage = "Der Modulcode muss genau {{ limit }} Zeichen lang sein."
+     *      maxMessage = "Der Modulcode darf maximal {{ limit }} Zeichen lang sein."
      * )
      * @Assert\Regex(
      *     pattern = "/[BM]\-[A-Z]{2,2}\-[A-Z]{1,2}[0-9]{2,2}/",
