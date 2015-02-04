@@ -13,21 +13,33 @@ use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Studienplan;
 
-class SortFunctions {
+/**
+ * Class SortFunctions
+ *
+ * @package FHBingen\Bundle\MHBBundle\PHP
+ */
+class SortFunctions
+{
 
+    /**
+     * @param Angebot $angebotA
+     * @param Angebot $angebotB
+     *
+     * @return int
+     */
     public static function angebotSort(Angebot $angebotA, Angebot $angebotB)
     {
         $a = null;
-        if($angebotA->getAbweichenderNameDE() != null){
+        if ($angebotA->getAbweichenderNameDE() != null) {
             $a = $angebotA->getAbweichenderNameDE();
-        }else{
+        } else {
             $a = $angebotA->getVeranstaltung()->getName();
         }
 
         $b = null;
-        if($angebotB->getAbweichenderNameDE() != null){
+        if ($angebotB->getAbweichenderNameDE() != null) {
             $b = $angebotB->getAbweichenderNameDE();
-        }else{
+        } else {
             $b = $angebotB->getVeranstaltung()->getName();
         }
 
@@ -38,6 +50,12 @@ class SortFunctions {
         return ($a < $b) ? -1 : 1;
     }
 
+    /**
+     * @param Dozent $dozA
+     * @param Dozent $dozB
+     *
+     * @return int
+     */
     public static function dozentSort(Dozent $dozA, Dozent $dozB)
     {
         $a = $dozA->getNachname();
@@ -50,6 +68,12 @@ class SortFunctions {
         return ($a < $b) ? -1 : 1;
     }
 
+    /**
+     * @param ModulBeschreibung $descA
+     * @param ModulBeschreibung $descB
+     *
+     * @return int
+     */
     public static function modulBeschreibungSort(ModulBeschreibung $descA, ModulBeschreibung $descB)
     {
         $fgA = $descA->getAngebot()->getFachgebiet();
@@ -71,7 +95,12 @@ class SortFunctions {
         return ($fgA < $fgB) ? -1 : 1;
     }
 
-
+    /**
+     * @param Studienplan $planA
+     * @param Studienplan $planB
+     *
+     * @return int
+     */
     public static function studienplanSort(Studienplan $planA, Studienplan $planB)
     {
         $a = $planA->getStartsemester();
