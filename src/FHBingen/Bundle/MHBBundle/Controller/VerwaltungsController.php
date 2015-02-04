@@ -329,7 +329,7 @@ class VerwaltungsController extends Controller
      *
      * Deaktiviert den User
      */
-    public function SglUserDeactivation($userid)
+    public function SglUserDeactivationAction($userid)
     {
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $userid));
@@ -346,7 +346,7 @@ class VerwaltungsController extends Controller
      *
      * Aktiviert den User
      */
-    public function SglUserActivation($userid)
+    public function SglUserActivationAction($userid)
     {
         $em = $this->getDoctrine()->getManager();
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $userid));
