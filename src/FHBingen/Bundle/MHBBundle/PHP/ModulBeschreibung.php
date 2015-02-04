@@ -88,9 +88,9 @@ class ModulBeschreibung
     }
 
     /**
-     * @param PersistentCollection $grundmodul
+     * @param mixed $grundmodul
      */
-    public function setVoraussetzungen(PersistentCollection $grundmodul)
+    public function setVoraussetzungen($grundmodul)
     {
         $this->voraussetzungen = $grundmodul;
     }
@@ -104,9 +104,9 @@ class ModulBeschreibung
     }
 
     /**
-     * @param array $pruefungsformen
+     * @param mixed $pruefungsformen
      */
-    public function setPruefungsformen(array $pruefungsformen)
+    public function setPruefungsformen($pruefungsformen)
     {
         $this->pruefungsformen = $pruefungsformen;
     }
@@ -120,9 +120,9 @@ class ModulBeschreibung
     }
 
     /**
-     * @param array $lehrveranstaltungen
+     * @param mixed $lehrveranstaltungen
      */
-    public function setLehrveranstaltungen(array $lehrveranstaltungen)
+    public function setLehrveranstaltungen($lehrveranstaltungen)
     {
         $this->lehrveranstaltungen = $lehrveranstaltungen;
     }
@@ -136,9 +136,9 @@ class ModulBeschreibung
     }
 
     /**
-     * @param array $voraussetzungenLP
+     * @param mixed $voraussetzungenLP
      */
-    public function setVoraussetzungenLP(array $voraussetzungenLP)
+    public function setVoraussetzungenLP($voraussetzungenLP)
     {
         $this->voraussetzungenLP = $voraussetzungenLP;
     }
