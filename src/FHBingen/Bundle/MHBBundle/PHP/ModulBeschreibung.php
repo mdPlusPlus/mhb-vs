@@ -12,7 +12,15 @@ namespace FHBingen\Bundle\MHBBundle\PHP;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 use FHBingen\Bundle\MHBBundle\Entity\Studiengang;
 
-class ModulBeschreibung {
+/**
+ * Class ModulBeschreibung
+ *
+ * wird als Container für das Generieren des Modulhandbuch-PDF verwendet
+ *
+ * @package FHBingen\Bundle\MHBBundle\PHP
+ */
+class ModulBeschreibung
+{
 
     private $angebot;
     private $fremdeStudiengaenge;
