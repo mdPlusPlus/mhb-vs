@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Angebot
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
- * @UniqueEntity(fields="AbweichenderNameDe", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen deutschen Titel.")
+ * @UniqueEntity(fields="AbweichenderNameDE", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen deutschen Titel.")
  * @UniqueEntity(fields="AbweichenderNameEN", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen englischen Titel.")
  * @ORM\Table(name="Angebot")
  * @ORM\HasLifecycleCallbacks
