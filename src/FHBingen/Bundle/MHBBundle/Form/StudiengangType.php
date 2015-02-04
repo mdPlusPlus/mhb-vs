@@ -34,23 +34,24 @@ class StudiengangType extends AbstractType
 
             //Ab hier neuer Merge mit VertiefungType und FachgebietType
 
+            //TODO: Asserts werden nicht angewendet!
             ->add('richtung', 'collection', array('label' => false, 'type' => new VertiefungType(),
                 'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
                 'options' => array(
                     'required' => false,
                     'attr' => array(
-                        'class' => 'Vertiefung' //TODO:notwendig oder nur CSS-klasse?
+                        'class' => 'Vertiefung'
                     )
                     )
             ))
 
-            //TODO: Überprüfung auf Mindestlänge fehlt hier (steht in den Asserts)
+            //TODO: Asserts werden nicht angewendet!
             ->add('fachgebiete', 'collection', array('label' => false, 'type' => new FachgebietType(),
                 'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
                 'options' => array(
                     'required' => true,
                     'attr' => array(
-                        'class' => 'Fachgebiet' //TODO:notwendig oder nur CSS-klasse?
+                        'class' => 'Fachgebiet'
                     ),
                     )
             ));
