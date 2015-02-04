@@ -427,7 +427,6 @@ class SglController extends Controller
         foreach ($angebote as $angebot) {
             $module[] = $angebot->getVeranstaltung();
         }
-        //asort($module, SORT_STRING);
         uasort($module, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions','veranstaltungSort'));
 
         $stgZuModul = array();
