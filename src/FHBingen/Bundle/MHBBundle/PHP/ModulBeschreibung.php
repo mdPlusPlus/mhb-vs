@@ -10,7 +10,6 @@ namespace FHBingen\Bundle\MHBBundle\PHP;
 
 
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
-use FHBingen\Bundle\MHBBundle\Entity\Studiengang;
 
 /**
  * Class ModulBeschreibung
