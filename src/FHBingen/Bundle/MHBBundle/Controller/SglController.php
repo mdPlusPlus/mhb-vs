@@ -427,7 +427,8 @@ class SglController extends Controller
         foreach ($angebote as $angebot) {
             $module[] = $angebot->getVeranstaltung();
         }
-        asort($module, SORT_STRING);
+        //asort($module, SORT_STRING);
+        uasort($module, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions','veranstaltungSort'));
 
         $stgZuModul = array();
         foreach ($module as $modul) {
@@ -437,6 +438,7 @@ class SglController extends Controller
                 $name[] = $angebot->getStudiengang();
             }
             asort($name, SORT_STRING);
+
 
             $stgZuModul[] = $name;
         }

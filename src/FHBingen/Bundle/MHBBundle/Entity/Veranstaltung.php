@@ -117,12 +117,13 @@ class Veranstaltung
      */
     protected $Haeufigkeit;
 
+    //TODO:
+    //* @Assert\Regex(
+    //*     pattern = "/[0-9]{1,2}[ ](\bWochen\b|\bSemester\b|\bMonate\b)/",
+    //*     message = "Bitte verwenden Sie folgendes muster für die Dauer: z.B. 12 Wochen, 1 Semster, 3 Monate"
+    //* )
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
-     * @Assert\Regex(
-     *     pattern = "/[0-9]{1,2}[ ](\bWochen\b|\bSemester\b|\bMonate\b)/",
-     *     message = "Bitte verwenden Sie folgendes muster für die Dauer: z.B. 12 Wochen, 1 Semster, 3 Monate"
-     * )
      */
     protected $Dauer;
 
