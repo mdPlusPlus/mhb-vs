@@ -32,9 +32,9 @@ class StudiengangType extends AbstractType
         $builder
             ->add('fachbereich', 'choice', array('label' => 'Fachbereich: ', 'required' => true, 'choices' => ArrayValues::$faculty))
             ->add('grad', 'choice', array('label' => 'Grad: ', 'required' => true, 'choices' => ArrayValues::$level))
-            ->add('titel', 'text', array('label' => 'Titel: ', 'required' => true))
+            ->add('titel', 'text', array('label' => 'Titel: ', 'required' => true, 'attr' => array('class' => 'sonstigesClass')))
             ->add('kuerzel', 'text', array('label' => 'Kürzel: ', 'required' => true))
-            ->add('beschreibung', 'text', array('label' => 'Beschreibung: ', 'required' => true))
+            ->add('beschreibung', 'textarea', array('label' => 'Beschreibung: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('sgl', 'entity', array('label' => 'Studiengangleiter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('s')
