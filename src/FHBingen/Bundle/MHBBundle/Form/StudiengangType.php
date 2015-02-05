@@ -55,7 +55,11 @@ class StudiengangType extends AbstractType
                     )
             ))
 
-            //TODO: Asserts werden nicht angewendet!
+            /*
+             * TODO:
+             *  - Asserts werden nicht angewendet!
+             *  - außerdem ist es möglich Studiengänge ohne Fachgebiete anzulegen, in denen dann keine Angebote erstellt werden können, weil keine Fachgebiete existieren.
+             */
             ->add('fachgebiete', 'collection', array('label' => false, 'type' => new FachgebietType(),
                 'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
                 'options' => array(
