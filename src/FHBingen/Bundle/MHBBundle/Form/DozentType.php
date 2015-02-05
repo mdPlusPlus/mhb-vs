@@ -16,9 +16,19 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-
+/**
+ * Class DozentType
+ *
+ * für Entity:	Dozent.php
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class DozentType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -34,6 +44,9 @@ class DozentType extends AbstractType
             ;
     }
 
+    /**
+     * @param FormEvent $event
+     */
     public function onPreSetData(FormEvent $event)
     {
         $input = $event->getData();
@@ -49,6 +62,9 @@ class DozentType extends AbstractType
             'data' => $role));
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -56,6 +72,9 @@ class DozentType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'dozent';
