@@ -14,17 +14,32 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
+/**
+ * Class AngebotType
+ *
+ * beschreibt:	Angebot.php
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class AngebotType extends AbstractType
 {
     private $studiengangID;
     private $isWahl;
 
+    /**
+     * @param int  $studiengangID
+     * @param bool $isWahl
+     */
     public function __construct($studiengangID, $isWahl)
     {
         $this->studiengangID = $studiengangID;
         $this->isWahl = $isWahl;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('fachgebiet', 'entity', array(
@@ -59,6 +74,9 @@ class AngebotType extends AbstractType
             ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'angebot';
