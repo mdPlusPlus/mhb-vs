@@ -23,7 +23,7 @@ class VertiefungType extends AbstractType
     {
 
         $builder
-            ->add('name', 'text', array('label' => 'Vertiefungsrichtung: ', 'required' => false));
+            ->add('name', 'text', array('label' => 'Vertiefungsrichtung: ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
     }
 
     /**

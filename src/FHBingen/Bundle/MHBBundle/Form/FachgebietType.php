@@ -31,7 +31,7 @@ class FachgebietType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titel', 'text', array('label' => 'Fachgebiet: ', 'required' => true));
+            ->add('titel', 'text', array('label' => 'Fachgebiet: ', 'required' => true, 'attr' => array('class' => 'sonstigesClass')));
 /*            ->add('hat', 'entity', array('label' => 'Studiengang Titel: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
             ->add('reset', 'reset')
             ->add('submit', 'submit');*/
