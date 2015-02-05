@@ -11,12 +11,23 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class FachgebietType
+ *
+ * für Entity:	Fachgebiet.php
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class FachgebietType extends AbstractType
 {
     /*
-     * wird in StuidengangType genutzt
+     * wird in StudiengangType genutzt
      */
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -36,6 +47,9 @@ class FachgebietType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'fachgebiet';
