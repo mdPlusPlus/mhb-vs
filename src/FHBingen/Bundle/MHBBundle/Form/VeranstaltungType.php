@@ -54,7 +54,7 @@ class VeranstaltungType extends AbstractType
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('selbststudium', 'integer', array('label' => false, 'required' => true, 'attr' => array('min' => '0', 'hidden' => true)))
             ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße [#]: ', 'required' => true, 'attr' => array('min' => '0')))
-            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebnisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('sprache', 'choice', array('label' => 'Sprache [#]: ', 'required' => true, 'choices' => ArrayValues::$lang))
             ->add('SpracheSonstiges', 'text', array('label' => 'Sprache Sonstiges: ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))

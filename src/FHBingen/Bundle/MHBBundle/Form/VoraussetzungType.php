@@ -13,15 +13,29 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class VoraussetzungType
+ *
+ * für Entity:	Modulvoraussetzung.php
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class VoraussetzungType extends AbstractType
 {
     private $modulID;
 
+    /**
+     * @param int $modulID
+     */
     public function __construct($modulID)
     {
         $this->modulID = $modulID;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -43,6 +57,9 @@ class VoraussetzungType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'grundmodul';

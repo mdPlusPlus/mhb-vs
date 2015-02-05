@@ -37,7 +37,7 @@ class PlanungType extends AbstractType
             ->add('name', 'text', array('label' => 'Modulname (deutsch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => false, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('selbststudium', 'integer', array('label' => false, 'required' => false, 'attr' => array('min' => '0', 'hidden' => true)))
-            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
+            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebnisse: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('PruefungsformSonstiges', 'text', array('label' => 'Sonstige Prüfungsform:', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
