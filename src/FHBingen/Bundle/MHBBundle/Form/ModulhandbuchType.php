@@ -11,8 +11,19 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Class ModulhandbuchType
+ *
+ * für Entity:	Modulhandbuch.php
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class ModulhandbuchType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -20,6 +31,9 @@ class ModulhandbuchType extends AbstractType
             ->add('gueltigAb', 'entity', array('label' => 'Gültig ab: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Semester'));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'modulhandbuch';

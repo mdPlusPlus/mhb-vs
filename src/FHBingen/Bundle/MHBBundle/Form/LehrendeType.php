@@ -22,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class LehrendeType extends AbstractType
 {
     /*
-     * wird von Veranstaltungtype genutzt
+     * wird von VeranstaltungType genutzt
      */
 
     /**
