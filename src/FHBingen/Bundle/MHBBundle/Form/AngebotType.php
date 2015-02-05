@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormEvents;
 /**
  * Class AngebotType
  *
- * beschreibt:	Angebot.php
+ * für Entity:	Angebot.php
  *
  * @package FHBingen\Bundle\MHBBundle\Form
  */
