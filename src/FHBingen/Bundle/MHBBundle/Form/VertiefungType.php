@@ -12,13 +12,23 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-
+/**
+ * Class VertiefungType
+ *
+ *
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class VertiefungType extends AbstractType
 {
     /*
      * wird in StudiengangType genutzt
      */
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
@@ -36,7 +46,9 @@ class VertiefungType extends AbstractType
         ));
     }
 
-
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'vertiefung';

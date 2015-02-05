@@ -651,10 +651,14 @@ class DozentController extends Controller
     }
 
     /**
+     * @param int $modulID
+     *
      * @Route("/restricted/dozent/vorAngebot/{modulID}", name="vorAngebot")
      * @Template("FHBingenMHBBundle:Dozent:vorAngebot.html.twig")
      *
      * dient der Auswahl des Studiengangs für die eigentliche angebotAction
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function vorAngebotAction($modulID)
     {
