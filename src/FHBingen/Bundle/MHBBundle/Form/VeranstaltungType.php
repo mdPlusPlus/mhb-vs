@@ -18,15 +18,29 @@ use Symfony\Component\Form\FormEvents;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
+/**
+ * Class VeranstaltungType
+ *
+ * für Entity:	Veranstaltung.php
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class VeranstaltungType extends AbstractType
 {
     private $modulID;
 
+    /**
+     * @param int $modulID
+     */
     public function __construct($modulID)
     {
         $this->modulID = $modulID;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -51,6 +65,9 @@ class VeranstaltungType extends AbstractType
 
     }
 
+    /**
+     * @param FormEvent $event
+     */
     public function onPreSetData(FormEvent $event)
     {
         $input = $event->getData();
@@ -121,7 +138,7 @@ class VeranstaltungType extends AbstractType
             'options' => array(
                 'required' => false,
                 'attr' => array(
-                    'class' => 'lehrende' //TODO:notwendig oder nur CSS-klasse?
+                    'class' => 'lehrende'
                 )
             )
         );
@@ -141,6 +158,9 @@ class VeranstaltungType extends AbstractType
 
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -148,6 +168,9 @@ class VeranstaltungType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'veranstaltung';
