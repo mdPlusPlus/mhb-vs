@@ -12,13 +12,23 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-
+/**
+ * Class LehrendeType
+ *
+ * für Entity:	Lehrende.php
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class LehrendeType extends AbstractType
 {
     /*
      * wird von Veranstaltungtype genutzt
      */
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
@@ -40,6 +50,9 @@ class LehrendeType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'lehrende';
