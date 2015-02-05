@@ -16,9 +16,19 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
-
+/**
+ * Class PlanungType
+ *
+ * für Entity:	Veranstaltung.php
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class PlanungType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -34,6 +44,9 @@ class PlanungType extends AbstractType
             //->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
     }
 
+    /**
+     * @param FormEvent $event
+     */
     public function onPreSetData(FormEvent $event)
     {
         $input = $event->getData();
@@ -170,6 +183,9 @@ class PlanungType extends AbstractType
         $form->add('PruefungsleistungSonstiges', 'text', $pruefungsungsleistungSonstigesOptions);
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -177,6 +193,9 @@ class PlanungType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'planung';
