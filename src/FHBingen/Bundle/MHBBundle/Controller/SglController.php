@@ -510,6 +510,12 @@ class SglController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $angeboteArr =$em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID));
+
+        if(sizeof($angeboteArr)== 1){
+            return $this->redirect($this->generateUrl('/restricted/sgl/modulDeaktivierung/{modulID}', array('modulID'=> $modulID)));
+        }
+
         $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID,'studiengang'=>$studiengangID));
 
         foreach ($angebot as $del) {
@@ -522,10 +528,10 @@ class SglController extends Controller
             $em->remove($del);
         }
 
-        if($studiengangID==2){
-            $kernfach = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('veranstaltung' => $modulID));
+        $kernfachArr = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('veranstaltung' => $modulID));
 
-            foreach ($kernfach as $del) {
+        if(sizeof($kernfachArr)>0){
+            foreach ($kernfachArr as $del) {
                 $em->remove($del);
             }
         }

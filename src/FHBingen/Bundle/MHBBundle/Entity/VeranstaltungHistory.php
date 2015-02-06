@@ -234,7 +234,7 @@ class VeranstaltungHistory
     /**
      * Set Modul_ID
      *
-     * @param \integer $Modul_ID
+     * @param integer $Modul_ID
      * @return VeranstaltungHistory
      */
     public function setModulID($id)
@@ -268,28 +268,28 @@ class VeranstaltungHistory
         return $this->Erstellungsdatum;
     }
 
-    /**
-     * Set erstellt_von
-     *
-     * @param string $erstelltVon
-     * @return VeranstaltungHistory
-     */
-    public function setErstelltVon($erstelltVon)
-    {
-        $this->Erstellt_von = $erstelltVon;
-
-        return $this;
-    }
-
-    /**
-     * Get erstellt_von
-     *
-     * @return string
-     */
-    public function getErstelltVon()
-    {
-        return $this->Erstellt_von;
-    }
+//    /**
+//     * Set erstellt_von
+//     *
+//     * @param string $erstelltVon
+//     * @return VeranstaltungHistory
+//     */
+//    public function setErstelltVon($erstelltVon)
+//    {
+//        $this->Erstellt_von = $erstelltVon;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get erstellt_von
+//     *
+//     * @return string
+//     */
+//    public function getErstelltVon()
+//    {
+//        return $this->Erstellt_von;
+//    }
 
     /**
      * Set Versionsnummer_Modul
