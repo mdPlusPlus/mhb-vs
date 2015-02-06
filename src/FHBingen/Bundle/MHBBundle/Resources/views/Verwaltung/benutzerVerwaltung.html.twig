@@ -25,8 +25,8 @@
                     <table>
                         {% for person in dozent %}
                             <tr>
-                                <td><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
-                                <td><a href="{{ path('SglUserDeactivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">deaktivieren</button></a></td>
+                                <td style="width:200px; padding-bottom:5px"><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
+                                <td style="padding-bottom:5px"><a href="{{ path('SglUserDeactivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">deaktivieren</button></a></td>
                               </tr>
 
                            {% endfor %}
@@ -36,8 +36,8 @@
                     <table>
                         {% for person in sgl %}
                             <tr>
-                                <td><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
-                                <td><a href="{{ path('SglUserDeactivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">deaktivieren</button></a></td>
+                                <td style="width:200px; padding-bottom:5px"><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
+                                <td style="padding-bottom:5px"><a href="{{ path('SglUserDeactivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">deaktivieren</button></a></td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -46,8 +46,8 @@
                 <table>
                     {% for person in deaktivierteNutzer %}
                         <tr>
-                            <td><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
-                            <td><a href="{{ path('SglUserActivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">reaktivieren</button></a></td>
+                            <td style="width:200px; padding-bottom:5px"><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
+                            <td style="padding-bottom:5px"><a href="{{ path('SglUserActivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">reaktivieren</button></a></td>
                         </tr>
                     {% endfor %}
                 </table>
