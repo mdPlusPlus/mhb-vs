@@ -74,7 +74,7 @@ class DozentController extends Controller
             $name = array();
             $angebote = $modul->getAngebot();
 
-            if(empty($angebote)){
+            if (empty($angebote)) {
                 $name[] =" ";
             }
             foreach ($angebote as $angebot) {
