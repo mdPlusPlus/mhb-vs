@@ -463,6 +463,7 @@ class DozentController extends Controller
      */
     public function planungFreigebenAction($id)
     {
+        //TODO: muss hier nicht noch die Version auf 1 gesetzt werden?
         //TODO modulBearbeitenAction + planungFreigebenAction zusammenführen (geht das überhaupt?)
         $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
