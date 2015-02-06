@@ -442,7 +442,7 @@ class SglController extends Controller
             $stgZuModul[] = $name;
         }
 
-        return array('deaktiv' => $deaktiv, 'module' => $module, 'stgZuModul' => $stgZuModul, 'studiengang' => $studiengang);
+        return array('deaktiv' => $deaktiv, 'module' => $module, 'stgZuModul' => $stgZuModul, 'studiengang' => $studiengang, 'pageTitle' => 'Moduldeaktiverung');
     }
 
 

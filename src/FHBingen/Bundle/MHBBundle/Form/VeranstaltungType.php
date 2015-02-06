@@ -18,15 +18,29 @@ use Symfony\Component\Form\FormEvents;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
+/**
+ * Class VeranstaltungType
+ *
+ * für Entity:	Veranstaltung.php
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class VeranstaltungType extends AbstractType
 {
     private $modulID;
 
+    /**
+     * @param int $modulID
+     */
     public function __construct($modulID)
     {
         $this->modulID = $modulID;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -40,7 +54,7 @@ class VeranstaltungType extends AbstractType
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('selbststudium', 'integer', array('label' => false, 'required' => true, 'attr' => array('min' => '0', 'hidden' => true)))
             ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße [#]: ', 'required' => true, 'attr' => array('min' => '0')))
-            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebnisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('sprache', 'choice', array('label' => 'Sprache [#]: ', 'required' => true, 'choices' => ArrayValues::$lang))
             ->add('SpracheSonstiges', 'text', array('label' => 'Sprache Sonstiges: ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
@@ -51,6 +65,9 @@ class VeranstaltungType extends AbstractType
 
     }
 
+    /**
+     * @param FormEvent $event
+     */
     public function onPreSetData(FormEvent $event)
     {
         $input = $event->getData();
@@ -121,7 +138,7 @@ class VeranstaltungType extends AbstractType
             'options' => array(
                 'required' => false,
                 'attr' => array(
-                    'class' => 'lehrende' //TODO:notwendig oder nur CSS-klasse?
+                    'class' => 'lehrende'
                 )
             )
         );
@@ -141,6 +158,9 @@ class VeranstaltungType extends AbstractType
 
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -148,6 +168,9 @@ class VeranstaltungType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'veranstaltung';

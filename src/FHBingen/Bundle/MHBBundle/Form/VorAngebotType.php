@@ -15,50 +15,58 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
+/**
+ * Class VorAngebotType
+ *
+ * für Entity:	N/A
+ * sammelt Informationen für den eigentlichen AngebotType
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class VorAngebotType extends AbstractType
 {
     private $studiengangIDs;
     private $queryString;
 
-    public function __construct($studiengangIDs)
+    /**
+     * @param array $studiengangIDs
+     *
+     * int array
+     */
+    public function __construct(array $studiengangIDs)
     {
-       $this->studiengangIDs = $studiengangIDs;
+        $this->studiengangIDs = $studiengangIDs;
         $this->queryString = "";
 
+        //concatenating the query strings
         $max = sizeof($this->studiengangIDs);
-        for($i = 0; $i < $max;$i++) {
-                    if($i<=$max-2){
-                    $this->queryString=$this->queryString. 's.Studiengang_ID=' . $this->studiengangIDs[$i].' or ';
-                    }else{
-                        $this->queryString =$this->queryString. ' s.Studiengang_ID=' . $this->studiengangIDs[$i];
-                    }
-                }
-
+        for ($i = 0; $i < $max; $i++) {
+            if ($i < $max-1) {
+                //not last entry
+                $this->queryString=$this->queryString. 's.Studiengang_ID=' . $this->studiengangIDs[$i].' or ';
+            } else {
+                //last entry or only entry
+                $this->queryString =$this->queryString. ' s.Studiengang_ID=' . $this->studiengangIDs[$i];
+            }
+        }
     }
 
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
-            ->add('modulid', 'hidden', array('required' => true))
+            //->add('modulid', 'hidden', array('required' => true))
 
             ->add('studiengang', 'entity', array(
                 'label' => 'Studiengang: ',
                 'required' => true,
                 'class' => 'FHBingenMHBBundle:Studiengang',
-                //TODO (Ingmar): nur Studiengänge anzeigen, in denen es noch nicht angeboten wird (jedenfalls bei "in weiterem Studiengang anbieten")
-                                    'query_builder' => function(EntityRepository $er) {
-                                        $qb= $er->createQueryBuilder('s');
-                                        foreach ($this->studiengangIDs as $id) {
-                                            $qb->where($this->queryString);
-
-                                        }
-                                         return $qb;
-                                    },))
-
-
-
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('s')->where($this->queryString);
+                }))
 
             ->add('angebotsart', 'choice', array('label' => 'Angebotsart:', 'required' => true, 'choices' => ArrayValues::$offerTypes))
 
@@ -77,6 +85,9 @@ class VorAngebotType extends AbstractType
                 'choices' => ArrayValues::$regelsem));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'vorangebot';
