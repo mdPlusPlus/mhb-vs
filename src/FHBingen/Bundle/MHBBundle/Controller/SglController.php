@@ -513,7 +513,7 @@ class SglController extends Controller
         $angeboteArr =$em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID));
 
         if(sizeof($angeboteArr)== 1){
-            return $this->redirect($this->generateUrl('/restricted/sgl/modulDeaktivierung/{modulID}', array('modulID'=> $modulID)));
+            return $this->redirect($this->generateUrl('modulDeaktivierung', array('modulID'=> $modulID)));
         }
 
         $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID,'studiengang'=>$studiengangID));
