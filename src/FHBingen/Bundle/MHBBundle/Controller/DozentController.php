@@ -495,6 +495,7 @@ class DozentController extends Controller
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
                 $modul->setSelbststudium($ms);
 
+                $modul->setVersionsnummer(1);
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
