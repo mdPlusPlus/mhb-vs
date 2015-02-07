@@ -17,6 +17,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
+/**
+ * Class DozentController
+ *
+ * @package FHBingen\Bundle\MHBBundle\Controller
+ */
 class DozentController extends Controller
 {
     /**
@@ -26,6 +31,8 @@ class DozentController extends Controller
      * Hier werden alle Module als Tabelle ausgegeben, welche der aktuell eingeloggte Benutzer
      * verwaltet, bzw. unterrichtet.
      * Die Vorgehensweise ist hier spaltenweise. Im Template werden dann die Spalten-Arrays mit Zeilen-Index aufgerufen.
+     *
+     * @return array
      */
     public function eigeneModuleAction()
     {
@@ -74,7 +81,7 @@ class DozentController extends Controller
             $name = array();
             $angebote = $modul->getAngebot();
 
-            if(empty($angebote)){
+            if (empty($angebote)) {
                 $name[] =" ";
             }
             foreach ($angebote as $angebot) {
@@ -96,6 +103,8 @@ class DozentController extends Controller
      * @Template("FHBingenMHBBundle:Dozent:planungUebersicht.html.twig")
      *
      * Hier werden alle aktuellen Planungen des aktuellen Benutzers ausgegeben
+     *
+     * @return array
      */
     public function planungAnzeigenAction()
     {
@@ -110,9 +119,13 @@ class DozentController extends Controller
 
 
     /**
+     * @param int $id
+     *
      * @Route("/restricted/dozent/planungLoeschen/{id}", name="planungLoeschen")
      *
      * Hier wird eine Planung anhand von der ID gelöscht
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function planungLoeschenAction($id)
     {
@@ -136,6 +149,8 @@ class DozentController extends Controller
      * @Route("/restricted/dozent/planungErstellen", name="planungErstellen")
      *
      * Hier erfolgt eine Weiterleitung auf die planungAction mit der ID = -1 um eine neue Planung anzulegen
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function planungErstellenAction()
     {
@@ -144,6 +159,8 @@ class DozentController extends Controller
 
 
     /**
+     * @param int $id
+     *
      * @Route("/restricted/dozent/planungBearbeiten/{id}", name="planungBearbeiten")
      * @Template("FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig")
      *
@@ -151,6 +168,8 @@ class DozentController extends Controller
      * Ausschlaggebend hierfür ist der Wert des übergebenen Parameters ID:
      * Ist die ID = -1 wir eine neue Planung angelegt
      * Ist die ID = positiver Wert wird eine Planung bearbeitet
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function planungAction($id)
     {
@@ -229,10 +248,14 @@ class DozentController extends Controller
     }
 
     /**
+     * @param int $id
+     *
      * @Route("/restricted/dozent/modulBearbeiten/{id}", name="modulBearbeiten")
      * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")
      *
      * Hier wird ein bereits freigegebenes Modul bearbeitet und eine Schattenkopie in die VeranstaltungsHistory eingepflegt
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function modulBearbeitenAction($id)
     {
@@ -374,8 +397,7 @@ class DozentController extends Controller
                         }
 
                     }
-                }
-                else {
+                } else {
                     //falls kein Lehrender ausgewählt wurde wird der Modulbeauftragte zum Lehrenden
                     $lehr = new Entity\Lehrende();
                     $lehr->setVeranstaltung($modul);
@@ -429,14 +451,19 @@ class DozentController extends Controller
 
 
     /**
+     * @param int $id
+     *
      * @Route("/restricted/dozent/planungFreigeben/{id}", name="planungFreigeben")
      * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")
      *
      * Hier wird eine bereits vorhandene Planung um alle notwendigen angaben ergänzt und freigegeben
      * Die Freigabe erfolgt erst in der weitergeleiteten angebotAction
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function planungFreigebenAction($id)
     {
+        //TODO: muss hier nicht noch die Version auf 1 gesetzt werden?
         //TODO modulBearbeitenAction + planungFreigebenAction zusammenführen (geht das überhaupt?)
         $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
@@ -590,10 +617,18 @@ class DozentController extends Controller
     }
 
     /**
+     * @param int    $studiengangID
+     * @param int    $modulID
+     * @param string $angebotsart
+     * @param string $encSS
+     * @param string $encWS
+     *
      * @Route("/restricted/dozent/angebot/{studiengangID}/{modulID}/{angebotsart}/{encSS}/{encWS}", name="angebot")
      * @Template("FHBingenMHBBundle:Dozent:angebot.html.twig")
      *
      * Hier wird ein Initialangebot für einen Studiengang erstellt und das freizugebende Modul endgültig freigegeben
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function angebotAction($studiengangID, $modulID, $angebotsart, $encSS, $encWS)
     {
