@@ -18,6 +18,8 @@ use Doctrine\ORM\NoResultException;
 /**
  * Class UserRepository
  *
+ * wird verwendet um den Login via Email-Adresse zu ermöglichen
+ *
  * @package FHBingen\Bundle\MHBBundle\PHP
  */
 class UserRepository extends EntityRepository implements UserProviderInterface
@@ -46,7 +48,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             $user = $q->getSingleResult();
         } catch (NoResultException $e) {
             $message = sprintf(
-                'Unable to find an active admin FHBingenMHBBundle:Dozent object identified by "%s".',
+                'Unable to find an active FHBingenMHBBundle:Dozent object identified by "%s".',
                 $username
             );
             throw new UsernameNotFoundException($message, 0, $e);
