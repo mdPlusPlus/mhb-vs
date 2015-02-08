@@ -9,6 +9,7 @@ built on Symfony 2.5.*
 3. git clone https://github.com/mdPlusPlus/mhb-vs.git symfony
 
 
+
 TODO
 ====
 - .gitignore muss vermutlich noch angepasst werden wegen /web/bundles/
