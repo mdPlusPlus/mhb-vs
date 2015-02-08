@@ -19,6 +19,7 @@ use Doctrine\ORM\NoResultException;
  * Class UserRepository
  *
  * wird verwendet um den Login via Email-Adresse zu ermöglichen
+ * Interface http://api.symfony.com/2.6/Symfony/Component/Security/Core/User/UserProviderInterface.html
  *
  * @package FHBingen\Bundle\MHBBundle\PHP
  */

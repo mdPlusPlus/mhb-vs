@@ -15,7 +15,7 @@ use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 /**
  * Class UserDependentRole
  *
- * wurde eingeführt, damit jeder Benutzer eine eigene Rolle nach eehält, z.B. 'ROLE_USER@EMAIL.COM' dann aber
+ * wurde eingeführt, damit jeder Benutzer eine eigene Rolle nach erhält, z.B. 'ROLE_USER@EMAIL.COM' dann aber
  * in unserem Security-Modell nicht konsequent umgesetzt, bzw erschien überflüssig
  *
  * @package FHBingen\Bundle\MHBBundle\PHP
