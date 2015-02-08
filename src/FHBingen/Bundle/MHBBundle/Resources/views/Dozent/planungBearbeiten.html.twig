@@ -49,13 +49,13 @@
 
             <tr class="form_row">
                 <td>{{ form_label(form.name) }}</td>
-                <td title="Der Modultitel muss folgendem Muster entsprechen [A-Z]{5,70}">{{ form_widget(form.name) }}</td>
+                <td title="Der Modultitel muss folgendem Muster entsprechen [A-Za-z0-9]{5,70}">{{ form_widget(form.name) }}</td>
                 <td>{{ form_errors(form.name) }}</td>
             </tr>
 
             <tr class="form_row">
                 <td>{{ form_label(form.nameEN) }}</td>
-                <td title="Der englische Name muss folgendem Muster entsprechen [A-Z]{5,70}">{{ form_widget(form.nameEN) }}</td>
+                <td title="Der englische Name muss folgendem Muster entsprechen [A-Za-z0-9]{5,70}">{{ form_widget(form.nameEN) }}</td>
                 <td>{{ form_errors(form.nameEN) }}</td>
             </tr>
 

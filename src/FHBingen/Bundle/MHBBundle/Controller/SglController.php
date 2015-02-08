@@ -598,6 +598,14 @@ class SglController extends Controller
         //TODO: hier noch DUMMY Module abfangen oder bei Zusammenstellung kenntlich machen
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang));
 
+        $angeboteOhneDummy=array();
+        foreach ($angebote as $dummy) {
+            if($dummy->getCode()!='DUMMY'){
+                $angeboteOhneDummy[]=$dummy;
+            }
+        }
+        $angebote=$angeboteOhneDummy;
+
         $zuordnung = array();
         $fachgebiete = $em->getRepository('FHBingenMHBBundle:Fachgebiet')->findBy(array('studiengang' => $studiengang));
 
