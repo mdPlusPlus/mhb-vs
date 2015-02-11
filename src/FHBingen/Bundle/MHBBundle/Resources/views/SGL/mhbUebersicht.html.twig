@@ -17,6 +17,7 @@
                     <th>Download</th>
                     <th>Beschreibung</th>
                     <th>Studiengang</th>
+                    <th>Autor</th>
                     <th>Gültig ab</th>
                     <th>Version</th>
                     <th>Erstellungsdatum</th>
@@ -29,6 +30,7 @@
                     <td><a href="{{ path('pdfDownload', {'mhbID': entity.getMHBID()}) }}">Download</a></td>
                     <td>{{ entity.Beschreibung }}</td>
                     <td>{{ entity.getGehoertZu() }}</td>
+                    <td>{{ entity.Autor }}</td>
                     <td>{{ entity.getGueltigAb() }}</td>
                     <td>{{ entity.getVersionsnummer() }}</td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}

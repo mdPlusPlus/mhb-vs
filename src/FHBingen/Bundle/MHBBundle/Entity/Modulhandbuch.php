@@ -56,6 +56,12 @@ class Modulhandbuch
     protected $Erstellungsdatum;
 
     /**
+     * @ORM\Column(type="string", length=50, nullable=false)
+     */
+    protected $Autor;
+
+
+    /**
      * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank(message = "Die Modulhandbuchbeschreibung darf nicht leer sein.")
      */
@@ -215,6 +221,18 @@ class Modulhandbuch
     public function getGehoertZu()
     {
         return $this->gehoertZu;
+    }
+
+    public function getAutor()
+    {
+     return $this->Autor;
+    }
+
+    public function setAutor($autor)
+    {
+        $this->Autor = $autor;
+
+        return $this;
     }
 
     /**
