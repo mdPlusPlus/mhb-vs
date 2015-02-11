@@ -226,7 +226,9 @@ class SglController extends Controller
         $datum = '01.01.1970';
         foreach ($resultMHB as $value) {
             foreach ($value as $v) {
-                $datum = $v;
+                if ($v != null) {
+                    $datum = $v;
+                }
             }
         }
 

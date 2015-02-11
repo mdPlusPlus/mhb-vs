@@ -10,7 +10,11 @@
             highlightMe(document.getElementById('modulAenderungenLink'));
         });
     </script>
-    <h4>{{ 'Das neueste Modulhandbuch wurde am ' ~ dateTime.format('d.m.Y') ~ ' generiert.' }}</h4>
+    {% if dateTime.format('d.m.Y')=='01.01.1970' %}
+         <h4>{{ 'In ihrem Studiengang wurde noch kein Modulhandbuch  generiert.' }}</h4>
+    {% else %}
+            <h4>{{ 'Das neueste Modulhandbuch wurde am ' ~ dateTime.format('d.m.Y') ~ ' generiert.' }}</h4>
+    {% endif %}
     {% if module is not empty %}
     <table id="table" class="table table-bordered tablesorter" >
         <thead>
@@ -35,7 +39,9 @@
         </tbody>
     </table>
     {% else %}
-        <p>Seit der Erstellung des letzten Modulhandbuchs Ihres Studienganges wurden keine Module geändert.</p>
+        {% if dateTime.format('d.m.Y')!='01.01.1970' %}
+            <p>Seit der Erstellung des letzten Modulhandbuchs Ihres Studienganges wurden keine Module geändert.</p>
+        {% endif %}
     {% endif %}
   </div>
 

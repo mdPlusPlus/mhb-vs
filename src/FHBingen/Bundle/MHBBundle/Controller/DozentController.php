@@ -488,7 +488,7 @@ class DozentController extends Controller
                     $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Voraussetzung für die Vergabe von Leistungspunkten gesetzt sein.');
                     $valid = false;
                 }
-                if ($encoder->encode($form->get('pruefungsformen')->getData(), 'json') == '[]') {
+                if ($encoder->encode($form->get('pruefungsformen')->getData(), 'json') == '[]'  AND $form->get('PruefungsformSonstiges')->getData() == "") {
                     $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Prüfungsform gesetzt sein.');
                     $valid = false;
                 }
