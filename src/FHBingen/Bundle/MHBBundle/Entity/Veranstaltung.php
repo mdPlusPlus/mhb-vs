@@ -37,8 +37,8 @@ class Veranstaltung
     protected $Modul_ID;
 
     /**
-     * @ORM\Column(type="date", nullable=false)
-     * @Assert\Date()
+     * @ORM\Column(type="datetime", nullable=false)
+     * @Assert\DateTime()
      */
     protected $Erstellungsdatum;
 
@@ -1115,72 +1115,6 @@ class Veranstaltung
     {
         return $this->kernfach;
     }
-
-//    /**
-//     * Add modulVoraussetzung
-//     *
-//     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung
-//     * @return Veranstaltung
-//     */
-//    public function addModulVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
-//    {
-//        $this->modulVoraussetzung[] = $modulVoraussetzung;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove modulVoraussetzung
-//     *
-//     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung
-//     */
-//    public function removeModulVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulVoraussetzung)
-//    {
-//        $this->modulVoraussetzung->removeElement($modulVoraussetzung);
-//    }
-//
-//    /**
-//     * Get modulVoraussetzung
-//     *
-//     * @return \Doctrine\Common\Collections\Collection
-//     */
-//    public function getModulVoraussetzung()
-//    {
-//        return $this->modulVoraussetzung;
-//    }
-//
-//    /**
-//     * Add modulX
-//     *
-//     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulX
-//     * @return Veranstaltung
-//     */
-//    public function addModulX(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulX)
-//    {
-//        $this->modulX[] = $modulX;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove modulX
-//     *
-//     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulX
-//     */
-//    public function removeModulX(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulX)
-//    {
-//        $this->modulX->removeElement($modulX);
-//    }
-//
-//    /**
-//     * Get modulX
-//     *
-//     * @return \Doctrine\Common\Collections\Collection
-//     */
-//    public function getModulX()
-//    {
-//        return $this->modulX;
-//    }
 
     /**
      * Set VoraussetzungInhalte

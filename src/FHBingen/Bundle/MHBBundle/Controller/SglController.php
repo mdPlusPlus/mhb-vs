@@ -663,6 +663,7 @@ class SglController extends Controller
                 ->getSingleResult();
             $version['V']++;
             $mhb->setVersionsnummer($version['V']);
+            $mhb->setAutor($sgl);
 
             $angebote = array();
 
