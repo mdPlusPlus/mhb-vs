@@ -50,8 +50,8 @@ class Modulhandbuch
     protected $Versionsnummer;
 
     /**
-     * @ORM\Column(type="date", nullable=false)
-     * @Assert\Date()
+     * @ORM\Column(type="datetime", nullable=false)
+     * @Assert\DateTime()
      */
     protected $Erstellungsdatum;
 
