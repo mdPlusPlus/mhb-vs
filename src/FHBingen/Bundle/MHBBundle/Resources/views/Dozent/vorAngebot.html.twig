@@ -43,12 +43,21 @@
             highlightMe(document.getElementById('eigeneModuleLink'));
         });
     </script>
+
+    <script type="text/javascript">
+        function refactorCheckboxes(){
+            var tmp = document.getElementById("vorangebot_studiengang");
+            var studiengang = tmp.options[tmp.selectedIndex].text;
+            alert(studiengang);
+        }
+    </script>
+
     <h4 style="font-weight: bold">Studiengangswahl für Angebot von {{ modul }}</h4>
     <div class="table-responsive">
         {{ form_start(form) }}
         <table class="table table-bordered">
             {{ form_errors(form) }}
-            {{ form_row(form.studiengang) }}
+            {{ form_row(form.studiengang,{ 'attr': {'onchange': 'refactorCheckboxes()'} }) }}
             {{ form_row(form.angebotsart) }}
             {{ form_row(form.studienplan_ss) }}
             {{ form_row(form.studienplan_ws) }}
