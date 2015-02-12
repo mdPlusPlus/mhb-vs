@@ -12,8 +12,14 @@ class ArrayValues {
 
     /**
      * Häufigkeit
-     * -> Entity/Veranstaltung.php
-     * -> Entity/VeranstaltungHistory.php
+     *
+     * muss angepasst werden in:
+     * - Entity/Veranstaltung.php
+     * - Entity/VeranstaltungHistory.php
+     *
+     * wird benutzt in:
+     * - Form/PlanungType.php
+     * - Form/VeranstaltungType.php
      */
     public static $frequency = array(
         'Sommersemester' => 'Sommersemester',
@@ -33,8 +39,14 @@ class ArrayValues {
 
     /**
      * Sprache
-     * -> Entity/Veranstaltung.php
-     * -> Entity/VeranstaltungHistory.php
+     *
+     * muss angepasst werden in:
+     * - Entity/Veranstaltung.php
+     * - Entity/VeranstaltungHistory.php
+     *
+     * wird benutzt in:
+     * - Form/PlanungType.php
+     * - Form/VeranstaltungType.php
      */
     public static $lang = array(
         'Deutsch' => 'Deutsch',
@@ -43,8 +55,14 @@ class ArrayValues {
 
     /**
      * Leistungspunkte
-     * -> Entity/Veranstaltung.php
-     * -> Entity/VeranstaltungHistory.php
+     *
+     * muss angepasst werden in:
+     * - Entity/Veranstaltung.php
+     * - Entity/VeranstaltungHistory.php
+     *
+     * wird benutzt in:
+     * - Form/PlanungType.php
+     * - Form/VeranstaltungType.php
      */
     public static $lp = array(
         '3' => '3',
@@ -59,6 +77,9 @@ class ArrayValues {
      * Fachbereiche
      * 1 -> Fachbereich 1 - Life Sciences and Engineering
      * 2 -> Fachbereich 2 - Technik, Informatik und Wirtschaft
+     *
+     * wird benutzt in:
+     * - Form/StudiengangType.php
      */
     public static $faculty = array(
         '1' => '1',
@@ -67,7 +88,12 @@ class ArrayValues {
 
     /**
      * Studiengang-Typen
-     * -> Entity/Studiengang.php
+     *
+     * muss angepasst werden in:
+     * - Entity/Studiengang.php
+     *
+     * wird benutzt in:
+     * - Form/StudiengangType.php
      */
     public static $level = array(
         'Bachelor' => 'Bachelor',
@@ -76,6 +102,9 @@ class ArrayValues {
 
     /**
      * Regelsemester
+     *
+     * wird benutzt in:
+     * - Form/VorAngebotType.php
      */
     public static $regelsem = array(
         '1' => '1',
@@ -89,7 +118,12 @@ class ArrayValues {
 
     /**
      * Angebotsarten
-     * -> Entity/Angebot.php
+     *
+     * muss angepasst werden in:
+     * - Entity/Angebot.php
+     *
+     * wird benutzt in:
+     * - Form/VorAngebotType.php
      */
     public static $offerTypes = array(
         'Wahlpflichtfach' => 'Wahlpflichtfach',
@@ -98,7 +132,12 @@ class ArrayValues {
 
     /**
      * Geschlechter
-     * -> Entity/Dozent.php
+     *
+     * muss angepasst werden in:
+     * - Entity/Dozent.php
+     *
+     * wird benutzt in:
+     * - Form/DozentType.php
      */
     public static $gender = array(
         'Herr' => 'Herr',
@@ -107,6 +146,10 @@ class ArrayValues {
 
     /**
      * Voraussetzungen für die Vergabe von Leistungspunkten
+     *
+     * wird benutzt in:
+     * - Form/PlanungType.php
+     * - Form/VeranstaltungType.php
      */
     public static $voraussetzungLP = array(
         'Prüfungsleistung' => 'bestandene Prüfungsleistung',
@@ -115,6 +158,10 @@ class ArrayValues {
 
     /**
      * Prüfungsformen
+     *
+     * wird benutzt in:
+     * - Form/PlanungType.php
+     * - Form/VeranstaltungType.php
      */
     public static $pruefungsformen = array(
         'Schriftliche Klausur' => 'Schriftliche Klausur',
@@ -125,6 +172,10 @@ class ArrayValues {
 
     /**
      * Lehrveranstaltungen
+     *
+     * wird benutzt in:
+     * - Form/PlanungType.php
+     * - Form/VeranstaltungType.php
      */
     public static $lehrveranstaltungen = array(
         'Vorlesung' => 'Vorlesung',
