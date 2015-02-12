@@ -12,6 +12,8 @@ class ArrayValues {
 
     /**
      * Häufigkeit
+     * -> Entity/Veranstaltung.php
+     * -> Entity/VeranstaltungHistory.php
      */
     public static $frequency = array(
         'Sommersemester' => 'Sommersemester',
@@ -31,6 +33,8 @@ class ArrayValues {
 
     /**
      * Sprache
+     * -> Entity/Veranstaltung.php
+     * -> Entity/VeranstaltungHistory.php
      */
     public static $lang = array(
         'Deutsch' => 'Deutsch',
@@ -39,6 +43,8 @@ class ArrayValues {
 
     /**
      * Leistungspunkte
+     * -> Entity/Veranstaltung.php
+     * -> Entity/VeranstaltungHistory.php
      */
     public static $lp = array(
         '3' => '3',
@@ -61,6 +67,7 @@ class ArrayValues {
 
     /**
      * Studiengang-Typen
+     * -> Entity/Studiengang.php
      */
     public static $level = array(
         'Bachelor' => 'Bachelor',
@@ -82,6 +89,7 @@ class ArrayValues {
 
     /**
      * Angebotsarten
+     * -> Entity/Angebot.php
      */
     public static $offerTypes = array(
         'Wahlpflichtfach' => 'Wahlpflichtfach',
@@ -90,6 +98,7 @@ class ArrayValues {
 
     /**
      * Geschlechter
+     * -> Entity/Dozent.php
      */
     public static $gender = array(
         'Herr' => 'Herr',
