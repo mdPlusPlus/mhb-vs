@@ -30,6 +30,9 @@ class ArrayValues {
 
     /**
      * Dauer
+     *
+     * @deprecated
+     * TODO: wird §duration wirklich nirgendwo verwendet?
      */
     public static $duration = array(
         'Wochen' => 'Wochen',
@@ -77,6 +80,9 @@ class ArrayValues {
      * Fachbereiche
      * 1 -> Fachbereich 1 - Life Sciences and Engineering
      * 2 -> Fachbereich 2 - Technik, Informatik und Wirtschaft
+     *
+     * muss angepasst werden in:
+     * - Entity/Studiengang.php (Range)
      *
      * wird benutzt in:
      * - Form/StudiengangType.php
@@ -150,6 +156,9 @@ class ArrayValues {
      * wird benutzt in:
      * - Form/PlanungType.php
      * - Form/VeranstaltungType.php
+     *
+     * TODO: 'Prüfungsleistung' ändern zu 'bestandene Prüfungsleistung'
+     * TODO: 'Prüfungsleistung' ändern zu 'bestandene Prüfungsleistung'
      */
     public static $voraussetzungLP = array(
         'Prüfungsleistung' => 'bestandene Prüfungsleistung',
