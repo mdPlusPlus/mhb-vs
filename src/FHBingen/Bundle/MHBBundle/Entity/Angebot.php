@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Angebot
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @UniqueEntity(fields="AbweichenderNameDE", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen deutschen Titel.")
@@ -25,7 +26,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Angebot
 {
-
+    /**
+     * @return null|string
+     */
     public function __toString()
     {
         $string = null;
@@ -147,6 +150,7 @@ class Angebot
      * Set module
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
+     *
      * @return Angebot
      */
     public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
@@ -170,6 +174,7 @@ class Angebot
      * Set fachgebiet
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
+     *
      * @return Angebot
      */
     public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet = null)
@@ -193,6 +198,7 @@ class Angebot
      * Set studiengang
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     *
      * @return Angebot
      */
     public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null)
@@ -216,6 +222,7 @@ class Angebot
      * Set Angebotsart
      *
      * @param string $angebotsart
+     *
      * @return Angebot
      */
     public function setAngebotsart($angebotsart)
@@ -239,6 +246,7 @@ class Angebot
      * Set Code
      *
      * @param string $code
+     *
      * @return Angebot
      */
     public function setCode($code)
@@ -261,7 +269,8 @@ class Angebot
     /**
      * Set abweichender_Titel_DE
      *
-     * @param string $abweichenderTitelDE
+     * @param string $abweichenderNameDE
+     *
      * @return Angebot
      */
     public function setAbweichenderNameDE($abweichenderNameDE)
@@ -284,7 +293,8 @@ class Angebot
     /**
      * Set abweichender_Titel_EN
      *
-     * @param string $abweichenderTitelEN
+     * @param string $abweichenderNameEN
+     *
      * @return Angebot
      */
     public function setAbweichenderNameEN($abweichenderNameEN)
@@ -318,6 +328,7 @@ class Angebot
      * Add zuweisung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
+     *
      * @return Angebot
      */
     public function addZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
