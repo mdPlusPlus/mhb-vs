@@ -32,7 +32,7 @@ class ArrayValues {
      * Dauer
      *
      * @deprecated
-     * TODO: wird §duration wirklich nirgendwo verwendet?
+     * TODO: wird $duration wirklich nirgendwo verwendet?
      */
     public static $duration = array(
         'Wochen' => 'Wochen',
