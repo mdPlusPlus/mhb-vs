@@ -104,10 +104,10 @@ class VerwaltungsController extends Controller
                 $dozent->setEmail($form->get('email')->getData());
                 $dozent->setRole($form->get('roles')->getData());
                 if(in_array('ROLE_SGL', $dozent->getRoles())){
-                    $dozent->setPassword('Author');
+                    $dozent->setPassword('Editor');
                 }
                 if(in_array('ROLE_DOZENT', $dozent->getRoles())){
-                    $dozent->setPassword('Editor');
+                    $dozent->setPassword('Autor');
                 }
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($dozent);
@@ -148,10 +148,10 @@ class VerwaltungsController extends Controller
                 $dozent->setEmail($form->get('email')->getData());
                 $dozent->setRole($form->get('roles')->getData());
                 if(in_array('ROLE_SGL', $dozent->getRoles())){
-                    $dozent->setPassword('Author');
+                    $dozent->setPassword('Editor');
                 }
                 if(in_array('ROLE_DOZENT', $dozent->getRoles())){
-                    $dozent->setPassword('Editor');
+                    $dozent->setPassword('Autor');
                 }
                 /*
                  * TODO:trigger?
