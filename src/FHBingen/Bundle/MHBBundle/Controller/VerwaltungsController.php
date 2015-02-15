@@ -55,16 +55,21 @@ class VerwaltungsController extends Controller
     /**
      * @Route("/restricted/sgl/passwordReset", name="passwdReset")
      *
-     * setzt das Passwort bei allen Dozenten auf "testpass"
+     * setzt das Passwort bei Dozenten auf "Author"
+     * setzt das Passwort bei SQL auf "Editor"
      */
     public function resetAction()
     {
-        //TODO: Abfrage Ja/Nein
         $em = $this->getDoctrine()->getManager();
         $dozenten = $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
 
         foreach ($dozenten as $doz) {
-            $doz->setPassword('testpass');
+            if(in_array('ROLE_SGL', $doz->getRoles())){
+                $doz->setPassword('Author');
+            }
+            if(in_array('ROLE_DOZENT', $doz->getRoles())){
+                $doz->setPassword('Editor');
+            }
             $em->persist($doz);
             $em->flush();
         }
@@ -97,9 +102,13 @@ class VerwaltungsController extends Controller
                 $dozent->setName($form->get('name')->getData());
                 $dozent->setNachname($form->get('nachname')->getData());
                 $dozent->setEmail($form->get('email')->getData());
-                $dozent->setPassword('password');
                 $dozent->setRole($form->get('roles')->getData());
-
+                if(in_array('ROLE_SGL', $dozent->getRoles())){
+                    $dozent->setPassword('Author');
+                }
+                if(in_array('ROLE_DOZENT', $dozent->getRoles())){
+                    $dozent->setPassword('Editor');
+                }
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($dozent);
                 $em->flush();
@@ -137,8 +146,13 @@ class VerwaltungsController extends Controller
                 $dozent->setName($form->get('name')->getData());
                 $dozent->setNachname($form->get('nachname')->getData());
                 $dozent->setEmail($form->get('email')->getData());
-                //TODO: $dozent->setPassword('password'); wieder aufnehmen? weg sonst doppelt hash
                 $dozent->setRole($form->get('roles')->getData());
+                if(in_array('ROLE_SGL', $dozent->getRoles())){
+                    $dozent->setPassword('Author');
+                }
+                if(in_array('ROLE_DOZENT', $dozent->getRoles())){
+                    $dozent->setPassword('Editor');
+                }
                 /*
                  * TODO:trigger?
                  * Doku: Wenn SGL auf Dozent abgestuft wird, besitzt er immernoch den Studiengang, den er vorher hatte,
