@@ -38,7 +38,7 @@ class DefaultController extends Controller
      */
     public function dokuDownloadAction()
     {
-        $downloadPath = 'Dokumentation' . DIRECTORY_SEPARATOR . '.pdf';
+        $downloadPath = 'Dokumentation.pdf';
 
         //return new BinaryFileResponse($pdfPath);
         return new BinaryFileResponse(
