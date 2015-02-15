@@ -463,7 +463,6 @@ class DozentController extends Controller
      */
     public function planungFreigebenAction($id)
     {
-        //TODO: muss hier nicht noch die Version auf 1 gesetzt werden?
         //TODO modulBearbeitenAction + planungFreigebenAction zusammenführen (geht das überhaupt?)
         $encoder = new JsonEncoder();
         $em = $this->getDoctrine()->getManager();
@@ -522,7 +521,12 @@ class DozentController extends Controller
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
                 $modul->setSelbststudium($ms);
 
-                $modul->setVersionsnummer(1);
+                if (!is_null($modul->getVersionsnummer())) {
+                    $modul->setVersionsnummer($modul->getVersionsnummer() + 1);
+                } else {
+                    $modul->setVersionsnummer(1);
+                }
+
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
