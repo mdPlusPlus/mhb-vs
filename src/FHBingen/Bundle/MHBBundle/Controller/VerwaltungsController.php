@@ -65,10 +65,10 @@ class VerwaltungsController extends Controller
 
         foreach ($dozenten as $doz) {
             if(in_array('ROLE_SGL', $doz->getRoles())){
-                $doz->setPassword('Author');
+                $doz->setPassword('Editor');
             }
             if(in_array('ROLE_DOZENT', $doz->getRoles())){
-                $doz->setPassword('Editor');
+                $doz->setPassword('Author');
             }
             $em->persist($doz);
             $em->flush();
