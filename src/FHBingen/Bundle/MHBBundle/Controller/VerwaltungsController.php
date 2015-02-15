@@ -55,7 +55,7 @@ class VerwaltungsController extends Controller
     /**
      * @Route("/restricted/sgl/passwordReset", name="passwdReset")
      *
-     * setzt das Passwort bei Dozenten auf "Author"
+     * setzt das Passwort bei Dozenten auf "Autor"
      * setzt das Passwort bei SQL auf "Editor"
      */
     public function resetAction()
@@ -68,7 +68,7 @@ class VerwaltungsController extends Controller
                 $doz->setPassword('Editor');
             }
             if(in_array('ROLE_DOZENT', $doz->getRoles())){
-                $doz->setPassword('Author');
+                $doz->setPassword('Autor');
             }
             $em->persist($doz);
             $em->flush();
