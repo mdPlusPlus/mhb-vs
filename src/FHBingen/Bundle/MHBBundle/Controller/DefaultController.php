@@ -29,6 +29,28 @@ class DefaultController extends Controller
     }
 
     /**
+     * Benutzerdokumentation-Download
+     *
+     * @return BinaryFileResponse
+     *
+     * @Route("/BenutzerhilfenDownload", name="DokuDownload")
+     */
+    public function dokuDownloadAction()
+    {
+        $downloadPath = 'Dokumentation' . DIRECTORY_SEPARATOR . '.pdf';
+
+        //return new BinaryFileResponse($pdfPath);
+        return new BinaryFileResponse(
+            $downloadPath,
+            200,
+            array(
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="Benutzerdokumentation.pdf"',
+            )
+        );
+    }
+
+    /**
      * Initialerstellung von Semestern
      */
     public function semesterCreate()
