@@ -27,12 +27,11 @@ use FHBingen\Bundle\MHBBundle\PHP\UserDependentRole;
  * @UniqueEntity(fields="email", message="Unter dieser EMail ist bereits ein Dozent eingetragen.")
  * @ORM\HasLifecycleCallbacks
  */
-
 class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, EncoderAwareInterface
 {
     public function __toString()
     {
-        return (string) $this->getTitel().' '.$this->getNachname();
+        return (string)$this->getTitel() . ' ' . $this->getNachname();
     }
 
     /**
@@ -115,7 +114,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * Get Dozenten_ID
      *
-     * @return integer 
+     * @return integer
      */
     public function getDozentenID()
     {
@@ -131,14 +130,14 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function setAnrede($anrede)
     {
         $this->Anrede = $anrede;
-    
+
         return $this;
     }
 
     /**
      * Get Anrede
      *
-     * @return string 
+     * @return string
      */
     public function getAnrede()
     {
@@ -154,14 +153,14 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function setTitel($titel)
     {
         $this->Titel = $titel;
-    
+
         return $this;
     }
 
     /**
      * Get Titel
      *
-     * @return string 
+     * @return string
      */
     public function getTitel()
     {
@@ -177,14 +176,14 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function setName($name)
     {
         $this->Name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get Name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -200,14 +199,14 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function setNachname($nachname)
     {
         $this->Nachname = $nachname;
-    
+
         return $this;
     }
 
     /**
      * Get Nachname
      *
-     * @return string 
+     * @return string
      */
     public function getNachname()
     {
@@ -234,14 +233,14 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
     /**
      * Get Email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -257,7 +256,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function addLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
     {
         $this->lehrende[] = $lehrende;
-    
+
         return $this;
     }
 
@@ -274,7 +273,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * Get lehrende
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getLehrende()
     {
@@ -290,7 +289,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
     {
         $this->semesterplan[] = $semesterplan;
-    
+
         return $this;
     }
 
@@ -307,7 +306,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * Get semesterplan
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSemesterplan()
     {
@@ -322,7 +321,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="dozent", cascade={"all"})
      * */
-    protected   $lehrende;
+    protected $lehrende;
 
 
     /*Semesterplan*/
@@ -356,7 +355,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function addModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung)
     {
         $this->modulbeauftragter[] = $veranstaltung;
-    
+
         return $this;
     }
 
@@ -373,7 +372,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * Get veranstaltung
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModulbeauftragter()
     {
@@ -389,7 +388,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function addStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
     {
         $this->studiengang[] = $studiengang;
-    
+
         return $this;
     }
 
@@ -406,7 +405,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     /**
      * Get studiengang
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getStudiengang()
     {
@@ -487,7 +486,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $rolesArr;
     }
 
-   /**
+    /**
      * @inheritDoc
      */
     public function eraseCredentials()
@@ -575,6 +574,9 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $this->isActive;
     }
 
+    /**
+     * @return string
+     */
     public function getEncoderName()
     {
         //always return encoder 'pwenc' defined in security.yml
