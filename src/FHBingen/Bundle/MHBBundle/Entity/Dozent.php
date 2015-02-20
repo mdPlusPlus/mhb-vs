@@ -21,6 +21,7 @@ use FHBingen\Bundle\MHBBundle\PHP\UserDependentRole;
 
 /**
  * Class Dozent
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity(repositoryClass="FHBingen\Bundle\MHBBundle\PHP\UserRepository")
  * @ORM\Table(name="Dozent")
