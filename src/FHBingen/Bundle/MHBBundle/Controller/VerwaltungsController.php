@@ -64,10 +64,10 @@ class VerwaltungsController extends Controller
         $dozenten = $em->getRepository('FHBingenMHBBundle:Dozent')->findAll();
 
         foreach ($dozenten as $doz) {
-            if(in_array('ROLE_SGL', $doz->getRoles())){
+            if (in_array('ROLE_SGL', $doz->getRoles())) {
                 $doz->setPassword('Editor');
             }
-            if(in_array('ROLE_DOZENT', $doz->getRoles())){
+            if (in_array('ROLE_DOZENT', $doz->getRoles())) {
                 $doz->setPassword('Autor');
             }
             $em->persist($doz);
@@ -103,10 +103,10 @@ class VerwaltungsController extends Controller
                 $dozent->setNachname($form->get('nachname')->getData());
                 $dozent->setEmail($form->get('email')->getData());
                 $dozent->setRole($form->get('roles')->getData());
-                if(in_array('ROLE_SGL', $dozent->getRoles())){
+                if (in_array('ROLE_SGL', $dozent->getRoles())) {
                     $dozent->setPassword('Editor');
                 }
-                if(in_array('ROLE_DOZENT', $dozent->getRoles())){
+                if (in_array('ROLE_DOZENT', $dozent->getRoles())) {
                     $dozent->setPassword('Autor');
                 }
                 $em = $this->getDoctrine()->getManager();
@@ -147,10 +147,10 @@ class VerwaltungsController extends Controller
                 $dozent->setNachname($form->get('nachname')->getData());
                 $dozent->setEmail($form->get('email')->getData());
                 $dozent->setRole($form->get('roles')->getData());
-                if(in_array('ROLE_SGL', $dozent->getRoles())){
+                if (in_array('ROLE_SGL', $dozent->getRoles())) {
                     $dozent->setPassword('Editor');
                 }
-                if(in_array('ROLE_DOZENT', $dozent->getRoles())){
+                if (in_array('ROLE_DOZENT', $dozent->getRoles())) {
                     $dozent->setPassword('Autor');
                 }
                 /*
