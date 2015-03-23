@@ -325,13 +325,6 @@ class SglController extends Controller
         );
     }
 
-
-//  TODO: falls MHBs manuell erzeugt werden müssen, diese Zeilen einpflegen und mhbUerbischt.html.twig anpassen
-//   * @Route("/restricted/sgl/pdfErstellen/{mhbID}", name="pdfErstellen")
-//  public function pdfErstellenAction($mhbID)
-//  return new Response('done');
-//  TODO: ES MÜSSEN ALLE PDF NEU GENERIERT WERDEN, WEIL HIER DAS INHALTSVERZEICHNIS FEHLT + LAYOUT KAPUTT
-
     /**
      * PDF-Export
      *
