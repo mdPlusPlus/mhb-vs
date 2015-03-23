@@ -594,7 +594,7 @@ class SglController extends Controller
 
         $angeboteOhneDummy=array();
         foreach ($angebote as $dummy) {
-            if($dummy->getCode()!='DUMMY'){
+            if ($dummy->getCode()!='DUMMY') {
                 $angeboteOhneDummy[]=$dummy;
             }
         }
