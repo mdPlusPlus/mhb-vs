@@ -125,7 +125,6 @@
                                     {{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')' }} {# Angebotsart hier sinnvoll? #}
                                     {# if Veranstaltung des Angebots seit letzter MHB-Erstullung geändert #}
                                     {% if angebot.getVeranstaltung().getErstellungsdatum().getTimestamp() > neuestesMHBDateTime.getTimestamp() %}
-                                        {# TODO: Achtung! Es wird nur auf das Datum, nicht auf Stunde, Minute, Sekunde überprüft #}
                                         {# then Angebot als geändert markieren #}
                                         <span style="color: red">{{ 'GEÄNDERT' }}</span>
                                     {% endif %}

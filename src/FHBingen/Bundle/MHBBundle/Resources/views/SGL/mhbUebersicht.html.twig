@@ -26,7 +26,6 @@
             <tbody>
             {% for entity in mhb|sort %}
                 <tr>
-                    {#<td><a href="{{ path('pdfErstellen', {'mhbID': entity.getMHBID()}) }}">Download</a></td>#} {# TODO: wenn manuelle PDF-Erstellung erwünscht wieder aktivieren #}
                     <td><a href="{{ path('pdfDownload', {'mhbID': entity.getMHBID()}) }}">Download</a></td>
                     <td>{{ entity.Beschreibung }}</td>
                     <td>{{ entity.getGehoertZu() }}</td>

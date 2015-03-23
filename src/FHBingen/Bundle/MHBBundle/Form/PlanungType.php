@@ -101,7 +101,7 @@ class PlanungType extends AbstractType
         $gruppengroesse = $input->getGruppengroesse();
         $gruppengroesseOptions = array('label' => 'Gruppengröße:', 'required' => false, 'attr' => array('min' => '0'));
         if ($gruppengroesse == null) {
-           $gruppengroesseOptions['data'] = 25; //default TODO: 25 sinnvoll?
+           $gruppengroesseOptions['data'] = 25; //default
         }
         $form->add('gruppengroesse', 'integer', $gruppengroesseOptions);
 

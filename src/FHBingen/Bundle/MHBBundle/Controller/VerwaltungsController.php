@@ -160,8 +160,6 @@ class VerwaltungsController extends Controller
                  * da sich diese hinter der /restricted/sgl firewall befinden
                  */
 
-                //TODO: Benutzerdeaktivierung fehlt
-
                 $em->persist($dozent);
                 $em->flush();
 
@@ -203,7 +201,7 @@ class VerwaltungsController extends Controller
      */
     public function SglCreateCourseAction()
     {
-        //TODO: createCource + updateCource zusammenlegen?
+        //TODO: createCourse + updateCourse zusammenlegen?
         $em = $this->getDoctrine()->getManager();
         $studiengang = new Entity\Studiengang();
         $form = $this->createForm(new Form\StudiengangType(), $studiengang);
@@ -263,7 +261,7 @@ class VerwaltungsController extends Controller
      */
     public function SglShowCourseAction($courseID)
     {
-        //TODO: createCource + updateCource zusammenlegen?
+        //TODO: createCourse + updateCourse zusammenlegen?
 
         $em = $this->getDoctrine()->getManager();
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID' => $courseID));
