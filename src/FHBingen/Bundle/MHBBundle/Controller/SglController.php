@@ -41,6 +41,7 @@ class SglController extends Controller
      * Pfad zur Linux-Binary von wkhtmltopdf
      */
     const WKHTMLTOPDF_BIN_LIN = '/home/proj/symfony/vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64';
+    //TODO: Pfade relativieren
 
 
     /**
