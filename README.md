@@ -1,30 +1,18 @@
 PROJ MHB-VS
 ===========
 
-built on Symfony 2.5.*
+built on Symfony 2.6.*
 
-0. install PHP interpreter
-1. install SQL server
+1. install dependencies (libxrender1, git, php5-cli, php5-curl, pdo-mysql, ...)
 2. install Composer
-3. git clone https://github.com/mdPlusPlus/mhb-vs.git symfony
+3. clone mdPlusPlus/mhb-vs.git (gir clone https://github.com/mdPlusPlus/mhb-vs)
+4. cd mhb-vs && composer install
 
-
-
-TODO
-====
-- .gitignore muss vermutlich noch angepasst werden wegen /web/bundles/
-(unter windows lokale kopie, soll auf server nur symlink sein, eventuell auf server löschen und update assets machen)
-(außerdem vllt parameters.yml drauf setzen)
-- MySQL-Konfiguration auf Produktiv-VM anpassen (bzw Anleitung schreiben für Deployment) (gar nicht notwendig!)
 
 Deployment
 ==========
 
-- (?) Umleitung von 80 auf 8000 (apache sites-available ?)
-- (?) composer update macht .git history kaputt
-- libxrender (apt-get)
-- wkhtmltopdf binary pfad anpassen
-- toc argument wieder aufnehmen
+- Umleitung von 80 auf 8000 (apache sites-available)
 - parameters.yml
 - assets:install
 - SQL-DB, ggf. Rollen und Semester anlegen (DefaultController)
@@ -34,8 +22,7 @@ Voraussetzungen
 
 - PHP (>5.5 ?)
 - MySQL
-- (?) Composer
-- wkhtmltopdf
+- Composer
 
 
 Development
