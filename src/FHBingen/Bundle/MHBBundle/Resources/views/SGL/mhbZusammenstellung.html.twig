@@ -1,0 +1,164 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+    <style type="text/css">
+
+        div#mhbWrapper {
+            float: left;
+            width: 45%;
+        }
+
+        ul.angebot {
+            list-style-type: none;
+            margin: 0 0 5px 0;
+            padding: 5px 5px 0 5px;
+        }
+
+        ul.angebot li, ul#nichtMhb li {
+            margin: 0 0 5px 0;
+            text-align: center;
+            background: url('{{ asset('bundles/fhbingenmhb/images/bg-white.jpg')}} ') top left repeat;
+            min-height: 42px;
+        }
+
+        div#angeboteDiv, div#nichtMhbDiv, ul.angebot,
+        ul.angebot li, ul#nichtMhb li {
+            border: 1px solid gray;
+
+        }
+
+        div#nichtMhbWrapper {
+            margin-left: 55%;
+            width: 45%;
+        }
+
+        div#mhbWrapper, div#nichtMhbWrapper {
+            text-align: center;
+        }
+
+        table.aussen th, table.aussen td {
+            border: 1px solid gray;
+            border-collapse: collapse;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            highlightMe(document.getElementById('mhbErstellungLink'));
+        });
+
+        $(function () {
+            {% for key in zuordnung|keys %}
+            {% set js_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
+            {% set js_NICHT_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
+
+            {{ js_MHB|raw  }}
+            {{ js_NICHT_MHB|raw }}
+
+
+            {% set connectLeftWithRight =
+                '$("#' ~ key|replace({' ': '_'}) ~ '").sortable({
+                    appendTo: "body",
+                    tolerance: "pointer",
+                    connectWith: "#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB",
+                    revert: "invalid",
+                    forceHelperSize: true,
+                    helper: "original",
+                    placeholder: "angebot li",
+                    scroll: true
+                }).disableSelection();'
+            %}
+            {% set connectRightWithLeft =
+                '$("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").sortable({
+                    appendTo: "body",
+                    tolerance: "pointer",
+                    connectWith: "#' ~ key|replace({' ': '_'}) ~ '",
+                    revert: "invalid",
+                    forceHelperSize: true,
+                    helper: "original",
+                    placeholder: "angebot li",
+                    scroll: true
+                }).disableSelection();'
+            %}
+
+            {{ connectLeftWithRight|raw }}
+            {{ connectRightWithLeft|raw }}
+
+            {% endfor %}
+
+        });
+
+        function resetFunc(){
+            {% for key in zuordnung|keys %}
+            {% set resetJS =
+                'var fachgebietTo = $("#' ~ key|replace({' ': '_'}) ~ '");
+                var fachgebietListItems = $("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").children("li");
+                for (var i = 0; i< fachgebietListItems.length; i++) {
+                    fachgebietTo.append(fachgebietListItems[i]);
+                }'
+            %}
+            {{ resetJS|raw }}
+            {% endfor %}
+        }
+
+    </script>
+
+    <div id="mhbWrapper">
+
+        <form method="POST" action="{{ path('mhbErstellungParsen') }}">
+            <input type="hidden" name="mhbGueltigAb" value="{{ mhbGueltigAb }}"/>
+            <input type="hidden" name="mhbBeschreibung" value="{{ mhbBeschreibung }}"/>
+
+            <h3>Modulhandbuch</h3>
+
+            <div id="angeboteDiv">
+                {% for key in zuordnung|keys %}
+                    <div class="angebotDiv">
+                        <h4>{{ key }}</h4>
+                        <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
+                            {% for angebot in zuordnung[key] %}
+                                {# TODO: Wenn Modulcode 'DUMMY', dann highlighten, oder nicht aufführen, oder abschicken unmöglich machen #}
+                                <li>
+                                    {#<label>#}
+                                    <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
+                                    {{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')' }} {# Angebotsart hier sinnvoll? #}
+                                    {# if Veranstaltung des Angebots seit letzter MHB-Erstullung geändert #}
+                                    {% if angebot.getVeranstaltung().getErstellungsdatum().getTimestamp() > neuestesMHBDateTime.getTimestamp() %}
+                                        {# then Angebot als geändert markieren #}
+                                        <span style="color: red">{{ 'GEÄNDERT' }}</span>
+                                    {% endif %}
+                                    {#</label>#}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="ourButtons">
+                {# nicht type="reset", weil form nicht wirklich resetet wird #}
+                <button class="btn btn-default" type="button" onclick="resetFunc()">zurücksetzen</button>
+                <button class="btn btn-primary" type="submit">abschicken</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div id="nichtMhbWrapper">
+        <h3>NICHT_MHB</h3>
+
+        <div id="nichtMhbDiv">
+            {% for key in zuordnung|keys %}
+                <div class="angebotDiv">
+                    <h4>{{ key }}</h4>
+                    <ul id="{{ key|replace({' ': '_'}) ~ '_NICHT_MHB' }}" class="angebot">
+
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include '@FHBingenMHB/flashbags.html.twig' %}
+
+{% endblock %}

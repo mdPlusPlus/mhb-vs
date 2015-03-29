@@ -1,0 +1,13 @@
+{% if app.user %}
+    {% if is_granted('ROLE_DOZENT') %}
+        <li role="presentation" class="active">
+            <a>Dozent</a>
+        </li>
+        <li role="presentation">
+            <a id="eigeneModuleLink" href="{{ path('eigeneModule') }}">Modulübersicht (verwaltbare)</a>
+        </li>
+        <li role="presentation">
+            <a id="modulplanungLink" href="{{ path('planungAnzeigen') }}">Modulplanung</a>
+        </li>
+    {% endif %}
+{% endif %}

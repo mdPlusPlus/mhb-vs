@@ -1,0 +1,150 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
+
+{% block form_label -%}
+    {% if label is not sameas(false) -%}
+        {% if not compound -%}
+    {% set label_attr = label_attr|merge({'for': id}) %}
+{%- endif %}
+        {% if required -%}
+    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+{%- endif %}
+        {% if label is empty -%}
+    {% set label = name|humanize %}
+{%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+        {# added <br /> for nicer layout of checboxes #}
+        <br />
+    {%- endif %}
+{%- endblock form_label %}
+
+{% block content %}
+    {% block jsBlock %}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('modulplanungLink'));
+        });
+    </script>
+    {% endblock jsBlock %}
+
+    <div class="table-responsive">
+        {% block formStart %}
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {% endblock formStart %}
+        <table class="table table-bordered">
+            {{ form_errors(form) }}
+            <tr>
+                <td colspan="3" style="color:red"> Mit [#] gekennzeichnete Felder sind Pflichtfelder</td>
+            </tr>
+
+            <tr class="form_row">
+                <td>{{ form_label(form.name) }}</td>
+                <td title="Der Modultitel muss folgendem Muster entsprechen [A-Za-z0-9]{5,70}">{{ form_widget(form.name) }}</td>
+                <td>{{ form_errors(form.name) }}</td>
+            </tr>
+
+            <tr class="form_row">
+                <td>{{ form_label(form.nameEN) }}</td>
+                <td title="Der englische Name muss folgendem Muster entsprechen [A-Za-z0-9]{5,70}">{{ form_widget(form.nameEN) }}</td>
+                <td>{{ form_errors(form.nameEN) }}</td>
+            </tr>
+
+            <tr class="form_row">
+                <td>{{ form_label(form.kuerzel) }}</td>
+                <td title="Kürzel muss folgendem Muster entsprechen [A-Z0-9]{2,5} z.B.: PROG1">{{ form_widget(form.kuerzel) }}</td>
+                <td>{{ form_errors(form.kuerzel) }}</td>
+            </tr>
+
+            {% block beauftragter %}
+            {% endblock beauftragter %}
+            {{ form_row(form.haeufigkeit) }}
+
+            <tr>
+                <td>{{ form_label(form.dauer) }}</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>{{ form_widget(form.dauer) }}</td>
+                            <td style="padding-left:20px">
+                                {% if einheit == 'Wochen' %}
+                                    <input type="radio" name="einheit" value="Wochen" checked>Wochen<br/>
+                                {% else %}
+                                    <input type="radio" name="einheit" value="Wochen">Wochen<br/>
+                                {% endif %}
+                                {% if einheit == 'Monate' %}
+                                    <input type="radio" name="einheit" value="Monate" checked>Monate<br/>
+                                {% else %}
+                                    <input type="radio" name="einheit" value="Monate">Monate<br/>
+                                {% endif %}
+                                {% if einheit == 'Semester' %}
+                                    <input type="radio" name="einheit" value="Semester" checked>Semester
+                                {% else %}
+                                    <input type="radio" name="einheit" value="Semester">Semester
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>{{ form_errors(form.dauer) }}</td>
+            </tr>
+            <tr class="form_row">
+                <td>{{ form_label(form.leistungspunkte) }}</td>
+                <td title="Default-Wert kann bei Bedarf geändert werden">{{ form_widget(form.leistungspunkte) }}</td>
+                <td>{{ form_errors(form.leistungspunkte) }}</td>
+            </tr>
+            <tr class="form_row">
+                <td>{{ form_label(form.kontaktzeitVL) }}</td>
+                <td title="Default-Wert kann bei Bedarf geändert werden">{{ form_widget(form.kontaktzeitVL) }}</td>
+                <td>{{ form_errors(form.kontaktzeitVL) }}</td>
+            </tr>
+            <tr class="form_row">
+                <td>{{ form_label(form.kontaktzeitSonstige) }}</td>
+                <td title="Default-Wert kann bei Bedarf geändert werden">{{ form_widget(form.kontaktzeitSonstige) }}</td>
+                <td>{{ form_errors(form.kontaktzeitSonstige) }}</td>
+            </tr>
+
+            {{ form_row(form.gruppengroesse) }}
+            {{ form_row(form.lernergebnisse) }}
+            {{ form_row(form.inhalte) }}
+            {{ form_row(form.sprache) }}
+            <tr class="form_row">
+                <td>{{ form_label(form.SpracheSonstiges) }}</td>
+                <td title="Default-Wert kann bei Bedarf gelöscht werden">{{ form_widget(form.SpracheSonstiges) }}</td>
+                <td>{{ form_errors(form.SpracheSonstiges) }}</td>
+            </tr>
+            {{ form_row(form.literatur) }}
+            {{ form_row(form.voraussetzungInh) }}
+            {{ form_row(form.lehrveranstaltungen) }}
+            {{ form_row(form.pruefungsformen) }}
+            {{ form_row(form.PruefungsformSonstiges) }}
+            {{ form_row(form.voraussetzungLP) }}
+            <tr class="form_row">
+                <td>{{ form_label(form.PruefungsleistungSonstiges) }}</td>
+                <td title="Defaul-Wert kann bei Bedarf gelöscht werden">{{ form_widget(form.PruefungsleistungSonstiges) }}</td>
+                <td>{{ form_errors(form.PruefungsleistungSonstiges) }}</td>
+            </tr>
+            {{ form_row(form.PruefungsleistungSonstiges) }}
+            {#{{ form_row(form.StudienleistungSonstiges) }}#}
+        </table>
+        {% block voraussetzung %}
+        {% endblock voraussetzung %}
+        {% block lehrende %}
+        {% endblock lehrende %}
+
+        {% include '@FHBingenMHB/buttons.html.twig' %}
+        {{ form_end(form) }}
+    </div>
+
+    {% include '@FHBingenMHB/flashbags.html.twig' %}
+
+{% endblock %}

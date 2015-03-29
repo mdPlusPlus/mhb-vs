@@ -1,0 +1,77 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
+
+{% block form_label -%}
+    {% if label is not sameas(false) -%}
+        {% if not compound -%}
+    {% set label_attr = label_attr|merge({'for': id}) %}
+{%- endif %}
+        {% if required -%}
+    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+{%- endif %}
+        {% if label is empty -%}
+    {% set label = name|humanize %}
+{%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+        {# added <br /> for nicer layout of checboxes #}
+        <br />
+        {# Der Zeilenumbruck bricht noch das Design von Lehrenden#}
+    {%- endif %}
+{%- endblock form_label %}
+
+{% block form_widget_compound -%}
+    {# notwending, damit es keine divs gibt #}
+    {%- if form.parent is empty -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+{%- endblock form_widget_compound %}
+
+{% block content %}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('modulplanungLink')); {# TODO: eigeneModule wie bei vorAngebot? oder modulplanung wie Herr Schmidt in S3 angemerkt hat? #}
+        });
+    </script>
+    <h4 style="font-weight: bold">Angebotserstellung für {{ modul }} in {{ studiengang }}</h4>
+    <div class="table-responsive">
+        {{ form_start(form) }}
+        <table class="table table-bordered">
+            {{ form_errors(form) }}
+            {{ form_row(form.fachgebiet) }}
+            {% if wahlpflichtfach %}
+                {{ form_row(form.kernfach) }}
+            {% endif %}
+            <tr>
+                <td style="font-weight: bold">optional:</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.abweichenderNameDE) }}</td>
+                <td>{{ form_widget(form.abweichenderNameDE) }}</td>
+                <td>{{ form_errors(form.abweichenderNameDE) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.abweichenderNameEN) }}</td>
+                <td>{{ form_widget(form.abweichenderNameEN) }}</td>
+                <td>{{ form_errors(form.abweichenderNameEN) }}</td>
+            </tr>
+        </table>
+
+        {% include '@FHBingenMHB/buttons.html.twig' %}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+# you can read more about security in the related section of the documentation
+# http://symfony.com/doc/current/book/security.html
+security:
+    # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
+    encoders:
+        # Symfony\Component\Security\Core\User\User: plaintext
+        pwenc:
+            algorithm: bcrypt
+            cost:      12
+
+    # http://symfony.com/doc/current/book/security.html#hierarchical-roles
+    role_hierarchy:
+        # ROLE_ADMIN:       ROLE_USER
+        # ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SGL: [ROLE_DOZENT]
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        # in_memory:
+        #    memory:
+        #        users:
+        #            user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+        #            admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        users:
+            entity: { class: FHBingenMHBBundle:Dozent }
+
+    # the main part of the security, where you can set up firewalls
+    # for specific sections of your app
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        # the login page has to be accessible for everybody
+        login:
+            pattern:  ^/restricted/login$
+            security: false
+
+        # secures part of the application
+        secured_area:
+            pattern:    ^/restricted/
+            # it's important to notice that in this case login, loginCheck, logout and eigeneModule
+            # are route names and that they are specified in the FHBingenMHBBundle
+            form_login:
+                login_path: login
+                check_path: loginCheck
+                default_target_path: eigeneModule
+            logout:
+                path:   logout
+                target: login
+            #anonymous: ~
+            #http_basic:
+            #    realm: "Secured Demo Area"
+
+    # with these settings you can restrict or allow access for different parts
+    # of your application based on roles, ip, host or methods
+    # http://symfony.com/doc/current/cookbook/security/access_control.html
+    access_control:
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/restricted/sgl/, roles: ROLE_SGL }        # /restricted/sgl/*
+        - { path: ^/restricted/sgl$, roles: ROLE_SGL }        # /restricted/sgl
+        - { path: ^/restricted/dozent/, roles: ROLE_DOZENT }  # /restricted/dozent/*
+        - { path: ^/restricted/dozent$, roles: ROLE_DOZENT }  # /restricted/dozent

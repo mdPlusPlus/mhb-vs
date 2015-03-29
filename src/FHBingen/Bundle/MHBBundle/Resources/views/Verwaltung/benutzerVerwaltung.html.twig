@@ -1,0 +1,66 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('benutzerverwaltungLink'));
+        });
+    </script>
+
+    <div class="table-responsive">
+            <ul>
+                <li><a href="{{ path('benutzerErstellen') }}">Neuen Nutzer anlegen</a></li>
+            </ul>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Dozenten</th>
+                <th>Studiengangleiter</th>
+                <th>Benutzer reaktivieren</th>
+            </tr>
+
+            <tr>
+                <td>
+                    <table>
+                        {% for person in dozent %}
+                            <tr>
+                                <td style="width:200px; padding-bottom:5px"><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
+                                <td style="padding-bottom:5px"><a href="{{ path('SglUserDeactivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">deaktivieren</button></a></td>
+                              </tr>
+
+                           {% endfor %}
+                        </table>
+                </td>
+                <td>
+                    <table>
+                        {% for person in sgl %}
+                            <tr>
+                                <td style="width:200px; padding-bottom:5px"><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
+                                <td style="padding-bottom:5px"><a href="{{ path('SglUserDeactivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">deaktivieren</button></a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+                <td>
+                <table>
+                    {% for person in deaktivierteNutzer %}
+                        <tr>
+                            <td style="width:200px; padding-bottom:5px"><a href="{{ path('benutzerBearbeiten', {'userid': person.getDozentenID()}) }}">{{ person }}</a></td>
+                            <td style="padding-bottom:5px"><a href="{{ path('SglUserActivation', {'userid': person.getDozentenID()}) }}"><button type="button" class="btn btn-default btn-xs">reaktivieren</button></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                </td>
+            </tr>
+        </table>
+
+        <ul>
+             <li><a href="{{ path('passwdReset') }}">Alle Passwörter zurücksetzen</a></li>
+        </ul>
+
+    </div>
+
+    {% include '@FHBingenMHB/flashbags.html.twig' %}
+
+{% endblock %}

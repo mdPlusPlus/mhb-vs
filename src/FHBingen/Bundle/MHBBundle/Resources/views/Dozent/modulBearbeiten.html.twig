@@ -1,0 +1,116 @@
+{% extends 'FHBingenMHBBundle:Dozent:planungBearbeiten.html.twig' %}
+
+{% block jsBlock %}
+    <script type="text/javascript">
+        var lehrendeCount = '{{ form.lehrende|length }}';
+        var voraussetzungCount = '{{ form.grundmodul|length }}';
+
+        jQuery(document).ready(function () {
+            jQuery('#add-another-lehrende').click(function (e) {
+                e.preventDefault();
+                return addAnotherLehrende();
+            });
+
+            jQuery('#add-another-voraussetzung').click(function (e) {
+                e.preventDefault();
+                return addAnotherVoraussetzung();
+            });
+
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('eigeneModuleLink'));
+        });
+
+        function addAnotherLehrende(){
+            var lehrendeList = jQuery('#lehrende-fields-list');
+
+            // grab the prototype template
+            var newWidget = lehrendeList.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, lehrendeCount);
+
+            // create a new list element and add it to the list
+            var newLi = jQuery('<li></li>').html(newWidget);
+
+            var link = jQuery('<a href="#">Lehrenden entfernen</a>');
+            link.click(function(e){
+                e.preventDefault();
+                newLi.remove();
+            });
+
+            newLi.append(link);
+            newLi.appendTo(lehrendeList);
+            lehrendeCount++;
+        }
+
+        function addAnotherVoraussetzung(){
+            var voraussetzungList = jQuery('#voraussetzung-fields-list');
+
+            // grab the prototype template
+            var newWidget = voraussetzungList.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, voraussetzungCount);
+
+            // create a new list element and add it to the list
+            var newLi = jQuery('<li></li>').html(newWidget);
+
+            var link = jQuery('<a href="#">Voraussetzung entfernen</a>');
+            link.click(function(e){
+                e.preventDefault();
+                newLi.remove();
+            });
+
+            newLi.append(link);
+            newLi.appendTo(voraussetzungList);
+            voraussetzungCount++;
+        }
+
+    </script>
+{% endblock jsBlock %}
+
+{% block formStart %}
+    {{ form_start(form) }}
+{% endblock formStart %}
+
+{% block beauftragter %}
+    {{ form_row(form.beauftragter) }}
+{% endblock beauftragter %}
+
+{% block voraussetzung %}
+    <h4 style="font-weight: bold">Modulvoraussetzungen (formal)</h4>
+    <ul id="voraussetzung-fields-list" data-prototype=
+    "{% filter escape %}
+        {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.grundmodul.vars.prototype } %}
+        {% endfilter %}">
+
+        {% for voraussetzungField in form.grundmodul %}
+            <li>
+                {{ form_errors(voraussetzungField) }}
+                {{ form_widget(voraussetzungField) }} {# TODO: break entfernen -> form_widget überschreiben? #}
+                <a href="#" onclick="jQuery(this).parent().remove()">Voraussetzung entfernen</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a style="padding-left: 40px" id="add-another-voraussetzung">Voraussetzung hinzufügen</a>
+{% endblock voraussetzung %}
+
+{% block lehrende %}
+     <h4 style="font-weight: bold">Lehrende</h4>
+     <ul id="lehrende-fields-list" data-prototype=
+     "{% filter escape %}
+        {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.lehrende.vars.prototype } %}
+        {% endfilter %}">
+
+         {% for lehrendeField in form.lehrende %}
+             <li>
+                 {{ form_errors(lehrendeField) }}
+                 {{ form_widget(lehrendeField) }} {# TODO: break entfernen -> form_widget überschreiben? #}
+                 <a href="#" onclick="jQuery(this).parent().remove()">Lehrenden entfernen</a>
+             </li>
+         {% endfor %}
+     </ul>
+     <a style="padding-left: 40px" id="add-another-lehrende">Lehrenden hinzufügen</a>
+{% endblock lehrende %}

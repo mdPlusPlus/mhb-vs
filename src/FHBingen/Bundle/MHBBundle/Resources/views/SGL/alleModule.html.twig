@@ -1,0 +1,57 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="table-responsive">
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#table").tablesorter();
+
+                <!-- navbar highlighting -->
+                highlightMe(document.getElementById('alleModuleLink'));
+            });
+        </script>
+        {% if module is not empty %}
+        <table id="table" class="table table-bordered tablesorter">
+            <thead>
+            <tr>
+                <th>Modultitel</th>
+                <th style="min-width: 80px; width: 7%">Kürzel</th>
+                <th style="min-width: 100px; width: 12%">Erstelldatum</th>
+                <th style="min-width: 130px; width: 15%">Häufigkeit</th>
+                <th style="min-width: 150px; width: 23%">Modulbeauftragte/r</th>
+                <th style="min-width: 150px; width: 23%">Autor</th>
+                <th style="min-width: 220px; width: 23%">Studiengang</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set count = 0 %}
+            {% for veranstaltung in module %}
+                <tr>
+                    <td>
+                        <a href="{{ path('modulBearbeiten', {'id': veranstaltung.getModulID()}) }}">{{ veranstaltung.name }}</a>
+                    </td>
+                    <td>{{ veranstaltung.kuerzel }}</td>
+                    <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
+                    <td>{{ veranstaltung.haeufigkeit }}</td>
+                    <td>{{ veranstaltung.beauftragter }}</td>
+                    <td>{{ veranstaltung.Autor }}</td>
+                    <td>
+                        {% for name in stgZuModul[count] %}
+                            {{ name }}<br/>
+                        {% endfor %}
+                        <a href=" {{ path('vorAngebot', {'modulID': veranstaltung.getModulID()}) }}">In weiterem
+                            Studiengang anbieten</a>
+                    </td>
+                </tr>
+                {% set count = count +1 %}
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>Zurzeit gibt es keine Module im System.</p>
+        {% endif %}
+    </div>
+
+    {% include '@FHBingenMHB/flashbags.html.twig' %}
+
+{% endblock %}

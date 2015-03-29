@@ -1,0 +1,112 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#modulverantwortlicher").tablesorter();
+            $("#lehrender").tablesorter();
+
+            highlightMe(document.getElementById('eigeneModuleLink'));
+        });
+    </script>
+    <div class="table-responsive">
+        <h3>Module als Modulbeauftragte/r</h3>
+        {% if modulverantwortung is not empty %}
+            <table id="modulverantwortlicher" class="table table-bordered tablesorter">
+                <thead>
+                <tr>
+                    <th style="width:30%">Modultitel</th>
+                    <th style="min-width: 100px; width: 7%">Kürzel</th>
+                    <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+                    <th style="min-width: 150px; width: 15%">Häufigkeit</th>
+                    <th style="min-width: 220px; width: 23%">Lehrende</th>
+                    <th style="min-width: 220px; width: 23%">Studiengang</th>
+                </tr>
+                </thead>
+                <tbody>
+                {# count festsetzen für das hochzählen des mLehrende[] #}
+                {# zweite for gibt jeweils Lehrende mit Namen in neue Zeilen aus #}
+                {% set count = 0 %}
+                {% for veranstaltung in modulverantwortung %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('modulBearbeiten', {'id': veranstaltung.getModulID()}) }}">{{ veranstaltung.name }}</a>
+                        </td>
+                        <td>{{ veranstaltung.kuerzel }}</td>
+                        {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                        <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
+                        <td>{{ veranstaltung.haeufigkeit }}</td>
+                        <td>
+                            {% for name in mLehrende[count] %}
+                                {{ name }}<br/>
+                            {% endfor %}
+                            {#{% for lehrende in veranstaltung.getLehrende() %}#}
+                                {#{{ lehrende.getDozent() }}<br>#}
+                            {#{% endfor %}#}
+                        </td>
+                        <td>
+                            {% for name in stgZuModul[count] %}
+                                {{ name }}<br/>
+                            {% endfor %}
+                            {#{% for angebot in veranstaltung.getAngebot() %}#}
+                                {#{{ angebot.getStudiengang() }}<br>#}
+                            {#{% endfor %}#}
+                            <a href=" {{ path('vorAngebot', {'modulID': veranstaltung.getModulID()}) }}">In weiterem
+                                Studiengang anbieten</a>
+                        </td>
+                    </tr>
+                    {% set count = count +1 %}
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Sie sind bei keinem Modul als Modulbeauftragte/r eingetragen.</p>
+        {% endif %}
+
+        <h3 style="margin-top: 50px">Module als Lehrende/r</h3>
+        {% if modullehrend is not empty %}
+            <table id="lehrender" class="table table-bordered tablesorter">
+                <thead>
+                <tr>
+                    <th>Modultitel</th>
+                    <th style="min-width: 100px; width: 7%">Kürzel</th>
+                    <th style="min-width: 130px; width: 12%">Erstelldatum</th>
+                    <th style="min-width: 150px; width: 15%">Häufigkeit</th>
+                    <th style="min-width: 220px; width: 23%">Modulbeauftragter</th>
+                    <th style="min-width: 220px; width: 23%">Studiengang</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set count = 0 %}
+                {% for veranstaltung in modullehrend %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('modulBearbeiten', {'id': veranstaltung.getModulID()}) }}">{{ veranstaltung.name }}</a>
+                        </td>
+                        <td>{{ veranstaltung.kuerzel }}</td>
+                        {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                        <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
+                        <td>{{ veranstaltung.haeufigkeit }}</td>
+                        <td>{{ veranstaltung.beauftragter }}</td>
+                        <td>
+                            {% for name in stgZuModullehrend[count] %}
+                                {#{% if stgZuModullehrend[count] is not empty  %}#}
+                                    {{ name }}<br/>
+{#                                {% else %}
+                                    {{ Keinem Studiengang zugeordnet }}<br/>
+                                {% endif %}#}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                 {% set count = count +1 %}
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Sie sind bei keinem Modul als Lehrende/r eingetragen.</p>
+        {% endif %}
+    </div>
+
+    {% include '@FHBingenMHB/flashbags.html.twig' %}
+
+{% endblock %}

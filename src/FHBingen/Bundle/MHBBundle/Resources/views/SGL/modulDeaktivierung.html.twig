@@ -1,0 +1,84 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#deaktivierte").tablesorter();
+            $("#studiengang").tablesorter();
+
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('moduldeaktivierungLink'));
+        });
+    </script>
+    <div class="table-responsive">
+        <h3>Deaktivierte Module</h3>
+        {% if deaktiv is not empty %}
+        <table id="deaktivierte" class="table table-bordered tablesorter">
+            <thead>
+            <tr>
+                <th>Modultitel</th>
+                <th style="min-width: 100px; width: 7%">deaktiviert am</th>
+                <th style="min-width: 130px; width: 12%">freigeben</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for veranstaltung in deaktiv %}
+                <tr>
+                    <td>
+                        {{ veranstaltung.name }}
+                    </td>
+                    {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                    <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
+                    <td><a href="{{ path('planungFreigeben', {'id': veranstaltung.getModulID()}) }}">freigeben</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>Zurzeit gibt es keine deaktiverten Module.</p>
+        {% endif %}
+
+        <h3 style="margin-top: 50px">Angebotene Module im Studiengang {{ studiengang }}</h3>
+        {% if module is not empty %}
+        <table id="studiengang" class="table table-bordered tablesorter">
+            <thead>
+            <tr>
+                <th>Modultitel</th>
+                <th style="min-width: 130px; width: 12%">letzte Änderung</th>
+                <th style="min-width: 200px; width: 23%">Modulbeauftragte/r</th>
+                <th style="min-width: 270px; width: 23%">Studiengang</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set count = 0 %}
+            {% for veranstaltung in module %}
+                <tr>
+                    <td>
+                        {{ veranstaltung.name }}
+                    </td>
+                    {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                    <td>{{ veranstaltung.erstellungsdatum|date('d.m.Y') }}</td>
+                    <td>{{ veranstaltung.beauftragter }}</td>
+                    <td>
+                        {% for name in stgZuModul[count] %}
+                        <a href=" {{ path('modulDeaktivierungStg',
+                        {'modulID': veranstaltung.getModulID(),'studiengangID': name.getStudiengangID()}) }}">In {{ name.__toString() }}
+                            deaktivieren</a><br/>
+                        {% endfor %}
+                        {% if stgZuModul[count]|length != 1 %}
+                        <a href=" {{ path('modulDeaktivierung', {'modulID': veranstaltung.getModulID()}) }}">Modul deaktivieren alle Studiengänge</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% set count = count +1 %}
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>Zurzeit werden keine Module in Ihrem Studiengang angeboten.</p>
+        {% endif %}
+    </div>
+
+    {% include '@FHBingenMHB/flashbags.html.twig' %}
+
+{% endblock %}

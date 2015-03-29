@@ -1,0 +1,155 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
+
+{% block form_label -%}
+    {% if label is not sameas(false) -%}
+        {% if not compound -%}
+    {% set label_attr = label_attr|merge({'for': id}) %}
+{%- endif %}
+        {% if required -%}
+    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+{%- endif %}
+        {% if label is empty -%}
+    {% set label = name|humanize %}
+{%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+        {# added <br /> for nicer layout of checboxes #}
+        <br />
+        {# Der Zeilenumbruck bricht noch das Design von Lehrenden#}
+    {%- endif %}
+{%- endblock form_label %}
+
+{% block form_widget_compound -%}
+    {# notwending, damit es keine divs gibt #}
+    {%- if form.parent is empty -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+{%- endblock form_widget_compound %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            highlightMe(document.getElementById('eigeneModuleLink'));
+        });
+    </script>
+
+    <script type="text/javascript">
+        function refactorCheckboxes(){
+            var tmp = document.getElementById("vorangebot_studiengang");
+            var stg = tmp.options[tmp.selectedIndex].text;
+
+            var ss =document.getElementById("vorangebot_studienplan_ss");
+            var ws =document.getElementById("vorangebot_studienplan_ws");
+
+            if(stg.indexOf("Bachelor") > -1){
+                while (ss.firstChild) {
+                    ss.removeChild(ss.firstChild);
+                }
+                while (ws.firstChild) {
+                    ws.removeChild(ws.firstChild);
+                }
+
+                ss.insertAdjacentHTML('afterbegin','<input type="checkbox" id="vorangebot_studienplan_ss_0" name="vorangebot[studienplan_ss][]" value="1" /> ' +
+                '<label for="vorangebot_studienplan_ss_0">1</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ss_1" name="vorangebot[studienplan_ss][]" value="2" /> ' +
+                '<label for="vorangebot_studienplan_ss_1">2</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ss_2" name="vorangebot[studienplan_ss][]" value="3" /> ' +
+                '<label for="vorangebot_studienplan_ss_2">3</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ss_3" name="vorangebot[studienplan_ss][]" value="4" /> ' +
+                '<label for="vorangebot_studienplan_ss_3">4</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ss_4" name="vorangebot[studienplan_ss][]" value="5" /> ' +
+                '<label for="vorangebot_studienplan_ss_4">5</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ss_5" name="vorangebot[studienplan_ss][]" value="6" /> ' +
+                '<label for="vorangebot_studienplan_ss_5">6</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ss_6" name="vorangebot[studienplan_ss][]" value="7" /> ' +
+                '<label for="vorangebot_studienplan_ss_6">7</label> ' +
+                '<br />');
+
+                ws.insertAdjacentHTML('afterbegin', '<input type="checkbox" id="vorangebot_studienplan_ws_0" name="vorangebot[studienplan_ws][]" value="1" /> ' +
+                '<label for="vorangebot_studienplan_ws_0">1</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ws_1" name="vorangebot[studienplan_ws][]" value="2" /> ' +
+                '<label for="vorangebot_studienplan_ws_1">2</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ws_2" name="vorangebot[studienplan_ws][]" value="3" /> ' +
+                '<label for="vorangebot_studienplan_ws_2">3</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ws_3" name="vorangebot[studienplan_ws][]" value="4" /> ' +
+                '<label for="vorangebot_studienplan_ws_3">4</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ws_4" name="vorangebot[studienplan_ws][]" value="5" /> ' +
+                '<label for="vorangebot_studienplan_ws_4">5</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ws_5" name="vorangebot[studienplan_ws][]" value="6" /> ' +
+                '<label for="vorangebot_studienplan_ws_5">6</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ws_6" name="vorangebot[studienplan_ws][]" value="7" /> ' +
+                '<label for="vorangebot_studienplan_ws_6">7</label> ' +
+                '<br />');
+            }
+            else{
+                while (ss.firstChild) {
+                    ss.removeChild(ss.firstChild);
+                }
+                while (ws.firstChild) {
+                    ws.removeChild(ws.firstChild);
+                }
+
+                ss.insertAdjacentHTML('afterbegin', '<input type="checkbox" id="vorangebot_studienplan_ss_0" name="vorangebot[studienplan_ss][]" value="1" /> ' +
+                '<label for="vorangebot_studienplan_ss_0">1</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ss_1" name="vorangebot[studienplan_ss][]" value="2" /> ' +
+                '<label for="vorangebot_studienplan_ss_1">2</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ss_2" name="vorangebot[studienplan_ss][]" value="3" /> ' +
+                '<label for="vorangebot_studienplan_ss_2">3</label> ' +
+                '<br />');
+
+                ws.insertAdjacentHTML('afterbegin', '<input type="checkbox" id="vorangebot_studienplan_ws_0" name="vorangebot[studienplan_ws][]" value="1" /> ' +
+                '<label for="vorangebot_studienplan_ws_0">1</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ws_1" name="vorangebot[studienplan_ws][]" value="2" /> ' +
+                '<label for="vorangebot_studienplan_ws_1">2</label> ' +
+                '<br /> ' +
+                '<input type="checkbox" id="vorangebot_studienplan_ws_2" name="vorangebot[studienplan_ws][]" value="3" /> ' +
+                '<label for="vorangebot_studienplan_ws_2">3</label> ' +
+                '<br />');
+            }
+        }
+    </script>
+
+    <h4 style="font-weight: bold">Studiengangswahl für Angebot von {{ modul }}</h4>
+    <div class="table-responsive">
+        {{ form_start(form) }}
+        <table class="table table-bordered">
+            {{ form_errors(form) }}
+            {{ form_row(form.studiengang,{ 'attr': {'onchange': 'refactorCheckboxes()'} }) }}
+            {{ form_row(form.angebotsart) }}
+            {{ form_row(form.studienplan_ss) }}
+            {{ form_row(form.studienplan_ws) }}
+        </table>
+
+        {% include '@FHBingenMHB/buttons.html.twig' %}
+        {{ form_end(form) }}
+    </div>
+
+    {% include '@FHBingenMHB/flashbags.html.twig' %}
+
+{% endblock %}

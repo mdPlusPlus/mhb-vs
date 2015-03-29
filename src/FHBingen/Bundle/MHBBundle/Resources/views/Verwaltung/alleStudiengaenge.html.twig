@@ -1,0 +1,39 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").tablesorter();
+
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('studiengangverwaltungLink'));
+        });
+    </script>
+    <div class="table-responsive">
+        <ul>
+            <li><a href="{{ path('studiengangErstellen') }}">Neuen Studiengang anlegen</a></li>
+        </ul>
+
+        <table id="table" class="table table-bordered tablesorter">
+            <thead>
+                <tr>
+                    <th style="">Studiengang</th>
+                    <th style="">Abschluss</th>
+                    <th style="">Studiengangleiter/in</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for gang in courses %}
+                <tr>
+                    <td><a href="{{ path('studiengangBearbeiten', {'courseID': gang['Studiengang_ID']}) }}">{{ gang['Studiengang'] }}</a></td>
+                    <td>{{ gang['Grad'] }}</td>
+                    <td>{{ gang['Titel']~' '~gang['Nachname'] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include '@FHBingenMHB/flashbags.html.twig' %}
+
+{% endblock %}

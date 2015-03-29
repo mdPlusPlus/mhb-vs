@@ -1,0 +1,46 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block userLogout %}
+    {# überschreibt den userLogout-block des base-templates mit leerem Inhalt, weil noch kein User verfügbar #}
+{% endblock %}
+
+{% block content %}
+    <div class="container" style="width: 300px">
+        <form class="form-signin" role="form" action="{{ path('loginCheck') }}" method="post">
+            <label for="inputEmail" class="sr-only">Email-Adresse:</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email-Addresse" name="_username"
+                   value="{{ last_username }}" required autofocus/>
+
+            <label for="inputPssword" class="sr-only">Passwort</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Passwort" name="_password"
+                   required/>
+
+            {#
+            <label for="remember_me">Keep me logged in</label>
+            <input type="checkbox" id="remember_me" name="_remember_me" checked />
+            #}
+            {#
+            benötigt 'remember_me:' config in firewall (security.yml)
+            http://symfony.com/doc/2.5/cookbook/security/remember_me.html
+            #}
+
+            {#
+            <input type="hidden" name="_target_path" value="{{ path('fhbingen_mhb_restricted_rolecheck') }}"/>
+            #}
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </form>
+    </div>
+    {% if error %}
+        <script type="text/javascript">
+            alert('{{ error.message }}');
+        </script>
+    {% endif %}
+    {#
+    {% if logoutMessage %}
+        <script type="text/javascript">
+            alert('Sie haben sich erfolgreich ausgeloggt.');
+        </script>
+    {% endif %}
+    #}
+{% endblock %}

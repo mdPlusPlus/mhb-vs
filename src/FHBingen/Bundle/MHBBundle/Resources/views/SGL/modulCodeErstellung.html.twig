@@ -1,0 +1,35 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('modulcodeLink'));
+        });
+    </script>
+
+    <h3>Modul aus {{ studiengang }} bearbeiten</h3>
+    <div class="table-responsive">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        <table class="table table-bordered">
+            {{ form_errors(form) }}
+            {% if modul != NULL %}
+            {{ modul.getName() }}
+            {% endif %}
+            {{ form_row(form.code) }}
+        </table>
+
+        {% include '@FHBingenMHB/buttons.html.twig' %}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

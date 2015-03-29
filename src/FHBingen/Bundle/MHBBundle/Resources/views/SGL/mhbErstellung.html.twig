@@ -1,0 +1,32 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block form_row %}
+    <tr class="form_row">
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+{% endblock form_row %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('mhbErstellungLink'));
+        });
+    </script>
+
+    <div class="table-responsive">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        <table class="table table-bordered">
+            {{ form_errors(form) }}
+            {{ form_row(form.beschreibung) }}
+            {{ form_row(form.gueltigAb) }}
+        </table>
+
+        {% include '@FHBingenMHB/buttons.html.twig' %}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
