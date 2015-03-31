@@ -250,51 +250,56 @@ class DozentController extends Controller
     /**
      * @param int $id
      *
-     * @Route("/restricted/dozent/modulBearbeiten/{id}", name="modulBearbeiten")
+     * @Route("/restricted/dozent/modulBearbeiten/{id}/{modus}", defaults={"modus" = "bearbeiten"}, name="modulBearbeiten")
      * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")
      *
      * Hier wird ein bereits freigegebenes Modul bearbeitet und eine Schattenkopie in die VeranstaltungsHistory eingepflegt
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function modulBearbeitenAction($id)
+    public function modulBearbeitenAction($id, $modus)
     {
-        //TODO modulBearbeitenAction + planungFreigebenAction zusammenführen (geht das überhaupt?)
+        //$modus ist entweder "bearbeiten" (Modul) oder "freigeben" (Planung, deaktiviertes Modul)
+
         $encoder = new JsonEncoder();
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         //TODO: auf Beauftragter, Lehrende oder SGl prüfen
-        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => "freigegeben"));
+        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id));
 
         $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
-        $modulHistory= new Entity\VeranstaltungHistory();
+        if ($modus == "bearbeiten") {
+            //TODO: History muss noch überarbeitet werden: Wenn nicht valides Formular abgeschickt wird, werden History-Daten mit angepassten Daten überschrieben
+            $modulHistory = new Entity\VeranstaltungHistory();
 
-        //schreibt den Veranstaltungsinhalt vor der Änderung in die Historytabelle
-        $modulHistory->setAutor($modul->getAutor());
-        $modulHistory->setModulID($modul->getModulID());
-        $modulHistory->setVersionsnummer($modul->getVersionsnummer());
-        $modulHistory->setDauer($modul->getDauer());
-        $modulHistory->setName($modul->getName());
-        $modulHistory->setNameEN($modul->getNameEN());
-        $modulHistory->setKuerzel($modul->getKuerzel());
-        $modulHistory->setErstellungsdatum($modul->getErstellungsdatum());
-        $modulHistory->setGruppengroesse($modul->getGruppengroesse());
-        $modulHistory->setHaeufigkeit($modul->getHaeufigkeit());
-        $modulHistory->setInhalte($modul->getInhalte());
-        $modulHistory->setKontaktzeitSonstige($modul->getKontaktzeitSonstige());
-        $modulHistory->setKontaktzeitVL($modul->getKontaktzeitVL());
-        $modulHistory->setSelbststudium($modul->getSelbststudium());
-        $modulHistory->setLernergebnisse($modul->getLernergebnisse());
-        $modulHistory->setSprache($modul->getSprache());
-        $modulHistory->setSpracheSonstiges($modul->getSpracheSonstiges());
-        $modulHistory->setLiteratur($modul->getLiteratur());
-        $modulHistory->setLeistungspunkte($modul->getLeistungspunkte());
-        $modulHistory->setVoraussetzungInh($modul->getVoraussetzungInh());
-        $modulHistory->setPruefungsformSonstiges($modul->getPruefungsformSonstiges());
-        $modulHistory->setVoraussetzungLP($encoder->encode($modul->getVoraussetzungLP(), 'json'));
-        $modulHistory->setPruefungsformen($encoder->encode($modul->getPruefungsformen(), 'json'));
-        $modulHistory->setLehrveranstaltungen($encoder->encode($modul->getLehrveranstaltungen(), 'json'));
+            //schreibt den Veranstaltungsinhalt vor der Änderung in die Historytabelle
+            $modulHistory->setAutor($modul->getAutor());
+            $modulHistory->setDauer($modul->getDauer());
+            $modulHistory->setErstellungsdatum($modul->getErstellungsdatum());
+            $modulHistory->setGruppengroesse($modul->getGruppengroesse());
+            $modulHistory->setHaeufigkeit($modul->getHaeufigkeit());
+            $modulHistory->setInhalte($modul->getInhalte());
+            $modulHistory->setKontaktzeitSonstige($modul->getKontaktzeitSonstige());
+            $modulHistory->setKontaktzeitVL($modul->getKontaktzeitVL());
+            $modulHistory->setKuerzel($modul->getKuerzel());
+            $modulHistory->setLehrveranstaltungen($encoder->encode($modul->getLehrveranstaltungen(), 'json'));
+            $modulHistory->setLeistungspunkte($modul->getLeistungspunkte());
+            $modulHistory->setLernergebnisse($modul->getLernergebnisse());
+            $modulHistory->setLiteratur($modul->getLiteratur());
+            $modulHistory->setModulID($modul->getModulID());
+            $modulHistory->setName($modul->getName());
+            $modulHistory->setNameEN($modul->getNameEN());
+            $modulHistory->setPruefungsformen($encoder->encode($modul->getPruefungsformen(), 'json'));
+            $modulHistory->setPruefungsformSonstiges($modul->getPruefungsformSonstiges());
+            $modulHistory->setSelbststudium($modul->getSelbststudium());
+            $modulHistory->setSprache($modul->getSprache());
+            $modulHistory->setSpracheSonstiges($modul->getSpracheSonstiges());
+            $modulHistory->setVersionsnummer($modul->getVersionsnummer());
+            $modulHistory->setVoraussetzungInh($modul->getVoraussetzungInh());
+            $modulHistory->setVoraussetzungLP($encoder->encode($modul->getVoraussetzungLP(), 'json'));
+        }
+
 
         //ab hier beginnt das eigentliche Formular mit Validierung
         $form = $this->createForm(new Form\VeranstaltungType($id), $modul);
@@ -324,10 +329,20 @@ class DozentController extends Controller
                 }
 
                 if (!$valid) {
-                    return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
+                    if ($modus == "bearbeiten") {
+                        return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
+                    } else {
+                        return array('form' => $form->createView(), 'pageTitle' => 'Planung freigeben', 'einheit' => $einheit);
+                    }
                 }
 
-                $em->persist($modulHistory);
+                //ab hier, wenn valide
+
+                if ($modus == "bearbeiten") {
+                    //persist erst NACH der Validierung!
+                    $em->persist($modulHistory);
+                }
+
 
 
                 $modul->setAutor((string) $user);
@@ -351,7 +366,7 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
-                $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
+                $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData()); //TODO: Änderung von PLSonstiges + SLSonstiges zu Erläuterung (auch in DB + PDF)
 
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
@@ -360,9 +375,14 @@ class DozentController extends Controller
 
                 $modul->setSprache($form->get('sprache')->getData());
                 $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
-                //$modul->setStatus
-               // $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
-                $modul->setVersionsnummer($modul->getVersionsnummer()+1);
+                //$modul->setStatus kommt hier nicht vor, weil "bearbeiten" auf bereits freigegebenen Modulen arbeitetet und "freigeben" den Status in angebotAction setzt
+
+                if (!is_null($modul->getVersionsnummer())) {
+                    $modul->setVersionsnummer($modul->getVersionsnummer() + 1);
+                } else {
+                    $modul->setVersionsnummer(1);
+                }
+
                 $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
@@ -435,18 +455,31 @@ class DozentController extends Controller
 
                 $em->flush();
                 } catch (UniqueConstraintViolationException $e) {
-                    $this->get('session')->getFlashBag()->add('info', 'Bitte nicht zweimal den gleichen Lehrenden/Veranstaltung auswählen');
+                    $this->get('session')->getFlashBag()->add('info', 'Bitte nicht zweimal den gleichen Lehrenden bzw. die gleiche Veranstaltung auswählen.');
 
                     return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
                 }
 
-                $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich bearbeitet.');
+                if ($modus == "bearbeiten") {
+                    $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich bearbeitet.');
 
-                return $this->redirect($this->generateUrl('eigeneModule'));
+                    return $this->redirect($this->generateUrl('eigeneModule'));
+                } else {
+                    return $this->redirect($this->generateUrl('vorAngebot', array('modulID' => $id)));
+                }
+
+
+
             }
         }
 
-        return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
+        if ($modus == "bearbeiten") {
+            $pTitle = 'Modulbearbeitung';
+        } else {
+            $pTitle = 'Freigabe';
+        }
+
+        return array('form' => $form->createView(), 'pageTitle' => $pTitle, 'einheit' => $einheit);
     }
 
 
@@ -454,7 +487,6 @@ class DozentController extends Controller
      * @param int $id
      *
      * @Route("/restricted/dozent/planungFreigeben/{id}", name="planungFreigeben")
-     * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")
      *
      * Hier wird eine bereits vorhandene Planung um alle notwendigen angaben ergänzt und freigegeben
      * Die Freigabe erfolgt erst in der weitergeleiteten angebotAction
@@ -463,161 +495,7 @@ class DozentController extends Controller
      */
     public function planungFreigebenAction($id)
     {
-        //TODO modulBearbeitenAction + planungFreigebenAction zusammenführen (geht das überhaupt?)
-        $encoder = new JsonEncoder();
-        $em = $this->getDoctrine()->getManager();
-        //TODO: auf Beauftragter, Lehrende oder SGl prüfen --> Lehrendentabelle auslesen
-        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $id, 'Status' => array('in Planung', 'expired')));
-        $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
-
-        $form = $this->createForm(new Form\VeranstaltungType($id), $modul);
-
-        $request = $this->get('request');
-        $form->handleRequest($request);
-
-        if ($request->getMethod() == 'POST') {
-            if ($form->isValid()) {
-
-                $valid = true;
-                if ($form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData() <=0) {
-                    $this->get('session')->getFlashBag()->add('info', 'Ihre Angaben zu den Kontaktzeiten lassen keine Zeiten für das Selbststudium zu.');
-                    $valid = false;
-                }
-                if ($encoder->encode($form->get('voraussetzungLP')->getData(), 'json') == '[]') {
-                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Voraussetzung für die Vergabe von Leistungspunkten gesetzt sein.');
-                    $valid = false;
-                }
-                if ($encoder->encode($form->get('pruefungsformen')->getData(), 'json') == '[]'  AND $form->get('PruefungsformSonstiges')->getData() == "") {
-                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Prüfungsform gesetzt sein.');
-                    $valid = false;
-                }
-                if ($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json') == '[]') {
-                    $this->get('session')->getFlashBag()->add('info', 'Es muss mindestens eine Lehrveranstaltungsform gesetzt sein.');
-                    $valid = false;
-                }
-
-                if (!$valid) {
-                    return array('form' => $form->createView(), 'pageTitle' => 'Planung freigeben', 'einheit' => $einheit);
-                }
-
-
-                //notwendige Einträge
-                $modul->setErstellungsdatum(new \DateTime());
-
-
-                //Änderungen an Einträgen
-                $modul->setKuerzel($form->get('kuerzel')->getData());
-                $modul->setName($form->get('name')->getData());
-                $modul->setNameEn($form->get('nameEN')->getData());
-                $modul->setBeauftragter($form->get('beauftragter')->getData());
-                $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
-
-                $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
-
-                $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
-                $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
-
-                //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
-                $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
-                $modul->setSelbststudium($ms);
-
-                if (!is_null($modul->getVersionsnummer())) {
-                    $modul->setVersionsnummer($modul->getVersionsnummer() + 1);
-                } else {
-                    $modul->setVersionsnummer(1);
-                }
-
-                $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
-                $modul->setLernergebnisse($form->get('lernergebnisse')->getData());
-                $modul->setInhalte($form->get('inhalte')->getData());
-                $modul->setSprache($form->get('sprache')->getData());
-                $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
-                $modul->setLiteratur($form->get('literatur')->getData());
-                $modul->setLeistungspunkte($form->get('leistungspunkte')->getData());
-                $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
-                $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
-                $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
-                $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
-                $modul->setLehrveranstaltungen($encoder->encode($form->get('lehrveranstaltungen')->getData(), 'json'));
-
-                $lehrendeArr = $form->get('lehrende')->getData()->toArray();
-                if (!empty($lehrendeArr)) {
-                    foreach ($lehrendeArr as $lehrend) {
-                        // Lehrende mit Veranstaltung verketten
-                        $lehrend->setVeranstaltung($modul);
-                        // passenden Dozenten aus dem Lehrenden Entity finden
-                        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $lehrend->getDozent()->getDozentenID()));
-                        // Lehrenden mit Dozent verketten
-                        $lehrend->setDozent($dozent);
-                        $em->persist($dozent);
-                        $em->persist($lehrend);
-                    }
-
-                    $lehrendeRepository = $em->getRepository('FHBingenMHBBundle:Lehrende');
-
-                    $dbLehrendeArr = $lehrendeRepository->findby(array('veranstaltung' => $id));
-
-                    foreach ($dbLehrendeArr as $dbEntry) {
-                        if (!in_array($dbEntry, $lehrendeArr)) {
-                            // passenden Dozenten zu dem Lehrenden Etity finden
-                            $dozentTmp = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $dbEntry->getDozent()->getDozentenID()));
-                            // link von Dozenten zu Lehrenden Entity löschen
-                            $dozentTmp->removeLehrende($dbEntry);
-                            // Lehrenden entfernen
-                            $em->remove($dbEntry);
-                            $em->persist($dozentTmp);
-                        }
-                    }
-                } else {
-                    //falls kein Lehrender ausgewählt wurde wird der Modulbeauftragte zum Lehrenden
-                    $lehr = new Entity\Lehrende();
-                    $lehr->setVeranstaltung($modul);
-                    $doz = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $modul->getBeauftragter()->getDozentenID()));
-                    $doz->addLehrende($lehr);
-                    $lehr->setDozent($doz);
-                    $em->persist($lehr);
-                    $em->persist($doz);
-                }
-
-                $voraussetzungArr = $form->get('grundmodul')->getData()->toArray();
-                foreach ($voraussetzungArr as $vor) {
-                    $vor->setModul($modul);
-                    $em->persist($vor);
-                }
-
-                $vorRepository = $em->getRepository('FHBingenMHBBundle:Modulvoraussetzung');
-                $dbVorArr = $vorRepository->findby(array('modul' => $id));
-
-                foreach ($dbVorArr as $dbEntry) {
-                    if (!in_array($dbEntry, $voraussetzungArr)) {
-                        // Voraussetzung identifizieren
-                        $modulTmp = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $dbEntry->getVoraussetzung()->getModulID()));
-                        // link zur Veranstaltung löschen
-                        $modulTmp->removeForderung($dbEntry);
-                        // Lehrenden entfernen
-                        $em->remove($dbEntry);
-                        $em->persist($modulTmp);
-                    }
-
-                }
-
-                $em->persist($modul);
-
-                try {
-
-                    $em->flush();
-
-                } catch (UniqueConstraintViolationException $e) {
-                    $this->get('session')->getFlashBag()->add('info', 'Bitte nicht zweimal den gleichen Lehrenden bzw. gleiche Veranstaltung auswählen');
-
-                    return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
-                }
-
-                return $this->redirect($this->generateUrl('vorAngebot', array('modulID' => $id)));
-            }
-        }
-
-        return array('form' => $form->createView(), 'pageTitle' => 'Planung freigeben', 'einheit' => $einheit);
+        return $this->redirect($this->generateUrl('modulBearbeiten', array('id' => $id, 'modus' => 'freigeben')));
     }
 
     /**

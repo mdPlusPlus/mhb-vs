@@ -81,7 +81,6 @@ class VerwaltungsController extends Controller
 
     /**
      * @Route("/restricted/sgl/createUsers", name="benutzerErstellen")
-     * @Template("FHBingenMHBBundle:Verwaltung:benutzerErstellen.html.twig")
      *
      * Legt einen neuen Dozenten mit den eingegebenen Daten an
      */
@@ -170,7 +169,6 @@ class VerwaltungsController extends Controller
 
     /**
      * @Route("/restricted/sgl/createCourse", name="studiengangErstellen")
-     * @Template("FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig")
      *
      * Legt einen Studiengang anhand der angegebenen Daten an. Dazu gehören auch Fachgebiete und Vertiefungsrichtungen
      */
