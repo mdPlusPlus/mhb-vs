@@ -206,6 +206,10 @@ class Veranstaltung
     protected $StudienleistungSonstiges;
     /////
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $ErlaeuterungenLP;
 
 
     /**
@@ -1203,5 +1207,21 @@ class Veranstaltung
     public function getGrundmodul()
     {
         return $this->grundmodul;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getErlaeuterungenLP()
+    {
+        return $this->ErlaeuterungenLP;
+    }
+
+    /**
+     * @param mixed $ErlaeuterungenLP
+     */
+    public function setErlaeuterungenLP($ErlaeuterungenLP)
+    {
+        $this->ErlaeuterungenLP = $ErlaeuterungenLP;
     }
 }

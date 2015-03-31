@@ -26,6 +26,7 @@ class Semester
     public function __toString()
     {
         $string = $this->getSemester();
+
         return $string;
     }
 

@@ -146,4 +146,34 @@ class DefaultController extends Controller
 
         return new Response($result);
     }
+
+    /**
+     * @Route("/convert")
+     */
+    public function convertDB()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $veranstaltungen = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
+
+        $response = '';
+
+        foreach ($veranstaltungen as $v) {
+            $pl = $v->getPruefungsleistungSonstiges();
+            $sl = $v->getStudienleistungSonstiges();
+
+            if (!is_null($sl)) {
+                $erl = $pl . ' und ' . $sl;
+            } else {
+                $erl = $pl;
+            }
+
+            $v->setErlaeuterungenLP($erl);
+            $em->persist($v);
+
+            $response = $response . $erl . '<br />';
+        }
+        $em->flush();
+
+        return new Response($response);
+    }
 }
