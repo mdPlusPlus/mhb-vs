@@ -9,10 +9,11 @@
             highlightMe(document.getElementById('mhbUebersichtLink'));
         });
     </script>
+
     <div class="table-responsive">
-        {# <h3>Modulhandbücher</h3> #}
-        <table id="table" class="table table-bordered tablesorter">
-            <thead>
+        {% if mhb is not empty %}{
+            <table id="table" class="table table-bordered tablesorter">
+                <thead>
                 <tr>
                     <th>Download</th>
                     <th>Beschreibung</th>
@@ -22,24 +23,27 @@
                     <th>Version</th>
                     <th>Erstellungsdatum</th>
                 </tr>
-            </thead>
-            <tbody>
-            {% for entity in mhb|sort %}
-                <tr>
-                    <td><a href="{{ path('pdfDownload', {'mhbID': entity.getMHBID()}) }}">Download</a></td>
-                    <td>{{ entity.Beschreibung }}</td>
-                    <td>{{ entity.getGehoertZu() }}</td>
-                    <td>{{ entity.Autor }}</td>
-                    <td>{{ entity.getGueltigAb() }}</td>
-                    <td>{{ entity.getVersionsnummer() }}</td>
-                    {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
-                    <td>{{ entity.getErstellungsdatum()|date('d.m.Y') }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
+                </thead>
+                <tbody>
+                {% for entity in mhb|sort %}
+                    <tr>
+                        <td><a href="{{ path('pdfDownload', {'mhbID': entity.getMHBID()}) }}">Download</a></td>
+                        <td>{{ entity.Beschreibung }}</td>
+                        <td>{{ entity.getGehoertZu() }}</td>
+                        <td>{{ entity.Autor }}</td>
+                        <td>{{ entity.getGueltigAb() }}</td>
+                        <td>{{ entity.getVersionsnummer() }}</td>
+                        {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                        <td>{{ entity.getErstellungsdatum()|date('d.m.Y') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Zurzeit gibt es keine Modulhanbücher im System.</p>
+        {% endif %}
     </div>
+
 
     {% include '@FHBingenMHB/flashbags.html.twig' %}
 
