@@ -174,13 +174,6 @@ class VerwaltungsController extends Controller
      */
     public function SglCreateCourseAction()
     {
-
-//
-//                $em->persist($studiengang);
-//                $em->flush();
-//
-//
-
         return $this->redirect($this->generateUrl('studiengangBearbeiten', array('courseID' => -1)));
     }
 
