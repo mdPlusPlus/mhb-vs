@@ -150,7 +150,7 @@ class DefaultController extends Controller
     /**
      * @Route("/convert")
      */
-    public function convertDB()
+    public function convert()
     {
         $em = $this->getDoctrine()->getManager();
         $veranstaltungen = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
@@ -158,19 +158,16 @@ class DefaultController extends Controller
         $response = '';
 
         foreach ($veranstaltungen as $v) {
-            $pl = $v->getPruefungsleistungSonstiges();
-            $sl = $v->getStudienleistungSonstiges();
+            $lp = $v->getVoraussetzungLP();
+            $lp = str_replace('"P', '"bestandene P', $lp);
+            $lp = str_replace('"S', '"bestandene S', $lp);
 
-            if (!is_null($sl)) {
-                $erl = $pl . ' und ' . $sl;
-            } else {
-                $erl = $pl;
-            }
-
-            $v->setErlaeuterungenLP($erl);
+            $v->setVoraussetzungLP($lp);
             $em->persist($v);
 
-            $response = $response . $erl . '<br />';
+
+            $response = $response . $lp . '<br />';
+
         }
         $em->flush();
 

@@ -197,6 +197,7 @@ class DozentController extends Controller
                 $modul->setAutor((string) $user);
                 $modul->setBeauftragter($user);
                 $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
+                $modul->setErlaeuterungenLP($form->get('erlaeuterungenLP')->getData());
                 $modul->setErstellungsdatum(new \DateTime());
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
@@ -212,7 +213,7 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
-                $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData());
+
 
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - ($form->get('kontaktzeitVL')->getData() + $form->get('kontaktzeitSonstige')->getData());
@@ -273,6 +274,7 @@ class DozentController extends Controller
             //TODO: History muss noch überarbeitet werden: Wenn nicht valides Formular abgeschickt wird, werden History-Daten mit angepassten Daten überschrieben - stimmt das überhaupt? testen!
             $modulHistory = new Entity\VeranstaltungHistory();
 
+            //TODO: hier fehlen auch Felder
             //schreibt den Veranstaltungsinhalt vor der Änderung in die Historytabelle
             $modulHistory->setAutor($modul->getAutor());
             $modulHistory->setDauer($modul->getDauer());
@@ -343,18 +345,14 @@ class DozentController extends Controller
                     $em->persist($modulHistory);
                 }
 
-
-
                 $modul->setAutor((string) $user);
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
-
                 $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
-
+                $modul->setErlaeuterungenLP($form->get('erlaeuterungenLP')->getData());
                 $modul->setErstellungsdatum(new \DateTime());
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
-
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
                 $modul->setKuerzel($form->get('kuerzel')->getData());
@@ -366,13 +364,10 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
-                $modul->setPruefungsleistungSonstiges($form->get('PruefungsleistungSonstiges')->getData()); //TODO: Änderung von PLSonstiges + SLSonstiges zu Erläuterung (auch in DB + PDF)
 
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
                 $ms = $form->get('leistungspunkte')->getData()*30 - $form->get('kontaktzeitVL')->getData() - $form->get('kontaktzeitSonstige')->getData();
                 $modul->setSelbststudium($ms);
-
-
                 $modul->setSprache($form->get('sprache')->getData());
                 $modul->setSpracheSonstiges($form->get('SpracheSonstiges')->getData());
                 //$modul->setStatus kommt hier nicht vor, weil "bearbeiten" auf bereits freigegebenen Modulen arbeitetet und "freigeben" den Status in angebotAction setzt

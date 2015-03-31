@@ -129,12 +129,10 @@
             {{ form_row(form.PruefungsformSonstiges) }}
             {{ form_row(form.voraussetzungLP) }}
             <tr class="form_row">
-                <td>{{ form_label(form.PruefungsleistungSonstiges) }}</td>
-                <td title="Defaul-Wert kann bei Bedarf gelöscht werden">{{ form_widget(form.PruefungsleistungSonstiges) }}</td>
-                <td>{{ form_errors(form.PruefungsleistungSonstiges) }}</td>
+                <td>{{ form_label(form.erlaeuterungenLP) }}</td>
+                <td title="Default-Wert kann bei Bedarf gelöscht werden">{{ form_widget(form.erlaeuterungenLP) }}</td>
+                <td>{{ form_errors(form.erlaeuterungenLP) }}</td>
             </tr>
-            {{ form_row(form.PruefungsleistungSonstiges) }}
-            {#{{ form_row(form.StudienleistungSonstiges) }}#}
         </table>
         {% block voraussetzung %}
         {% endblock voraussetzung %}

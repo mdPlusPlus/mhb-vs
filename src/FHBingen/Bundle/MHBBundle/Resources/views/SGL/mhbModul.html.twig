@@ -92,7 +92,7 @@
                         {% for studienplan in modulBeschreibung.getStudienplaene() %}
                             <tr>
                                 <td class="studiensemseter startsemester">{{ studienplan.getStartsemester() }}:</td>
-                                <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': ''}) }}</td>
+                                <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' erstzen #}
                             </tr>
                         {% endfor %}
                     </table>
@@ -209,17 +209,10 @@
                     <div class="key">Voraussetzungen für die Vergabe von Leistungspunkten</div>
                     {% if modulBeschreibung.getVoraussetzungenLP() is not empty %}
                         {% for voraussetzung in modulBeschreibung.getVoraussetzungenLP() %}
-                            {{ voraussetzung }}
-                            {% if voraussetzung == 'Prüfungsleistung' and modulBeschreibung.getAngebot().getVeranstaltung().getPruefungsleistungSonstiges() is not empty %}
-                                ({{ modulBeschreibung.getAngebot().getVeranstaltung().getPruefungsleistungSonstiges() }})
-                            {% endif %}
-                            {% if voraussetzung == 'Studienleistung' and modulBeschreibung.getAngebot().getVeranstaltung().getStudienleistungSonstiges() is not empty %}
-                                ({{ modulBeschreibung.getAngebot().getVeranstaltung().getStudienleistungSonstiges() }})
-                            {% endif %}
+                            {{ voraussetzung }}<br/>
+                            {{ 'Erläuterungen: ' ~ modulBeschreibung.getAngebot().getVeranstaltung().getErlaeuterungenLP() }}
                             <br/>
                         {% endfor %}
-                    {% else %}
-                        ... {# TODO: Warum "..."? #}
                     {% endif %}
                 </td>
             </tr>

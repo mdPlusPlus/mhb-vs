@@ -198,12 +198,12 @@ class Veranstaltung
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $PruefungsleistungSonstiges;
+    //protected $PruefungsleistungSonstiges;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $StudienleistungSonstiges;
+    //protected $StudienleistungSonstiges;
     /////
 
     /**
@@ -725,51 +725,51 @@ class Veranstaltung
         return $this->PruefungsformSonstiges;
     }
 
-    /**
-     * Set PruefungsleistungSonstiges
-     *
-     * @param string $pruefungsleistungSonstiges
-     * @return Veranstaltung
-     */
-    public function setPruefungsleistungSonstiges($pruefungsleistungSonstiges)
-    {
-        $this->PruefungsleistungSonstiges = $pruefungsleistungSonstiges;
-    
-        return $this;
-    }
+//    /**
+//     * Set PruefungsleistungSonstiges
+//     *
+//     * @param string $pruefungsleistungSonstiges
+//     * @return Veranstaltung
+//     */
+//    public function setPruefungsleistungSonstiges($pruefungsleistungSonstiges)
+//    {
+//        $this->PruefungsleistungSonstiges = $pruefungsleistungSonstiges;
+//
+//        return $this;
+//    }
 
-    /**
-     * Get PruefungsleistungSonstiges
-     *
-     * @return string 
-     */
-    public function getPruefungsleistungSonstiges()
-    {
-        return $this->PruefungsleistungSonstiges;
-    }
+//    /**
+//     * Get PruefungsleistungSonstiges
+//     *
+//     * @return string
+//     */
+//    public function getPruefungsleistungSonstiges()
+//    {
+//        return $this->PruefungsleistungSonstiges;
+//    }
 
-    /**
-     * Set StudienleistungSonstiges
-     *
-     * @param string $studienleistungSonstiges
-     * @return Veranstaltung
-     */
-    public function setStudienleistungSonstiges($studienleistungSonstiges)
-    {
-        $this->StudienleistungSonstiges = $studienleistungSonstiges;
-    
-        return $this;
-    }
+//    /**
+//     * Set StudienleistungSonstiges
+//     *
+//     * @param string $studienleistungSonstiges
+//     * @return Veranstaltung
+//     */
+//    public function setStudienleistungSonstiges($studienleistungSonstiges)
+//    {
+//        $this->StudienleistungSonstiges = $studienleistungSonstiges;
+//
+//        return $this;
+//    }
 
-    /**
-     * Get StudienleistungSonstiges
-     *
-     * @return string 
-     */
-    public function getStudienleistungSonstiges()
-    {
-        return $this->StudienleistungSonstiges;
-    }
+//    /**
+//     * Get StudienleistungSonstiges
+//     *
+//     * @return string
+//     */
+//    public function getStudienleistungSonstiges()
+//    {
+//        return $this->StudienleistungSonstiges;
+//    }
 
     /**
      * Set Sprache
