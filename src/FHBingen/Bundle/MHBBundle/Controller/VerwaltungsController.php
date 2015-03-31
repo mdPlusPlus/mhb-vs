@@ -176,56 +176,14 @@ class VerwaltungsController extends Controller
      */
     public function SglCreateCourseAction()
     {
-        //TODO: createCourse + updateCourse zusammenlegen?
-        $em = $this->getDoctrine()->getManager();
-        $studiengang = new Entity\Studiengang();
-        $form = $this->createForm(new Form\StudiengangType(), $studiengang);
 
-        $request = $this->get('request');
-        $form->handleRequest($request);
+//
+//                $em->persist($studiengang);
+//                $em->flush();
+//
+//
 
-        if ($request->getMethod() == 'POST') {
-            if ($form->isValid()) {
-
-                $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice
-                $studiengang->setGrad($form->get('grad')->getData());                   //choice
-                $studiengang->setTitel($form->get('titel')->getData());                 //text
-                $studiengang->setKuerzel($form->get('kuerzel')->getData());             //text
-                $studiengang->setBeschreibung($form->get('beschreibung')->getData());   //text
-                $studiengang->setSgl($form->get('sgl')->getData());                     //entity
-
-                /*
-                 * TODO:
-                 * - überprüfen ob Vertiefungsrichtung oder Fachgebiet doppelt in Feldern steht
-                 * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
-                 */
-
-                //hier keine Collection, sondern "nur" array
-                $vertiefungArr = $form->get('richtung')->getData();
-                foreach ($vertiefungArr as $vertiefung) {
-                    $studiengang->addRichtung($vertiefung);
-                    $vertiefung->setStudiengang($studiengang);
-                    $em->persist($vertiefung);
-                }
-
-                //hier keine Collection, sondern "nur" array
-                $fachgebietArr = $form->get('fachgebiete')->getData();
-                foreach ($fachgebietArr as $fachgebiet) {
-                    $studiengang->addFachgebiete($fachgebiet);
-                    $fachgebiet->setStudiengang($studiengang);
-                    $em->persist($fachgebiet);
-                }
-
-                $em->persist($studiengang);
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->add('info', 'Der Studiengang wurde erfolgreich angelegt.');
-
-                return $this->redirect($this->generateUrl('studiengangVerwaltung'));
-            }
-        }
-
-        return array('form' => $form->createView(),'studiengang'=>$studiengang, 'pageTitle' => 'Studiengangverwaltung');
+        return $this->redirect($this->generateUrl('studiengangBearbeiten', array('courseID' => -1)));
     }
 
     /**
@@ -236,10 +194,12 @@ class VerwaltungsController extends Controller
      */
     public function SglShowCourseAction($courseID)
     {
-        //TODO: createCourse + updateCourse zusammenlegen?
-
         $em = $this->getDoctrine()->getManager();
-        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID' => $courseID));
+        if ($courseID == -1) {
+            $studiengang = new Entity\Studiengang();
+        } else {
+            $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('Studiengang_ID' => $courseID));
+        }
         $form = $this->createForm(new Form\StudiengangType(), $studiengang);
 
         $request = $this->get('request');
@@ -259,14 +219,21 @@ class VerwaltungsController extends Controller
                 $studiengang->setBeschreibung($form->get('beschreibung')->getData());   //text
                 $studiengang->setSgl($form->get('sgl')->getData());                     //entity
 
-                $vertiefungArr = $form->get('richtung')->getData()->toArray();
+                //benötigt, sonst Fehler
+                if ($courseID == -1) {
+                    $vertiefungArr = $form->get('richtung')->getData();
+                    $fachgebietArr = $form->get('fachgebiete')->getData();
+                } else {
+                    $vertiefungArr = $form->get('richtung')->getData()->toArray();
+                    $fachgebietArr = $form->get('fachgebiete')->getData()->toArray();
+                }
+
                 foreach ($vertiefungArr as $vertiefung) {
                     $studiengang->addRichtung($vertiefung);
                     $vertiefung->setStudiengang($studiengang);
                     $em->persist($vertiefung);
                 }
 
-                $fachgebietArr = $form->get('fachgebiete')->getData()->toArray();
                 foreach ($fachgebietArr as $fachgebiet) {
                     $studiengang->addFachgebiete($fachgebiet);
                     $fachgebiet->setStudiengang($studiengang);
@@ -277,31 +244,38 @@ class VerwaltungsController extends Controller
                 // hier notwendig da weiter unten alle Eintrage mit den aktuell gesetzten verglichen werden
                 $em->flush();
 
-                //$studiengang->getRichtung() holt sich die infos NICHT aus der db....
-                //also:
-                $vertiefungRepository = $em->getRepository('FHBingenMHBBundle:Vertiefung');
-                $dbVertiefungArr = $vertiefungRepository->findby(array('studiengang' => $courseID));
+                //hier ungleich -1
+                if ($courseID != -1) {
+                    //$studiengang->getRichtung() holt sich die infos NICHT aus der db....
+                    //also:
+                    $vertiefungRepository = $em->getRepository('FHBingenMHBBundle:Vertiefung');
+                    $dbVertiefungArr = $vertiefungRepository->findby(array('studiengang' => $courseID));
 
-                $fachgebietRepository = $em->getRepository('FHBingenMHBBundle:Fachgebiet');
-                $dbFachgebietArr = $fachgebietRepository->findby(array('studiengang' => $courseID));
+                    $fachgebietRepository = $em->getRepository('FHBingenMHBBundle:Fachgebiet');
+                    $dbFachgebietArr = $fachgebietRepository->findby(array('studiengang' => $courseID));
 
 
-                //löscht alle Vertiefungsrichtungen aus der DB, die nicht angegeben/gelöscht wurden
-                foreach ($dbVertiefungArr as $dbEntry) {
-                    if (!in_array($dbEntry, $vertiefungArr)) {
-                        $em->remove($dbEntry);
+                    //löscht alle Vertiefungsrichtungen aus der DB, die nicht angegeben/gelöscht wurden
+                    foreach ($dbVertiefungArr as $dbEntry) {
+                        if (!in_array($dbEntry, $vertiefungArr)) {
+                            $em->remove($dbEntry);
+                        }
                     }
+
+                    //löscht alle Fachgebiete aus der DB, die nicht angegeben/gelöscht wurden
+                    foreach ($dbFachgebietArr as $dbEntry) {
+                        if (!in_array($dbEntry, $fachgebietArr)) {
+                            $em->remove($dbEntry);
+                        }
+                    }
+                    $em->flush();
                 }
 
-                //löscht alle Fachgebiete aus der DB, die nicht angegeben/gelöscht wurden
-                foreach ($dbFachgebietArr as $dbEntry) {
-                    if (!in_array($dbEntry, $fachgebietArr)) {
-                        $em->remove($dbEntry);
-                    }
+                if ($courseID == -1) {
+                    $this->get('session')->getFlashBag()->add('info', 'Der Studiengang wurde erfolgreich angelegt.');
+                } else {
+                    $this->get('session')->getFlashBag()->add('info', 'Der Studiengang wurde erfolgreich bearbeitet.');
                 }
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->add('info', 'Der Studiengang wurde erfolgreich bearbeitet.');
 
                 return $this->redirect($this->generateUrl('studiengangVerwaltung'));
             }
