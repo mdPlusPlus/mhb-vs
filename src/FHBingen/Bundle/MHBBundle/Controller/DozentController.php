@@ -270,7 +270,7 @@ class DozentController extends Controller
         $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
         if ($modus == "bearbeiten") {
-            //TODO: History muss noch überarbeitet werden: Wenn nicht valides Formular abgeschickt wird, werden History-Daten mit angepassten Daten überschrieben
+            //TODO: History muss noch überarbeitet werden: Wenn nicht valides Formular abgeschickt wird, werden History-Daten mit angepassten Daten überschrieben - stimmt das überhaupt? testen!
             $modulHistory = new Entity\VeranstaltungHistory();
 
             //schreibt den Veranstaltungsinhalt vor der Änderung in die Historytabelle
