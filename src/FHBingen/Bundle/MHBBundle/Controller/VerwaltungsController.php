@@ -88,38 +88,7 @@ class VerwaltungsController extends Controller
 
     public function SglCreateUserAction()
     {
-        //TODO: userCreate und updateUsers zusammenführen?
-        $dozent = new Entity\Dozent();
-        $form = $this->createForm(new Form\DozentType(), $dozent);
-
-        $request = $this->get('request');
-        $form->handleRequest($request);
-
-        if ($request->getMethod() == 'POST') {
-            if ($form->isValid()) {
-                $dozent->setAnrede($form->get('anrede')->getData());
-                $dozent->setTitel($form->get('titel')->getData());
-                $dozent->setName($form->get('name')->getData());
-                $dozent->setNachname($form->get('nachname')->getData());
-                $dozent->setEmail($form->get('email')->getData());
-                $dozent->setRole($form->get('roles')->getData());
-                if (in_array('ROLE_SGL', $dozent->getRoles())) {
-                    $dozent->setPassword('Editor');
-                }
-                if (in_array('ROLE_DOZENT', $dozent->getRoles())) {
-                    $dozent->setPassword('Autor');
-                }
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($dozent);
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->add('info', 'Der neue Nutzer wurde erfolgreich angelegt.');
-
-                return $this->redirect($this->generateUrl('benutzerVerwaltung'));
-            }
-        }
-
-        return array('form' => $form->createView(), 'pageTitle' => 'Nutzerverwaltung');
+        return $this->redirect($this->generateUrl('benutzerBearbeiten', array('userid' => -1)));
     }
 
     /**
@@ -131,9 +100,12 @@ class VerwaltungsController extends Controller
 
     public function SglUpdateUserAction($userid)
     {
-        //TODO: userCreate und updateUsers zusammenführen?
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $userid));
+        if ($userid == -1) {
+            $dozent = new Entity\Dozent();
+        } else {
+            $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => $userid));
+        }
         $form = $this->createForm(new Form\DozentType(), $dozent);
 
         $request = $this->get('request');
@@ -162,8 +134,11 @@ class VerwaltungsController extends Controller
 
                 $em->persist($dozent);
                 $em->flush();
-
-                $this->get('session')->getFlashBag()->add('info', 'Der Nutzer wurde erfolgreich bearbeitet.');
+                if ($userid == -1 ) {
+                    $this->get('session')->getFlashBag()->add('info', 'Der neue Nutzer wurde erfolgreich angelegt.');
+                } else {
+                    $this->get('session')->getFlashBag()->add('info', 'Der Nutzer wurde erfolgreich bearbeitet.');
+                }
 
                 return $this->redirect($this->generateUrl('benutzerVerwaltung'));
             }
