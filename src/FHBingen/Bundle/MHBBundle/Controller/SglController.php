@@ -363,7 +363,7 @@ class SglController extends Controller
             'orientation' => 'Portrait',
             'encoding' => 'utf8',
             'header-font-size' => 10,
-            'header-left' => $sgl,
+            'header-left' => $studiengang->getKuerzel(),
             'header-center' => 'Modulhandbuch ' . $studiengang,
             'header-right' => 'Stand vom ' . date('d.m.Y'),
             'header-spacing' => 5, //in mm
@@ -375,7 +375,7 @@ class SglController extends Controller
             'disable-javascript' => true,
             //'no-outline' => true,
             //'dump-outline' => 'outline.xml',
-            //'cover' => 'cover.html',
+            'cover' => $this->forward('FHBingenMHBBundle:Sgl:cover', array('mhbID' => $mhbID))->getContent(),
         );
 
         //OS check
@@ -386,15 +386,29 @@ class SglController extends Controller
             //funktioniert unter windows nicht
             $wkthmltopdfOptions['toc'] = true;
             $wkthmltopdfOptions['xsl-style-sheet'] = 'bundles/fhbingenmhb/xsl/toc.xsl';
-
-            //test
-            //$wkthmltopdfOptions['xsl-style-sheet'] = 'bundles/fhbingenmhb/xsl/default.xsl';
         } else {
             //windows
             $this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary(self::WKHTMLTOPDF_BIN_WIN);
         }
 
         $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($html, $output, $wkthmltopdfOptions, true); //overwrite
+    }
+
+    /**
+     * @Route("/restricted/sgl/cover/{mhbID}", name="cover")
+     */
+    public function coverAction($mhbID)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $user));
+        $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
+
+        return $this->render('@FHBingenMHB/SGL/mhbCover.html.twig', array(
+            'studiengang' => $studiengang,
+            'mhb' => $mhb,
+            'datum' => date('d.m.Y', time()),
+        ));
     }
 
 
