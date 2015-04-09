@@ -202,6 +202,7 @@ class SglController extends Controller
         return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module aus ' . $studiengang->__toString(), 'dateTime' => $datum);
     }
 
+
     /**
      * @return \DateTime
      */
@@ -235,22 +236,19 @@ class SglController extends Controller
         return new \DateTime($datum);
     }
 
+
     /**
      * Erstellt die Modulbeschreibungen für das Modulhandbuch
      *
-     * @param int   $mhbID
-     * @param array $angebote
+     * @param Entity\Modulhandbuch $mhb
+     * @param array                $angebote
      *
      * @return array
      */
     private function createModulBeschreibungen(Entity\Modulhandbuch $mhb, array $angebote)
     {
-        $em = $this->getDoctrine()->getManager();
         $encoder = new JsonEncoder();
-
-        //$mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
         $studiengang = $mhb->getGehoertZu();
-
         $modulBeschreibungen = array();
 
         foreach ($angebote as $angebot) {
@@ -323,13 +321,14 @@ class SglController extends Controller
         );
     }
 
+
     /**
      * PDF-Export
      *
      * Erstellt das Modulhanbduch mit Hilfe der Daten aus der Datenbank und erstellt das MHB-PDF
      *
-     * @param int   $mhbID
-     * @param array $angebote
+     * @param Entity\Modulhandbuch $mhb
+     * @param array                $angebote
      */
     private function pdfErstellenAction(Entity\Modulhandbuch $mhb, array $angebote)
     {
@@ -341,12 +340,27 @@ class SglController extends Controller
         //$modulBeschreibungen = $this->createModulBeschreibungen($mhbID, $angebote);
         $modulBeschreibungen = $this->createModulBeschreibungen($mhb, $angebote);
 
-        $em->persist($mhb);
-        $em->flush();
-
         $html = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibungen' => $modulBeschreibungen));
 
-        $footerText = "";
+
+
+        //create temporary file to save HTML for the cover
+        $tmpFile = tmpfile();
+        $metaData = stream_get_meta_data($tmpFile);
+        $pathToCover = $metaData['uri'];;
+
+        $coverHTML = $this->getMHBCoverHTML($mhb);
+        fwrite($tmpFile, $coverHTML);
+
+//        $pathToCover = tempnam('.', 'mhb');
+//        $tmpFile = fopen($pathToCover, 'w');
+//
+//        $coverHTML = $this->getMHBCoverHTML($mhb);
+//        fwrite($tmpFile, $coverHTML);
+//        fclose($tmpFile);
+
+
+        $footerText = '';
 
         if ($studiengang->getFachbereich() == 1) {
             $footerText = 'Fachbereich 1 - Life Sciences and Engineering';
@@ -377,7 +391,8 @@ class SglController extends Controller
             'disable-javascript' => true,
             //'no-outline' => true,
             //'dump-outline' => 'outline.xml',
-            'cover' => $this->forward('FHBingenMHBBundle:Sgl:mhbCover', array('mhbID' => $mhb->getMHBID()))->getContent(),
+            'cover' => $pathToCover,
+            //'load-error-handling' => 'ignore',    //nur testweise
         );
 
         //OS check
@@ -394,23 +409,30 @@ class SglController extends Controller
         }
 
         $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($html, $output, $wkthmltopdfOptions, true); //overwrite
+
+        $em->persist($mhb);
+        $em->flush();
+
+        //removes the temporary file;
+        fclose($tmpFile);
+        //unlink($pathToCover);
     }
 
-    /**
-     * @Route("/restricted/sgl/mhbCover/{mhbID}", name="mhbCover")
-     */
-    public function mhbCoverAction($mhbID)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $user));
-        $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
 
-        return $this->render('@FHBingenMHB/SGL/mhbCover.html.twig', array(
-            'studiengang' => $studiengang,
+    /**
+     * @param Entity\Modulhandbuch $mhb
+     *
+     * @return string
+     */
+    private function getMHBCoverHTML(Entity\Modulhandbuch $mhb)
+    {
+        $html = $this->render('@FHBingenMHB/SGL/mhbCover.html.twig', array(
+            'studiengang' => $mhb->getGehoertZu(),
             'mhb' => $mhb,
             'datum' => date('d.m.Y', time()),
-        ));
+        ))->getContent();
+
+        return $html;
     }
 
 
@@ -507,6 +529,7 @@ class SglController extends Controller
         return $this->redirect($this->generateUrl('deaktivierungAlleModule'));
     }
 
+
     /**
      * @param int $modulID
      * @param int $studiengangID
@@ -523,7 +546,7 @@ class SglController extends Controller
 
         $angeboteArr =$em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID));
 
-        if(sizeof($angeboteArr)== 1){
+        if (sizeof($angeboteArr)== 1) {
             return $this->redirect($this->generateUrl('modulDeaktivierung', array('modulID'=> $modulID)));
         }
 
@@ -541,7 +564,7 @@ class SglController extends Controller
 
         $kernfachArr = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('veranstaltung' => $modulID));
 
-        if(sizeof($kernfachArr)>0){
+        if (sizeof($kernfachArr)>0) {
             foreach ($kernfachArr as $del) {
                 $em->remove($del);
             }
@@ -695,12 +718,6 @@ class SglController extends Controller
             }
 
             if (!empty($angebote)) {
-//                $em->persist($mhb);
-//                $em->flush(); //hier notwending!
-
-
-                //TODO: warum nicht $mhb übergeben statt $mhb->getMHBID()
-                //$this->pdfErstellenAction($mhb->getMHBID(), $angebote); //schreibt das PDF
                 $this->pdfErstellenAction($mhb, $angebote); //schreibt das PDF
 
                 $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
