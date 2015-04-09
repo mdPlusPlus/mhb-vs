@@ -41,10 +41,10 @@ class Angebot
         return $string;
     }
 
-    /**
-     * @ORM\OneToMany(targetEntity="ModulhandbuchZuweisung", mappedBy="angebot", cascade={"all"})
-     */
-    private $zuweisung;
+//    /**
+//     * @ORM\OneToMany(targetEntity="ModulhandbuchZuweisung", mappedBy="angebot", cascade={"all"})
+//     */
+//    private $zuweisung;
 
     /**
      * @ORM\Id
@@ -324,39 +324,39 @@ class Angebot
         return $this->Angebots_ID;
     }
 
-    /**
-     * Add zuweisung
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
-     *
-     * @return Angebot
-     */
-    public function addZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
-    {
-        $this->zuweisung[] = $zuweisung;
+//    /**
+//     * Add zuweisung
+//     *
+//     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
+//     *
+//     * @return Angebot
+//     */
+//    public function addZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
+//    {
+//        $this->zuweisung[] = $zuweisung;
+//
+//        return $this;
+//    }
 
-        return $this;
-    }
-
-    /**
-     * Remove zuweisung
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
-     */
-    public function removeZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
-    {
-        $this->zuweisung->removeElement($zuweisung);
-    }
-
-    /**
-     * Get zuweisung
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getZuweisung()
-    {
-        return $this->zuweisung;
-    }
+//    /**
+//     * Remove zuweisung
+//     *
+//     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
+//     */
+//    public function removeZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
+//    {
+//        $this->zuweisung->removeElement($zuweisung);
+//    }
+//
+//    /**
+//     * Get zuweisung
+//     *
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getZuweisung()
+//    {
+//        return $this->zuweisung;
+//    }
 
 //    /**
 //     * @return ModulBeschreibung
