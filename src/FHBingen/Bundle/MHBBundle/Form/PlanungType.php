@@ -170,7 +170,7 @@ class PlanungType extends AbstractType
             $vorausetzungLP = $encoder->decode($vorausetzungLP, 'json');
             $voraussetzungLPOptions['data'] = $vorausetzungLP;
         } else {
-            $voraussetzungLPOptions['data'] = array('Prüfungsleistung' => 'Prüfungsleistung'); //default
+            $voraussetzungLPOptions['data'] = array('bestandene Prüfungsleistung' => 'bestandene Prüfungsleistung'); //default
         }
         $form->add('voraussetzungLP', 'choice', $voraussetzungLPOptions);
 

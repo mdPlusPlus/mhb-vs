@@ -243,12 +243,12 @@ class SglController extends Controller
      *
      * @return array
      */
-    private function createModulBeschreibungen($mhbID, array $angebote)
+    private function createModulBeschreibungen(Entity\Modulhandbuch $mhb, array $angebote)
     {
         $em = $this->getDoctrine()->getManager();
         $encoder = new JsonEncoder();
 
-        $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
+        //$mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
         $studiengang = $mhb->getGehoertZu();
 
         $modulBeschreibungen = array();
@@ -331,14 +331,15 @@ class SglController extends Controller
      * @param int   $mhbID
      * @param array $angebote
      */
-    private function pdfErstellenAction($mhbID, array $angebote)
+    private function pdfErstellenAction(Entity\Modulhandbuch $mhb, array $angebote)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
+        //$mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
         $studiengang = $mhb->getGehoertZu();
 
-        $modulBeschreibungen = $this->createModulBeschreibungen($mhbID, $angebote);
+        //$modulBeschreibungen = $this->createModulBeschreibungen($mhbID, $angebote);
+        $modulBeschreibungen = $this->createModulBeschreibungen($mhb, $angebote);
 
         $html = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibungen' => $modulBeschreibungen));
 
@@ -392,7 +393,8 @@ class SglController extends Controller
         $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($html, $output, $wkthmltopdfOptions, true); //overwrite
 
 
-        //TODO hier mhb persisten
+        $em->persist($mhb);
+        $em->flush();
     }
 
     /**
@@ -666,13 +668,12 @@ class SglController extends Controller
             $mhb->setErstellungsdatum(new \DateTime());
             $mhb->setGehoertZu($studiengang);
 
-            $version = $em->createQuery(
+            $alteVersion = $em->createQuery(
                 'SELECT MAX(m.Versionsnummer) AS V
                 FROM  FHBingenMHBBundle:Modulhandbuch m
                 WHERE m.gehoertZu=' . $studiengang->getStudiengangID())
                 ->getSingleResult();
-            $version['V']++;
-            $mhb->setVersionsnummer($version['V']);
+            $mhb->setVersionsnummer($alteVersion['V'] + 1);
             $mhb->setAutor($sgl);
 
             $angebote = array();
@@ -695,21 +696,13 @@ class SglController extends Controller
             }
 
             if (!empty($angebote)) {
-                $em->persist($mhb);
-                $em->flush(); //hier notwending!
+//                $em->persist($mhb);
+//                $em->flush(); //hier notwending!
 
-                //ModulhandbuchZuweisung wird nicht mehr verwendet
-//                foreach ($angebote as $angebot) {
-//                    $zuweisung = new Entity\ModulhandbuchZuweisung();
-//                    $zuweisung->setMhb($mhb);
-//                    $zuweisung->setAngebot($angebot);
-//                    $em->persist($zuweisung);
-//                }
-
-                $em->flush();
 
                 //TODO: warum nicht $mhb übergeben statt $mhb->getMHBID()
-                $this->pdfErstellenAction($mhb->getMHBID(), $angebote); //schreibt das PDF
+                //$this->pdfErstellenAction($mhb->getMHBID(), $angebote); //schreibt das PDF
+                $this->pdfErstellenAction($mhb, $angebote); //schreibt das PDF
 
                 $this->get('session')->getFlashBag()->add('info', 'Das Modulhandbuch wurde erfolgreich angelegt.');
 
