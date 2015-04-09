@@ -338,20 +338,9 @@ class SglController extends Controller
         $modulBeschreibungen = $this->createModulBeschreibungen($mhb, $angebote);
 
 
-        //create temporary file to save HTML for the cover
-        $tmpFile = tmpfile();
-        $metaData = stream_get_meta_data($tmpFile);
-        $pathToCover = $metaData['uri'];;
-
-        $coverHTML = $this->getMHBCoverHTML($mhb);
-        fwrite($tmpFile, $coverHTML);
-
-//        $pathToCover = tempnam('.', 'mhb');
-//        $tmpFile = fopen($pathToCover, 'w');
-//
-//        $coverHTML = $this->getMHBCoverHTML($mhb);
-//        fwrite($tmpFile, $coverHTML);
-//        fclose($tmpFile);
+        //create temporary file for the cover
+        $pathToCover = $mhb->getGehoertZu()->getKuerzel() . '_' . rand(10000, 65536) . '.html';
+        file_put_contents($pathToCover, $this->getMHBCoverHTML($mhb));
 
 
         $footerText = '';
@@ -410,8 +399,7 @@ class SglController extends Controller
         $em->flush();
 
         //removes the temporary file;
-        fclose($tmpFile);
-        //unlink($pathToCover);
+        unlink($pathToCover);
     }
 
 

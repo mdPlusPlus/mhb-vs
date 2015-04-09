@@ -174,6 +174,19 @@ class DefaultController extends Controller
         return new Response($response);
     }
 
+    /**
+     * @Route("/tmp")
+     */
+    public function tmpFileTest()
+    {
+        $pathToCover = 'test.file';
 
+        file_put_contents($pathToCover, 'stuff');
+
+        unlink($pathToCover);
+
+        return new Response($pathToCover);
+
+    }
 
 }
