@@ -375,7 +375,7 @@ class SglController extends Controller
             'disable-javascript' => true,
             //'no-outline' => true,
             //'dump-outline' => 'outline.xml',
-            'cover' => $this->forward('FHBingenMHBBundle:Sgl:cover', array('mhbID' => $mhbID))->getContent(),
+            'cover' => $this->forward('FHBingenMHBBundle:Sgl:mhbCover', array('mhbID' => $mhbID))->getContent(),
         );
 
         //OS check
@@ -395,9 +395,9 @@ class SglController extends Controller
     }
 
     /**
-     * @Route("/restricted/sgl/cover/{mhbID}", name="cover")
+     * @Route("/restricted/sgl/mhbCover/{mhbID}", name="mhbCover")
      */
-    public function coverAction($mhbID)
+    public function mhbCoverAction($mhbID)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
