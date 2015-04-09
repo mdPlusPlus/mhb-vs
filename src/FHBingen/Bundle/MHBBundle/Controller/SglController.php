@@ -334,14 +334,8 @@ class SglController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        //$mhb = $em->getRepository('FHBingenMHBBundle:Modulhandbuch')->findOneBy(array('MHB_ID' => $mhbID));
         $studiengang = $mhb->getGehoertZu();
-
-        //$modulBeschreibungen = $this->createModulBeschreibungen($mhbID, $angebote);
         $modulBeschreibungen = $this->createModulBeschreibungen($mhb, $angebote);
-
-        $html = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibungen' => $modulBeschreibungen));
-
 
 
         //create temporary file to save HTML for the cover
@@ -407,6 +401,8 @@ class SglController extends Controller
             //windows
             $this->get('knp_snappy.pdf')->getInternalGenerator()->setBinary(self::WKHTMLTOPDF_BIN_WIN);
         }
+
+        $html = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibungen' => $modulBeschreibungen));
 
         $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($html, $output, $wkthmltopdfOptions, true); //overwrite
 
