@@ -341,6 +341,9 @@ class SglController extends Controller
         //$modulBeschreibungen = $this->createModulBeschreibungen($mhbID, $angebote);
         $modulBeschreibungen = $this->createModulBeschreibungen($mhb, $angebote);
 
+        $em->persist($mhb);
+        $em->flush();
+
         $html = $this->renderView('FHBingenMHBBundle:SGL:mhbModul.html.twig', array('modulBeschreibungen' => $modulBeschreibungen));
 
         $footerText = "";
@@ -374,7 +377,7 @@ class SglController extends Controller
             'disable-javascript' => true,
             //'no-outline' => true,
             //'dump-outline' => 'outline.xml',
-            'cover' => $this->forward('FHBingenMHBBundle:Sgl:mhbCover', array('mhbID' => $mhbID))->getContent(),
+            'cover' => $this->forward('FHBingenMHBBundle:Sgl:mhbCover', array('mhbID' => $mhb->getMHBID()))->getContent(),
         );
 
         //OS check
@@ -391,10 +394,6 @@ class SglController extends Controller
         }
 
         $this->get('knp_snappy.pdf')->getInternalGenerator()->generateFromHtml($html, $output, $wkthmltopdfOptions, true); //overwrite
-
-
-        $em->persist($mhb);
-        $em->flush();
     }
 
     /**
@@ -610,9 +609,9 @@ class SglController extends Controller
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang));
 
         $angeboteOhneDummy=array();
-        foreach ($angebote as $dummy) {
-            if ($dummy->getCode()!='DUMMY') {
-                $angeboteOhneDummy[]=$dummy;
+        foreach ($angebote as $an) {
+            if ($an->getCode()!='DUMMY') {
+                $angeboteOhneDummy[]=$an;
             }
         }
         $angebote=$angeboteOhneDummy;
