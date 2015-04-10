@@ -27,9 +27,9 @@
             {% for gang in courses %}
                 <tr>
                     <td>{{ gang['Grad'] }}</td>
-                    <td><a href="{{ path('studiengangBearbeiten', {'courseID': gang['Studiengang_ID']}) }}">{{ gang['Studiengang'] }}</a></td>
+                    <td><a href="{{ path('studiengangBearbeiten', {'courseID': gang['Studiengang_ID']}) }}">{{ gang['studiengangTitel'] ~ ' (' ~ gang['Kuerzel'] ~ ')' }}</a></td>
                     <td><a href="#">verwalten</a></td>
-                    <td>{{ gang['Titel'] ~ ' ' ~ gang['Nachname'] }}</td>
+                    <td>{{ gang['dozentTitel'] ~ ' ' ~ gang['Nachname'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>
