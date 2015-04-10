@@ -157,7 +157,7 @@ class VerwaltungsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $mhb = $em->createQuery(
-            'SELECT s.Studiengang_ID, s.Titel AS studiengangTitel, s.Grad, s.Kuerzel, d.Titel AS dozentTitel, d.Nachname
+            'SELECT s.Studiengang_ID, s.Titel AS studiengangTitel, s.Grad, s.Kuerzel, d.Titel AS dozentTitel, d.Name, d.Nachname
             FROM  FHBingenMHBBundle:Studiengang s
             JOIN  FHBingenMHBBundle:Dozent d WITH  s.sgl =  d.Dozenten_ID
             ORDER BY studiengangTitel ASC'
@@ -311,5 +311,13 @@ class VerwaltungsController extends Controller
     }
 
 
-
+    /**
+     * @param int $studiengangID
+     *
+     * @Route("/restricted/sgl/fachgebietsverwaltung/{studiengangID}", name="fachgebietsverwaltung")
+     */
+    public function fachgebietsverwaltungAction($studiengangID)
+    {
+        return new Response($studiengangID);
+    }
 }

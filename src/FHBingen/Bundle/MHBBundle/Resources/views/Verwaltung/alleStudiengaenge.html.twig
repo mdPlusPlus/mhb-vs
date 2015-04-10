@@ -28,8 +28,8 @@
                 <tr>
                     <td>{{ gang['Grad'] }}</td>
                     <td><a href="{{ path('studiengangBearbeiten', {'courseID': gang['Studiengang_ID']}) }}">{{ gang['studiengangTitel'] ~ ' (' ~ gang['Kuerzel'] ~ ')' }}</a></td>
-                    <td><a href="#">verwalten</a></td>
-                    <td>{{ gang['dozentTitel'] ~ ' ' ~ gang['Nachname'] }}</td>
+                    <td><a href="{{ path('fachgebietsverwaltung', {'studiengangID': gang['Studiengang_ID']}) }}">verwalten</a></td>
+                    <td>{{ gang['dozentTitel'] ~ ' ' ~ gang['Name'] ~ ' ' ~ gang['Nachname'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>
