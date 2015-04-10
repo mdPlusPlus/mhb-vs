@@ -73,15 +73,15 @@ class TaskController extends Controller
             foreach ($originalTags as $tag) {
                 if (false === $task->getTags()->contains($tag)) {
                     // remove the Task from the Tag
-                    $tag->getTasks()->removeElement($task);
+                    //$tag->getTask()->removeElement($task);
 
                     // if it was a many-to-one relationship, remove the relationship like this
-                    // $tag->setTask(null);
+                    //$tag->setTask(null);
 
-                    $em->persist($tag);
+                    //$em->persist($tag);
 
                     // if you wanted to delete the Tag entirely, you can also do that
-                    // $em->remove($tag);
+                    $em->remove($tag);
                 }
             }
 
@@ -89,9 +89,12 @@ class TaskController extends Controller
             $em->flush();
 
             // redirect back to some edit page
-            return $this->redirectToRoute('task_edit', array('id' => $id));
+            // return $this->redirectToRoute('task_edit', array('id' => $id));
         }
 
         // render some form template
+        return $this->render('@FHBingenMHB/Task/new.html.twig', array(
+            'form' => $editForm->createView(),
+        ));
     }
 }
