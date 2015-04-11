@@ -83,16 +83,21 @@
     <h3>Tags</h3>
 
     <table class="tags" {#data-protoype="{{ form_widget(form.tags.vars.prototype)|e }}"#}>
-        {% for tag in form.tags %}
-            <tr class="form_row">
-                <td>{{ form_label(tag.name) }}</td>
-                <td>{{ form_widget(tag.name) }}</td>
-                <td>{{ form_errors(tag.name) }}</td>
-                <td>{{ form_label(tag.anotherField) }}</td>
-                <td>{{ form_widget(tag.anotherField) }}</td>
-                <td>{{ form_errors(tag.anotherField) }}</td>
-            </tr>
-        {% endfor %}
+        {% if form.tags is not empty %}
+            {% for tag in form.tags %}
+                <tr class="form_row">
+                    <td>{{ form_label(tag.name) }}</td>
+                    <td>{{ form_widget(tag.name) }}</td>
+                    <td>{{ form_errors(tag.name) }}</td>
+                    <td>{{ form_label(tag.anotherField) }}</td>
+                    <td>{{ form_widget(tag.anotherField) }}</td>
+                    <td>{{ form_errors(tag.anotherField) }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            {# Damit bei leeren tags (z.B. neuer Task) nicht "Tags" unter dem Formular erscheint #}
+            {{ form_widget(form.tags) }}
+        {% endif %}
     </table>
 
     {% include '@FHBingenMHB/buttons.html.twig' %}
