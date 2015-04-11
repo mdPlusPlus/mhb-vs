@@ -9,6 +9,8 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -32,8 +34,31 @@ class Tag
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     */
+    private $anotherField;
+
+    /**
+     * @return mixed
+     */
+    public function getAnotherField()
+    {
+        return $this->anotherField;
+    }
+
+    /**
+     * @param mixed $anotherField
+     */
+    public function setAnotherField($anotherField)
+    {
+        $this->anotherField = $anotherField;
+    }
 
     /**
      * @ORM\ManyToOne(targetEntity="Task", inversedBy="tags")

@@ -1,88 +1,102 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
+{% form_theme form 'form_table_layout.html.twig' %}
+
 {% block userLogout %}
-{% endblock userLogout  %}
+{% endblock userLogout %}
 
 {% block content %}
-<script>
-    var $collectionHolder;
+    <script>
+        var $collectionHolder;
 
-    // setup an "add a tag" link
-    var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
-    var $newLinkLi = $('<li></li>').append($addTagLink);
+        // setup an "add a tag" link
+        var $addTagLink = $('<td colspan="7"><a href="#" class="add_tag_link">Add a tag</a></td>');
+        var $newLinkLi = $('<tr></tr>').append($addTagLink);
 
-    jQuery(document).ready(function() {
-        // Get the ul that holds the collection of tags
-        $collectionHolder = $('ul.tags');
+        jQuery(document).ready(function () {
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('table.tags');
 
-        // add a delete link to all of the existing tag form li elements
-        $collectionHolder.find('li').each(function() {
-            addTagFormDeleteLink($(this));
+            // add a delete link to all of the existing tag form li elements
+            $collectionHolder.find('tr').each(function () {
+                addTagFormDeleteLink($(this));
+            });
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addTagLink.on('click', function (e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see next code block)
+                addTagForm($collectionHolder, $newLinkLi);
+            });
         });
 
-        // add the "add a tag" anchor and li to the tags ul
-        $collectionHolder.append($newLinkLi);
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            //var prototype = $collectionHolder.data('prototype');
+            var prototype = '<td><label for="task_tags___name___name" class="required">Name</label></td><td><input type="text" id="task_tags___name___name" name="task[tags][__name__][name]" required="required" /></td><td></td><td><label for="task_tags___name___anotherField" class="required">Another field</label></td><td><input type="text" id="task_tags___name___anotherField" name="task[tags][__name__][anotherField]" required="required" /></td><td></td>';
 
-        // count the current form inputs we have (e.g. 2), use that as the new
-        // index when inserting a new item (e.g. 2)
-        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+            // get the new index
+            var index = $collectionHolder.data('index');
 
-        $addTagLink.on('click', function(e) {
-            // prevent the link from creating a "#" on the URL
-            e.preventDefault();
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
 
-            // add a new tag form (see next code block)
-            addTagForm($collectionHolder, $newLinkLi);
-        });
-    });
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
 
-    function addTagForm($collectionHolder, $newLinkLi) {
-        // Get the data-prototype explained earlier
-        var prototype = $collectionHolder.data('prototype');
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<tr></tr>').append(newForm);
+            $newLinkLi.before($newFormLi);
 
-        // get the new index
-        var index = $collectionHolder.data('index');
+            // add a delete link to the new form
+            addTagFormDeleteLink($newFormLi);
+        }
 
-        // Replace '__name__' in the prototype's HTML to
-        // instead be a number based on how many items we have
-        var newForm = prototype.replace(/__name__/g, index);
+        function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormA = $('<a href="#">delete this tag</a>');
+            $tagFormLi.append($removeFormA);
 
-        // increase the index with one for the next item
-        $collectionHolder.data('index', index + 1);
+            $removeFormA.on('click', function (e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
 
-        // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<li></li>').append(newForm);
-        $newLinkLi.before($newFormLi);
+                // remove the li for the tag form
+                $tagFormLi.remove();
+            });
+        }
+    </script>
 
-        // add a delete link to the new form
-        addTagFormDeleteLink($newFormLi);
-    }
+    {#{{ form_start(form) }}#}
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 
-    function addTagFormDeleteLink($tagFormLi) {
-        var $removeFormA = $('<a href="#">delete this tag</a>');
-        $tagFormLi.append($removeFormA);
-
-        $removeFormA.on('click', function(e) {
-            // prevent the link from creating a "#" on the URL
-            e.preventDefault();
-
-            // remove the li for the tag form
-            $tagFormLi.remove();
-        });
-    }
-</script>
-
-{{ form_start(form) }}
-    {# render the task's only field: description #}
     {{ form_row(form.description) }}
 
-<h3>Tags</h3>
-<ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
-    {# iterate over each existing tag and render its only field: name #}
-    {% for tag in form.tags %}
-        <li>{{ form_row(tag.name) }}</li>
-    {% endfor %}
-</ul>
-{% include '@FHBingenMHB/buttons.html.twig' %}
-{{ form_end(form) }}
+    <h3>Tags</h3>
+
+    <table class="tags" {#data-protoype="{{ form_widget(form.tags.vars.prototype)|e }}"#}>
+        {% for tag in form.tags %}
+            <tr class="form_row">
+                <td>{{ form_label(tag.name) }}</td>
+                <td>{{ form_widget(tag.name) }}</td>
+                <td>{{ form_errors(tag.name) }}</td>
+                <td>{{ form_label(tag.anotherField) }}</td>
+                <td>{{ form_widget(tag.anotherField) }}</td>
+                <td>{{ form_errors(tag.anotherField) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% include '@FHBingenMHB/buttons.html.twig' %}
+
+    {{ form_end(form) }}
+
 {% endblock content %}

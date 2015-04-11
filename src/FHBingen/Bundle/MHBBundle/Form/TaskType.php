@@ -23,6 +23,7 @@ class TaskType extends AbstractType
             'allow_add'     => true,
             'allow_delete'  => true,
             'by_reference'  => false,
+            'cascade_validation' => true,   //wichtig für collections!
         ));
     }
 
@@ -30,6 +31,7 @@ class TaskType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Task',
+            'cascade_validation' => true,   //wichtig für embedded forms!
         ));
     }
 
