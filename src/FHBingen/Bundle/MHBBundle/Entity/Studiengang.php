@@ -311,6 +311,10 @@ class Studiengang
 
     /**
      * @ORM\OneToMany(targetEntity="Fachgebiet", mappedBy="studiengang")
+     * @Assert\Count(
+     *      min = "1",
+     *      minMessage = "Sie müssen mindestens ein Fachgebiet anlegen"
+     * )
      */
     protected $fachgebiete;
 
