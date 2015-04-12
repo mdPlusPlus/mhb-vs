@@ -474,6 +474,7 @@ class SglController extends Controller
      */
     public function modulDeaktivierungAction($modulID)
     {
+        //TODO: modulDeaktivierungAction + modulDeaktivierungStgAction zusammenlegen
         $em = $this->getDoctrine()->getManager();
 
         $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modulID));
@@ -526,6 +527,7 @@ class SglController extends Controller
      */
     public function modulDeaktivierungStgAction($modulID,$studiengangID)
     {
+        //TODO: modulDeaktivierungAction + modulDeaktivierungStgAction zusammenlegen
         $em = $this->getDoctrine()->getManager();
 
         $angeboteArr =$em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID));

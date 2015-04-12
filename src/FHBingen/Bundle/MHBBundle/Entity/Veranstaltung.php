@@ -293,12 +293,13 @@ class Veranstaltung
      */
     public function __construct()
     {
-        $this->lehrende         = new ArrayCollection();
-        $this->semesterplan     = new ArrayCollection();
-        $this->modul_kernfach   = new ArrayCollection();
         $this->angebot          = new ArrayCollection();
         $this->basis            = new ArrayCollection();
         $this->forderung        = new ArrayCollection();
+        $this->kernfach         = new ArrayCollection();
+        $this->lehrende         = new ArrayCollection();
+        $this->semesterplan     = new ArrayCollection();
+        $this->studienplanModul = new ArrayCollection();
     }
 
     /**
