@@ -88,6 +88,7 @@ class Role implements RoleInterface
      * Set name
      *
      * @param string $name
+     *
      * @return Role
      */
     public function setName($name)
@@ -111,6 +112,7 @@ class Role implements RoleInterface
      * Set role
      *
      * @param string $role
+     *
      * @return Role
      */
     public function setRole($role)
@@ -122,6 +124,8 @@ class Role implements RoleInterface
 
     /**
      * Add users
+     *
+     * @param UserInterface $users
      *
      * @return Role
      */
@@ -135,6 +139,7 @@ class Role implements RoleInterface
     /**
      * Remove users
      *
+     * @param UserInterface $users
      */
     public function removeUser(UserInterface $users)
     {

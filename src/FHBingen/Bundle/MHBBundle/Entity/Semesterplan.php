@@ -12,14 +12,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Semesterplan
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Semesterplan")
  * @ORM\HasLifecycleCallbacks
  */
-
 class Semesterplan
 {
+    //TODO: Entity vollständig überarbeiten
 
     public function __toString()
     {
@@ -140,6 +141,7 @@ class Semesterplan
      * Set sws_vorlesung
      *
      * @param integer $swsVorlesung
+     *
      * @return Semesterplan
      */
     public function setSWSVorlesung($swsVorlesung)
@@ -163,6 +165,7 @@ class Semesterplan
      * Set anzahl_uebungsgruppen
      *
      * @param integer $anzahlUebungsgruppen
+     *
      * @return Semesterplan
      */
     public function setAnzahlUebungsgruppen($anzahlUebungsgruppen)
@@ -186,6 +189,7 @@ class Semesterplan
      * Set groesse_uebungsgruppen
      *
      * @param integer $groesseUebungsgruppen
+     *
      * @return Semesterplan
      */
     public function setGroesseUebungsgruppen($groesseUebungsgruppen)
@@ -209,6 +213,7 @@ class Semesterplan
      * Set module
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
+     *
      * @return Semesterplan
      */
     public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
@@ -232,6 +237,7 @@ class Semesterplan
      * Set lehrender
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender
+     *
      * @return Semesterplan
      */
     public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender = null)
@@ -255,6 +261,7 @@ class Semesterplan
      * Set semester
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $semester
+     *
      * @return Semesterplan
      */
     public function setSemester(\FHBingen\Bundle\MHBBundle\Entity\Semester $semester = null)

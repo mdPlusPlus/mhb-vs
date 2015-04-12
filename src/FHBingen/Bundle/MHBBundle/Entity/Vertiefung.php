@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Studiengang
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Vertiefung")
@@ -67,6 +68,7 @@ class Vertiefung
      * Set Vertiefungsrichtung
      *
      * @param string $vertiefungsrichtung
+     *
      * @return Vertiefung
      */
     public function setName($name)
@@ -101,6 +103,7 @@ class Vertiefung
      * Add vertiefung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Kernfach $vertiefung
+     *
      * @return Vertiefung
      */
     public function addVertiefung(\FHBingen\Bundle\MHBBundle\Entity\Kernfach $vertiefung)
@@ -151,6 +154,7 @@ class Vertiefung
      * Set stgang
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $stgang
+     *
      * @return Vertiefung
      */
     public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $stgang = null)

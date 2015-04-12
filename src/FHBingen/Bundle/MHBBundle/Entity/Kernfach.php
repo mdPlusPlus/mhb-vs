@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Kernfach
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Kernfach")
@@ -65,6 +66,7 @@ class Kernfach
      * Set modul
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul
+     *
      * @return Kernfach
      */
     public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul = null)
@@ -88,6 +90,7 @@ class Kernfach
      * Set vertiefung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Vertiefung $vertiefung
+     *
      * @return Kernfach
      */
     public function setVertiefung(\FHBingen\Bundle\MHBBundle\Entity\Vertiefung $vertiefung = null)

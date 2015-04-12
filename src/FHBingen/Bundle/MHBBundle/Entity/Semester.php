@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Semester
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @UniqueEntity(fields="Semester", message="Dieses Semester wurde bereits in die Datenbank eingetragen.")
@@ -50,6 +51,7 @@ class Semester
      * Set Semester
      *
      * @param string $semester
+     *
      * @return Semester
      */
     public function setSemester($semester)
@@ -91,6 +93,7 @@ class Semester
      * Add semesterplan
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
+     *
      * @return Semester
      */
     public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
@@ -132,6 +135,7 @@ class Semester
      * Add sem
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $sem
+     *
      * @return Semester
      */
     public function addGueltigAbSemester(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $sem)
@@ -161,10 +165,12 @@ class Semester
         return $this->gueltigAbSemester;
     }
 
+    //TODO: Was ist das?
     /**
      * Add modul_start
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart
+     *
      * @return Semester
      */
     public function addModulStart(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart)
@@ -174,6 +180,7 @@ class Semester
         return $this;
     }
 
+    //TODO: Was ist das?
     /**
      * Remove modul_start
      *
@@ -184,6 +191,7 @@ class Semester
         $this->modul_start->removeElement($modulStart);
     }
 
+    //TODO: Was ist das?
     /**
      * Get modul_start
      *
@@ -194,11 +202,12 @@ class Semester
         return $this->modul_start;
     }
 
-
+    //TODO: Was ist das?
     /**
      * Add regelsem
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem
+     *
      * @return Semester
      */
     public function addRegelsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem)
@@ -208,6 +217,7 @@ class Semester
         return $this;
     }
 
+    //TODO: Was ist das?
     /**
      * Remove regelsem
      *
@@ -218,6 +228,7 @@ class Semester
         $this->regelsem->removeElement($regelsem);
     }
 
+    //TODO: Was ist das?
     /**
      * Get regelsem
      *

@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Studiengang
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Modulhandbuch")
@@ -84,20 +85,21 @@ class Modulhandbuch
     }
 
     /**
-     * Set MHB_Versionsnummer
+     * Set Versionsnummer
      *
-     * @param integer $mHBVersionsnummer
+     * @param integer $mhbVersionsnummer
+     *
      * @return Modulhandbuch
      */
-    public function setVersionsnummer($mHBVersionsnummer)
+    public function setVersionsnummer($mhbVersionsnummer)
     {
-        $this->Versionsnummer = $mHBVersionsnummer;
+        $this->Versionsnummer = $mhbVersionsnummer;
     
         return $this;
     }
 
     /**
-     * Get MHB_Versionsnummer
+     * Get Versionsnummer
      *
      * @return integer 
      */
@@ -110,6 +112,7 @@ class Modulhandbuch
      * Set Erstellungsdatum
      *
      * @param \DateTime $erstellungsdatum
+     *
      * @return Modulhandbuch
      */
     public function setErstellungsdatum($erstellungsdatum)
@@ -156,11 +159,6 @@ class Modulhandbuch
 
     /*Angebot*/
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="ModulhandbuchZuweisung" , mappedBy="mhb" , cascade={"all"})
-//     */
-//    private $zuweisung;
-
     /*Modulhandbuch/Semester*/
 
     /**
@@ -181,9 +179,10 @@ class Modulhandbuch
      * Set gueltig_ab
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $gueltigAb
+     *
      * @return Modulhandbuch
      */
-    public function setGueltigAb(\FHBingen\Bundle\MHBBundle\Entity\Semester $gueltigAb = null)
+    public function setGueltigAb(\FHBingen\Bundle\MHBBundle\Entity\Semester $gueltigAb)
     {
         $this->gueltigAb = $gueltigAb;
     
@@ -204,9 +203,10 @@ class Modulhandbuch
      * Set gehoert_zu
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $gehoertZu
+     *
      * @return Modulhandbuch
      */
-    public function setGehoertZu(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $gehoertZu = null)
+    public function setGehoertZu(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $gehoertZu)
     {
         $this->gehoertZu = $gehoertZu;
     
@@ -234,37 +234,4 @@ class Modulhandbuch
 
         return $this;
     }
-
-//    /**
-//     * Add zuweisung
-//     *
-//     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
-//     * @return Modulhandbuch
-//     */
-//    public function addZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
-//    {
-//        $this->zuweisung[] = $zuweisung;
-//
-//        return $this;
-//    }
-
-//    /**
-//     * Remove zuweisung
-//     *
-//     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
-//     */
-//    public function removeZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
-//    {
-//        $this->zuweisung->removeElement($zuweisung);
-//    }
-//
-//    /**
-//     * Get zuweisung
-//     *
-//     * @return \Doctrine\Common\Collections\Collection
-//     */
-//    public function getZuweisung()
-//    {
-//        return $this->zuweisung;
-//    }
 }

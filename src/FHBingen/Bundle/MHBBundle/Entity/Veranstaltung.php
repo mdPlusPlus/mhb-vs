@@ -20,6 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 /**
  * Class Veranstaltung
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @UniqueEntity(fields="Name",    message="Es existiert bereits eine Veranstaltung mit diesem deutschen Namen.")
@@ -192,20 +193,6 @@ class Veranstaltung
      */
     protected $PruefungsformSonstiges;
 
-
-
-    /////TODO: Beide Felder in eines zusammenziehen -> Erläuterungen zu Voraussetzungen für LP
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    //protected $PruefungsleistungSonstiges;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    //protected $StudienleistungSonstiges;
-    /////
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -306,12 +293,12 @@ class Veranstaltung
      */
     public function __construct()
     {
-        $this->lehrende = new ArrayCollection();
-        $this->semesterplan = new ArrayCollection();
-        $this->modul_kernfach = new ArrayCollection();
-        $this->angebot = new ArrayCollection();
-        $this->basis = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->forderung = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lehrende         = new ArrayCollection();
+        $this->semesterplan     = new ArrayCollection();
+        $this->modul_kernfach   = new ArrayCollection();
+        $this->angebot          = new ArrayCollection();
+        $this->basis            = new ArrayCollection();
+        $this->forderung        = new ArrayCollection();
     }
 
     /**
@@ -338,6 +325,7 @@ class Veranstaltung
      * Set Erstellungsdatum
      *
      * @param \DateTime $erstellungsdatum
+     *
      * @return Veranstaltung
      */
     public function setErstellungsdatum($erstellungsdatum)
@@ -361,6 +349,7 @@ class Veranstaltung
      * Set Versionsnummer
      *
      * @param integer $versionsnummer
+     *
      * @return Veranstaltung
      */
     public function setVersionsnummer($versionsnummer)
@@ -384,6 +373,7 @@ class Veranstaltung
      * Set Status
      *
      * @param string $status
+     *
      * @return Veranstaltung
      */
     public function setStatus($status)
@@ -407,6 +397,7 @@ class Veranstaltung
      * Set Kuerzel
      *
      * @param string $kuerzel
+     *
      * @return Veranstaltung
      */
     public function setKuerzel($kuerzel)
@@ -430,6 +421,7 @@ class Veranstaltung
      * Set Name
      *
      * @param string $name
+     *
      * @return Veranstaltung
      */
     public function setName($name)
@@ -453,6 +445,7 @@ class Veranstaltung
      * Set NameEN
      *
      * @param string $nameEN
+     *
      * @return Veranstaltung
      */
     public function setNameEN($nameEN)
@@ -476,6 +469,7 @@ class Veranstaltung
      * Set Haeufigkeit
      *
      * @param string $haeufigkeit
+     *
      * @return Veranstaltung
      */
     public function setHaeufigkeit($haeufigkeit)
@@ -499,6 +493,7 @@ class Veranstaltung
      * Set Dauer
      *
      * @param string $dauer
+     *
      * @return Veranstaltung
      */
     public function setDauer($dauer)
@@ -522,6 +517,7 @@ class Veranstaltung
      * Set Lehrveranstaltungen
      *
      * @param string $lehrveranstaltungen
+     *
      * @return Veranstaltung
      */
     public function setLehrveranstaltungen($lehrveranstaltungen)
@@ -545,6 +541,7 @@ class Veranstaltung
      * Set KontaktzeitVL
      *
      * @param integer $kontaktzeitVL
+     *
      * @return Veranstaltung
      */
     public function setKontaktzeitVL($kontaktzeitVL)
@@ -568,6 +565,7 @@ class Veranstaltung
      * Set KontaktzeitSonstige
      *
      * @param integer $kontaktzeitSonstige
+     *
      * @return Veranstaltung
      */
     public function setKontaktzeitSonstige($kontaktzeitSonstige)
@@ -591,6 +589,7 @@ class Veranstaltung
      * Set Selbststudium
      *
      * @param integer $selbststudium
+     *
      * @return Veranstaltung
      */
     public function setSelbststudium($selbststudium)
@@ -614,6 +613,7 @@ class Veranstaltung
      * Set Gruppengroesse
      *
      * @param integer $gruppengroesse
+     *
      * @return Veranstaltung
      */
     public function setGruppengroesse($gruppengroesse)
@@ -637,6 +637,7 @@ class Veranstaltung
      * Set Lernergebnisse
      *
      * @param string $lernergebnisse
+     *
      * @return Veranstaltung
      */
     public function setLernergebnisse($lernergebnisse)
@@ -660,6 +661,7 @@ class Veranstaltung
      * Set Inhalte
      *
      * @param string $inhalte
+     *
      * @return Veranstaltung
      */
     public function setInhalte($inhalte)
@@ -683,6 +685,7 @@ class Veranstaltung
      * Set Pruefungsformen
      *
      * @param string $pruefungsformen
+     *
      * @return Veranstaltung
      */
     public function setPruefungsformen($pruefungsformen)
@@ -706,6 +709,7 @@ class Veranstaltung
      * Set PruefungsformSonstiges
      *
      * @param string $pruefungsformSonstiges
+     *
      * @return Veranstaltung
      */
     public function setPruefungsformSonstiges($pruefungsformSonstiges)
@@ -725,56 +729,11 @@ class Veranstaltung
         return $this->PruefungsformSonstiges;
     }
 
-//    /**
-//     * Set PruefungsleistungSonstiges
-//     *
-//     * @param string $pruefungsleistungSonstiges
-//     * @return Veranstaltung
-//     */
-//    public function setPruefungsleistungSonstiges($pruefungsleistungSonstiges)
-//    {
-//        $this->PruefungsleistungSonstiges = $pruefungsleistungSonstiges;
-//
-//        return $this;
-//    }
-
-//    /**
-//     * Get PruefungsleistungSonstiges
-//     *
-//     * @return string
-//     */
-//    public function getPruefungsleistungSonstiges()
-//    {
-//        return $this->PruefungsleistungSonstiges;
-//    }
-
-//    /**
-//     * Set StudienleistungSonstiges
-//     *
-//     * @param string $studienleistungSonstiges
-//     * @return Veranstaltung
-//     */
-//    public function setStudienleistungSonstiges($studienleistungSonstiges)
-//    {
-//        $this->StudienleistungSonstiges = $studienleistungSonstiges;
-//
-//        return $this;
-//    }
-
-//    /**
-//     * Get StudienleistungSonstiges
-//     *
-//     * @return string
-//     */
-//    public function getStudienleistungSonstiges()
-//    {
-//        return $this->StudienleistungSonstiges;
-//    }
-
     /**
      * Set Sprache
      *
      * @param string $sprache
+     *
      * @return Veranstaltung
      */
     public function setSprache($sprache)
@@ -798,6 +757,7 @@ class Veranstaltung
      * Set SpracheSonstiges
      *
      * @param string $spracheSonstiges
+     *
      * @return Veranstaltung
      */
     public function setSpracheSonstiges($spracheSonstiges)
@@ -821,6 +781,7 @@ class Veranstaltung
      * Set Autor
      *
      * @param string $autor
+     *
      * @return Veranstaltung
      */
     public function setAutor($autor)
@@ -844,6 +805,7 @@ class Veranstaltung
      * Set Literatur
      *
      * @param string $literatur
+     *
      * @return Veranstaltung
      */
     public function setLiteratur($literatur)
@@ -867,6 +829,7 @@ class Veranstaltung
      * Set Leistungspunkte
      *
      * @param integer $leistungspunkte
+     *
      * @return Veranstaltung
      */
     public function setLeistungspunkte($leistungspunkte)
@@ -890,6 +853,7 @@ class Veranstaltung
      * Set VoraussetzungLP
      *
      * @param string $voraussetzungLP
+     *
      * @return Veranstaltung
      */
     public function setVoraussetzungLP($voraussetzungLP)
@@ -913,6 +877,7 @@ class Veranstaltung
      * Set VoraussetzungInhalte
      *
      * @param string $voraussetzungInhalte
+     *
      * @return Veranstaltung
      */
     public function setVoraussetzungInh($voraussetzungInhalte)
@@ -936,6 +901,7 @@ class Veranstaltung
      * Add semesterplan
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
+     *
      * @return Veranstaltung
      */
     public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
@@ -969,6 +935,7 @@ class Veranstaltung
      * Add angebot
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
+     *
      * @return Veranstaltung
      */
     public function addAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
@@ -1002,6 +969,7 @@ class Veranstaltung
      * Add lehrende
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
+     *
      * @return Veranstaltung
      */
     public function addLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
@@ -1035,6 +1003,7 @@ class Veranstaltung
      * Set beauftragter
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $beauftragter
+     *
      * @return Veranstaltung
      */
     public function setBeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Dozent $beauftragter)
@@ -1058,6 +1027,7 @@ class Veranstaltung
      * Add studienplanModul
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul
+     *
      * @return Veranstaltung
      */
     public function addStudienplanModul(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul)
@@ -1091,6 +1061,7 @@ class Veranstaltung
      * Add kernfach
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Kernfach $kernfach
+     *
      * @return Veranstaltung
      */
     public function addKernfach(\FHBingen\Bundle\MHBBundle\Entity\Kernfach $kernfach)
@@ -1124,6 +1095,7 @@ class Veranstaltung
      * Set VoraussetzungInhalte
      *
      * @param string $voraussetzungInhalte
+     *
      * @return Veranstaltung
      */
     public function setVoraussetzungInhalte($voraussetzungInhalte)
@@ -1147,6 +1119,7 @@ class Veranstaltung
      * Add forderung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $forderung
+     *
      * @return Veranstaltung
      */
     public function addForderung(\FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $forderung)
@@ -1180,6 +1153,7 @@ class Veranstaltung
      * Add grundmodul
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $grundmodul
+     *
      * @return Veranstaltung
      */
     public function addGrundmodul(\FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $grundmodul)

@@ -32,7 +32,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
 {
     public function __toString()
     {
-        return (string)$this->getTitel() . ' ' . $this->getNachname();
+        return (string) $this->getTitel() . ' ' . $this->getNachname();
     }
 
     /**
@@ -149,6 +149,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Set Titel
      *
      * @param string $titel
+     *
      * @return Dozent
      */
     public function setTitel($titel)
@@ -172,6 +173,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Set Name
      *
      * @param string $name
+     *
      * @return Dozent
      */
     public function setName($name)
@@ -195,6 +197,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Set Nachname
      *
      * @param string $nachname
+     *
      * @return Dozent
      */
     public function setNachname($nachname)
@@ -229,6 +232,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Set Email
      *
      * @param string $email
+     *
      * @return Dozent
      */
     public function setEmail($email)
@@ -252,6 +256,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Add lehrende
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
+     *
      * @return Dozent
      */
     public function addLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
@@ -285,6 +290,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Add semesterplan
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
+     *
      * @return Dozent
      */
     public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
@@ -351,6 +357,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Add veranstaltung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung
+     *
      * @return Dozent
      */
     public function addModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung)
@@ -384,6 +391,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Add studiengang
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     *
      * @return Dozent
      */
     public function addStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
@@ -528,6 +536,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Set username
      *
      * @param string $username
+     *
      * @return Dozent
      */
     public function setUsername($username)
@@ -542,6 +551,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Set password
      *
      * @param string $password
+     *
      * @return Dozent
      */
     public function setPassword($password)
@@ -556,6 +566,7 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * Set isActive
      *
      * @param boolean $isActive
+     *
      * @return Dozent
      */
     public function setIsActive($isActive)
