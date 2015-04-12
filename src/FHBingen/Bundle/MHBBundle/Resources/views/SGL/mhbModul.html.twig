@@ -92,7 +92,7 @@
                         {% for studienplan in modulBeschreibung.getStudienplaene() %}
                             <tr>
                                 <td class="studiensemseter startsemester">{{ studienplan.getStartsemester() }}:</td>
-                                <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' erstzen #}
+                                <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' ersetzen #}
                             </tr>
                         {% endfor %}
                     </table>

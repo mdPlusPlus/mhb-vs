@@ -58,8 +58,6 @@ class VorAngebotType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //->add('modulid', 'hidden', array('required' => true))
-
             ->add('studiengang', 'entity', array(
                 'label' => 'Studiengang: ',
                 'required' => true,

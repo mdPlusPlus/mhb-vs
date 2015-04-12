@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Fachgebiet
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Fachgebiet")
@@ -64,6 +65,7 @@ class Fachgebiet
      * Set Titel
      *
      * @param string $titel
+     *
      * @return Fachgebiet
      */
     public function setTitel($titel)
@@ -93,6 +95,7 @@ class Fachgebiet
      * @ORM\OneToMany(targetEntity="Angebot", mappedBy="fachgebiet", cascade={"all"})
      * */
     protected $angebot;
+
     /**
      * Constructor
      */
@@ -105,10 +108,12 @@ class Fachgebiet
      * Add angebot
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
+     *
      * @return Fachgebiet
      */
     public function addAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
     {
+        $angebot->setFachgebiet($this);
         $this->angebot[] = $angebot;
     
         return $this;
@@ -146,9 +151,10 @@ class Fachgebiet
      * Set studiengang
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     *
      * @return Fachgebiet
      */
-    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null)
+    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
     {
         $this->studiengang = $studiengang;
     
