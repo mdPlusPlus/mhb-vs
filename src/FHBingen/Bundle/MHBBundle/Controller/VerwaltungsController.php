@@ -183,7 +183,7 @@ class VerwaltungsController extends Controller
      *
      * Updatet einen Studiengang nach den angegebenen Daten
      */
-    public function SglShowCourseAction($courseID)
+    public function SglUpdateCourseAction($courseID)
     {
         $em = $this->getDoctrine()->getManager();
         if ($courseID == -1) {
