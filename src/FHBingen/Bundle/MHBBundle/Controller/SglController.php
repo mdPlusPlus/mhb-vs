@@ -428,7 +428,7 @@ class SglController extends Controller
      *
      * @return array
      */
-    public function modulDeaktiverungUebersichtAction()
+    public function modulDeaktivierungUebersichtAction()
     {
         //TODO: Abfrage ja/nein "wollen sie das wirklich?"
         $user = $this->get('security.context')->getToken()->getUser();
