@@ -72,8 +72,6 @@ class AngebotListener
      */
     public function preRemove(Angebot $angebot, LifecycleEventArgs $args)
     {
-        //file_put_contents('angebot.log', 'preRemove' . PHP_EOL, FILE_APPEND);
-
         //$entity = $args->getObject();
         $em = $args->getObjectManager();
 
@@ -82,6 +80,17 @@ class AngebotListener
         if ($angebot->getVeranstaltung()->getAngebot()->count() == 1) {
             $isLastAngebot = true;
         }
+
+        //logging
+        /*
+        if ($isLastAngebot) {
+            $logString = 'Veranstaltung: "' . $angebot->getVeranstaltung() . '", Studiengang: "' . $angebot->getStudiengang() . '", isLastAngebot: true';
+        } else {
+            $logString = 'Veranstaltung: "' . $angebot->getVeranstaltung() . '", Studiengang: "' . $angebot->getStudiengang() . '", isLastAngebot: false';
+        }
+        file_put_contents('angebot.log', $logString . PHP_EOL, FILE_APPEND);
+        */
+        //
 
         //Studienplan-Entities
         $studienplaene = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array(

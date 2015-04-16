@@ -428,7 +428,7 @@ class SglController extends Controller
      *
      * @return array
      */
-    public function deaktivierungModuleAction()
+    public function modulDeaktiverungUebersichtAction()
     {
         //TODO: Abfrage ja/nein "wollen sie das wirklich?"
         $user = $this->get('security.context')->getToken()->getUser();
@@ -474,40 +474,16 @@ class SglController extends Controller
      */
     public function modulDeaktivierungAction($modulID)
     {
-        //TODO: modulDeaktivierungAction + modulDeaktivierungStgAction zusammenlegen
+        //[mdPlusPlus]: von mir neu geschrieben
         $em = $this->getDoctrine()->getManager();
-
-        $modul = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modulID));
-
-        $modul->setStatus('expired');
-        $modul->setErstellungsdatum(new \DateTime());
-        $em->persist($modul);
-
-        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID));
-
-        foreach ($angebot as $del) {
-            $em->remove($del);
+        $veranstaltung = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID' => $modulID));
+        $angebote = $veranstaltung->getAngebot();
+        foreach ($angebote as $angebot) {
+            $em->remove($angebot);
+            $em->flush(); //hier in Schleife notwendig
         }
-
-        $kernfach = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('veranstaltung' => $modulID));
-
-        foreach ($kernfach as $del) {
-            $em->remove($del);
-        }
-
-        $studienplan = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array('veranstaltung' => $modulID));
-
-        foreach ($studienplan as $del) {
-            $em->remove($del);
-        }
-
-        $lehrende = $em->getRepository('FHBingenMHBBundle:Lehrende')->findBy(array('veranstaltung' => $modulID));
-
-        foreach ($lehrende as $del) {
-            $em->remove($del);
-        }
-
-        $em->flush();
+        //alles andere erledigt die preRemove()-Funktion des AngebotListeners
+        //
 
         $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich deaktiviert.');
 
@@ -527,38 +503,13 @@ class SglController extends Controller
      */
     public function modulDeaktivierungStgAction($modulID, $studiengangID)
     {
-        //TODO: modulDeaktivierungAction + modulDeaktivierungStgAction zusammenlegen
+        //[mdPlusPlus]: von mir neu geschrieben
         $em = $this->getDoctrine()->getManager();
-
-        $angeboteArr =$em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID));
-
-        if (sizeof($angeboteArr)== 1) {
-            return $this->redirect($this->generateUrl('modulDeaktivierung', array('modulID'=> $modulID)));
-        }
-
-        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID,'studiengang'=>$studiengangID));
-        //TODO: kann es überhaupt mehrere Angebote für eine Veranstaltung in einem Studiengang geben? -> nein (?)
-
-        foreach ($angebot as $del) {
-            $em->remove($del);
-        }
-
-        $studienplan = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array('veranstaltung' => $modulID,'studiengang'=>$studiengangID));
-
-        foreach ($studienplan as $del) {
-            $em->remove($del);
-        }
-
-        //TODO fehlt hier nicht noch der join mit den studiengängen? so werde doch ALLE Kernfach-Zuweisungen gelöscht statt nur die des Studiengangs
-        $kernfachArr = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('veranstaltung' => $modulID));
-
-        if (sizeof($kernfachArr)>0) {
-            foreach ($kernfachArr as $del) {
-                $em->remove($del);
-            }
-        }
-
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('veranstaltung' => $modulID, 'studiengang' => $studiengangID));
+        $em->remove($angebot);
         $em->flush();
+        //alles andere erledigt die preRemove()-Funktion des AngebotListeners
+        //
 
         $this->get('session')->getFlashBag()->add('info', 'Das Modul wurde erfolgreich deaktiviert.');
 

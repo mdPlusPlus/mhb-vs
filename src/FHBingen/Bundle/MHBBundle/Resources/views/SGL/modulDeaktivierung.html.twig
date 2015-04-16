@@ -66,7 +66,7 @@
                             deaktivieren</a><br/>
                         {% endfor %}
                         {% if stgZuModul[count]|length != 1 %}
-                        <a href=" {{ path('modulDeaktivierung', {'modulID': veranstaltung.getModulID()}) }}">Modul deaktivieren alle Studiengänge</a>
+                        <a href=" {{ path('modulDeaktivierung', {'modulID': veranstaltung.getModulID()}) }}">In allen Studiengängen deaktiveren</a>
                         {% endif %}
                     </td>
                 </tr>
