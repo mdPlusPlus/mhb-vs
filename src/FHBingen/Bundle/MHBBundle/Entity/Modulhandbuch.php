@@ -68,12 +68,6 @@ class Modulhandbuch
      */
     protected $Beschreibung;
 
-    public function __construct()
-    {
-        $this->zuweisung = new ArrayCollection();
-        //TODO: funktioniert das?
-    }
-
     /**
      * Get MHB_ID
      *

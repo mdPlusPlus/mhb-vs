@@ -59,8 +59,6 @@ class StudiengangType extends AbstractType
                 )
             ))
 
-
-            //TODO: Es ist möglich Studiengänge ohne Fachgebiete anzulegen, in denen dann keine Angebote erstellt werden können, weil keine Fachgebiete existieren.
             ->add('fachgebiete', 'collection', array(
                 'type'                  => new FachgebietType(),
                 'label'                 => false,
