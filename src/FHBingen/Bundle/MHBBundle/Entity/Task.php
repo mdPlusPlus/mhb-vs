@@ -12,7 +12,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Class Task
+ *
+ * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
+ * @ORM\EntityListeners({"FHBingen\Bundle\MHBBundle\EntityListener\TaskListener"})
  */
 class Task
 {

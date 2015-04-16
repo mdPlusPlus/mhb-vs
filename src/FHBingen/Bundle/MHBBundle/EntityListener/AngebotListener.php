@@ -37,8 +37,8 @@ class AngebotListener
 //    {
 //    }
 
-    public function preRemove(Angebot $angebot, LifecycleEventArgs $args)
-    {
+//    public function preRemove(Angebot $angebot, LifecycleEventArgs $args)
+//    {
 //        $em = $args->getEntityManager();
 //        foreach ($angebot->getVeranstaltung() as $veranstaltung) {
 //            $veranstaltung = new Veranstaltung();
@@ -53,7 +53,7 @@ class AngebotListener
 //        }
 //        $em->flush();
         //TODO: preRemove
-    }
+//    }
 
 //    public function preFlush(Angebot $angebot, PreFlushEventArgs $args)
 //    {
