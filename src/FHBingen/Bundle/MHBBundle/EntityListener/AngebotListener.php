@@ -10,56 +10,132 @@ namespace FHBingen\Bundle\MHBBundle\EntityListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
-//use Doctrine\ORM\Event\PreUpdateEventArgs;
-//use Doctrine\ORM\Event\PreFlushEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
-use FHBingen\Bundle\MHBBundle\Entity\Veranstaltung;
 
+/**
+ * Class AngebotListener
+ *
+ * @package FHBingen\Bundle\MHBBundle\EntityListener
+ */
 class AngebotListener
 {
-//    public function prePersist(Angebot $angebot, LifecycleEventArgs $args)
-//    {
-//    }
+    /**
+     * @param Angebot            $angebot
+     * @param LifecycleEventArgs $args
+     */
+    public function prePersist(Angebot $angebot, LifecycleEventArgs $args)
+    {
+        //file_put_contents('angebot.log', 'prePersist' . PHP_EOL, FILE_APPEND);
+    }
 
-//    public function postPersist(Angebot $angebot, LifecycleEventArgs $args)
-//    {
-//    }
+    /**
+     * @param Angebot            $angebot
+     * @param LifecycleEventArgs $args
+     */
+    public function postPersist(Angebot $angebot, LifecycleEventArgs $args)
+    {
+        //file_put_contents('angebot.log', 'postPersist' . PHP_EOL, FILE_APPEND);
+    }
 
-//    public function preUpdate(Angebot $angebot, PreUpdateEventArgs $args)
-//    {
-//    }
+    /**
+     * @param Angebot            $angebot
+     * @param PreUpdateEventArgs $args
+     */
+    public function preUpdate(Angebot $angebot, PreUpdateEventArgs $args)
+    {
+        //file_put_contents('angebot.log', 'preUpdate' . PHP_EOL, FILE_APPEND);
+    }
 
-//    public function postUpdate(Angebot $angebot, LifecycleEventArgs $args)
-//    {
-//    }
+    /**
+     * @param Angebot            $angebot
+     * @param LifecycleEventArgs $args
+     */
+    public function postUpdate(Angebot $angebot, LifecycleEventArgs $args)
+    {
+        //file_put_contents('angebot.log', 'postUpdate' . PHP_EOL, FILE_APPEND);
+    }
 
-//    public function postRemove(Angebot $angebot, LifecycleEventArgs $args)
-//    {
-//    }
+    /**
+     * @param Angebot            $angebot
+     * @param LifecycleEventArgs $args
+     */
+    public function postRemove(Angebot $angebot, LifecycleEventArgs $args)
+    {
+        //file_put_contents('angebot.log', 'postRemove' . PHP_EOL, FILE_APPEND);
+    }
 
-//    public function preRemove(Angebot $angebot, LifecycleEventArgs $args)
-//    {
-//        $em = $args->getEntityManager();
-//        foreach ($angebot->getVeranstaltung() as $veranstaltung) {
-//            $veranstaltung = new Veranstaltung();
-//
-//            //wenn nur noch ein Angebot existiert und dieses gelöscht wird -> Veranstaltung expiren
-//            if ($veranstaltung->getAngebot()->count() == 1) {
-//                $veranstaltung->setStatus('expired');
-//                $veranstaltung->setErstellungsdatum(new \DateTime());
-//            }
-//
-//            $em->persist($veranstaltung);
-//        }
-//        $em->flush();
-        //TODO: preRemove
-//    }
+    /**
+     * @param Angebot            $angebot
+     * @param LifecycleEventArgs $args
+     */
+    public function preRemove(Angebot $angebot, LifecycleEventArgs $args)
+    {
+        //file_put_contents('angebot.log', 'preRemove' . PHP_EOL, FILE_APPEND);
 
-//    public function preFlush(Angebot $angebot, PreFlushEventArgs $args)
-//    {
-//    }
+        //$entity = $args->getObject();
+        $em = $args->getObjectManager();
 
-//    public function postLoad(Angebot $angebot, LifecycleEventArgs $args)
-//    {
-//    }
+        //$em = $this->getDoctrine()->getManager();
+        $isLastAngebot = false;
+        if ($angebot->getVeranstaltung()->getAngebot()->count() == 1) {
+            $isLastAngebot = true;
+        }
+
+        //Studienplan-Entities
+        $studienplaene = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array(
+            'veranstaltung' => $angebot->getVeranstaltung()->getModulID(),
+            'studiengang' => $angebot->getStudiengang()->getStudiengangID()
+        ));
+        foreach ($studienplaene as $studienplan) {
+            $em->remove($studienplan);
+        }
+
+        //Kernfach-Entities
+        $vertiefungsrichtungen = $angebot->getStudiengang()->getRichtung();
+        $kernfaecherOfVeranstaltung = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('veranstaltung' => $angebot->getVeranstaltung()->getModulID()));
+        foreach ($kernfaecherOfVeranstaltung as $kernfach) {
+            foreach ($vertiefungsrichtungen as $vertiefungsrichtung) {
+                if ($kernfach->getVertiefung() == $vertiefungsrichtung) {
+                    $em->remove($kernfach);
+                }
+            }
+        }
+
+        if ($isLastAngebot) {
+            //Lehrende-Entities
+            $lehrende = $angebot->getVeranstaltung()->getLehrende();
+            foreach ($lehrende as $lehrender) {
+                $em->remove($lehrender);
+            }
+
+            //Veranstaltung-Entity
+            $angebot->getVeranstaltung()->setStatus('expired');
+            $angebot->getVeranstaltung()->setErstellungsdatum(new \DateTime());
+        }
+
+        //Angebot-Entity
+        //$em->remove($angebot);
+
+        $em->flush();
+    }
+
+    /**
+     * @param Angebot           $angebot
+     * @param PreFlushEventArgs $args
+     */
+    public function preFlush(Angebot $angebot, PreFlushEventArgs $args)
+    {
+        //file_put_contents('angebot.log', 'preFlush' . PHP_EOL, FILE_APPEND);
+    }
+
+    /**
+     * @param Angebot            $angebot
+     * @param LifecycleEventArgs $args
+     */
+    public function postLoad(Angebot $angebot, LifecycleEventArgs $args)
+    {
+        //file_put_contents('angebot.log', 'postFlush' . PHP_EOL, FILE_APPEND);
+    }
 }

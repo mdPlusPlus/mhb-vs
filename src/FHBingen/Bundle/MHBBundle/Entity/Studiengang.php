@@ -289,7 +289,7 @@ class Studiengang
     /**
      * @ORM\OneToMany(targetEntity="Vertiefung", mappedBy="studiengang")
      */
-    protected $richtung;
+    protected $richtung; //warum nicht '$vertiefungsrichtung'?
 
     /*Modulbeauftragter (Dozent/Modul)*/
 

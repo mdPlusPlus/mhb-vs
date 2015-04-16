@@ -15,7 +15,6 @@ use FHBingen\Bundle\MHBBundle\Entity\Task;
 
 class TaskListener
 {
-
     public function prePersist(Task $task, LifecycleEventArgs $args)
     {
         file_put_contents('task.log', 'prePersist' . PHP_EOL, FILE_APPEND);

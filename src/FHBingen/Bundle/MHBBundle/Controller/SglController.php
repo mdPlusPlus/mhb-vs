@@ -525,7 +525,7 @@ class SglController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function modulDeaktivierungStgAction($modulID,$studiengangID)
+    public function modulDeaktivierungStgAction($modulID, $studiengangID)
     {
         //TODO: modulDeaktivierungAction + modulDeaktivierungStgAction zusammenlegen
         $em = $this->getDoctrine()->getManager();
@@ -537,6 +537,7 @@ class SglController extends Controller
         }
 
         $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('veranstaltung' => $modulID,'studiengang'=>$studiengangID));
+        //TODO: kann es überhaupt mehrere Angebote für eine Veranstaltung in einem Studiengang geben? -> nein (?)
 
         foreach ($angebot as $del) {
             $em->remove($del);
@@ -548,6 +549,7 @@ class SglController extends Controller
             $em->remove($del);
         }
 
+        //TODO fehlt hier nicht noch der join mit den studiengängen? so werde doch ALLE Kernfach-Zuweisungen gelöscht statt nur die des Studiengangs
         $kernfachArr = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('veranstaltung' => $modulID));
 
         if (sizeof($kernfachArr)>0) {
