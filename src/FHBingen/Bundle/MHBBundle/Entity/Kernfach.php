@@ -17,41 +17,22 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Kernfach")
- * @ORM\HasLifecycleCallbacks
  */
 class Kernfach
 {
-
-//    /**
-//     * @ORM\Id
-//     * @ORM\Column(type="integer")
-//     * @ORM\GeneratedValue(strategy="AUTO")
-//     */
-//    protected $Kernfach_ID;
-
     /**
      * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="kernfach")
      * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
-     * */
+     */
     protected $veranstaltung;
 
     /**
      * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Vertiefung", inversedBy="vertiefung")
      * @ORM\JoinColumn(name="vertiefung", referencedColumnName="Vertiefung_ID", nullable=false)
-     * */
+     */
     protected $vertiefung;
-
-//    /**
-//     * Get id
-//     *
-//     * @return integer
-//     */
-//    public function getKernfach_ID()
-//    {
-//        return $this->Kernfach_ID;
-//    }
 
     /**
      * Set modul
@@ -63,7 +44,7 @@ class Kernfach
     public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul = null)
     {
         $this->veranstaltung = $modul;
-    
+
         return $this;
     }
 
@@ -87,10 +68,9 @@ class Kernfach
     public function setVertiefung(\FHBingen\Bundle\MHBBundle\Entity\Vertiefung $vertiefung = null)
     {
         $this->vertiefung = $vertiefung;
-    
+
         return $this;
     }
-
 
     /**
      * Get vertiefung
