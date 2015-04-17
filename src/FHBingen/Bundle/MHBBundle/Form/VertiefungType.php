@@ -15,8 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Class VertiefungType
  *
- *
- *
  * @package FHBingen\Bundle\MHBBundle\Form
  */
 class VertiefungType extends AbstractType

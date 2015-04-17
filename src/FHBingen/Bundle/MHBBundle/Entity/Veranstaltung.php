@@ -296,6 +296,7 @@ class Veranstaltung
         $this->angebot          = new ArrayCollection();
         $this->basis            = new ArrayCollection();
         $this->forderung        = new ArrayCollection();
+        $this->grundmodul       = new ArrayCollection();    //TODO: richtig?
         $this->kernfach         = new ArrayCollection();
         $this->lehrende         = new ArrayCollection();
         $this->semesterplan     = new ArrayCollection();
@@ -332,7 +333,7 @@ class Veranstaltung
     public function setErstellungsdatum($erstellungsdatum)
     {
         $this->Erstellungsdatum = $erstellungsdatum;
-    
+
         return $this;
     }
 
@@ -356,7 +357,7 @@ class Veranstaltung
     public function setVersionsnummer($versionsnummer)
     {
         $this->Versionsnummer = $versionsnummer;
-    
+
         return $this;
     }
 
@@ -380,7 +381,7 @@ class Veranstaltung
     public function setStatus($status)
     {
         $this->Status = $status;
-    
+
         return $this;
     }
 
@@ -404,7 +405,7 @@ class Veranstaltung
     public function setKuerzel($kuerzel)
     {
         $this->Kuerzel = $kuerzel;
-    
+
         return $this;
     }
 
@@ -428,7 +429,7 @@ class Veranstaltung
     public function setName($name)
     {
         $this->Name = $name;
-    
+
         return $this;
     }
 
@@ -452,7 +453,7 @@ class Veranstaltung
     public function setNameEN($nameEN)
     {
         $this->NameEN = $nameEN;
-    
+
         return $this;
     }
 
@@ -476,7 +477,7 @@ class Veranstaltung
     public function setHaeufigkeit($haeufigkeit)
     {
         $this->Haeufigkeit = $haeufigkeit;
-    
+
         return $this;
     }
 
@@ -500,7 +501,7 @@ class Veranstaltung
     public function setDauer($dauer)
     {
         $this->Dauer = $dauer;
-    
+
         return $this;
     }
 
@@ -524,7 +525,7 @@ class Veranstaltung
     public function setLehrveranstaltungen($lehrveranstaltungen)
     {
         $this->Lehrveranstaltungen = $lehrveranstaltungen;
-    
+
         return $this;
     }
 
@@ -548,7 +549,7 @@ class Veranstaltung
     public function setKontaktzeitVL($kontaktzeitVL)
     {
         $this->KontaktzeitVL = $kontaktzeitVL;
-    
+
         return $this;
     }
 
@@ -572,7 +573,7 @@ class Veranstaltung
     public function setKontaktzeitSonstige($kontaktzeitSonstige)
     {
         $this->KontaktzeitSonstige = $kontaktzeitSonstige;
-    
+
         return $this;
     }
 
@@ -596,7 +597,7 @@ class Veranstaltung
     public function setSelbststudium($selbststudium)
     {
         $this->Selbststudium = $selbststudium;
-    
+
         return $this;
     }
 
@@ -620,7 +621,7 @@ class Veranstaltung
     public function setGruppengroesse($gruppengroesse)
     {
         $this->Gruppengroesse = $gruppengroesse;
-    
+
         return $this;
     }
 
@@ -644,7 +645,7 @@ class Veranstaltung
     public function setLernergebnisse($lernergebnisse)
     {
         $this->Lernergebnisse = $lernergebnisse;
-    
+
         return $this;
     }
 
@@ -668,7 +669,7 @@ class Veranstaltung
     public function setInhalte($inhalte)
     {
         $this->Inhalte = $inhalte;
-    
+
         return $this;
     }
 
@@ -692,7 +693,7 @@ class Veranstaltung
     public function setPruefungsformen($pruefungsformen)
     {
         $this->Pruefungsformen = $pruefungsformen;
-    
+
         return $this;
     }
 
@@ -716,7 +717,7 @@ class Veranstaltung
     public function setPruefungsformSonstiges($pruefungsformSonstiges)
     {
         $this->PruefungsformSonstiges = $pruefungsformSonstiges;
-    
+
         return $this;
     }
 
@@ -740,7 +741,7 @@ class Veranstaltung
     public function setSprache($sprache)
     {
         $this->Sprache = $sprache;
-    
+
         return $this;
     }
 
@@ -764,7 +765,7 @@ class Veranstaltung
     public function setSpracheSonstiges($spracheSonstiges)
     {
         $this->SpracheSonstiges = $spracheSonstiges;
-    
+
         return $this;
     }
 
@@ -788,7 +789,7 @@ class Veranstaltung
     public function setAutor($autor)
     {
         $this->Autor = $autor;
-    
+
         return $this;
     }
 
@@ -812,7 +813,7 @@ class Veranstaltung
     public function setLiteratur($literatur)
     {
         $this->Literatur = $literatur;
-    
+
         return $this;
     }
 
@@ -836,7 +837,7 @@ class Veranstaltung
     public function setLeistungspunkte($leistungspunkte)
     {
         $this->Leistungspunkte = $leistungspunkte;
-    
+
         return $this;
     }
 
@@ -860,7 +861,7 @@ class Veranstaltung
     public function setVoraussetzungLP($voraussetzungLP)
     {
         $this->VoraussetzungLP = $voraussetzungLP;
-    
+
         return $this;
     }
 
@@ -884,7 +885,7 @@ class Veranstaltung
     public function setVoraussetzungInh($voraussetzungInhalte)
     {
         $this->VoraussetzungInhalte = $voraussetzungInhalte;
-    
+
         return $this;
     }
 
@@ -908,7 +909,7 @@ class Veranstaltung
     public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
     {
         $this->semesterplan[] = $semesterplan;
-    
+
         return $this;
     }
 
@@ -942,7 +943,7 @@ class Veranstaltung
     public function addAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
     {
         $this->angebot[] = $angebot;
-    
+
         return $this;
     }
 
@@ -976,7 +977,7 @@ class Veranstaltung
     public function addLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
     {
         $this->lehrende[] = $lehrende;
-    
+
         return $this;
     }
 
@@ -1010,7 +1011,7 @@ class Veranstaltung
     public function setBeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Dozent $beauftragter)
     {
         $this->beauftragter = $beauftragter;
-    
+
         return $this;
     }
 
@@ -1034,7 +1035,7 @@ class Veranstaltung
     public function addStudienplanModul(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul)
     {
         $this->studienplanModul[] = $studienplanModul;
-    
+
         return $this;
     }
 
@@ -1068,7 +1069,7 @@ class Veranstaltung
     public function addKernfach(\FHBingen\Bundle\MHBBundle\Entity\Kernfach $kernfach)
     {
         $this->kernfach[] = $kernfach;
-    
+
         return $this;
     }
 
@@ -1102,7 +1103,7 @@ class Veranstaltung
     public function setVoraussetzungInhalte($voraussetzungInhalte)
     {
         $this->VoraussetzungInhalte = $voraussetzungInhalte;
-    
+
         return $this;
     }
 
@@ -1126,7 +1127,7 @@ class Veranstaltung
     public function addForderung(\FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $forderung)
     {
         $this->forderung[] = $forderung;
-    
+
         return $this;
     }
 
@@ -1160,7 +1161,7 @@ class Veranstaltung
     public function addGrundmodul(\FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung $grundmodul)
     {
         $this->grundmodul[] = $grundmodul;
-    
+
         return $this;
     }
 
@@ -1185,7 +1186,7 @@ class Veranstaltung
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getErlaeuterungenLP()
     {
@@ -1193,10 +1194,14 @@ class Veranstaltung
     }
 
     /**
-     * @param mixed $ErlaeuterungenLP
+     * @param string $ErlaeuterungenLP
+     *
+     * @return $this
      */
     public function setErlaeuterungenLP($ErlaeuterungenLP)
     {
         $this->ErlaeuterungenLP = $ErlaeuterungenLP;
+
+        return $this;
     }
 }

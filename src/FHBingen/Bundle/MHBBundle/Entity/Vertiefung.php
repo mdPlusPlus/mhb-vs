@@ -67,7 +67,7 @@ class Vertiefung
     /**
      * Set Vertiefungsrichtung
      *
-     * @param string $vertiefungsrichtung
+     * @param string $name
      *
      * @return Vertiefung
      */

@@ -9,7 +9,6 @@
 namespace FHBingen\Bundle\MHBBundle\PHP;
 
 
-use Doctrine\ORM\PersistentCollection;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 
 

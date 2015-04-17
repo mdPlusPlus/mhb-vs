@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class VeranstaltungHistory
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="VeranstaltungHistory")

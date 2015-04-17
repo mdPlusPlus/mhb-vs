@@ -32,9 +32,6 @@ class FachgebietType extends AbstractType
     {
         $builder
             ->add('titel', 'text', array('label' => 'Fachgebiet: ', 'required' => true, 'attr' => array('class' => 'sonstigesClass')));
-/*            ->add('hat', 'entity', array('label' => 'Studiengang Titel: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Studiengang'))
-            ->add('reset', 'reset')
-            ->add('submit', 'submit');*/
     }
 
     /**

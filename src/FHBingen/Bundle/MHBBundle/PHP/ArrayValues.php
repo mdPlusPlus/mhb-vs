@@ -8,7 +8,13 @@
 
 namespace FHBingen\Bundle\MHBBundle\PHP;
 
-class ArrayValues {
+/**
+ * Class ArrayValues
+ *
+ * @package FHBingen\Bundle\MHBBundle\PHP
+ */
+class ArrayValues
+{
 
     /**
      * Häufigkeit

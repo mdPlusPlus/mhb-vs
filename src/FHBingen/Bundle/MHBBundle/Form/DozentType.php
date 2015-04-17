@@ -39,8 +39,6 @@ class DozentType extends AbstractType
             ->add('nachname', 'text', array('label' => 'Nachname: ', 'required' => true))
             ->add('email', 'email', array('label' => 'Email: ', 'required' => true))
             //->add('password', 'text', array('label' => 'Passwort: ', 'required' => true))
-            //->add('reset', 'reset', array('label' => 'zurücksetzen', 'attr' => array('class' =>'btn btn-default')))
-            //->add('submit', 'submit', array('label' => 'abschicken', 'attr' => array('class' =>'btn btn-default')))
             ;
     }
 

@@ -43,8 +43,9 @@ class VeranstaltungType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
             ->add('beauftragter', 'entity', array('label' => "Modulbeauftragte/r [#]: ", 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
             ->add('kuerzel', 'text', array('label' => 'Modulkürzel [#]: ', 'required' => true))
             ->add('name', 'text', array('label' => 'Modulname (deutsch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
