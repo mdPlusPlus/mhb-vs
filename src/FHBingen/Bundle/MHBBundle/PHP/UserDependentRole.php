@@ -22,6 +22,7 @@ use FHBingen\Bundle\MHBBundle\Entity\Dozent;
  */
 class UserDependentRole implements RoleInterface
 {
+    //TODO: UserDependentRole entfernen. ACHTUNG: Dozent->getRole() liefert aktuell Array zurück, muss dann überall so gändert werden, dass einzelner Eintrag erwartet wird
     private $user;
 
     /**
