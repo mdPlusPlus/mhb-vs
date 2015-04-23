@@ -229,10 +229,14 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function __construct()
     {
-        $this->isActive = true;
-        //$this->roles = new ArrayCollection();
-        $this->lehrende = new ArrayCollection();
-        $this->semesterplan = new ArrayCollection();
+        $this->bearbeitet           = new ArrayCollection();
+        $this->bearbeitetHistory    = new ArrayCollection();
+        $this->isActive             = true;
+        //$this->roles              = new ArrayCollection();
+        $this->lehrende             = new ArrayCollection();
+        $this->modulbeauftragter    = new ArrayCollection();
+        $this->semesterplan         = new ArrayCollection();
+        $this->studiengang          = new ArrayCollection(); //TODO: sollte auf single entry geändert werden
     }
 
     /**
@@ -355,42 +359,42 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     protected $bearbeitet;
 
-    /**
-     * @return mixed
-     */
-    public function getBearbeitet()
-    {
-        return $this->bearbeitet;
-    }
-
-    /**
-     * @param mixed $bearbeitet
-     */
-    public function setBearbeitet($bearbeitet)
-    {
-        $this->bearbeitet = $bearbeitet;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getBearbeitet()
+//    {
+//        return $this->bearbeitet;
+//    }
+//
+//    /**
+//     * @param mixed $bearbeitet
+//     */
+//    public function setBearbeitet($bearbeitet)
+//    {
+//        $this->bearbeitet = $bearbeitet;
+//    }
 
     /**
      * @ORM\OneToMany(targetEntity="VeranstaltungHistory", mappedBy="autor")
      */
     protected $bearbeitetHistory;
 
-    /**
-     * @return mixed
-     */
-    public function getBearbeitetHistory()
-    {
-        return $this->bearbeitetHistory;
-    }
-
-    /**
-     * @param mixed $bearbeitetHistory
-     */
-    public function setBearbeitetHistory($bearbeitetHistory)
-    {
-        $this->bearbeitetHistory = $bearbeitetHistory;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getBearbeitetHistory()
+//    {
+//        return $this->bearbeitetHistory;
+//    }
+//
+//    /**
+//     * @param mixed $bearbeitetHistory
+//     */
+//    public function setBearbeitetHistory($bearbeitetHistory)
+//    {
+//        $this->bearbeitetHistory = $bearbeitetHistory;
+//    }
 
     /*Studiengangleiter (Dozent/Studiengang)*/
 
