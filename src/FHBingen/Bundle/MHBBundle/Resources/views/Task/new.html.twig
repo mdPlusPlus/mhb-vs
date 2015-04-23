@@ -11,7 +11,7 @@
 
         // setup an "add a tag" link
         var $addTagLink = $('<td colspan="10"><a href="#" class="add_tag_link">Add a tag</a></td>');
-        var $newLinkLi = $('<tr></tr>').append($addTagLink);
+        var $newLink = $('<tr></tr>').append($addTagLink);
 
         jQuery(document).ready(function () {
             // Get the ul that holds the collection of tags
@@ -23,7 +23,7 @@
             });
 
             // add the "add a tag" anchor and li to the tags ul
-            $collectionHolder.append($newLinkLi);
+            $collectionHolder.append($newLink);
 
             // count the current form inputs we have (e.g. 2), use that as the new
             // index when inserting a new item (e.g. 2)
@@ -34,11 +34,11 @@
                 e.preventDefault();
 
                 // add a new tag form (see next code block)
-                addTagForm($collectionHolder, $newLinkLi);
+                addTagForm($collectionHolder, $newLink);
             });
         });
 
-        function addTagForm($collectionHolder, $newLinkLi) {
+        function addTagForm($collectionHolder, $newLink) {
             // Get the data-prototype explained earlier
             //var prototype = $collectionHolder.data('prototype');
 
@@ -53,29 +53,29 @@
 
             // Replace '__name__' in the prototype's HTML to
             // instead be a number based on how many items we have
-            var newForm = prototype.replace(/__name__/g, index);
+            var newFormP = prototype.replace(/__name__/g, index);
 
             // increase the index with one for the next item
             $collectionHolder.data('index', index + 1);
 
             // Display the form in the page in an li, before the "Add a tag" link li
-            var $newFormLi = $('<tr></tr>').append(newForm);
-            $newLinkLi.before($newFormLi);
+            var $newForm = $('<tr></tr>').append(newFormP);
+            $newLink.before($newForm);
 
             // add a delete link to the new form
-            addTagFormDeleteLink($newFormLi);
+            addTagFormDeleteLink($newForm);
         }
 
-        function addTagFormDeleteLink($tagFormLi) {
-            var $removeFormA = $('<a href="#">delete this tag</a>');
-            $tagFormLi.append($removeFormA);
+        function addTagFormDeleteLink($tagForm) {
+            var $removeForm = $('<td><a href="#">delete this tag</a></td>');
+            $tagForm.append($removeForm);
 
-            $removeFormA.on('click', function (e) {
+            $removeForm.on('click', function (e) {
                 // prevent the link from creating a "#" on the URL
                 e.preventDefault();
 
                 // remove the li for the tag form
-                $tagFormLi.remove();
+                $tagForm.remove();
             });
         }
     </script>
