@@ -16,7 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
- * @ORM\EntityListeners({"FHBingen\Bundle\MHBBundle\EntityListener\TaskListener"})
  */
 class Task
 {
