@@ -26,7 +26,6 @@ use FHBingen\Bundle\MHBBundle\PHP\UserDependentRole;
  * @ORM\Entity(repositoryClass="FHBingen\Bundle\MHBBundle\PHP\UserRepository")
  * @ORM\Table(name="Dozent")
  * @UniqueEntity(fields="email", message="Unter dieser EMail ist bereits ein Dozent eingetragen.")
- * @ORM\HasLifecycleCallbacks
  */
 class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, EncoderAwareInterface
 {
@@ -118,111 +117,51 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     private $email;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="dozent", cascade={"all"})
+     * */
+    protected $lehrende;
 
     /**
-     * Get Dozenten_ID
-     *
-     * @return integer
-     */
-    public function getDozentenID()
-    {
-        return $this->Dozenten_ID;
-    }
+     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="dozent", cascade={"all"})
+     * */
+    protected $semesterplan;
 
     /**
-     * Set Anrede
-     *
-     * @param string $anrede
-     * @return Dozent
+     * @ORM\OneToMany(targetEntity="Veranstaltung", mappedBy="beauftragter")
      */
-    public function setAnrede($anrede)
-    {
-        $this->Anrede = $anrede;
-
-        return $this;
-    }
+    protected $modulbeauftragter;
 
     /**
-     * Get Anrede
-     *
-     * @return string
+     * @ORM\OneToMany(targetEntity="Veranstaltung", mappedBy="autor")
      */
-    public function getAnrede()
-    {
-        return $this->Anrede;
-    }
+    protected $bearbeitet;
 
     /**
-     * Set Titel
-     *
-     * @param string $titel
-     *
-     * @return Dozent
+     * @ORM\OneToMany(targetEntity="VeranstaltungHistory", mappedBy="autor")
      */
-    public function setTitel($titel)
-    {
-        $this->Titel = $titel;
-
-        return $this;
-    }
+    protected $bearbeitetHistory;
 
     /**
-     * Get Titel
-     *
-     * @return string
+     * @ORM\OneToMany(targetEntity="Studiengang", mappedBy="sgl")
      */
-    public function getTitel()
-    {
-        return $this->Titel;
-    }
+    protected $studiengang;
 
     /**
-     * Set Name
-     *
-     * @param string $name
-     *
-     * @return Dozent
+     * @ORM\Column(type="string", length=64, nullable=false)
      */
-    public function setName($name)
-    {
-        $this->Name = $name;
-
-        return $this;
-    }
+    private $password;
 
     /**
-     * Get Name
-     *
-     * @return string
+     * @ORM\Column(name="is_active", type="boolean", nullable=false)
      */
-    public function getName()
-    {
-        return $this->Name;
-    }
+    private $isActive;
 
     /**
-     * Set Nachname
-     *
-     * @param string $nachname
-     *
-     * @return Dozent
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinColumn(name="roles_id", referencedColumnName="id", nullable=false)
      */
-    public function setNachname($nachname)
-    {
-        $this->Nachname = $nachname;
-
-        return $this;
-    }
-
-    /**
-     * Get Nachname
-     *
-     * @return string
-     */
-    public function getNachname()
-    {
-        return $this->Nachname;
-    }
+    private $roles;
 
     /**
      * Constructor
@@ -262,235 +201,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     {
         return $this->email;
     }
-
-    /**
-     * Add lehrende
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
-     *
-     * @return Dozent
-     */
-    public function addLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
-    {
-        $this->lehrende[] = $lehrende;
-
-        return $this;
-    }
-
-    /**
-     * Remove lehrende
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
-     */
-    public function removeLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
-    {
-        $this->lehrende->removeElement($lehrende);
-    }
-
-    /**
-     * Get lehrende
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLehrende()
-    {
-        return $this->lehrende;
-    }
-
-    /**
-     * Add semesterplan
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
-     *
-     * @return Dozent
-     */
-    public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
-    {
-        $this->semesterplan[] = $semesterplan;
-
-        return $this;
-    }
-
-    /**
-     * Remove semesterplan
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
-     */
-    public function removeSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
-    {
-        $this->semesterplan->removeElement($semesterplan);
-    }
-
-    /**
-     * Get semesterplan
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSemesterplan()
-    {
-        return $this->semesterplan;
-    }
-
-    /*Abhaengigkeiten*/
-
-    /*Lehrender*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="dozent", cascade={"all"})
-     * */
-    protected $lehrende;
-
-    /*Semesterplan*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="dozent", cascade={"all"})
-     * */
-    protected $semesterplan;
-
-    /*Modulbeauftragter (Dozent/Modul)*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Veranstaltung", mappedBy="beauftragter")
-     */
-    protected $modulbeauftragter;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Veranstaltung", mappedBy="autor")
-     */
-    protected $bearbeitet;
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getBearbeitet()
-//    {
-//        return $this->bearbeitet;
-//    }
-//
-//    /**
-//     * @param mixed $bearbeitet
-//     */
-//    public function setBearbeitet($bearbeitet)
-//    {
-//        $this->bearbeitet = $bearbeitet;
-//    }
-
-    /**
-     * @ORM\OneToMany(targetEntity="VeranstaltungHistory", mappedBy="autor")
-     */
-    protected $bearbeitetHistory;
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getBearbeitetHistory()
-//    {
-//        return $this->bearbeitetHistory;
-//    }
-//
-//    /**
-//     * @param mixed $bearbeitetHistory
-//     */
-//    public function setBearbeitetHistory($bearbeitetHistory)
-//    {
-//        $this->bearbeitetHistory = $bearbeitetHistory;
-//    }
-
-    /*Studiengangleiter (Dozent/Studiengang)*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Studiengang", mappedBy="sgl")
-     */
-    protected $studiengang;
-
-    /**
-     * Add veranstaltung
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung
-     *
-     * @return Dozent
-     */
-    public function addModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung)
-    {
-        $this->modulbeauftragter[] = $veranstaltung;
-
-        return $this;
-    }
-
-    /**
-     * Remove veranstaltung
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung
-     */
-    public function removeModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung)
-    {
-        $this->modulbeauftragter->removeElement($veranstaltung);
-    }
-
-    /**
-     * Get veranstaltung
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getModulbeauftragter()
-    {
-        return $this->modulbeauftragter;
-    }
-
-    /**
-     * Add studiengang
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
-     *
-     * @return Dozent
-     */
-    public function addStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
-    {
-        $this->studiengang[] = $studiengang;
-
-        return $this;
-    }
-
-    /**
-     * Remove studiengang
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
-     */
-    public function removeStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
-    {
-        $this->studiengang->removeElement($studiengang);
-    }
-
-    /**
-     * Get studiengang
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getStudiengang()
-    {
-        return $this->studiengang;
-    }
-
-
-    ///////////////////////////////////
-
-    ///////////////////////////////////
-
-    /**
-     * @ORM\Column(type="string", length=64, nullable=false)
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(name="is_active", type="boolean", nullable=false)
-     */
-    private $isActive;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
-     * @ORM\JoinColumn(name="roles_id", referencedColumnName="id", nullable=false)
-     */
-    private $roles;
 
 
     public function setRole(RoleInterface $role)
@@ -667,5 +377,317 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     public function isEnabled()
     {
         return $this->isActive;
+    }
+
+    /* ab hier doctrine:generate:entitites */
+
+    /**
+     * Get Dozenten_ID
+     *
+     * @return integer 
+     */
+    public function getDozentenID()
+    {
+        return $this->Dozenten_ID;
+    }
+
+    /**
+     * Set Anrede
+     *
+     * @param string $anrede
+     *
+     * @return Dozent
+     */
+    public function setAnrede($anrede)
+    {
+        $this->Anrede = $anrede;
+
+        return $this;
+    }
+
+    /**
+     * Get Anrede
+     *
+     * @return string 
+     */
+    public function getAnrede()
+    {
+        return $this->Anrede;
+    }
+
+    /**
+     * Set Titel
+     *
+     * @param string $titel
+     *
+     * @return Dozent
+     */
+    public function setTitel($titel)
+    {
+        $this->Titel = $titel;
+
+        return $this;
+    }
+
+    /**
+     * Get Titel
+     *
+     * @return string 
+     */
+    public function getTitel()
+    {
+        return $this->Titel;
+    }
+
+    /**
+     * Set Name
+     *
+     * @param string $name
+     *
+     * @return Dozent
+     */
+    public function setName($name)
+    {
+        $this->Name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get Name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->Name;
+    }
+
+    /**
+     * Set Nachname
+     *
+     * @param string $nachname
+     *
+     * @return Dozent
+     */
+    public function setNachname($nachname)
+    {
+        $this->Nachname = $nachname;
+
+        return $this;
+    }
+
+    /**
+     * Get Nachname
+     *
+     * @return string 
+     */
+    public function getNachname()
+    {
+        return $this->Nachname;
+    }
+
+    /**
+     * Add lehrende
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
+     *
+     * @return Dozent
+     */
+    public function addLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
+    {
+        $this->lehrende[] = $lehrende;
+
+        return $this;
+    }
+
+    /**
+     * Remove lehrende
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende
+     */
+    public function removeLehrende(\FHBingen\Bundle\MHBBundle\Entity\Lehrende $lehrende)
+    {
+        $this->lehrende->removeElement($lehrende);
+    }
+
+    /**
+     * Get lehrende
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLehrende()
+    {
+        return $this->lehrende;
+    }
+
+    /**
+     * Add semesterplan
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
+     *
+     * @return Dozent
+     */
+    public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
+    {
+        $this->semesterplan[] = $semesterplan;
+
+        return $this;
+    }
+
+    /**
+     * Remove semesterplan
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
+     */
+    public function removeSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
+    {
+        $this->semesterplan->removeElement($semesterplan);
+    }
+
+    /**
+     * Get semesterplan
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSemesterplan()
+    {
+        return $this->semesterplan;
+    }
+
+    /**
+     * Add modulbeauftragter
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulbeauftragter
+     *
+     * @return Dozent
+     */
+    public function addModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulbeauftragter)
+    {
+        $this->modulbeauftragter[] = $modulbeauftragter;
+
+        return $this;
+    }
+
+    /**
+     * Remove modulbeauftragter
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulbeauftragter
+     */
+    public function removeModulbeauftragter(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulbeauftragter)
+    {
+        $this->modulbeauftragter->removeElement($modulbeauftragter);
+    }
+
+    /**
+     * Get modulbeauftragter
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getModulbeauftragter()
+    {
+        return $this->modulbeauftragter;
+    }
+
+    /**
+     * Add bearbeitet
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $bearbeitet
+     *
+     * @return Dozent
+     */
+    public function addBearbeitet(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $bearbeitet)
+    {
+        $this->bearbeitet[] = $bearbeitet;
+
+        return $this;
+    }
+
+    /**
+     * Remove bearbeitet
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $bearbeitet
+     */
+    public function removeBearbeitet(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $bearbeitet)
+    {
+        $this->bearbeitet->removeElement($bearbeitet);
+    }
+
+    /**
+     * Get bearbeitet
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBearbeitet()
+    {
+        return $this->bearbeitet;
+    }
+
+    /**
+     * Add bearbeitetHistory
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\VeranstaltungHistory $bearbeitetHistory
+     *
+     * @return Dozent
+     */
+    public function addBearbeitetHistory(\FHBingen\Bundle\MHBBundle\Entity\VeranstaltungHistory $bearbeitetHistory)
+    {
+        $this->bearbeitetHistory[] = $bearbeitetHistory;
+
+        return $this;
+    }
+
+    /**
+     * Remove bearbeitetHistory
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\VeranstaltungHistory $bearbeitetHistory
+     */
+    public function removeBearbeitetHistory(\FHBingen\Bundle\MHBBundle\Entity\VeranstaltungHistory $bearbeitetHistory)
+    {
+        $this->bearbeitetHistory->removeElement($bearbeitetHistory);
+    }
+
+    /**
+     * Get bearbeitetHistory
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBearbeitetHistory()
+    {
+        return $this->bearbeitetHistory;
+    }
+
+    /**
+     * Add studiengang
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     *
+     * @return Dozent
+     */
+    public function addStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
+    {
+        $this->studiengang[] = $studiengang;
+
+        return $this;
+    }
+
+    /**
+     * Remove studiengang
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     */
+    public function removeStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
+    {
+        $this->studiengang->removeElement($studiengang);
+    }
+
+    /**
+     * Get studiengang
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStudiengang()
+    {
+        return $this->studiengang;
     }
 }
