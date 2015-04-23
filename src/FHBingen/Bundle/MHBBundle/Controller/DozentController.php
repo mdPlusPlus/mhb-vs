@@ -194,7 +194,7 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $modul->setAutor((string) $user);
+                $modul->setAutor($user);
                 $modul->setBeauftragter($user);
                 $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
                 $modul->setErlaeuterungenLP($form->get('erlaeuterungenLP')->getData());

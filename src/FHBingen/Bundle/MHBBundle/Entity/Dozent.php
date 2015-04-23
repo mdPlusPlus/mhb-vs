@@ -35,7 +35,11 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     public function __toString()
     {
-        return (string) $this->getTitel() . ' ' . $this->getNachname();
+        if (is_null($this->getTitel())) {
+            return (string) $this->getNachname();
+        } else {
+            return (string) $this->getTitel() . ' ' . $this->getNachname();
+        }
     }
 
     /**
@@ -323,7 +327,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
         return $this->semesterplan;
     }
 
-
     /*Abhaengigkeiten*/
 
     /*Lehrender*/
@@ -332,7 +335,6 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="dozent", cascade={"all"})
      * */
     protected $lehrende;
-
 
     /*Semesterplan*/
 
@@ -348,6 +350,47 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
      */
     protected $modulbeauftragter;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Veranstaltung", mappedBy="autor")
+     */
+    protected $bearbeitet;
+
+    /**
+     * @return mixed
+     */
+    public function getBearbeitet()
+    {
+        return $this->bearbeitet;
+    }
+
+    /**
+     * @param mixed $bearbeitet
+     */
+    public function setBearbeitet($bearbeitet)
+    {
+        $this->bearbeitet = $bearbeitet;
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="VeranstaltungHistory", mappedBy="autor")
+     */
+    protected $bearbeitetHistory;
+
+    /**
+     * @return mixed
+     */
+    public function getBearbeitetHistory()
+    {
+        return $this->bearbeitetHistory;
+    }
+
+    /**
+     * @param mixed $bearbeitetHistory
+     */
+    public function setBearbeitetHistory($bearbeitetHistory)
+    {
+        $this->bearbeitetHistory = $bearbeitetHistory;
+    }
 
     /*Studiengangleiter (Dozent/Studiengang)*/
 

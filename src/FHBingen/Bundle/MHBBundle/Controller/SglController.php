@@ -184,22 +184,21 @@ class SglController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
-        $userMail = $user->getUsername();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $user));
         //Sucht das neuste Erstelldatum der MHBs des Studiengangs herraus
         $datum = $this->getNewestMHBDateForMyCourse();
 
         //prüft welche Veranstaltungen ein Änderungsdatum haben das aktueller als das des neusten MHBs ist
         $veranstaltungenBearbeitet = $em->createQuery(
-            'SELECT v.Modul_ID,v.Name,v.Kuerzel,v.Erstellungsdatum,v.Autor
+            'SELECT v.Modul_ID, v.Name, v.Kuerzel, v.Erstellungsdatum
             FROM  FHBingenMHBBundle:Veranstaltung v
             JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang=' . $studiengang->getStudiengangID() . ' AND v.Modul_ID = a.veranstaltung
             WHERE v.Erstellungsdatum > :mhbDatum ORDER BY v.Name ASC')
             ->setParameter('mhbDatum', $datum);
         $resultModul = $veranstaltungenBearbeitet->getResult();
+        //TODO: Wie Autor aufnehmen nachdem jetzt foreign key ist?
 
-        return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module aus ' . $studiengang->__toString(), 'dateTime' => $datum);
+        return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module aus ' . (string) $studiengang, 'dateTime' => $datum);
     }
 
 
@@ -208,11 +207,9 @@ class SglController extends Controller
      */
     private function getNewestMHBDateForMyCourse()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
-        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
+        $user = $this->get('security.context')->getToken()->getUser();
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $user));
         //Sucht das neuste Erstelldatum der MHBs des Studiengangs herraus
         $mhbs = $em->createQuery(
             'SELECT MAX(m.Erstellungsdatum) AS Erstellungsdatum

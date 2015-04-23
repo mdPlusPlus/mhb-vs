@@ -193,10 +193,16 @@ class VeranstaltungHistory
      */
     protected $SpracheSonstiges;
 
+//    /**
+//     * @ORM\Column(type="text", nullable=false)
+//     */
+//    protected $Autor;
+
     /**
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="bearbeitetHistory")
+     * @ORM\JoinColumn(name="autor", referencedColumnName="Dozenten_ID", nullable=false)
      */
-    protected $Autor;
+    protected $autor;
 
     /**
      * @ORM\Column(type="text", nullable=false)
@@ -662,25 +668,25 @@ class VeranstaltungHistory
     /**
      * Set Autor
      *
-     * @param string $autor
-     * @return Veranstaltung
+     * @param Dozent $autor
+     * @return $this
      */
-    public function setAutor($autor)
+    public function setAutor(Dozent $autor)
     {
-        $this->Autor = $autor;
+        $this->autor = $autor;
 
         return $this;
     }
+
     /**
      * Get Sprache
      *
-     * @return string
+     * @return Dozent
      */
     public function getAutor()
     {
-        return $this->Autor;
+        return $this->autor;
     }
-
 
     /**
      * Set SpracheSonstiges

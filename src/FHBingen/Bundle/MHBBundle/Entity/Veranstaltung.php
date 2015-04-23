@@ -214,11 +214,49 @@ class Veranstaltung
     protected $SpracheSonstiges;
 
 
-    //TODO: Vielleicht als Fremdschlüssel auf Dozent
+//    //TODO: Vielleicht als Fremdschlüssel auf Dozent
+//    /**
+//     * @ORM\Column(type="text", nullable=true)
+//     */
+//    protected $Autor;
+
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @return ArrayCollection
      */
-    protected $Autor;
+    public function getBasis()
+    {
+        return $this->basis;
+    }
+
+    /**
+     * @param ArrayCollection $basis
+     */
+    public function setBasis($basis)
+    {
+        $this->basis = $basis;
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="bearbeitet")
+     * @ORM\JoinColumn(name="autor", referencedColumnName="Dozenten_ID", nullable=false)
+     */
+    protected $autor;
+
+//    /**
+//     * @return mixed
+//     */
+//    public function getAutor2()
+//    {
+//        return $this->autor2;
+//    }
+//
+//    /**
+//     * @param mixed $autor2
+//     */
+//    public function setAutor2($autor2)
+//    {
+//        $this->autor2 = $autor2;
+//    }
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -782,13 +820,13 @@ class Veranstaltung
     /**
      * Set Autor
      *
-     * @param string $autor
+     * @param Dozent $autor
      *
      * @return Veranstaltung
      */
-    public function setAutor($autor)
+    public function setAutor(Dozent $autor)
     {
-        $this->Autor = $autor;
+        $this->autor = $autor;
 
         return $this;
     }
@@ -796,11 +834,11 @@ class Veranstaltung
     /**
      * Get Autor
      *
-     * @return string 
+     * @return Dozent
      */
     public function getAutor()
     {
-        return $this->Autor;
+        return $this->autor;
     }
 
     /**

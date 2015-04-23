@@ -3,6 +3,7 @@
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
+use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -187,5 +188,34 @@ class DefaultController extends Controller
 
         return new Response($pathToCover);
 
+    }
+
+    /**
+     * @Route("/autorConvert")
+     */
+    public function autoConvertAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $veranstaltungen = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
+        $veranstaltungenHistory = $em->getRepository('FHBingenMHBBundle:VeranstaltungHistory')->findAll();
+
+        foreach ($veranstaltungen as $veranstaltung) {
+            $veranstaltung->setAutor($em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => 8))); //schmidt
+            $em->persist($veranstaltung);
+        }
+        foreach ($veranstaltungenHistory as $veranstaltung) {
+            $veranstaltung->setAutor($em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => 8))); //schmidt
+            $em->persist($veranstaltung);
+        }
+
+        $em->flush();
+
+        return new Response('Erfolg');
+    }
+
+    public function dozToString(Dozent $dozent)
+    {
+        return (string) $dozent;
     }
 }

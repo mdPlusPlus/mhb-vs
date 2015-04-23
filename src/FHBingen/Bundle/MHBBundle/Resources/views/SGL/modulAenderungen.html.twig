@@ -32,7 +32,7 @@
                 <td><a href="{{ path('modulBearbeiten', {'id': veranstaltung['Modul_ID']}) }}">{{ veranstaltung['Name'] }}</a></td>
                 <td>{{ veranstaltung['Kuerzel'] }}</td>
                 <td>{{ veranstaltung['Erstellungsdatum']|date('d.m.Y') }}</td>
-                <td>{{ veranstaltung['Autor'] }}</td>
+                {#<td>{{ veranstaltung['autor'] }}</td>#}
             </tr>
             {% set count = count +1 %}
         {% endfor %}
