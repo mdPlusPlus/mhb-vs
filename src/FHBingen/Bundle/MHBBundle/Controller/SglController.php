@@ -75,7 +75,7 @@ class SglController extends Controller
             foreach ($angebote as $angebot) {
                 $name[] = (string) $angebot->getStudiengang();
             }
-            asort($name, SORT_STRING);//Sortiert die Studiengänge nach name
+            asort($name, SORT_STRING);//Sortiert die Studiengänge nach name //TODO: sortierung scheint hier nicht zu funktionieren
             $stgZuModul[] = $name;
         }
 
@@ -87,8 +87,8 @@ class SglController extends Controller
      * @Route("/restricted/sgl/modulCodeUebersicht", name="modulCodeUebersicht")
      * @Template("FHBingenMHBBundle:SGL:modulCodeUebersicht.html.twig")
      *
-     * Zeigt alle Angebote mit Dummy Modulcode an aus dem Studiengangs des Angemeldeten SGLs
-     * Zeigt zusätzlich die Angebote die einen sinvollen vom SGL vergebenen Modulcode haben
+     * Zeigt alle Angebote ohne Modulcode aus dem Studiengangs des Angemeldeten SGLs an.
+     * Zeigt zusätzlich die Angebote, die einen sinnvollen vom SGL vergebenen Modulcode haben.
      * @return array
      */
     public function modulCodeUebersichtAction()
@@ -99,21 +99,21 @@ class SglController extends Controller
         $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
 
-        //findet die Angebote mit Dummy Modulcode
-        $dummyAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => 'DUMMY', 'studiengang' => $studiengang));
-        uasort($dummyAngebote, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
+        //findet die Angebote ohne Modulcode
+        $angeboteOhneCode = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => null, 'studiengang' => $studiengang));
+        uasort($angeboteOhneCode, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
 
-        //Filtert die Angebote mit DummyModul und aus anderen Studiengängen herraus
+        //Filtert die Angebote ohne Modulcode und aus anderen Studiengängen heraus
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang));
-        $angeboteOhneDummy = array();
+        $angeboteMitCode = array();
         foreach ($angebote as $value) {
-            if ($value->getCode() != 'DUMMY') {
-                $angeboteOhneDummy[] = $value;
+            if (!is_null($value->getCode())) {
+                $angeboteMitCode[] = $value;
             }
         }
-        uasort($angeboteOhneDummy, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
+        uasort($angeboteMitCode, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
 
-        return array('angebote' => $angeboteOhneDummy, 'dummyAngebote' => $dummyAngebote, 'studiengang' => $studiengang, 'pageTitle' => 'Modulcodes');
+        return array('angeboteMitCode' => $angeboteMitCode, 'angeboteOhneCode' => $angeboteOhneCode, 'studiengang' => $studiengang, 'pageTitle' => 'Modulcodes');
     }
 
 
@@ -570,13 +570,13 @@ class SglController extends Controller
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $sgl));
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang));
 
-        $angeboteOhneDummy=array();
+        $angeboteMitCode = array();
         foreach ($angebote as $an) {
-            if ($an->getCode()!='DUMMY') {
-                $angeboteOhneDummy[]=$an;
+            if (!is_null($an->getCode())) {
+                $angeboteMitCode[] = $an;
             }
         }
-        $angebote=$angeboteOhneDummy;
+        $angebote = $angeboteMitCode;
 
         $zuordnung = array();
         $fachgebiete = $em->getRepository('FHBingenMHBBundle:Fachgebiet')->findBy(array('studiengang' => $studiengang));

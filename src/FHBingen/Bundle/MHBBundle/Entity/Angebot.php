@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\EntityListeners({"FHBingen\Bundle\MHBBundle\EntityListener\AngebotListener"})
+ * @UniqueEntity(fields="Code",               ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem Code.")
  * @UniqueEntity(fields="AbweichenderNameDE", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen deutschen Titel.")
  * @UniqueEntity(fields="AbweichenderNameEN", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen englischen Titel.")
  * @ORM\Table(name="Angebot")
@@ -78,7 +79,7 @@ class Angebot
     protected	$Angebotsart;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=false)
+     * @ORM\Column(type="string", length=10, nullable=true, unique=true)
      * @Assert\Length(
      *      min = 8,
      *      minMessage = "Der Modulcode muss mindestens {{ limit }} Zeichen lang sein.",
@@ -90,7 +91,7 @@ class Angebot
      *     message = "Bitte verwenden Sie folgendes Muster für den Modulcode: z.B. B-IN-MN01, B-IN-V05"
      * )
      */
-    protected	$Code; //TODO: unique, nullable, statt DUMMY auf null setzen/prüfen
+    protected	$Code;
 
     // Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
@@ -123,8 +124,6 @@ class Angebot
      * )
      */
     protected	$AbweichenderNameEN;
-
-
 
     /**
      * Get Angebots_ID

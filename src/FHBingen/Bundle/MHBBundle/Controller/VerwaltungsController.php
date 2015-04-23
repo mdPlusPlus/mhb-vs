@@ -35,7 +35,7 @@ class VerwaltungsController extends Controller
 
         foreach ($entries as $e) {
             //wenn nicht "Alle" oder "N.N." wird zwischen SGL und Dozent unterschieden und sortiert
-            if ($e->getName()!='Dummy') {
+            if ($e->getName() != 'Dummy') {
                 if (in_array('ROLE_SGL', $e->getRoles())) {
                     $sgl[] = $e;
                 } else {

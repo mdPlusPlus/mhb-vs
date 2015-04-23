@@ -527,7 +527,7 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                $angebot->setCode('DUMMY');
+                $angebot->setCode(null);
                 $angebot->setVeranstaltung($modul);
                 $angebot->setStudiengang($studiengang);
                 $angebot->setAngebotsart($angebotsart);
