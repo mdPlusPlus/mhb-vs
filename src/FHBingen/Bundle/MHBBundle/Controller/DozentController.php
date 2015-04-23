@@ -71,7 +71,7 @@ class DozentController extends Controller
         //$dozentLehrt ist ein Array mit allen Modulen, welche der aktuelle Benutzer unterrichtet
         $dozentLehrt = array();
         foreach ($lehrendeVonDozent as $lehrende) {
-            $dozentLehrt[] = $lehrende->getVeranstaltung();
+            $dozentLehrt[] = $lehrende->getVeranstaltung(); //TODO: keine "expired" anzeigen!
         }
         asort($dozentLehrt, SORT_STRING);
 

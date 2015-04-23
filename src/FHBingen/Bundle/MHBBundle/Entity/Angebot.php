@@ -90,7 +90,7 @@ class Angebot
      *     message = "Bitte verwenden Sie folgendes Muster für den Modulcode: z.B. B-IN-MN01, B-IN-V05"
      * )
      */
-    protected	$Code;
+    protected	$Code; //TODO: unique, nullable, statt DUMMY auf null setzen/prüfen
 
     // Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
