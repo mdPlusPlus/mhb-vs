@@ -185,20 +185,20 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $user));
-        //Sucht das neuste Erstelldatum der MHBs des Studiengangs herraus
+        //Sucht das neuste Erstelldatum der MHBs des Studiengangs heraus
         $datum = $this->getNewestMHBDateForMyCourse();
 
-        //prüft welche Veranstaltungen ein Änderungsdatum haben das aktueller als das des neusten MHBs ist
-        $veranstaltungenBearbeitet = $em->createQuery(
+        //prüft welche Veranstaltungen ein Änderungsdatum haben, das aktueller als das des neusten MHBs ist
+        $geaenderteVeranstaltungenQuery = $em->createQuery(
             'SELECT v.Modul_ID, v.Name, v.Kuerzel, v.Erstellungsdatum
             FROM  FHBingenMHBBundle:Veranstaltung v
             JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang=' . $studiengang->getStudiengangID() . ' AND v.Modul_ID = a.veranstaltung
             WHERE v.Erstellungsdatum > :mhbDatum ORDER BY v.Name ASC')
             ->setParameter('mhbDatum', $datum);
-        $resultModul = $veranstaltungenBearbeitet->getResult();
+        $geaenderteVeranstaltungen = $geaenderteVeranstaltungenQuery->getResult();
         //TODO: Wie Autor aufnehmen nachdem jetzt foreign key ist?
 
-        return array('module' => $resultModul, 'pageTitle' => 'Geänderte Module aus ' . (string) $studiengang, 'dateTime' => $datum);
+        return array('module' => $geaenderteVeranstaltungen, 'pageTitle' => 'Geänderte Module aus ' . (string) $studiengang, 'dateTime' => $datum);
     }
 
 

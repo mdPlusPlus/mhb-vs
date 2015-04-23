@@ -1,49 +1,51 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block content %}
-<div class="table-responsive">
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#table").tablesorter();
+    <div class="table-responsive">
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#table").tablesorter();
 
-            <!-- navbar highlighting -->
-            highlightMe(document.getElementById('modulAenderungenLink'));
-        });
-    </script>
-    {% if dateTime.format('d.m.Y')=='01.01.1970' %}
-         <h4>{{ 'In ihrem Studiengang wurde noch kein Modulhandbuch  generiert.' }}</h4>
-    {% else %}
+                <!-- navbar highlighting -->
+                highlightMe(document.getElementById('modulAenderungenLink'));
+            });
+        </script>
+
+        {% if dateTime.format('d.m.Y') != '01.01.1970' %}
             <h4>{{ 'Das neueste Modulhandbuch wurde am ' ~ dateTime.format('d.m.Y') ~ ' generiert.' }}</h4>
-    {% endif %}
-    {% if module is not empty %}
-    <table id="table" class="table table-bordered tablesorter" >
-        <thead>
-        <tr>
-            <th>Modultitel</th>
-            <th style="min-width: 100px; width: 7%">Kürzel</th>
-            <th style="min-width: 130px; width: 12%">Letzte Änderung</th>
-            <th style="min-width: 8px; width: 23%">Autor</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% set count = 0 %}
-        {% for veranstaltung in module %}
-            <tr>
-                <td><a href="{{ path('modulBearbeiten', {'id': veranstaltung['Modul_ID']}) }}">{{ veranstaltung['Name'] }}</a></td>
-                <td>{{ veranstaltung['Kuerzel'] }}</td>
-                <td>{{ veranstaltung['Erstellungsdatum']|date('d.m.Y') }}</td>
-                {#<td>{{ veranstaltung['autor'] }}</td>#}
-            </tr>
-            {% set count = count +1 %}
-        {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-        {% if dateTime.format('d.m.Y')!='01.01.1970' %}
-            <p>Seit der Erstellung des letzten Modulhandbuchs Ihres Studienganges wurden keine Module geändert.</p>
+        {% else %}
+            <h4>{{ 'In ihrem Studiengang wurde noch kein Modulhandbuch generiert.' }}</h4>
         {% endif %}
-    {% endif %}
-  </div>
+
+        {% if module is not empty %}
+            <table id="table" class="table table-bordered tablesorter">
+                <thead>
+                <tr>
+                    <th>Modultitel</th>
+                    <th style="min-width: 100px; width: 7%">Kürzel</th>
+                    <th style="min-width: 130px; width: 12%">Letzte Änderung</th>
+                    <th style="min-width: 8px; width: 23%">Autor</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for veranstaltung in module %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('modulBearbeiten', {'id': veranstaltung['Modul_ID']}) }}">{{ veranstaltung['Name'] }}</a>
+                        </td>
+                        <td>{{ veranstaltung['Kuerzel'] }}</td>
+                        <td>{{ veranstaltung['Erstellungsdatum']|date('d.m.Y') }}</td>
+                        {#<td>{{ veranstaltung['autor'] }}</td>#}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            {% if dateTime.format('d.m.Y') != '01.01.1970' %}
+                <p>Seit der Erstellung des letzten Modulhandbuchs Ihres Studienganges wurden keine Module geändert.</p>
+            {% endif %}
+        {% endif %}
+    </div>
 
     {% include '@FHBingenMHB/flashbags.html.twig' %}
 

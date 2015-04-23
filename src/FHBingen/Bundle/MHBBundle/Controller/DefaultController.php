@@ -120,9 +120,6 @@ class DefaultController extends Controller
         return new Response("Rollen angelegt");
     }
 
-    /**
-     * @Route("/create/vor")
-     */
     public function voraussetzungAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -148,9 +145,6 @@ class DefaultController extends Controller
         return new Response($result);
     }
 
-    /**
-     * @Route("/convert")
-     */
     public function convert()
     {
         $em = $this->getDoctrine()->getManager();
@@ -175,9 +169,6 @@ class DefaultController extends Controller
         return new Response($response);
     }
 
-    /**
-     * @Route("/tmp")
-     */
     public function tmpFileTest()
     {
         $pathToCover = 'test.file';
@@ -190,9 +181,6 @@ class DefaultController extends Controller
 
     }
 
-    /**
-     * @Route("/autorConvert")
-     */
     public function autoConvertAction()
     {
         $em = $this->getDoctrine()->getManager();
