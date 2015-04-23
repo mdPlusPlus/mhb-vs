@@ -124,94 +124,16 @@ class Angebot
      */
     protected	$AbweichenderNameEN;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->zuweisung = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
 
     /**
-     * Get id
+     * Get Angebots_ID
      *
      * @return integer 
      */
-    public function getAngebots_ID()
+    public function getAngebotsID()
     {
         return $this->Angebots_ID;
-    }
-
-    /**
-     * Set module
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
-     *
-     * @return Angebot
-     */
-    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null) //warum default null?
-    {
-        $this->veranstaltung = $module;
-    
-        return $this;
-    }
-
-    /**
-     * Get module
-     *
-     * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
-     */
-    public function getVeranstaltung()
-    {
-        return $this->veranstaltung;
-    }
-
-    /**
-     * Set fachgebiet
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
-     *
-     * @return Angebot
-     */
-    public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet = null) //warum default null?
-    {
-        $this->fachgebiet = $fachgebiet;
-    
-        return $this;
-    }
-
-    /**
-     * Get fachgebiet
-     *
-     * @return \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet 
-     */
-    public function getFachgebiet()
-    {
-        return $this->fachgebiet;
-    }
-
-    /**
-     * Set studiengang
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
-     *
-     * @return Angebot
-     */
-    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null) //warum default null?
-    {
-        $this->studiengang = $studiengang;
-    
-        return $this;
-    }
-
-    /**
-     * Get studiengang
-     *
-     * @return \FHBingen\Bundle\MHBBundle\Entity\Studiengang 
-     */
-    public function getStudiengang()
-    {
-        return $this->studiengang;
     }
 
     /**
@@ -224,7 +146,7 @@ class Angebot
     public function setAngebotsart($angebotsart)
     {
         $this->Angebotsart = $angebotsart;
-    
+
         return $this;
     }
 
@@ -248,7 +170,7 @@ class Angebot
     public function setCode($code)
     {
         $this->Code = $code;
-    
+
         return $this;
     }
 
@@ -263,7 +185,7 @@ class Angebot
     }
 
     /**
-     * Set abweichender_Titel_DE
+     * Set AbweichenderNameDE
      *
      * @param string $abweichenderNameDE
      *
@@ -272,12 +194,12 @@ class Angebot
     public function setAbweichenderNameDE($abweichenderNameDE)
     {
         $this->AbweichenderNameDE = $abweichenderNameDE;
-    
+
         return $this;
     }
 
     /**
-     * Get abweichender_Titel_DE
+     * Get AbweichenderNameDE
      *
      * @return string 
      */
@@ -287,7 +209,7 @@ class Angebot
     }
 
     /**
-     * Set abweichender_Titel_EN
+     * Set AbweichenderNameEN
      *
      * @param string $abweichenderNameEN
      *
@@ -296,12 +218,12 @@ class Angebot
     public function setAbweichenderNameEN($abweichenderNameEN)
     {
         $this->AbweichenderNameEN = $abweichenderNameEN;
-    
+
         return $this;
     }
 
     /**
-     * Get abweichender_Titel_EN
+     * Get AbweichenderNameEN
      *
      * @return string 
      */
@@ -311,12 +233,74 @@ class Angebot
     }
 
     /**
-     * Get Angebots_ID
+     * Set veranstaltung
      *
-     * @return integer 
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung
+     *
+     * @return Angebot
      */
-    public function getAngebotsID()
+    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung)
     {
-        return $this->Angebots_ID;
+        $this->veranstaltung = $veranstaltung;
+
+        return $this;
+    }
+
+    /**
+     * Get veranstaltung
+     *
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
+     */
+    public function getVeranstaltung()
+    {
+        return $this->veranstaltung;
+    }
+
+    /**
+     * Set fachgebiet
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
+     *
+     * @return Angebot
+     */
+    public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
+    {
+        $this->fachgebiet = $fachgebiet;
+
+        return $this;
+    }
+
+    /**
+     * Get fachgebiet
+     *
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet 
+     */
+    public function getFachgebiet()
+    {
+        return $this->fachgebiet;
+    }
+
+    /**
+     * Set studiengang
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     *
+     * @return Angebot
+     */
+    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
+    {
+        $this->studiengang = $studiengang;
+
+        return $this;
+    }
+
+    /**
+     * Get studiengang
+     *
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Studiengang 
+     */
+    public function getStudiengang()
+    {
+        return $this->studiengang;
     }
 }
