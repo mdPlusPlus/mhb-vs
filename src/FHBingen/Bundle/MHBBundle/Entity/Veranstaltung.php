@@ -31,6 +31,16 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Veranstaltung
 {
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        $string = $this->getName();
+
+        return $string;
+    }
+
+    /**
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\ID
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -198,7 +208,6 @@ class Veranstaltung
      */
     protected $ErlaeuterungenLP;
 
-
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Choice(
@@ -264,7 +273,6 @@ class Veranstaltung
      */
     protected $beauftragter;
 
-
     //TODO: Wirklich Veranstaltung in Studienplan eintragen? Nicht vielleicht Angebot?
     /**
      * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="veranstaltung", cascade={"all"})
@@ -286,7 +294,6 @@ class Veranstaltung
      */
     private $forderung;
 
-
     /**
      * Constructor
      */
@@ -300,16 +307,6 @@ class Veranstaltung
         $this->lehrende         = new ArrayCollection();
         $this->semesterplan     = new ArrayCollection();
         $this->studienplanModul = new ArrayCollection();
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        $string = $this->getName();
-
-        return $string;
     }
 
     /**
