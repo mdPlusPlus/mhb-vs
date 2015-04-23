@@ -213,50 +213,11 @@ class Veranstaltung
      */
     protected $SpracheSonstiges;
 
-
-//    //TODO: Vielleicht als Fremdschlüssel auf Dozent
-//    /**
-//     * @ORM\Column(type="text", nullable=true)
-//     */
-//    protected $Autor;
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getBasis()
-    {
-        return $this->basis;
-    }
-
-    /**
-     * @param ArrayCollection $basis
-     */
-    public function setBasis($basis)
-    {
-        $this->basis = $basis;
-    }
-
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="bearbeitet")
      * @ORM\JoinColumn(name="autor", referencedColumnName="Dozenten_ID", nullable=false)
      */
     protected $autor;
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getAutor2()
-//    {
-//        return $this->autor2;
-//    }
-//
-//    /**
-//     * @param mixed $autor2
-//     */
-//    public function setAutor2($autor2)
-//    {
-//        $this->autor2 = $autor2;
-//    }
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -359,6 +320,22 @@ class Veranstaltung
     public function getModulID()
     {
         return $this->Modul_ID;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getBasis()
+    {
+        return $this->basis;
+    }
+
+    /**
+     * @param ArrayCollection $basis
+     */
+    public function setBasis($basis)
+    {
+        $this->basis = $basis;
     }
 
     /**

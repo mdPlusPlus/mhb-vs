@@ -25,6 +25,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 class VeranstaltungHistory
 {
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $string = (string) $this->getName();
@@ -193,11 +196,6 @@ class VeranstaltungHistory
      */
     protected $SpracheSonstiges;
 
-//    /**
-//     * @ORM\Column(type="text", nullable=false)
-//     */
-//    protected $Autor;
-
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="bearbeitetHistory")
      * @ORM\JoinColumn(name="autor", referencedColumnName="Dozenten_ID", nullable=false)
@@ -241,7 +239,8 @@ class VeranstaltungHistory
     /**
      * Set Modul_ID
      *
-     * @param integer $Modul_ID
+     * @param integer $id
+     *
      * @return VeranstaltungHistory
      */
     public function setModulID($id)
@@ -256,6 +255,7 @@ class VeranstaltungHistory
      * Set Erstellungsdatum
      *
      * @param \DateTime $erstellungsdatum
+     *
      * @return VeranstaltungHistory
      */
     public function setErstellungsdatum($erstellungsdatum)
@@ -275,33 +275,11 @@ class VeranstaltungHistory
         return $this->Erstellungsdatum;
     }
 
-//    /**
-//     * Set erstellt_von
-//     *
-//     * @param string $erstelltVon
-//     * @return VeranstaltungHistory
-//     */
-//    public function setErstelltVon($erstelltVon)
-//    {
-//        $this->Erstellt_von = $erstelltVon;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get erstellt_von
-//     *
-//     * @return string
-//     */
-//    public function getErstelltVon()
-//    {
-//        return $this->Erstellt_von;
-//    }
-
     /**
      * Set Versionsnummer_Modul
      *
      * @param integer $versionsnummerModul
+     *
      * @return VeranstaltungHistory
      */
     public function setVersionsnummer($versionsnummerModul)
@@ -325,6 +303,7 @@ class VeranstaltungHistory
      * Set Kuerzel
      *
      * @param string $kuerzel
+     *
      * @return VeranstaltungHistory
      */
     public function setKuerzel($kuerzel)
@@ -348,6 +327,7 @@ class VeranstaltungHistory
      * Set Name
      *
      * @param string $name
+     *
      * @return VeranstaltungHistory
      */
     public function setName($name)
@@ -368,32 +348,10 @@ class VeranstaltungHistory
     }
 
     /**
-     * Set Name_en
-     *
-     * @param string $nameEn
-     * @return VeranstaltungHistory
-     */
-    public function setNameEn($nameEn)
-    {
-        $this->NameEN = $nameEn;
-
-        return $this;
-    }
-
-    /**
-     * Get Name_en
-     *
-     * @return string
-     */
-    public function getNameEn()
-    {
-        return $this->NameEN;
-    }
-
-    /**
      * Set Haeufigkeit
      *
      * @param string $haeufigkeit
+     *
      * @return VeranstaltungHistory
      */
     public function setHaeufigkeit($haeufigkeit)
@@ -417,6 +375,7 @@ class VeranstaltungHistory
      * Set Dauer
      *
      * @param integer $dauer
+     *
      * @return VeranstaltungHistory
      */
     public function setDauer($dauer)
@@ -440,6 +399,7 @@ class VeranstaltungHistory
      * Set Lehrveranstaltungen
      *
      * @param string $lehrveranstaltungen
+     *
      * @return VeranstaltungHistory
      */
     public function setLehrveranstaltungen($lehrveranstaltungen)
@@ -463,6 +423,7 @@ class VeranstaltungHistory
      * Set Kontaktzeit_VL
      *
      * @param integer $kontaktzeitVL
+     *
      * @return VeranstaltungHistory
      */
     public function setKontaktzeitVL($kontaktzeitVL)
@@ -486,6 +447,7 @@ class VeranstaltungHistory
      * Set Kontaktzeit_sonstige
      *
      * @param integer $kontaktzeitSonstige
+     *
      * @return Veranstaltung
      */
     public function setKontaktzeitSonstige($kontaktzeitSonstige)
@@ -509,6 +471,7 @@ class VeranstaltungHistory
      * Set Selbststudium
      *
      * @param integer $selbststudium
+     *
      * @return Veranstaltung
      */
     public function setSelbststudium($selbststudium)
@@ -532,6 +495,7 @@ class VeranstaltungHistory
      * Set Gruppengroesse
      *
      * @param integer $gruppengroesse
+     *
      * @return Veranstaltung
      */
     public function setGruppengroesse($gruppengroesse)
@@ -555,6 +519,7 @@ class VeranstaltungHistory
      * Set Lernergebnisse
      *
      * @param string $lernergebnisse
+     *
      * @return Veranstaltung
      */
     public function setLernergebnisse($lernergebnisse)
@@ -578,6 +543,7 @@ class VeranstaltungHistory
      * Set Inhalte
      *
      * @param string $inhalte
+     *
      * @return Veranstaltung
      */
     public function setInhalte($inhalte)
@@ -601,6 +567,7 @@ class VeranstaltungHistory
      * Set Pruefungsformen
      *
      * @param string $pruefungsformen
+     *
      * @return Veranstaltung
      */
     public function setPruefungsformen($pruefungsformen)
@@ -624,6 +591,7 @@ class VeranstaltungHistory
      * Set PruefungsformSonstiges
      *
      * @param string $pruefungsformen
+     *
      * @return Veranstaltung
      */
     public function setPruefungsformSonstiges($pruefungsformSonst)
@@ -647,6 +615,7 @@ class VeranstaltungHistory
      * Set Sprache
      *
      * @param string $sprache
+     *
      * @return Veranstaltung
      */
     public function setSprache($sprache)
@@ -669,6 +638,7 @@ class VeranstaltungHistory
      * Set Autor
      *
      * @param Dozent $autor
+     *
      * @return $this
      */
     public function setAutor(Dozent $autor)
@@ -691,6 +661,7 @@ class VeranstaltungHistory
     /**
      * Set SpracheSonstiges
      * @param string $sprache
+     *
      * @return Veranstaltung
      */
     public function setSpracheSonstiges($sprache)
@@ -716,6 +687,7 @@ class VeranstaltungHistory
      * Set Literatur
      *
      * @param string $literatur
+     *
      * @return Veranstaltung
      */
     public function setLiteratur($literatur)
@@ -739,6 +711,7 @@ class VeranstaltungHistory
      * Set Leistungspunkte
      *
      * @param integer $leistungspunkte
+     *
      * @return Veranstaltung
      */
     public function setLeistungspunkte($leistungspunkte)
@@ -762,6 +735,7 @@ class VeranstaltungHistory
      * Set Voraussetzung_LP
      *
      * @param string $voraussetzungLP
+     *
      * @return Veranstaltung
      */
     public function setVoraussetzungLP($voraussetzungLP)
@@ -785,6 +759,7 @@ class VeranstaltungHistory
      * Set Voraussetzung_inh
      *
      * @param string $voraussetzungInh
+     *
      * @return Veranstaltung
      */
     public function setVoraussetzungInh($voraussetzungInh)
@@ -804,4 +779,100 @@ class VeranstaltungHistory
         return $this->VoraussetzungInhalte;
     }
 
+
+    /**
+     * Set NameEN
+     *
+     * @param string $nameEN
+     *
+     * @return VeranstaltungHistory
+     */
+    public function setNameEN($nameEN)
+    {
+        $this->NameEN = $nameEN;
+
+        return $this;
+    }
+
+    /**
+     * Get NameEN
+     *
+     * @return string 
+     */
+    public function getNameEN()
+    {
+        return $this->NameEN;
+    }
+
+    /**
+     * Set PruefungsleistungSonstiges
+     *
+     * @param string $pruefungsleistungSonstiges
+     *
+     * @return VeranstaltungHistory
+     */
+    public function setPruefungsleistungSonstiges($pruefungsleistungSonstiges)
+    {
+        $this->PruefungsleistungSonstiges = $pruefungsleistungSonstiges;
+
+        return $this;
+    }
+
+    /**
+     * Get PruefungsleistungSonstiges
+     *
+     * @return string 
+     */
+    public function getPruefungsleistungSonstiges()
+    {
+        return $this->PruefungsleistungSonstiges;
+    }
+
+    /**
+     * Set StudienleistungSonstiges
+     *
+     * @param string $studienleistungSonstiges
+     *
+     * @return VeranstaltungHistory
+     */
+    public function setStudienleistungSonstiges($studienleistungSonstiges)
+    {
+        $this->StudienleistungSonstiges = $studienleistungSonstiges;
+
+        return $this;
+    }
+
+    /**
+     * Get StudienleistungSonstiges
+     *
+     * @return string 
+     */
+    public function getStudienleistungSonstiges()
+    {
+        return $this->StudienleistungSonstiges;
+    }
+
+    /**
+     * Set VoraussetzungInhalte
+     *
+     * @param string $voraussetzungInhalte
+     *
+     * @return VeranstaltungHistory
+     */
+    public function setVoraussetzungInhalte($voraussetzungInhalte)
+    {
+        $this->VoraussetzungInhalte = $voraussetzungInhalte;
+
+        return $this;
+    }
+
+    /**
+     * Get VoraussetzungInhalte
+     *
+     * @return string 
+     */
+    public function getVoraussetzungInhalte()
+    {
+        return $this->VoraussetzungInhalte;
+    }
 }
