@@ -24,6 +24,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Semester
 {
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $string = $this->getSemester();

@@ -24,6 +24,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Modulhandbuch
 {
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         //TODO richtig? getter?
@@ -32,6 +35,9 @@ class Modulhandbuch
         return $string;
     }
 
+    /**
+     * @return string
+     */
     public function getMhbTitel()
     {
         return 'MHB_' . $this->getGehoertZu()->getKuerzel() . '_' . $this->getGueltigAb() . '_V' . $this->getVersionsnummer();

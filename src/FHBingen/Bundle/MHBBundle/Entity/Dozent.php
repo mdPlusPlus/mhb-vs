@@ -30,6 +30,9 @@ use FHBingen\Bundle\MHBBundle\PHP\UserDependentRole;
  */
 class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, EncoderAwareInterface
 {
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string) $this->getTitel() . ' ' . $this->getNachname();

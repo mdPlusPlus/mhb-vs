@@ -22,6 +22,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Lehrende
 {
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $string = (string) $this->dozent . ' ' .(string) $this->veranstaltung;
@@ -47,7 +50,7 @@ class Lehrende
     /**
      * Set module
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul
      *
      * @return Lehrende
      */

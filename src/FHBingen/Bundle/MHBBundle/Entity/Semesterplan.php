@@ -22,6 +22,9 @@ class Semesterplan
 {
     //TODO: Entity vollständig überarbeiten
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         //TODO $Semester richtig? getter?

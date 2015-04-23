@@ -9,7 +9,6 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FHBingen\Bundle\MHBBundle\PHP\ModulBeschreibung;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -29,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Angebot
 {
     /**
-     * @return null|string
+     * @return string
      */
     public function __toString()
     {

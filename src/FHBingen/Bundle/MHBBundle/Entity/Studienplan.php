@@ -24,6 +24,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Studienplan
 {
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $string = (string) $this->getRegelSemester();
