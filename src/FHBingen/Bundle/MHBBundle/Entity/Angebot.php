@@ -149,7 +149,7 @@ class Angebot
      *
      * @return Angebot
      */
-    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
+    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null) //warum default null?
     {
         $this->veranstaltung = $module;
     
@@ -173,7 +173,7 @@ class Angebot
      *
      * @return Angebot
      */
-    public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet = null)
+    public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet = null) //warum default null?
     {
         $this->fachgebiet = $fachgebiet;
     
@@ -197,7 +197,7 @@ class Angebot
      *
      * @return Angebot
      */
-    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null)
+    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null) //warum default null?
     {
         $this->studiengang = $studiengang;
     
