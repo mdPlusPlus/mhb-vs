@@ -33,19 +33,19 @@ class Tag
     }
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      * @Assert\NotBlank()
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      * @Assert\NotBlank()
      */
     private $anotherField;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAnotherField()
     {
@@ -53,11 +53,33 @@ class Tag
     }
 
     /**
-     * @param mixed $anotherField
+     * @param string $anotherField
      */
     public function setAnotherField($anotherField)
     {
         $this->anotherField = $anotherField;
+    }
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank()
+     */
+    private $yetAnotherField;
+
+    /**
+     * @return string
+     */
+    public function getYetAnotherField()
+    {
+        return $this->yetAnotherField;
+    }
+
+    /**
+     * @param string $yetAnotherField
+     */
+    public function setYetAnotherField($yetAnotherField)
+    {
+        $this->yetAnotherField = $yetAnotherField;
     }
 
     /**

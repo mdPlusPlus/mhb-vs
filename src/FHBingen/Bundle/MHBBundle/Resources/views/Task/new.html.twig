@@ -1,6 +1,6 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
-{#{% form_theme form 'form_table_layout.html.twig' %}#}
+{% form_theme form 'form_table_layout.html.twig' %}
 
 {% block userLogout %}
 {% endblock userLogout %}
@@ -10,7 +10,7 @@
         var $collectionHolder;
 
         // setup an "add a tag" link
-        var $addTagLink = $('<td colspan="7"><a href="#" class="add_tag_link">Add a tag</a></td>');
+        var $addTagLink = $('<td colspan="10"><a href="#" class="add_tag_link">Add a tag</a></td>');
         var $newLinkLi = $('<tr></tr>').append($addTagLink);
 
         jQuery(document).ready(function () {
@@ -41,7 +41,12 @@
         function addTagForm($collectionHolder, $newLinkLi) {
             // Get the data-prototype explained earlier
             //var prototype = $collectionHolder.data('prototype');
-            var prototype = '<td><label for="task_tags___name___name" class="required">Name</label></td><td><input type="text" id="task_tags___name___name" name="task[tags][__name__][name]" required="required" /></td><td></td><td><label for="task_tags___name___anotherField" class="required">Another field</label></td><td><input type="text" id="task_tags___name___anotherField" name="task[tags][__name__][anotherField]" required="required" /></td><td></td>';
+
+            var prototypeStr = '{{ form_widget(form.tags.vars.prototype)|replace({'  ' : '', '\n' : ''})|raw }}'; //stripping whitespace
+            prototypeStr = prototypeStr.replace(new RegExp('<[/]{0,1}table[^>]*>', 'g'), ''); //striping <table>...</table>
+            prototypeStr = prototypeStr.replace(new RegExp('<[/]{0,1}tr>', 'g'), ''); //stripping <tr>...</tr>
+            prototypeStr = prototypeStr.replace(new RegExp('(<input[^/]*\/><\/td>)', 'g'), '$1<td></td>'); //TODO: extra '<td></td>'s für errors
+            var prototype = prototypeStr;
 
             // get the new index
             var index = $collectionHolder.data('index');
@@ -75,14 +80,13 @@
         }
     </script>
 
-    {#{{ form_start(form) }}#}
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 
     {{ form_row(form.description) }}
 
     <h3>Tags</h3>
 
-    <table class="tags" {#data-protoype="{{ form_widget(form.tags.vars.prototype)|e }}"#}>
+    <table class="tags" {# data-protoype="{{ form_widget(form.tags.vars.prototype)|e }}" #}>
         {% if form.tags is not empty %}
             {% for tag in form.tags %}
                 <tr class="form_row">
@@ -92,6 +96,9 @@
                     <td>{{ form_label(tag.anotherField) }}</td>
                     <td>{{ form_widget(tag.anotherField) }}</td>
                     <td>{{ form_errors(tag.anotherField) }}</td>
+                    <td>{{ form_label(tag.yetAnotherField) }}</td>
+                    <td>{{ form_widget(tag.yetAnotherField) }}</td>
+                    <td>{{ form_errors(tag.yetAnotherField) }}</td>
                 </tr>
             {% endfor %}
         {% else %}

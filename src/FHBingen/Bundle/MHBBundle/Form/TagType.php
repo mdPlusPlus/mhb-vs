@@ -18,7 +18,8 @@ class TagType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('anotherField');
+            ->add('anotherField')
+            ->add('yetAnotherField');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
