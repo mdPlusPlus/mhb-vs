@@ -18,7 +18,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="Fachgebiet")
  * @ORM\HasLifecycleCallbacks
  */
-
 class Fachgebiet
 {
     /**
@@ -33,7 +32,7 @@ class Fachgebiet
 
     /**
      * @ORM\Column(type="integer")
-     * @ORM\ID
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $Fachgebiets_ID;
