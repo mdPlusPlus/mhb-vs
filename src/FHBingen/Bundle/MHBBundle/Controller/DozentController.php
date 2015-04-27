@@ -345,7 +345,7 @@ class DozentController extends Controller
                     $em->persist($modulHistory);
                 }
 
-                $modul->setAutor((string) $user);
+                $modul->setAutor($user);
                 $modul->setBeauftragter($form->get('beauftragter')->getData());
                 $modul->setDauer($form->get('dauer')->getData() . ' ' . $_POST['einheit']); // wird von Template gesetzt
                 $modul->setErlaeuterungenLP($form->get('erlaeuterungenLP')->getData());
