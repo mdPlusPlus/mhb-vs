@@ -6,7 +6,6 @@
  * Time: 17:37
  */
 
-
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -18,12 +17,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Studienplan")
- * @ORM\HasLifecycleCallbacks
  */
-
 class Studienplan
 {
-
     /**
      * @return string
      */
@@ -35,20 +31,13 @@ class Studienplan
     }
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @var integer $id
-     */
-    protected $Studienplan_ID;
-
-    /**
      * @ORM\Column(type="text"), nullable=false
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
     protected $Regelsemester;
 
     /**
+     * @ORM\Id()
      * @ORM\Column(type="string"), nullable = false
      * @Assert\Choice(
      *      choices = { "SS", "WS" },
@@ -58,26 +47,18 @@ class Studienplan
     protected $Startsemester;
 
     /**
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="studienplanModul")
      * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
      */
     protected $veranstaltung;
 
     /**
+     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studienplanZuStudienplan")
      * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
      */
     protected $studiengang;
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getStudienplan_ID()
-    {
-        return $this->Studienplan_ID;
-    }
 
     /**
      * Set reg_sem
@@ -88,13 +69,14 @@ class Studienplan
     public function setRegelSemester($regSem)
     {
         $this->Regelsemester = $regSem;
-    
+
         return $this;
     }
 
     /**
      * Get reg_sem
      *
+     * @return string
      */
     public function getRegelSemester()
     {
@@ -102,14 +84,22 @@ class Studienplan
     }
 
 
+    /**
+     * @param string $startSem
+     *
+     * @return $this
+     */
     public function setStartsemester($startSem)
     {
         $this->Startsemester = $startSem;
-    
+
         return $this;
     }
 
 
+    /**
+     * @return string
+     */
     public function getStartsemester()
     {
         return $this->Startsemester;
@@ -125,7 +115,7 @@ class Studienplan
     public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul = null)
     {
         $this->veranstaltung = $modul;
-    
+
         return $this;
     }
 
@@ -149,7 +139,7 @@ class Studienplan
     public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null)
     {
         $this->studiengang = $studiengang;
-    
+
         return $this;
     }
 
