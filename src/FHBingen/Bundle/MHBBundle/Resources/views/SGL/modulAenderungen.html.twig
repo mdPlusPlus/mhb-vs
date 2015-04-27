@@ -31,11 +31,11 @@
                 {% for veranstaltung in module %}
                     <tr>
                         <td>
-                            <a href="{{ path('modulBearbeiten', {'id': veranstaltung['Modul_ID']}) }}">{{ veranstaltung['Name'] }}</a>
+                            <a href="{{ path('modulBearbeiten', {'id': veranstaltung.getModulID()}) }}">{{ veranstaltung.getName() }}</a>
                         </td>
-                        <td>{{ veranstaltung['Kuerzel'] }}</td>
-                        <td>{{ veranstaltung['Erstellungsdatum']|date('d.m.Y') }}</td>
-                        {#<td>{{ veranstaltung['autor'] }}</td>#}
+                        <td>{{ veranstaltung.getKuerzel() }}</td>
+                        <td>{{ veranstaltung.getErstellungsdatum()|date('d.m.Y') }}</td>
+                        <td>{{ veranstaltung.getAutor() }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

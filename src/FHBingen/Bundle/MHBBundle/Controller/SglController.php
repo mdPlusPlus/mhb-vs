@@ -190,13 +190,12 @@ class SglController extends Controller
 
         //prüft welche Veranstaltungen ein Änderungsdatum haben, das aktueller als das des neusten MHBs ist
         $geaenderteVeranstaltungenQuery = $em->createQuery(
-            'SELECT v.Modul_ID, v.Name, v.Kuerzel, v.Erstellungsdatum
+            'SELECT v
             FROM  FHBingenMHBBundle:Veranstaltung v
             JOIN  FHBingenMHBBundle:Angebot a WITH a.studiengang=' . $studiengang->getStudiengangID() . ' AND v.Modul_ID = a.veranstaltung
             WHERE v.Erstellungsdatum > :mhbDatum ORDER BY v.Name ASC')
             ->setParameter('mhbDatum', $datum);
         $geaenderteVeranstaltungen = $geaenderteVeranstaltungenQuery->getResult();
-        //TODO: Wie Autor aufnehmen nachdem jetzt foreign key ist?
 
         return array('module' => $geaenderteVeranstaltungen, 'pageTitle' => 'Geänderte Module aus ' . (string) $studiengang, 'dateTime' => $datum);
     }
