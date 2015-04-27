@@ -59,7 +59,7 @@ class Fachgebiet
      * @Assert\Regex(
      *     pattern="/[A-Z]{2,2}/",
      *     match=true,
-     *     message="Die Fachgebietskürzel dürfen nur aus zwei Großbuchstaben (A-Z) bestehen."
+     *     message="Das Fachgebietskürzel (Pflichtfach) darf nur aus zwei Großbuchstaben (A-Z) bestehen."
      * )
      */
     protected $KuerzelP;
@@ -69,10 +69,64 @@ class Fachgebiet
      * @Assert\Regex(
      *     pattern="/[A-Z]{2,2}/",
      *     match=true,
-     *     message="Die Fachgebietskürzel dürfen nur aus zwei Großbuchstaben (A-Z) bestehen."
+     *     message="Das Fachgebietskürzel (Wahlpflichfach) darf nur aus zwei Großbuchstaben (A-Z) bestehen."
      * )
      */
     protected $KuerzelWP;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Angebot", mappedBy="fachgebiet", cascade={"all"})
+     * */
+    protected $angebot;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="fachgebiete")
+     * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
+     */
+    protected $studiengang;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->angebot = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add angebot
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
+     *
+     * @return Fachgebiet
+     */
+    public function addAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
+    {
+        $angebot->setFachgebiet($this);
+        $this->angebot[] = $angebot;
+
+        return $this;
+    }
+
+    /**
+     * Remove angebot
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
+     */
+    public function removeAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
+    {
+        $this->angebot->removeElement($angebot);
+    }
+
+    /**
+     * Get angebot
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAngebot()
+    {
+        return $this->angebot;
+    }
 
     /**
      * Get Fachgebiets_ID
@@ -94,7 +148,7 @@ class Fachgebiet
     public function setTitel($titel)
     {
         $this->Titel = $titel;
-    
+
         return $this;
     }
 
@@ -108,96 +162,11 @@ class Fachgebiet
         return $this->Titel;
     }
 
-
-    /*Abhaengigkeiten*/
-
-
-    /*Angebot*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Angebot", mappedBy="fachgebiet", cascade={"all"})
-     * */
-    protected $angebot;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->angebot = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add angebot
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
-     *
-     * @return Fachgebiet
-     */
-    public function addAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
-    {
-        $angebot->setFachgebiet($this);
-        $this->angebot[] = $angebot;
-    
-        return $this;
-    }
-
-    /**
-     * Remove angebot
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
-     */
-    public function removeAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
-    {
-        $this->angebot->removeElement($angebot);
-    }
-
-    /**
-     * Get angebot
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAngebot()
-    {
-        return $this->angebot;
-    }
-
-    /*Fachgbiet/Studiengang*/
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="fachgebiete")
-     * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
-     */
-    protected $studiengang;
-
-    /**
-     * Set studiengang
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
-     *
-     * @return Fachgebiet
-     */
-    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
-    {
-        $this->studiengang = $studiengang;
-    
-        return $this;
-    }
-
-    /**
-     * Get hat
-     *
-     * @return \FHBingen\Bundle\MHBBundle\Entity\Studiengang 
-     */
-    public function getStudiengang()
-    {
-        return $this->studiengang;
-    }
-
     /**
      * Set KuerzelP
      *
      * @param string $kuerzelP
+     *
      * @return Fachgebiet
      */
     public function setKuerzelP($kuerzelP)
@@ -221,6 +190,7 @@ class Fachgebiet
      * Set KuerzelWP
      *
      * @param string $kuerzelWP
+     *
      * @return Fachgebiet
      */
     public function setKuerzelWP($kuerzelWP)
@@ -238,5 +208,29 @@ class Fachgebiet
     public function getKuerzelWP()
     {
         return $this->KuerzelWP;
+    }
+
+    /**
+     * Set studiengang
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     *
+     * @return Fachgebiet
+     */
+    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
+    {
+        $this->studiengang = $studiengang;
+
+        return $this;
+    }
+
+    /**
+     * Get studiengang
+     *
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Studiengang 
+     */
+    public function getStudiengang()
+    {
+        return $this->studiengang;
     }
 }
