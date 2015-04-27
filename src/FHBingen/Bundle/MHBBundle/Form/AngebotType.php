@@ -70,8 +70,8 @@ class AngebotType extends AbstractType
         }
 
         $builder
-            ->add('abweichenderNameDE', 'text', array('label' => 'abweichender Titel (Deutsch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
-            ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
+            ->add('abweichenderNameDE', 'text', array('label' => 'abweichender Titel (Deutsch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass', 'maxlength' => '70')))
+            ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass', 'maxlength' => '70')));
     }
 
     /**

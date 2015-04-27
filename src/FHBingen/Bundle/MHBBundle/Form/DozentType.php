@@ -31,8 +31,8 @@ class DozentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
             ->add('anrede', 'choice', array('label' => 'Anrede: ', 'required' => true, 'choices' => ArrayValues::$gender))
             ->add('titel', 'text', array('label' => 'Titel: ', 'required' => false))
             ->add('name', 'text', array('label' => 'Vorname: ', 'required' => true))
