@@ -56,9 +56,9 @@ class Fachgebiet
     /**
      * @ORM\Column(type="string", length=2, nullable=true)
      * @Assert\Regex(
-     *     pattern="/[A-Z]{2,2}/",
+     *     pattern="/[A-ZÄÖÜ]{2,2}/",
      *     match=true,
-     *     message="Das Fachgebietskürzel (Pflichtfach) darf nur aus zwei Großbuchstaben (A-Z) bestehen."
+     *     message="Das Fachgebietskürzel (Pflichtfach) darf nur aus zwei Großbuchstaben bestehen."
      * )
      */
     protected $KuerzelP;
@@ -66,9 +66,9 @@ class Fachgebiet
     /**
      * @ORM\Column(type="string", length=2, nullable=true)
      * @Assert\Regex(
-     *     pattern="/[A-Z]{2,2}/",
+     *     pattern="/[A-ZÄÖÜ]{2,2}/",
      *     match=true,
-     *     message="Das Fachgebietskürzel (Wahlpflichfach) darf nur aus zwei Großbuchstaben (A-Z) bestehen."
+     *     message="Das Fachgebietskürzel (Wahlpflichfach) darf nur aus zwei Großbuchstaben bestehen."
      * )
      */
     protected $KuerzelWP;
