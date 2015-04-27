@@ -55,6 +55,26 @@ class Fachgebiet
     protected $Titel;
 
     /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/[A-Z]{2,2}/",
+     *     match=true,
+     *     message="Die Fachgebietskürzel dürfen nur aus zwei Großbuchstaben (A-Z) bestehen."
+     * )
+     */
+    protected $KuerzelP;
+
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/[A-Z]{2,2}/",
+     *     match=true,
+     *     message="Die Fachgebietskürzel dürfen nur aus zwei Großbuchstaben (A-Z) bestehen."
+     * )
+     */
+    protected $KuerzelWP;
+
+    /**
      * Get Fachgebiets_ID
      *
      * @return integer 
@@ -172,5 +192,51 @@ class Fachgebiet
     public function getStudiengang()
     {
         return $this->studiengang;
+    }
+
+    /**
+     * Set KuerzelP
+     *
+     * @param string $kuerzelP
+     * @return Fachgebiet
+     */
+    public function setKuerzelP($kuerzelP)
+    {
+        $this->KuerzelP = $kuerzelP;
+
+        return $this;
+    }
+
+    /**
+     * Get KuerzelP
+     *
+     * @return string 
+     */
+    public function getKuerzelP()
+    {
+        return $this->KuerzelP;
+    }
+
+    /**
+     * Set KuerzelWP
+     *
+     * @param string $kuerzelWP
+     * @return Fachgebiet
+     */
+    public function setKuerzelWP($kuerzelWP)
+    {
+        $this->KuerzelWP = $kuerzelWP;
+
+        return $this;
+    }
+
+    /**
+     * Get KuerzelWP
+     *
+     * @return string 
+     */
+    public function getKuerzelWP()
+    {
+        return $this->KuerzelWP;
     }
 }

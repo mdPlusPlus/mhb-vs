@@ -31,7 +31,9 @@ class FachgebietType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titel', 'text', array('label' => 'Fachgebiet: ', 'required' => true, 'attr' => array('class' => 'sonstigesClass')));
+            ->add('Titel', 'text', array('label' => 'Fachgebiet: ', 'required' => true, 'attr' => array('class' => 'sonstigesClass', 'maxlength' => '50')))
+            ->add('KuerzelP', 'text', array('label' => 'Kürzel Pflicht: ', 'required' => true, 'attr' => array('class' => 'fachgebietKuerzelClass', 'maxlength' => '2')))
+            ->add('KuerzelWP', 'text', array('label' => 'Kürzel Wahlpflicht: ', 'required' => true, 'attr' => array('class' => 'fachgebietKuerzelClass', 'maxlength' => '2')));
     }
 
     /**
