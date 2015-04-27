@@ -19,8 +19,7 @@
                 <tr>
                     <th style="width: 150px">Abschluss</th>
                     <th>Studiengang</th>
-                    <th style="width: 200px">Fachgebiete</th>
-                    <th style="width: 200px">Studiengangleiter/in</th>
+                    <th style="width: 400px">Studiengangleiter/in</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +27,6 @@
                 <tr>
                     <td>{{ gang['Grad'] }}</td>
                     <td><a href="{{ path('studiengangBearbeiten', {'courseID': gang['Studiengang_ID']}) }}">{{ gang['studiengangTitel'] ~ ' (' ~ gang['Kuerzel'] ~ ')' }}</a></td>
-                    <td><a href="{{ path('fachgebietsverwaltung', {'studiengangID': gang['Studiengang_ID']}) }}">verwalten</a></td>
                     <td>{{ gang['dozentTitel'] ~ ' ' ~ gang['Name'] ~ ' ' ~ gang['Nachname'] }}</td>
                 </tr>
             {% endfor %}

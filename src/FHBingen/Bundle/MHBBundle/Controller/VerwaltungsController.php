@@ -309,15 +309,4 @@ class VerwaltungsController extends Controller
 
         return $this->redirect($this->generateUrl('benutzerVerwaltung'));
     }
-
-
-    /**
-     * @param int $studiengangID
-     *
-     * @Route("/restricted/sgl/fachgebietsverwaltung/{studiengangID}", name="fachgebietsverwaltung")
-     */
-    public function fachgebietsverwaltungAction($studiengangID)
-    {
-        return new Response($studiengangID);
-    }
 }
