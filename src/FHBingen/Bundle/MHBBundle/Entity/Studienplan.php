@@ -55,7 +55,7 @@ class Studienplan
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studienplanZuStudienplan")
+     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studienplan")
      * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
      */
     protected $studiengang;
