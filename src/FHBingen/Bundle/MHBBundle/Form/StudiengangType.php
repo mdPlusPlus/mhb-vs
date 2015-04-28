@@ -35,14 +35,16 @@ class StudiengangType extends AbstractType
             ->add('titel', 'text', array('label' => 'Titel: ', 'required' => true, 'attr' => array('class' => 'sonstigesClass')))
             ->add('kuerzel', 'text', array('label' => 'Kürzel: ', 'required' => true))
             ->add('beschreibung', 'textarea', array('label' => 'Beschreibung: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('sgl', 'entity', array('label' => 'Studiengangleiter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent',
+            ->add('sgl', 'entity', array(
+                'label' => 'Studiengangleiter: ',
+                'required' => true,
+                'class' => 'FHBingenMHBBundle:Dozent',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('s')
                         ->where('s.roles=2')
                         ->OrderBy('s.Nachname', 'ASC');
-                },))
-
-            //Ab hier neuer Merge mit VertiefungType und FachgebietType
+                }
+            ))
 
             ->add('richtung', 'collection', array(
                 'type'                  => new VertiefungType(),
@@ -51,6 +53,7 @@ class StudiengangType extends AbstractType
                 'allow_delete'          => true,
                 'delete_empty'          => true,
                 'cascade_validation'    => true,    //wichtig für collections!
+                //'error_bubbling'        => true,
                 'options' => array(
                     'required'          => false,
                     'attr' => array(
@@ -66,6 +69,7 @@ class StudiengangType extends AbstractType
                 'allow_delete'          => true,
                 'delete_empty'          => true,
                 'cascade_validation'    => true,    //wichtig für collections!
+                //'error_bubbling'        => true,
                 'options' => array(
                     'required'          => true,
                     'attr' => array(
