@@ -116,7 +116,7 @@ class Studiengang
     /**
      * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gehoertZu")
      */
-    protected $studiengang; //sind eigentlich die MHB, wer hat den Scheiß verbockt?
+    protected $modulhandbuch; //sind eigentlich die MHB, wer hat den Scheiß verbockt?
 
     /**
      * @ORM\OneToMany(targetEntity="Fachgebiet", mappedBy="studiengang")
@@ -129,7 +129,7 @@ class Studiengang
 
     /**
      * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="studiengang", cascade={"all"})
-     * */
+     */
     protected $studienplan;
 
     /**
@@ -137,11 +137,11 @@ class Studiengang
      */
     public function __construct()
     {
-        $this->angebot      = new ArrayCollection();
-        $this->fachgebiete  = new ArrayCollection();
-        $this->richtung     = new ArrayCollection();
-        $this->studiengang  = new ArrayCollection(); //sind eigentlich die MHB, wer hat den Scheiß verbockt?
-        $this->studienplan  = new ArrayCollection();
+        $this->angebot       = new ArrayCollection();
+        $this->fachgebiete   = new ArrayCollection();
+        $this->richtung      = new ArrayCollection();
+        $this->modulhandbuch = new ArrayCollection();
+        $this->studienplan   = new ArrayCollection();
     }
 
     /**
@@ -359,36 +359,36 @@ class Studiengang
     }
 
     /**
-     * Add studiengang
+     * Add modulhandbuch
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $studiengang
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $modulhandbuch
      * @return Studiengang
      */
-    public function addStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $studiengang)
+    public function addModulhandbuch(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $modulhandbuch)
     {
-        $this->studiengang[] = $studiengang;
+        $this->modulhandbuch[] = $modulhandbuch;
 
         return $this;
     }
 
     /**
-     * Remove studiengang
+     * Remove modulhandbuch
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $studiengang
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $modulhandbuch
      */
-    public function removeStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $studiengang)
+    public function removeModulhandbuch(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $modulhandbuch)
     {
-        $this->studiengang->removeElement($studiengang);
+        $this->modulhandbuch->removeElement($modulhandbuch);
     }
 
     /**
-     * Get studiengang
+     * Get modulhandbuch
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getStudiengang()
+    public function getModulhandbuch()
     {
-        return $this->studiengang;
+        return $this->modulhandbuch;
     }
 
     /**

@@ -170,7 +170,7 @@ class Modulhandbuch
     /*Modulhandbuch/Studiengang*/
 
     /**
-     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studiengang")
+     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="modulhandbuch")
      * @ORM\JoinColumn(name="gehoertZu", referencedColumnName="Studiengang_ID", nullable=false)
      */
     protected $gehoertZu;
