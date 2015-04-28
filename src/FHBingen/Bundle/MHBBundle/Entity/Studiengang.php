@@ -51,11 +51,11 @@ class Studiengang
      *      maxMessage = "Fachbereich {{ limit }} ist Maximum"
      * )
      */
-    protected $Fachbereich;
+    protected $Fachbereich; //Fehlermeldungen sinnvoll?
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
-     * @Assert\Choice(choices = {"Bachelor", "Master"}, message = "Wählen Sie einen gültigen Bildungsgrad")
+     * @Assert\Choice(choices = {"Bachelor", "Master"}, message = "Wählen Sie einen gültigen Bildungsgrad.")
      */
     protected $Grad;
 
@@ -122,7 +122,7 @@ class Studiengang
      * @ORM\OneToMany(targetEntity="Fachgebiet", mappedBy="studiengang")
      * @Assert\Count(
      *      min = "1",
-     *      minMessage = "Sie müssen mindestens ein Fachgebiet anlegen"
+     *      minMessage = "Sie müssen mindestens ein Fachgebiet anlegen."
      * )
      */
     protected $fachgebiete; //sollte das nicht Singular 'fachgebiet' sein?
