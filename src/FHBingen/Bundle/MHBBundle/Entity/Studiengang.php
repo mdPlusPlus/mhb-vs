@@ -125,7 +125,7 @@ class Studiengang
      *      minMessage = "Sie müssen mindestens ein Fachgebiet anlegen"
      * )
      */
-    protected $fachgebiete;
+    protected $fachgebiete; //sollte das nicht Singular 'fachgebiet' sein?
 
     /**
      * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="studiengang", cascade={"all"})
