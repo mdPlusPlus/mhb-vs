@@ -129,7 +129,6 @@
 
             {% for fachgebiet in form.fachgebiete %}
                 {# TODO: Bei 1280x1024 gibt es einen Zeilenumbruch #}
-                {# TODO: Fehlermeldungen für Fachgebiete werden nicht ausgegeben #}
                 <li>
                     {{ form_widget(fachgebiet) }}
                     <a href="#" onclick="jQuery(this).parent().remove()">Fachgebiet entfernen</a>
