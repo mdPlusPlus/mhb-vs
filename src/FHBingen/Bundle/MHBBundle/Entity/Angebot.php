@@ -59,7 +59,7 @@ class Angebot
      * @ORM\ManyToOne(targetEntity="Fachgebiet", inversedBy="angebot")
      * @ORM\JoinColumn(name="fachgebiet", referencedColumnName="Fachgebiets_ID", nullable=false)
      * */
-    protected $fachgebiet;
+    protected $fachgebiet; //TODO: nullable=false, damit Wahlpflichtfächer keine Fachgebiete mehr brauchen
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="angebot")
