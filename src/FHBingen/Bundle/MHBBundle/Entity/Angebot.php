@@ -24,7 +24,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="Angebot")
  * @ORM\HasLifecycleCallbacks
  */
-
 class Angebot
 {
     /**
@@ -52,19 +51,19 @@ class Angebot
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="angebot")
      * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
-     * */
+     */
     protected $veranstaltung;
 
     /**
      * @ORM\ManyToOne(targetEntity="Fachgebiet", inversedBy="angebot")
-     * @ORM\JoinColumn(name="fachgebiet", referencedColumnName="Fachgebiets_ID", nullable=false)
-     * */
-    protected $fachgebiet; //TODO: nullable=false, damit Wahlpflichtfächer keine Fachgebiete mehr brauchen
+     * @ORM\JoinColumn(name="fachgebiet", referencedColumnName="Fachgebiets_ID", nullable=true)
+     */
+    protected $fachgebiet;
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="angebot")
      * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
-     * */
+     */
     protected $studiengang;
 
 
@@ -261,7 +260,7 @@ class Angebot
      *
      * @return Angebot
      */
-    public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
+    public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet = null)
     {
         $this->fachgebiet = $fachgebiet;
 
