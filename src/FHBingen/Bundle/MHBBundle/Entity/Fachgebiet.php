@@ -61,7 +61,7 @@ class Fachgebiet
      *     message="Das Fachgebietskürzel (Pflichtfach) darf nur aus zwei Großbuchstaben bestehen."
      * )
      */
-    protected $KuerzelP;
+    protected $KuerzelP; //TODO: nullable=false, wenn alle Fachgebiete ihre Kürzel bekommen haben
 
     /**
      * @ORM\Column(type="string", length=2, nullable=true)
@@ -71,7 +71,7 @@ class Fachgebiet
      *     message="Das Fachgebietskürzel (Wahlpflichfach) darf nur aus zwei Großbuchstaben bestehen."
      * )
      */
-    protected $KuerzelWP;
+    protected $KuerzelWP; //TODO: nullable=false, wenn alle Fachgebiete ihre Kürzel bekommen haben
 
     /**
      * @ORM\OneToMany(targetEntity="Angebot", mappedBy="fachgebiet", cascade={"all"})
