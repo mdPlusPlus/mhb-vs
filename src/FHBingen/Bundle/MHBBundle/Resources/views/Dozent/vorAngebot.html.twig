@@ -135,6 +135,8 @@
         }
     </script>
 
+    {# TODO: BUG: Wenn Master Informationssysteme als erstes erscheint (z.B. wenn es schon Angebote in allen Bachelor-Studiengängen gibt, dann wird der Master mit 7 Semestern angezeigt, statt mit 3 #}
+
     <h4 style="font-weight: bold">Studiengangswahl für Angebot von {{ modul }}</h4>
     <div class="table-responsive">
         {{ form_start(form) }}
