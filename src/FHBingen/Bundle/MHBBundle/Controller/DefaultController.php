@@ -208,16 +208,17 @@ class DefaultController extends Controller
     }
 
 
-    //TODO: 1. alte Fachgebiete löschen
-    //TODO: 2. bleibende Fachgebiete umbenennen
-    //TODO: 3. Angboterstellung von Wahlpflichtfächern: String-Überprüfen deaktivieren
+
+    //[DONE] 0. B-IN-IVxx und B-IN-V zu "Informatik Vertiefung" ändern
+    //[DONE] 1. alte Fachgebiete löschen
+    //[DONE] 2. bleibende Fachgebiete umbenennen
+    //[DONE] 3. Angboterstellung von Wahlpflichtfächern: String-Überprüfen deaktivieren
     //TODO: 4. Abfrage einbauen, dass bei Pflichtfächern ein Fachgebiet vergeben werden muss
+    //TODO: 5. Unterscheidung in MHB neu machen
+    //TODO: 6. Modulcode-Erstellung: Wenn kein Fachgebiet, dann WP als Code bei Wahlpflicht
+    //TODO: 7. Kürzel für Fachgebiete überprüfen/vervollständigen
+    //TODO: 8. Kürzel für Fachgebiete nullable=false
 
-
-
-    /**
-     * @Route("/convert/B-IN")
-     */
     public function convertFachgebieteInformatik()
     {
         //37 -> null
@@ -235,9 +236,6 @@ class DefaultController extends Controller
         return new Response($response);
     }
 
-    /**
-     * @Route("/convert/B-BI")
-     */
     public function convertFachgebieteBioInformatik()
     {
         $em = $this->getDoctrine()->getManager();
@@ -275,9 +273,6 @@ class DefaultController extends Controller
         return new Response($response);
     }
 
-    /**
-     * @Route("/convert/B-MC")
-     */
     public function convertFachgebieteMoCo()
     {
         //44 -> null
@@ -295,9 +290,6 @@ class DefaultController extends Controller
         return new Response($response);
     }
 
-    /**
-     * @Route("/convert/M-IS")
-     */
     public function convertFachgebieteInfSys()
     {
         $em = $this->getDoctrine()->getManager();
