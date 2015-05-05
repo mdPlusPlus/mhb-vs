@@ -123,6 +123,61 @@ class Angebot
      */
     protected	$AbweichenderNameEN;
 
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, unique=true)
+     *
+     * @Assert\Regex(
+     *  pattern="0-9",
+     *  message="Die Prüfungsordnungsnummer darf nur aus Zahlen bestehen."
+     * )
+     *
+     */
+    protected $PORD;
+
+    /**
+     * @ORM\Column(type="text"), nullable=false
+     * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
+     */
+    protected $Regelsem_SS;
+
+    /**
+     * @ORM\Column(type="text"), nullable=false
+     * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
+     */
+    protected $Regelsem_WS;
+
+    public function  getPORD(){
+        return $this->PORD;
+    }
+
+    public function setPORD($pord){
+        $this->PORD =  $pord;
+
+        return this;
+    }
+
+    public function getRegelsem_SS(){
+        return $this->getRegelsem_SS();
+    }
+
+    public  function setRegelsem_SS($ss){
+        $this->Regelsem_SS = $ss;
+
+        return $this;
+    }
+
+    public function getRegelsem_WS(){
+        return $this->getRegelsem_WS();
+    }
+
+    public  function setRegelsem_WS($ws){
+        $this->Regelsem_WS = $ws;
+
+        return $this;
+    }
+
+
     /**
      * Get Angebots_ID
      *
