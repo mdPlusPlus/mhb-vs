@@ -339,10 +339,10 @@ class DefaultController extends Controller
             $ws->setRegelsem_WS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array(
                 'Startsemester' => "WS",
                 'veranstaltung' => $ws->getVeranstaltung(),
-                'studiengang' => $ss->getStudiengang()
+                'studiengang' => $ws->getStudiengang()
             )));
-            $em->persist($ss);
-            $response = $response . $ss . '<br />';
+            $em->persist($ws);
+            $response = $response . $ws . '<br />';
         }
 
         $em->flush();
