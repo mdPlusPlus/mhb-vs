@@ -44,19 +44,11 @@ class AngebotType extends AbstractType
     {
         $builder->add('fachgebiet', 'entity', array(
                 'label' => "Fachgebiet:",
-                'required' => true,
+                'required' => false,
                 'class' => 'FHBingenMHBBundle:Fachgebiet',
                 'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('f')->select('')->where('f.studiengang = ' . $this->studiengangID);
                 },
-//alter code
-//                'query_builder' => function(EntityRepository $er) {
-//                    if ($this->isWahl) {
-//                        return $er->createQueryBuilder('f')->select('')->where('f.studiengang = ' . $this->studiengangID, 'f.Titel like \'%Wahlpflicht%\' ');
-//                    } else {
-//                        return $er->createQueryBuilder('f')->select('')->where('f.studiengang = ' . $this->studiengangID, 'f.Titel not like \'%Wahlpflicht%\'');
-//                    }
-//                },
             ));
 
         if ($this->isWahl) {
@@ -67,7 +59,6 @@ class AngebotType extends AbstractType
                 'expanded' => true,
                 'class' => 'FHBingenMHBBundle:Vertiefung',
                 'query_builder' => function(EntityRepository $er) {
-                    //SELECT * FROM `Fachgebiet` WHERE `studiengang` = 2
                     return $er->createQueryBuilder('v')->select('')->where('v.studiengang = ' . $this->studiengangID);
                 },
             ));

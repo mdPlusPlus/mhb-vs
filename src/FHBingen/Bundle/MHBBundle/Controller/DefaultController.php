@@ -213,7 +213,7 @@ class DefaultController extends Controller
     //[DONE] 1. alte Fachgebiete löschen
     //[DONE] 2. bleibende Fachgebiete umbenennen
     //[DONE] 3. Angboterstellung von Wahlpflichtfächern: String-Überprüfen deaktivieren
-    //TODO: 4. Abfrage einbauen, dass bei Pflichtfächern ein Fachgebiet vergeben werden muss
+    //[DONE] 4. Abfrage einbauen, dass bei Pflichtfächern ein Fachgebiet vergeben werden muss
     //TODO: 5. Unterscheidung in MHB neu machen
     //TODO: 6. Modulcode-Erstellung: Wenn kein Fachgebiet, dann WP als Code bei Wahlpflicht
     //TODO: 7. Kürzel für Fachgebiete überprüfen/vervollständigen

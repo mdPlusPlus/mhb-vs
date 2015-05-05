@@ -50,7 +50,7 @@ class VorAngebotType extends AbstractType
                 'class' => 'FHBingenMHBBundle:Studiengang',
                 'query_builder' => function(EntityRepository $er) {
                     $qb = $er->createQueryBuilder('s');
-                    $qb->add('where', $qb->expr()->in('s.Studiengang_ID', $this->studiengangIDs))
+                    $qb->add('where', $qb->expr()->in('s.Studiengang_ID', $this->studiengangIDs)) //warning?
                     ->orderBy('s.Grad', 'ASC')
                     ->addOrderBy('s.Titel', 'ASC');
 
