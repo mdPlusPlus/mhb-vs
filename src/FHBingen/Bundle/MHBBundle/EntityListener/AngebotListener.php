@@ -113,7 +113,7 @@ class AngebotListener
         }
 
         if ($isLastAngebot) {
-            //Lehrende-Entities
+            //Lehrende-Entities - Warum löschen wir die eigentlich?
             $lehrende = $angebot->getVeranstaltung()->getLehrende();
             foreach ($lehrende as $lehrender) {
                 $em->remove($lehrender);
