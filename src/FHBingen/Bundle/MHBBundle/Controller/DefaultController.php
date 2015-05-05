@@ -120,55 +120,6 @@ class DefaultController extends Controller
         return new Response("Rollen angelegt");
     }
 
-    public function voraussetzungAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $test = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>156));
-
-//        $mv = new Modulvoraussetzung();
-//        $mv->setModul($test);
-//        $mv->setVoraussetzung($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>9)));
-//        $test->addForderung($mv);
-        $result ="";
-//
-//       $em->persist($mv);
-//       $em->persist($test);
-//        $em->flush();
-
-        $entries = $test->getGrundmodul();
-
-        foreach ($entries as $entry) {
-            $result= $result."+++".$entry;
-        }
-
-        return new Response($result);
-    }
-
-    public function convert()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $veranstaltungen = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
-
-        $response = '';
-
-        foreach ($veranstaltungen as $v) {
-            $lp = $v->getVoraussetzungLP();
-            $lp = str_replace('"P', '"bestandene P', $lp);
-            $lp = str_replace('"S', '"bestandene S', $lp);
-
-            $v->setVoraussetzungLP($lp);
-            $em->persist($v);
-
-
-            $response = $response . $lp . '<br />';
-
-        }
-        $em->flush();
-
-        return new Response($response);
-    }
-
     public function tmpFileTest()
     {
         $pathToCover = 'test.file';

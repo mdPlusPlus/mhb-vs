@@ -15,11 +15,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
-
+/**
+ * Class LoginController
+ *
+ * @package FHBingen\Bundle\MHBBundle\Controller
+ */
 class LoginController extends Controller
 {
-
     /**
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Route("/login", name="login")
      * @Template("FHBingenMHBBundle:Login:login.html.twig")
      */
@@ -39,7 +46,7 @@ class LoginController extends Controller
 
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
-        
+
         return array(
             // last username entered by the user
             'last_username' => $lastUsername,
@@ -62,5 +69,4 @@ class LoginController extends Controller
     {
         // The security layer will intercept this request
     }
-
 }
