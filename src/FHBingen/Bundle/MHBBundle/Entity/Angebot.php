@@ -138,13 +138,13 @@ class Angebot
      * @ORM\Column(type="text"), nullable=true
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $Regelsem_SS; //TODO: nullable: false
+    protected $RegelsemSS; //TODO: nullable: false
 
     /**
      * @ORM\Column(type="text"), nullable=true
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $Regelsem_WS; //TODO: nullable: false
+    protected $RegelsemWS; //TODO: nullable: false
 
     /**
      * Get Angebots_ID
@@ -327,12 +327,12 @@ class Angebot
     /**
      * Set PORD
      *
-     * @param integer $pORD
+     * @param integer $pord
      * @return Angebot
      */
-    public function setPORD($pORD)
+    public function setPORD($pord)
     {
-        $this->PORD = $pORD;
+        $this->PORD = $pord;
 
         return $this;
     }
@@ -355,7 +355,7 @@ class Angebot
      */
     public function setRegelsemSS($regelsemSS)
     {
-        $this->Regelsem_SS = $regelsemSS;
+        $this->RegelsemSS = $regelsemSS;
 
         return $this;
     }
@@ -367,7 +367,7 @@ class Angebot
      */
     public function getRegelsemSS()
     {
-        return $this->Regelsem_SS;
+        return $this->RegelsemSS;
     }
 
     /**
@@ -378,7 +378,7 @@ class Angebot
      */
     public function setRegelsemWS($regelsemWS)
     {
-        $this->Regelsem_WS = $regelsemWS;
+        $this->RegelsemWS = $regelsemWS;
 
         return $this;
     }
@@ -390,6 +390,6 @@ class Angebot
      */
     public function getRegelsemWS()
     {
-        return $this->Regelsem_WS;
+        return $this->RegelsemWS;
     }
 }

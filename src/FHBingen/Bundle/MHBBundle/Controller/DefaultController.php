@@ -326,7 +326,7 @@ class DefaultController extends Controller
 
         $response = "Sommer: <br />";
         foreach ($angebot as $ss) {
-            $ss->setRegelsem_SS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array(
+            $ss->setRegelsemSS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array(
                 'Startsemester' => "SS",
                 'veranstaltung' => $ss->getVeranstaltung(),
                 'studiengang' => $ss->getStudiengang(),
@@ -337,7 +337,7 @@ class DefaultController extends Controller
 
         $response = $response . "Winter: <br />";
         foreach ($angebot as $ws) {
-            $ws->setRegelsem_WS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array(
+            $ws->setRegelsemWS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array(
                 'Startsemester' => "WS",
                 'veranstaltung' => $ws->getVeranstaltung(),
                 'studiengang' => $ws->getStudiengang()
