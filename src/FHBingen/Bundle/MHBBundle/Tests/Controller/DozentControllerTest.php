@@ -12,11 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DozentControllerTest extends WebTestCase
 {
-    $client = static::createClient();
+    public function whatTheFuckTest()
+    {
+        $client = static::createClient();
 
-    $crawler = $client->request('GET', '/restricted/dozent/eigeneModule');
+        $crawler = $client->request('GET', '/restricted/dozent/eigeneModule');
 
-    $form = $crawler->selectButton('speichern')->form();
-
-
+        $form = $crawler->selectButton('speichern')->form();
+    }
 }
