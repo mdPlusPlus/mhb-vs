@@ -4,8 +4,8 @@ PROJ MHB-VS
 built on Symfony 2.6.*
 
 1. install dependencies (libxrender1, git, php5-cli, php5-curl, pdo-mysql, ...)
-2. install Composer
-3. clone mdPlusPlus/mhb-vs.git (gir clone https://github.com/mdPlusPlus/mhb-vs)
+2. install Composer (https://getcomposer.org/download)
+3. clone mdPlusPlus/mhb-vs.git (git clone https://github.com/mdPlusPlus/mhb-vs)
 4. cd mhb-vs && composer install
 
 
