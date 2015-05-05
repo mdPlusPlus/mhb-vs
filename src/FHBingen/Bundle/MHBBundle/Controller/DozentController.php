@@ -559,22 +559,12 @@ class DozentController extends Controller
                     }
                 }
 
-                $studienplanSS = new Entity\Studienplan();
-                $studienplanSS->setStartsemester('SS');
-                $studienplanSS->setVeranstaltung($modul);
-                $studienplanSS->setStudiengang($studiengang);
-                $studienplanSS->setRegelSemester($encSS);
+                $angebot->setRegelSemSS($encSS);
 
-                $studienplanWS = new Entity\Studienplan();
-                $studienplanWS->setStartsemester('WS');
-                $studienplanWS->setVeranstaltung($modul);
-                $studienplanWS->setStudiengang($studiengang);
-                $studienplanWS->setRegelSemester($encWS);
+                $angebot->setRegelSemWS($encWS);
 
                 $modul->setStatus('Freigegeben');
 
-                $em->persist($studienplanSS);
-                $em->persist($studienplanWS);
                 $em->persist($modul);
                 $em->persist($angebot);
 

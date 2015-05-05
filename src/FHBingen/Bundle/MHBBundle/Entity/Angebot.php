@@ -125,26 +125,26 @@ class Angebot
 
 
     /**
-     * @ORM\Column(type="integer", nullable=true, unique=true)
+     * @ORM\Column(type="integer", nullable=false, unique=true)
      *
      * @Assert\Regex(
      *      pattern="0-9",
      *      message="Die Prüfungsordnungsnummer darf nur aus Zahlen bestehen."
      * )
      */
-    protected $PORD; //TODO: nullable: false
+    protected $PORD;
 
     /**
-     * @ORM\Column(type="text"), nullable=true
+     * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $RegelsemSS; //TODO: nullable: false
+    protected $RegelsemSS;
 
     /**
-     * @ORM\Column(type="text"), nullable=true
+     * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $RegelsemWS; //TODO: nullable: false
+    protected $RegelsemWS;
 
     /**
      * Get Angebots_ID

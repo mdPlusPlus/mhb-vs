@@ -258,7 +258,7 @@ class SglController extends Controller
             $modulBeschreibung->setVoraussetzungenLP($encoder->decode($veranstaltung->getVoraussetzungLP(), 'json'));
 
             //TODO: Frage ans Team: Bei Studienplänen statt Modul+Studiengang lieber Angebot?
-            //$modulBeschreibung->setStudienplaene($veranstaltung->getStudienplanModul());
+/*          $modulBeschreibung->setStudienplaene($veranstaltung->getStudienplanModul());
             $studienplaene = $veranstaltung->getStudienplanModul();
             $studienplaeneZuStudiengang = array();
             foreach ($studienplaene as $studienplan) {
@@ -268,7 +268,7 @@ class SglController extends Controller
             }
             uasort($studienplaeneZuStudiengang, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'studienplanSort'));
             $modulBeschreibung->setStudienplaene($studienplaeneZuStudiengang);
-
+*/
             $fremdeStudiengaenge = array();
             //hole ALLE Angebote, in denen das Modul steckt und hole davon die jeweiligen Studiengänge
             $modulAngebote = $veranstaltung->getAngebot();

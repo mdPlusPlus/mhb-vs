@@ -205,40 +205,4 @@ class Semester
         return $this->modul_start;
     }
 
-    //TODO: Was ist das?
-    /**
-     * Add regelsem
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem
-     *
-     * @return Semester
-     */
-    public function addRegelsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem)
-    {
-        $this->regelsem[] = $regelsem;
-
-        return $this;
-    }
-
-    //TODO: Was ist das?
-    /**
-     * Remove regelsem
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem
-     */
-    public function removeRegelSemester(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem)
-    {
-        $this->regelsem->removeElement($regelsem);
-    }
-
-    //TODO: Was ist das?
-    /**
-     * Get regelsem
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getRegelSemester()
-    {
-        return $this->regelsem;
-    }
 }

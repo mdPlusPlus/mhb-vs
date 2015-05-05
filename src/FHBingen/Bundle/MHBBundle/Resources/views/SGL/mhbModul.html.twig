@@ -89,12 +89,14 @@
                 <td colspan="2">
                     <div class="key">Studiensemeseter bei Studienbeginn</div>
                     <table>
-                        {% for studienplan in modulBeschreibung.getStudienplaene() %}
                             <tr>
-                                <td class="studiensemester startsemester">{{ studienplan.getStartsemester() }}:</td>
-                                <td class="studiensemester">{{ studienplan.getRegelsemester()|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' ersetzen #}
+                                <td class="studiensemester startsemester">SS:</td>
+                                <td class="studiensemester">{{ modulBeschreibung.getAngebot().getRegelsemesterSS|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' ersetzen #}
                             </tr>
-                        {% endfor %}
+                            <tr>
+                                <td class="studiensemester startsemester">WS:</td>
+                                <td class="studiensemester">{{ modulBeschreibung.getAngebot().getRegelsemesterWS|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' ersetzen #}
+                            </tr>
                     </table>
                 </td>
                 <td>

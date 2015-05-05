@@ -93,13 +93,13 @@ class AngebotListener
         //
 
         //Studienplan-Entities
-        $studienplaene = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array(
+/*        $studienplaene = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array(
             'veranstaltung' => $angebot->getVeranstaltung()->getModulID(),
             'studiengang' => $angebot->getStudiengang()->getStudiengangID()
         ));
         foreach ($studienplaene as $studienplan) {
             $em->remove($studienplan);
-        }
+        }*/
 
         //Kernfach-Entities
         $vertiefungsrichtungen = $angebot->getStudiengang()->getRichtung();

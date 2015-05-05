@@ -127,10 +127,6 @@ class Studiengang
      */
     protected $fachgebiete; //sollte das nicht Singular 'fachgebiet' sein?
 
-    /**
-     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="studiengang", cascade={"all"})
-     */
-    protected $studienplan;
 
     /**
      * Constructor
@@ -141,7 +137,6 @@ class Studiengang
         $this->fachgebiete   = new ArrayCollection();
         $this->richtung      = new ArrayCollection();
         $this->modulhandbuch = new ArrayCollection();
-        $this->studienplan   = new ArrayCollection();
     }
 
     /**
@@ -422,38 +417,5 @@ class Studiengang
     public function getFachgebiete()
     {
         return $this->fachgebiete;
-    }
-
-    /**
-     * Add studienplan
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplan
-     * @return Studiengang
-     */
-    public function addStudienplan(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplan)
-    {
-        $this->studienplan[] = $studienplan;
-
-        return $this;
-    }
-
-    /**
-     * Remove studienplan
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplan
-     */
-    public function removeStudienplan(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplan)
-    {
-        $this->studienplan->removeElement($studienplan);
-    }
-
-    /**
-     * Get studienplan
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getStudienplan()
-    {
-        return $this->studienplan;
     }
 }

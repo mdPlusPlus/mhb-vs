@@ -273,11 +273,7 @@ class Veranstaltung
      */
     protected $beauftragter;
 
-    //TODO: Wirklich Veranstaltung in Studienplan eintragen? Nicht vielleicht Angebot?
-    /**
-     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="veranstaltung", cascade={"all"})
-     */
-    protected $studienplanModul;
+
 
     /**
      * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="veranstaltung", cascade={"all"})
@@ -306,7 +302,6 @@ class Veranstaltung
         $this->kernfach         = new ArrayCollection();
         $this->lehrende         = new ArrayCollection();
         $this->semesterplan     = new ArrayCollection();
-        $this->studienplanModul = new ArrayCollection();
     }
 
     /**
@@ -1037,39 +1032,7 @@ class Veranstaltung
         return $this->beauftragter;
     }
 
-    /**
-     * Add studienplanModul
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul
-     *
-     * @return Veranstaltung
-     */
-    public function addStudienplanModul(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul)
-    {
-        $this->studienplanModul[] = $studienplanModul;
 
-        return $this;
-    }
-
-    /**
-     * Remove studienplanModul
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul
-     */
-    public function removeStudienplanModul(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanModul)
-    {
-        $this->studienplanModul->removeElement($studienplanModul);
-    }
-
-    /**
-     * Get studienplanModul
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getStudienplanModul()
-    {
-        return $this->studienplanModul;
-    }
 
     /**
      * Add kernfach
