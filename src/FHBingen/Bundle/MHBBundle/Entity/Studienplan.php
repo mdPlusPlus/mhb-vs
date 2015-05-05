@@ -20,6 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Studienplan
 {
+    //TODO: Anmerkung: Datei löschen?
+
     /**
      * @return string
      */

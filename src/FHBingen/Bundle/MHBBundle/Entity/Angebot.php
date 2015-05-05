@@ -121,30 +121,29 @@ class Angebot
      *     message = "Der studiengangspezifische englische Name darf nur aus Buchstaben, Zahlen, Leerzeichen und Bindestrichen bestehen."
      * )
      */
-    protected	$AbweichenderNameEN;
+    protected $AbweichenderNameEN;
 
 
     /**
      * @ORM\Column(type="integer", nullable=false, unique=true)
-     *
      * @Assert\Regex(
      *      pattern="0-9",
      *      message="Die Prüfungsordnungsnummer darf nur aus Zahlen bestehen."
      * )
      */
-    protected $PORD;
+    protected $PORD; //TODO: Anmerkung: nullable=false aber in DB sind noch alle null -  wieder auf true setzen bis alle Werte gesetzt, sonst kein valides Entity; außerdem pattern falsch, lieber Assert\Type integer
 
     /**
      * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $RegelsemSS;
+    protected $RegelsemSS; //TODO: Anmerkung: In der DB sind einige blank; M-IS-IN03 ist '[]' ???
 
     /**
      * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $RegelsemWS;
+    protected $RegelsemWS; //TODO: Anmerkung: In der DB sind einige blank
 
     /**
      * Get Angebots_ID
@@ -328,6 +327,7 @@ class Angebot
      * Set PORD
      *
      * @param integer $pord
+     *
      * @return Angebot
      */
     public function setPORD($pord)
@@ -351,6 +351,7 @@ class Angebot
      * Set Regelsem_SS
      *
      * @param string $regelsemSS
+     *
      * @return Angebot
      */
     public function setRegelsemSS($regelsemSS)
@@ -374,6 +375,7 @@ class Angebot
      * Set Regelsem_WS
      *
      * @param string $regelsemWS
+     *
      * @return Angebot
      */
     public function setRegelsemWS($regelsemWS)
