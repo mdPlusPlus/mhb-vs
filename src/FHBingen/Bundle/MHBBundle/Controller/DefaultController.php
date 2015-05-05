@@ -334,6 +334,7 @@ class DefaultController extends Controller
             $em->persist($ss);
             $response = $response . $ss . '<br />';
         }
+
         $response = $response . "Winter: <br />";
         foreach ($angebot as $ws) {
             $ws->setRegelsem_WS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array(

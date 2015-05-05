@@ -125,58 +125,26 @@ class Angebot
 
 
     /**
-     * @ORM\Column(type="integer", nullable=false, unique=true)
+     * @ORM\Column(type="integer", nullable=true, unique=true)
      *
      * @Assert\Regex(
-     *  pattern="0-9",
-     *  message="Die Prüfungsordnungsnummer darf nur aus Zahlen bestehen."
+     *      pattern="0-9",
+     *      message="Die Prüfungsordnungsnummer darf nur aus Zahlen bestehen."
      * )
-     *
      */
-    protected $PORD;
+    protected $PORD; //TODO: nullable: false
 
     /**
-     * @ORM\Column(type="text"), nullable=false
+     * @ORM\Column(type="text"), nullable=true
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $Regelsem_SS;
+    protected $Regelsem_SS; //TODO: nullable: false
 
     /**
-     * @ORM\Column(type="text"), nullable=false
+     * @ORM\Column(type="text"), nullable=true
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $Regelsem_WS;
-
-    public function  getPORD(){
-        return $this->PORD;
-    }
-
-    public function setPORD($pord){
-        $this->PORD =  $pord;
-
-        return this;
-    }
-
-    public function getRegelsem_SS(){
-        return $this->getRegelsem_SS();
-    }
-
-    public  function setRegelsem_SS($ss){
-        $this->Regelsem_SS = $ss;
-
-        return $this;
-    }
-
-    public function getRegelsem_WS(){
-        return $this->getRegelsem_WS();
-    }
-
-    public  function setRegelsem_WS($ws){
-        $this->Regelsem_WS = $ws;
-
-        return $this;
-    }
-
+    protected $Regelsem_WS; //TODO: nullable: false
 
     /**
      * Get Angebots_ID
@@ -354,5 +322,74 @@ class Angebot
     public function getStudiengang()
     {
         return $this->studiengang;
+    }
+
+    /**
+     * Set PORD
+     *
+     * @param integer $pORD
+     * @return Angebot
+     */
+    public function setPORD($pORD)
+    {
+        $this->PORD = $pORD;
+
+        return $this;
+    }
+
+    /**
+     * Get PORD
+     *
+     * @return integer 
+     */
+    public function getPORD()
+    {
+        return $this->PORD;
+    }
+
+    /**
+     * Set Regelsem_SS
+     *
+     * @param string $regelsemSS
+     * @return Angebot
+     */
+    public function setRegelsemSS($regelsemSS)
+    {
+        $this->Regelsem_SS = $regelsemSS;
+
+        return $this;
+    }
+
+    /**
+     * Get Regelsem_SS
+     *
+     * @return string 
+     */
+    public function getRegelsemSS()
+    {
+        return $this->Regelsem_SS;
+    }
+
+    /**
+     * Set Regelsem_WS
+     *
+     * @param string $regelsemWS
+     * @return Angebot
+     */
+    public function setRegelsemWS($regelsemWS)
+    {
+        $this->Regelsem_WS = $regelsemWS;
+
+        return $this;
+    }
+
+    /**
+     * Get Regelsem_WS
+     *
+     * @return string 
+     */
+    public function getRegelsemWS()
+    {
+        return $this->Regelsem_WS;
     }
 }
