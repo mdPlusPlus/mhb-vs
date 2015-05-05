@@ -410,7 +410,6 @@ class DozentController extends Controller
                             $em->remove($dbEntry);
                             $em->persist($dozentTmp);
                         }
-
                     }
                 } else {
                     //falls kein Lehrender ausgewählt wurde wird der Modulbeauftragte zum Lehrenden
@@ -446,9 +445,9 @@ class DozentController extends Controller
                 }
 
                 $em->persist($modul);
-                try {
 
-                $em->flush();
+                try {
+                    $em->flush();
                 } catch (UniqueConstraintViolationException $e) {
                     $this->get('session')->getFlashBag()->add('info', 'Bitte nicht zweimal den gleichen Lehrenden bzw. die gleiche Veranstaltung auswählen.');
 
@@ -462,9 +461,6 @@ class DozentController extends Controller
                 } else {
                     return $this->redirect($this->generateUrl('vorAngebot', array('modulID' => $id)));
                 }
-
-
-
             }
         }
 
@@ -527,6 +523,15 @@ class DozentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
+
+                //wenn Pflichtfach, dann Fachgebietszuweisung notwendig
+                if (!$isWahl) {
+                    $fachgebiet = $form->get('fachgebiet')->getData();
+                    if (is_null($fachgebiet)) {
+                        //TODO: redirect + flashbag
+                    }
+                }
+
                 $angebot->setCode(null);
                 $angebot->setVeranstaltung($modul);
                 $angebot->setStudiengang($studiengang);
@@ -619,7 +624,7 @@ class DozentController extends Controller
             if ($form->isValid()) {
                 $encoder = new JsonEncoder();
                 $studiengang = $form->get('studiengang')->getData();
-                $angeotsart = $form->get('angebotsart')->getData();
+                $angebotsart = $form->get('angebotsart')->getData();
 
 
                 $valid = true;
@@ -638,7 +643,7 @@ class DozentController extends Controller
                     return $this->redirect($this->generateUrl('angebot', array(
                         'modulID' => $modulID,
                         'studiengangID' => $studiengang->getStudiengangID(),
-                        'angebotsart' => $angeotsart,
+                        'angebotsart' => $angebotsart,
                         'encSS' => $ssEncodedData,
                         'encWS' => $wsEncodedData)));
                 } else {

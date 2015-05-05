@@ -131,8 +131,6 @@ class VeranstaltungType extends AbstractType
         $form->add('lehrveranstaltungen', 'choice', $lehrveranstaltungenChoiceOptions);
 
 
-
-
         //$lehrende = $input->getLehrende();
         $lehrendeOptions = array('label' => false, 'type' => new LehrendeType(),
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
@@ -143,7 +141,7 @@ class VeranstaltungType extends AbstractType
                 )
             )
         );
-        $form->add('lehrende', 'collection', $lehrendeOptions);
+        $form->add('lehrende', 'collection', $lehrendeOptions); //TODO: 'cascade_validation' testen statt UniqueConstraintViolationException
 
         //$voraussetzung =$input->getForderung();
         $voraussetzungOptions = array('label' => false, 'type' => new VoraussetzungType($this->modulID),
