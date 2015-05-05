@@ -318,30 +318,35 @@ class DefaultController extends Controller
      *
      * @Route("/regelsem")
      */
-
-    public function copyRegelsem(){
+    public function copyRegelsem()
+    {
         $em = $this->getDoctrine()->getManager();
 
         $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
 
+        $response = "Sommer: <br />";
         foreach ($angebot as $ss) {
-            $ss->setRegelsem_SS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array('Startsemester' => "SS",
-                'veranstaltung' => $ss->getVeranstaltung(), 'studiengang' => $ss->getStudiengang())));
+            $ss->setRegelsem_SS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array(
+                'Startsemester' => "SS",
+                'veranstaltung' => $ss->getVeranstaltung(),
+                'studiengang' => $ss->getStudiengang(),
+                )));
             $em->persist($ss);
-            $response = "Sommer: <br />";
             $response = $response . $ss . '<br />';
-       }
-
+        }
+        $response = $response . "Winter: <br />";
         foreach ($angebot as $ws) {
-            $ws->setRegelsem_SS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array('Startsemester' => "WS",
-                'veranstaltung' => $ss->getVeranstaltung(), 'studiengang' => $ss->getStudiengang())));
+            $ws->setRegelsem_WS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array(
+                'Startsemester' => "WS",
+                'veranstaltung' => $ws->getVeranstaltung(),
+                'studiengang' => $ss->getStudiengang()
+            )));
             $em->persist($ss);
-            $response = "Winter: <br />";
             $response = $response . $ss . '<br />';
         }
 
-
         $em->flush();
-        return new response;
+
+        return new Response($response);
     }
 }
