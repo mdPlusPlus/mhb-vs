@@ -125,13 +125,9 @@ class Angebot
 
 
     /**
-     * @ORM\Column(type="integer", nullable=false, unique=true)
-     * @Assert\Regex(
-     *      pattern="0-9",
-     *      message="Die Prüfungsordnungsnummer darf nur aus Zahlen bestehen."
-     * )
+     * @ORM\Column(type="integer", nullable=true, unique=true)
      */
-    protected $PORD; //TODO: Anmerkung: nullable=false aber in DB sind noch alle null -  wieder auf true setzen bis alle Werte gesetzt, sonst kein valides Entity; außerdem pattern falsch, lieber Assert\Type integer
+    protected $PORD; //TODO: Assert
 
     /**
      * @ORM\Column(type="text", nullable=false)
