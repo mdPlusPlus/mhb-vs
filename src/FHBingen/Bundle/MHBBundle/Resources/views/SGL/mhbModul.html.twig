@@ -44,6 +44,7 @@
     </style>
 </head>
 <body>
+{% set ohneFachgebiet = 'Ohne Fachgebiet' %}
 {% set previousFachgebiet = '' %}
 
 {% for modulBeschreibung in modulBeschreibungen %}
@@ -58,8 +59,14 @@
 
     <div class="modul">
         <p class="intro">
-        {% if modulBeschreibung.getAngebot().getFachgebiet().getTitel() != previousFachgebiet %}
-            <h2>{{ modulBeschreibung.getAngebot().getFachgebiet().getTitel() }}</h2>
+        {% if modulBeschreibung.getAngebot().getFachgebiet() is not null %}
+            {% if modulBeschreibung.getAngebot().getFachgebiet().getTitel() != previousFachgebiet %}
+                <h2>{{ modulBeschreibung.getAngebot().getFachgebiet().getTitel() }}</h2>
+            {% endif %}
+        {% else %}
+            {% if ohneFachgebiet != previousFachgebiet %}
+                <h2>{{ ohneFachgebiet }}</h2>
+            {% endif %}
         {% endif %}
         <h3>{{ titelDE }} ({{ modulBeschreibung.getAngebot().getCode() }})</h3>
         </p>
@@ -272,7 +279,11 @@
         </table>
     </div>
 
-    {% set previousFachgebiet = modulBeschreibung.getAngebot().getFachgebiet().getTitel() %}
+    {% if modulBeschreibung.getAngebot().getFachgebiet() is not null %}
+        {% set previousFachgebiet = modulBeschreibung.getAngebot().getFachgebiet().getTitel() %}
+    {% else %}
+        {% set previousFachgebiet = ohneFachgebiet %}
+    {% endif %}
 
 {% endfor %}
 </body>

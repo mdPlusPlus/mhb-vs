@@ -575,6 +575,7 @@ class SglController extends Controller
         $angebote = $angeboteMitCode;
 
         $zuordnung = array();
+        $zuordnung[null] = array(); //ohne Fachgebiet (kann nur Wahlpflichtfach sein)
         $fachgebiete = $em->getRepository('FHBingenMHBBundle:Fachgebiet')->findBy(array('studiengang' => $studiengang));
 
         foreach ($fachgebiete as $fachgebiet) {
@@ -582,7 +583,12 @@ class SglController extends Controller
         }
 
         foreach ($angebote as $angebot) {
-            $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
+            if (!is_null($angebot->getFachgebiet())) {
+                $zuordnung[$angebot->getFachgebiet()->getTitel()][] = $angebot;
+            } else {
+                $zuordnung[null][] = $angebot;
+            }
+
         }
 
         //sortieren

@@ -117,20 +117,24 @@
             <div id="angeboteDiv">
                 {% for key in zuordnung|keys %}
                     <div class="angebotDiv">
-                        <h4>{{ key }}</h4>
-                        <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
-                            {% for angebot in zuordnung[key] %}
-                                <li>
-                                    {#<label>#}
-                                    <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
-                                    {{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')' }} {# Angebotsart hier sinnvoll? #}
-                                    {# if Veranstaltung des Angebots seit letzter MHB-Erstullung geändert #}
-                                    {% if angebot.getVeranstaltung().getErstellungsdatum().getTimestamp() > neuestesMHBDateTime.getTimestamp() %}
-                                        {# then Angebot als geändert markieren #}
-                                        <span style="color: red">{{ 'GEÄNDERT' }}</span>
-                                    {% endif %}
-                                    {#</label>#}
-                                </li>
+                        {% if key is not null %}
+                            <h4>{{ key }}</h4>
+                            <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
+                        {% else %}
+                            <h4>ohne Fachgebiet</h4>
+                            <ul id="ohne_Fachgebiet" class="angebot">
+                        {% endif %}
+
+                        {% for angebot in zuordnung[key] %}
+                            <li>
+                                <input type="hidden" name="{{ angebot }}" value="{{ angebot.getAngebotsID() }}"/>
+                                {{ angebot ~ ' (' ~ angebot.getAngebotsart() ~ ')' }} {# Angebotsart hier sinnvoll? #}
+                                {# if Veranstaltung des Angebots seit letzter MHB-Erstullung geändert #}
+                                {% if angebot.getVeranstaltung().getErstellungsdatum().getTimestamp() > neuestesMHBDateTime.getTimestamp() %}
+                                    {# then Angebot als geändert markieren #}
+                                    <span style="color: red">{{ 'GEÄNDERT' }}</span>
+                                {% endif %}
+                            </li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -151,10 +155,15 @@
         <div id="nichtMhbDiv">
             {% for key in zuordnung|keys %}
                 <div class="angebotDiv">
-                    <h4>{{ key }}</h4>
-                    <ul id="{{ key|replace({' ': '_'}) ~ '_NICHT_MHB' }}" class="angebot">
-
-                    </ul>
+                    {% if key is not null %}
+                        <h4>{{ key }}</h4>
+                        <ul id="{{ key|replace({' ': '_'}) ~ '_NICHT_MHB' }}" class="angebot">
+                        </ul>
+                    {% else %}
+                        <h4>ohne Fachgebiet</h4>
+                        <ul id="ohne_Fachgebiet_NICHT_MHB" class="angebot">
+                        </ul>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
