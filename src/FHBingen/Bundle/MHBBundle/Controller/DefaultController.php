@@ -83,8 +83,6 @@ class DefaultController extends Controller
 
     /**
      * Initialerstellung von Userrollen
-     *
-     * @Route("/create/roles")
      */
     public function createRolesAction()
     {
@@ -119,46 +117,6 @@ class DefaultController extends Controller
 
         return new Response("Rollen angelegt");
     }
-
-    public function tmpFileTest()
-    {
-        $pathToCover = 'test.file';
-
-        file_put_contents($pathToCover, 'stuff');
-
-        unlink($pathToCover);
-
-        return new Response($pathToCover);
-
-    }
-
-    public function autoConvertAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $veranstaltungen = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
-        $veranstaltungenHistory = $em->getRepository('FHBingenMHBBundle:VeranstaltungHistory')->findAll();
-
-        foreach ($veranstaltungen as $veranstaltung) {
-            $veranstaltung->setAutor($em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => 8))); //schmidt
-            $em->persist($veranstaltung);
-        }
-        foreach ($veranstaltungenHistory as $veranstaltung) {
-            $veranstaltung->setAutor($em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('Dozenten_ID' => 8))); //schmidt
-            $em->persist($veranstaltung);
-        }
-
-        $em->flush();
-
-        return new Response('Erfolg');
-    }
-
-    public function dozToString(Dozent $dozent)
-    {
-        return (string) $dozent;
-    }
-
-
 
     //[DONE] 0. B-IN-IVxx und B-IN-V zu "Informatik Vertiefung" ändern
     //[DONE] 1. alte Fachgebiete löschen
@@ -261,57 +219,5 @@ class DefaultController extends Controller
         //48 löschen
 
         return new Response($response);
-    }
-
-    public function copyRegelsem()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
-
-        $response = "Sommer: <br />";
-        foreach ($angebot as $ss) {
-            $ss->setRegelsemSS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array(
-                'Startsemester' => "SS",
-                'veranstaltung' => $ss->getVeranstaltung(),
-                'studiengang' => $ss->getStudiengang(),
-                )));
-            $em->persist($ss);
-            $response = $response . $ss . '<br />';
-        }
-
-        $response = $response . "Winter: <br />";
-        foreach ($angebot as $ws) {
-            $ws->setRegelsemWS($em->getRepository('FHBingenMHBBundle:Studienplan')->findOneBy(array(
-                'Startsemester' => "WS",
-                'veranstaltung' => $ws->getVeranstaltung(),
-                'studiengang' => $ws->getStudiengang()
-            )));
-            $em->persist($ws);
-            $response = $response . $ws . '<br />';
-        }
-
-        $em->flush();
-
-        return new Response($response);
-    }
-
-    /**
-     * @Route("/correct")
-     */
-    public function correctRegelsemester()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
-
-        foreach ($angebote as $angebot) {
-            $angebot->setRegelsemesterSS($angebot->getRegelsemSS());
-            $angebot->setRegelsemesterWS($angebot->getRegelsemWS());
-            $em->persist($angebot);
-        }
-
-        $em->flush();
-
-        return new Response('okay');
     }
 }
