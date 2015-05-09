@@ -97,24 +97,6 @@ class SortFunctions
     }
 
     /**
-     * @param Studienplan $planA
-     * @param Studienplan $planB
-     *
-     * @return int
-     */
-    public static function studienplanSort(Studienplan $planA, Studienplan $planB)
-    {
-        $a = $planA->getStartsemester();
-        $b = $planB->getStartsemester();
-
-        if ($a == $b) {
-            return 0;
-        }
-
-        return ($a < $b) ? -1 : 1;
-    }
-
-    /**
      * @param Veranstaltung $modulA
      * @param Veranstaltung $modulB
      *
