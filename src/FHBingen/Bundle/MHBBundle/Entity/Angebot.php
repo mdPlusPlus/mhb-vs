@@ -133,13 +133,14 @@ class Angebot
      * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $RegelsemSS; //TODO: Anmerkung: In der DB sind einige blank; M-IS-IN03 ist '[]' ???
+    protected $RegelsemesterSS; //TODO: Anmerkung: In der DB sind einige blank; M-IS-IN03 ist '[]' ???
 
     /**
      * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $RegelsemWS; //TODO: Anmerkung: In der DB sind einige blank
+    protected $RegelsemesterWS; //TODO: Anmerkung: In der DB sind einige blank
+
 
     /**
      * Get Angebots_ID
@@ -344,50 +345,50 @@ class Angebot
     }
 
     /**
-     * Set Regelsem_SS
+     * Set RegelsemesterSS
      *
-     * @param string $regelsemSS
+     * @param string $regelsemesterSS
      *
      * @return Angebot
      */
-    public function setRegelsemSS($regelsemSS)
+    public function setRegelsemesterSS($regelsemesterSS)
     {
-        $this->RegelsemSS = $regelsemSS;
+        $this->RegelsemesterSS = $regelsemesterSS;
 
         return $this;
     }
 
     /**
-     * Get Regelsem_SS
+     * Get RegelsemesterSS
      *
      * @return string 
      */
-    public function getRegelsemSS()
+    public function getRegelsemesterSS()
     {
-        return $this->RegelsemSS;
+        return $this->RegelsemesterSS;
     }
 
     /**
-     * Set Regelsem_WS
+     * Set RegelsemesterWS
      *
-     * @param string $regelsemWS
+     * @param string $regelsemesterWS
      *
      * @return Angebot
      */
-    public function setRegelsemWS($regelsemWS)
+    public function setRegelsemesterWS($regelsemesterWS)
     {
-        $this->RegelsemWS = $regelsemWS;
+        $this->RegelsemesterWS = $regelsemesterWS;
 
         return $this;
     }
 
     /**
-     * Get Regelsem_WS
+     * Get RegelsemesterWS
      *
      * @return string 
      */
-    public function getRegelsemWS()
+    public function getRegelsemesterWS()
     {
-        return $this->RegelsemWS;
+        return $this->RegelsemesterWS;
     }
 }

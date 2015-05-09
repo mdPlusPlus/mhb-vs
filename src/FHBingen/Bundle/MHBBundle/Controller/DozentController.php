@@ -559,9 +559,9 @@ class DozentController extends Controller
                     }
                 }
 
-                $angebot->setRegelSemSS($encSS);
+                $angebot->setRegelsemesterSS($encSS);
 
-                $angebot->setRegelSemWS($encWS);
+                $angebot->setRegelsemesterWS($encWS);
 
                 $modul->setStatus('Freigegeben');
 

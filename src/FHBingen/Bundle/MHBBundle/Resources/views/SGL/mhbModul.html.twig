@@ -98,11 +98,11 @@
                     <table>
                             <tr>
                                 <td class="studiensemester startsemester">SS:</td>
-                                <td class="studiensemester">{{ modulBeschreibung.getAngebot().getRegelsemesterSS|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' ersetzen #}
+                                <td class="studiensemester">{{ modulBeschreibung.getAngebot().getRegelsemesterSS()|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' ersetzen #}
                             </tr>
                             <tr>
                                 <td class="studiensemester startsemester">WS:</td>
-                                <td class="studiensemester">{{ modulBeschreibung.getAngebot().getRegelsemesterWS|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' ersetzen #}
+                                <td class="studiensemester">{{ modulBeschreibung.getAngebot().getRegelsemesterWS()|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' ersetzen #}
                             </tr>
                     </table>
                 </td>

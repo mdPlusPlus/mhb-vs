@@ -263,12 +263,6 @@ class DefaultController extends Controller
         return new Response($response);
     }
 
-
-    /**
-     * Kopieren der Regelsemester
-     *
-     * @Route("/regelsem")
-     */
     public function copyRegelsem()
     {
         $em = $this->getDoctrine()->getManager();
@@ -300,5 +294,24 @@ class DefaultController extends Controller
         $em->flush();
 
         return new Response($response);
+    }
+
+    /**
+     * @Route("/correct")
+     */
+    public function correctRegelsemester()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
+
+        foreach ($angebote as $angebot) {
+            $angebot->setRegelsemesterSS($angebot->getRegelsemSS());
+            $angebot->setRegelsemesterWS($angebot->getRegelsemWS());
+            $em->persist($angebot);
+        }
+
+        $em->flush();
+
+        return new Response('okay');
     }
 }

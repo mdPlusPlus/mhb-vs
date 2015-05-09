@@ -49,6 +49,7 @@
         });
 
         $(function () {
+            {# TODO: Verbindung 'ohne Fachgebiete' #}
             {% for key in zuordnung|keys %}
             {% set js_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
             {% set js_NICHT_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
@@ -117,12 +118,12 @@
             <div id="angeboteDiv">
                 {% for key in zuordnung|keys %}
                     <div class="angebotDiv">
-                        {% if key is not null %}
-                            <h4>{{ key }}</h4>
-                            <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
-                        {% else %}
+                        {% if key == '' %}
                             <h4>ohne Fachgebiet</h4>
                             <ul id="ohne_Fachgebiet" class="angebot">
+                        {% else %}
+                            <h4>{{ key }}</h4>
+                            <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
                         {% endif %}
 
                         {% for angebot in zuordnung[key] %}
@@ -155,13 +156,13 @@
         <div id="nichtMhbDiv">
             {% for key in zuordnung|keys %}
                 <div class="angebotDiv">
-                    {% if key is not null %}
-                        <h4>{{ key }}</h4>
-                        <ul id="{{ key|replace({' ': '_'}) ~ '_NICHT_MHB' }}" class="angebot">
-                        </ul>
-                    {% else %}
+                    {% if key == '' %}
                         <h4>ohne Fachgebiet</h4>
                         <ul id="ohne_Fachgebiet_NICHT_MHB" class="angebot">
+                        </ul>
+                    {% else %}
+                        <h4>{{ key }}</h4>
+                        <ul id="{{ key|replace({' ': '_'}) ~ '_NICHT_MHB' }}" class="angebot">
                         </ul>
                     {% endif %}
                 </div>
