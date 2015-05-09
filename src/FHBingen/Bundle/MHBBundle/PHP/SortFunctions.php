@@ -93,6 +93,14 @@ class SortFunctions
             return ($codeA < $codeB) ? -1 : 1;
         }
 
+        //Ausnahme wenn eines der Fachgebiete == null ('Ohne Fachgebiet' soll ganz am Ende im MHB kommen, nicht am Anfang)
+        if ($fgA == null) {
+            return 1;
+        }
+        if ($fgB == null) {
+            return -1;
+        }
+
         return ($fgA < $fgB) ? -1 : 1;
     }
 
