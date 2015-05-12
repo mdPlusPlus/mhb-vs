@@ -119,8 +119,8 @@
                 {% for key in zuordnung|keys %}
                     <div class="angebotDiv">
                         {% if key == '' %}
-                            <h4>ohne Fachgebiet</h4>
-                            <ul id="ohne_Fachgebiet" class="angebot">
+                            <h4>Ohne Fachgebiet</h4>
+                            <ul id="Ohne_Fachgebiet" class="angebot">
                         {% else %}
                             <h4>{{ key }}</h4>
                             <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
@@ -157,8 +157,8 @@
             {% for key in zuordnung|keys %}
                 <div class="angebotDiv">
                     {% if key == '' %}
-                        <h4>ohne Fachgebiet</h4>
-                        <ul id="ohne_Fachgebiet_NICHT_MHB" class="angebot">
+                        <h4>Ohne Fachgebiet</h4>
+                        <ul id="Ohne_Fachgebiet_NICHT_MHB" class="angebot">
                         </ul>
                     {% else %}
                         <h4>{{ key }}</h4>
