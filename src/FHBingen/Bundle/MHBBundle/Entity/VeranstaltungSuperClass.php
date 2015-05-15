@@ -28,8 +28,24 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="Veranstaltung")
  * @ORM\HasLifecycleCallbacks
  */
-class Veranstaltung
+class VeranstaltungSuperClass
 {
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\ID
+     */
+    protected $Modul_ID;
+
+    /**
+     * Get Modul_ID
+     *
+     * @return integer
+     */
+    public function getModulID()
+    {
+        return $this->Modul_ID;
+    }
+
     /**
      * @return string
      */
@@ -41,23 +57,10 @@ class Veranstaltung
     }
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\ID
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $Modul_ID;
-
-    /**
      * @ORM\Column(type="datetime", nullable=false)
      * @Assert\DateTime()
      */
     protected $Erstellungsdatum;
-
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $Versionsnummer;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
@@ -254,17 +257,6 @@ class Veranstaltung
 
 
     /**
-     * Get Modul_ID
-     *
-     * @return integer 
-     */
-    public function getModulID()
-    {
-        return $this->Modul_ID;
-    }
-
-
-    /**
      * Set Erstellungsdatum
      *
      * @param \DateTime $erstellungsdatum
@@ -286,30 +278,6 @@ class Veranstaltung
     public function getErstellungsdatum()
     {
         return $this->Erstellungsdatum;
-    }
-
-    /**
-     * Set Versionsnummer
-     *
-     * @param integer $versionsnummer
-     *
-     * @return Veranstaltung
-     */
-    public function setVersionsnummer($versionsnummer)
-    {
-        $this->Versionsnummer = $versionsnummer;
-
-        return $this;
-    }
-
-    /**
-     * Get Versionsnummer
-     *
-     * @return integer 
-     */
-    public function getVersionsnummer()
-    {
-        return $this->Versionsnummer;
     }
 
     /**

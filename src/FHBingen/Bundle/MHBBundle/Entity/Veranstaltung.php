@@ -30,6 +30,16 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Veranstaltung extends VeranstaltungSuperClass
 {
+
+    /*
+     * @Override
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+
+    protected $Modul_ID;
+
+
+
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
      * @Assert\Choice(
@@ -38,6 +48,8 @@ class Veranstaltung extends VeranstaltungSuperClass
      * )
      */
     protected $Status;
+
+
 
     /**
      * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="veranstaltung", cascade={"all"})
@@ -366,5 +378,35 @@ class Veranstaltung extends VeranstaltungSuperClass
     public function getGrundmodul()
     {
         return $this->grundmodul;
+    }
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $Versionsnummer;
+
+    /**
+     * Set Versionsnummer
+     *
+     * @param integer $versionsnummer
+     *
+     * @return Veranstaltung
+     */
+    public function setVersionsnummer($versionsnummer)
+    {
+        $this->Versionsnummer = $versionsnummer;
+
+        return $this;
+    }
+
+    /**
+     * Get Versionsnummer
+     *
+     * @return integer
+     */
+    public function getVersionsnummer()
+    {
+        return $this->Versionsnummer;
     }
 }

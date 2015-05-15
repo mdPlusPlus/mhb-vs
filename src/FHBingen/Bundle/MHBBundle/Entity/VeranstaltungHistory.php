@@ -20,15 +20,53 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="VeranstaltungHistory")
  * @ORM\HasLifecycleCallbacks
  *
- * @ORM\AttributeOverrides(name="Versionsnummer",
- *  column=@column(
-        @ORM\Id
- *  )
- * )
- *
  */
 class VeranstaltungHistory extends VeranstaltungSuperClass
 {
 
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\ID
+     */
+    protected $Modul_ID;
+
+    /**
+     * Get Modul_ID
+     *
+     * @return integer
+     */
+    public function getModulID()
+    {
+        return $this->Modul_ID;
+    }
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
+     */
+    protected $Versionsnummer;
+
+    /**
+     * Set Versionsnummer
+     *
+     * @param integer $versionsnummer
+     *
+     * @return Veranstaltung
+     */
+    public function setVersionsnummer($versionsnummer)
+    {
+        $this->Versionsnummer = $versionsnummer;
+
+        return $this;
+    }
+
+    /**
+     * Get Versionsnummer
+     *
+     * @return integer
+     */
+    public function getVersionsnummer()
+    {
+        return $this->Versionsnummer;
+    }
 
 }
