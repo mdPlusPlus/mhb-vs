@@ -133,14 +133,10 @@ class Dozent implements UserInterface, AdvancedUserInterface, \Serializable, Enc
     protected $modulbeauftragter;
 
     /**
-     * @ORM\OneToMany(targetEntity="Veranstaltung", mappedBy="autor")
+     * @ORM\OneToMany(targetEntity="VeranstaltungSuperClass", mappedBy="autor")
      */
     protected $bearbeitet;
 
-    /**
-     * @ORM\OneToMany(targetEntity="VeranstaltungHistory", mappedBy="autor")
-     */
-    protected $bearbeitetHistory;
 
     /**
      * @ORM\OneToMany(targetEntity="Studiengang", mappedBy="sgl")

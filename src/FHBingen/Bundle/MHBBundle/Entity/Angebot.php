@@ -125,21 +125,16 @@ class Angebot
 
 
     /**
-     * @ORM\Column(type="integer", nullable=true, unique=true)
+     * @ORM\Column(type="text", nullable=false)
+     * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $PORD; //TODO: Assert
+    protected $RegelsemesterSS;
 
     /**
      * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
      */
-    protected $RegelsemesterSS; //TODO: Anmerkung: In der DB sind einige blank; M-IS-IN03 ist '[]' ???
-
-    /**
-     * @ORM\Column(type="text", nullable=false)
-     * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
-     */
-    protected $RegelsemesterWS; //TODO: Anmerkung: In der DB sind einige blank
+    protected $RegelsemesterWS;
 
 
     /**
@@ -320,29 +315,6 @@ class Angebot
         return $this->studiengang;
     }
 
-    /**
-     * Set PORD
-     *
-     * @param integer $pord
-     *
-     * @return Angebot
-     */
-    public function setPORD($pord)
-    {
-        $this->PORD = $pord;
-
-        return $this;
-    }
-
-    /**
-     * Get PORD
-     *
-     * @return integer 
-     */
-    public function getPORD()
-    {
-        return $this->PORD;
-    }
 
     /**
      * Set RegelsemesterSS
