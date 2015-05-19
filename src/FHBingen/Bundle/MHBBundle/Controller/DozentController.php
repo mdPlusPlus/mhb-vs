@@ -201,6 +201,7 @@ class DozentController extends Controller
                 $modul->setErstellungsdatum(new \DateTime());
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
+                $modul->setLehrform($form->get('lehrform')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
@@ -213,7 +214,7 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
-                $modul->setLehrform($form->get('lehrform')->getData());
+
 
 
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
