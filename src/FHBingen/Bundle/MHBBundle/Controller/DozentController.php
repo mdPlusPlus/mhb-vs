@@ -71,7 +71,7 @@ class DozentController extends Controller
         //$dozentLehrt ist ein Array mit allen Modulen, welche der aktuelle Benutzer unterrichtet
         $dozentLehrt = array();
         foreach ($lehrendeVonDozent as $lehrende) {
-            $dozentLehrt[] = $lehrende->getVeranstaltung(); //TODO: keine "expired" anzeigen!
+            $dozentLehrt[] = $lehrende->getVeranstaltung();
         }
         asort($dozentLehrt, SORT_STRING);
 
@@ -276,7 +276,6 @@ class DozentController extends Controller
             //TODO: History muss noch überarbeitet werden: Wenn nicht valides Formular abgeschickt wird, werden History-Daten mit angepassten Daten überschrieben - stimmt das überhaupt? testen!
             $modulHistory = new Entity\VeranstaltungHistory();
 
-            //TODO: hier fehlen auch Felder
             //schreibt den Veranstaltungsinhalt vor der Änderung in die Historytabelle
             $modulHistory->setAutor($modul->getAutor());
             $modulHistory->setDauer($modul->getDauer());
@@ -301,7 +300,9 @@ class DozentController extends Controller
             $modulHistory->setSpracheSonstiges($modul->getSpracheSonstiges());
             $modulHistory->setVersionsnummer($modul->getVersionsnummer());
             $modulHistory->setVoraussetzungInh($modul->getVoraussetzungInh());
+            $modulHistory->setLehrform($modul->getLehrform());
             $modulHistory->setVoraussetzungLP($encoder->encode($modul->getVoraussetzungLP(), 'json'));
+            $modulHistory->setErlaeuterungenLP($modul->getErlaueterungenLP());
         }
 
 
