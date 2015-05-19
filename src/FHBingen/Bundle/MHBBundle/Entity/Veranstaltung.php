@@ -31,12 +31,23 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Veranstaltung extends VeranstaltungSuperClass
 {
 
-    /*
-     * @Override
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\ID
      * @ORM\GeneratedValue(strategy="AUTO")
      */
 
     protected $Modul_ID;
+
+    /**
+     * Get Modul_ID
+     *
+     * @return integer
+     */
+    public function getModulID()
+    {
+        return $this->Modul_ID;
+    }
 
 
 

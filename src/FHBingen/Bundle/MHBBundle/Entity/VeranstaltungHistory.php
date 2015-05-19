@@ -39,6 +39,14 @@ class VeranstaltungHistory extends VeranstaltungSuperClass
     {
         return $this->Modul_ID;
     }
+
+    public  function  setModulID($id)
+    {
+        $this->Modul_ID = $id;
+
+        return $this;
+    }
+
     /**
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id

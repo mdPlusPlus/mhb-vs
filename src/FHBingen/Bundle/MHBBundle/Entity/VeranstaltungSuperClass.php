@@ -11,40 +11,19 @@ namespace FHBingen\Bundle\MHBBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /*
  * TODO:
  * @UniqueEntity(fields="Kuerzel", message="Es existiert bereits eine Veranstaltung mit diesem Kürzel.")
  * wirft fehler wegen MAT2
  */
+
 /**
- * Class Veranstaltung
- *
- * @package FHBingen\Bundle\MHBBundle\Entity
- * @ORM\Entity
- * @UniqueEntity(fields="Name",    message="Es existiert bereits eine Veranstaltung mit diesem deutschen Namen.")
- * @UniqueEntity(fields="NameEN",  message="Es existiert bereits eine Veranstaltung mit diesem englischen Namen.")
- * @ORM\Table(name="Veranstaltung")
- * @ORM\HasLifecycleCallbacks
+ * @ORM\MappedSuperclass()
  */
+
 class VeranstaltungSuperClass
 {
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\ID
-     */
-    protected $Modul_ID;
-
-    /**
-     * Get Modul_ID
-     *
-     * @return integer
-     */
-    public function getModulID()
-    {
-        return $this->Modul_ID;
-    }
 
     /**
      * @return string
@@ -62,14 +41,23 @@ class VeranstaltungSuperClass
      */
     protected $Erstellungsdatum;
 
+
     /**
-     * @ORM\Column(type="string", length=15, nullable=false)
-     * @Assert\Choice(
-     *      choices = { "in Planung", "Freigegeben", "expired" },
-     *      message = "Bitte geben Sie einen korrekten Status an!"
-     * )
+     * @ORM\Column(type="text", nullable=true)
      */
-    protected $Status;
+    protected $Lehrform;
+
+    public function getLehrform()
+    {
+        return $this->Lehrform;
+    }
+
+    public function setLehrform($form)
+    {
+        $this->Lehrform = $form;
+
+        return $this;
+    }
 
     //TODO: unique, siehe oben
     /**

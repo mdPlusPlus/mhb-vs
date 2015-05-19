@@ -213,6 +213,7 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
+                $modul->setLehrform($form->get('lehrform')->getData());
 
 
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
