@@ -63,11 +63,6 @@ class Veranstaltung extends VeranstaltungSuperClass
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="veranstaltung", cascade={"all"})
-     */
-    protected $semesterplan;
-
-    /**
      * @ORM\OneToMany(targetEntity="Angebot", mappedBy="veranstaltung", cascade={"all"})
      */
     protected $angebot;
@@ -109,7 +104,6 @@ class Veranstaltung extends VeranstaltungSuperClass
         $this->grundmodul       = new ArrayCollection();    //TODO: richtig?
         $this->kernfach         = new ArrayCollection();
         $this->lehrende         = new ArrayCollection();
-        $this->semesterplan     = new ArrayCollection();
     }
 
     /**
@@ -137,39 +131,7 @@ class Veranstaltung extends VeranstaltungSuperClass
     }
 
 
-    /**
-     * Add semesterplan
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
-     *
-     * @return Veranstaltung
-     */
-    public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
-    {
-        $this->semesterplan[] = $semesterplan;
 
-        return $this;
-    }
-
-    /**
-     * Remove semesterplan
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
-     */
-    public function removeSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
-    {
-        $this->semesterplan->removeElement($semesterplan);
-    }
-
-    /**
-     * Get semesterplan
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSemesterplan()
-    {
-        return $this->semesterplan;
-    }
 
     /**
      * Add angebot

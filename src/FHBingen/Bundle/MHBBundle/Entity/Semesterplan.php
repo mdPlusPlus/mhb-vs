@@ -32,12 +32,6 @@ class Semesterplan
 
         return $string;
     }
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $Semesterplan_ID;
 
     /**
      * @ORM\Column(type="integer")
@@ -84,15 +78,27 @@ class Semesterplan
      */
     protected $GroesseUebungsgruppen;
 
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $istLehrbeauftragter;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $findetStatt;
+
     /**
      * Abhaengigkeiten
      */
 
     /**
-     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Angebot", inversedBy="semesterplan")
+     * @ORM\JoinColumn(name="angebot", referencedColumnName="Angebots_ID", nullable=false)
      */
-    protected $veranstaltung;
+    protected $angebot;
 
 
     /**
@@ -102,20 +108,12 @@ class Semesterplan
     protected $dozent;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="semesterplan")
      * @ORM\JoinColumn(name="semester", referencedColumnName="Semester", nullable=false)
      * */
     protected $semester;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getSemesterplan_ID()
-    {
-        return $this->Semesterplan_ID;
-    }
 
     /**
      * Set sws_uebung

@@ -363,4 +363,43 @@ class Angebot
     {
         return $this->RegelsemesterWS;
     }
+
+    /**
+     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="angebot", cascade={"all"})
+     */
+    protected $semesterplan;
+
+    /**
+     * Add semesterplan
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
+     *
+     * @return Veranstaltung
+     */
+    public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
+    {
+        $this->semesterplan[] = $semesterplan;
+
+        return $this;
+    }
+
+    /**
+     * Remove semesterplan
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
+     */
+    public function removeSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
+    {
+        $this->semesterplan->removeElement($semesterplan);
+    }
+
+    /**
+     * Get semesterplan
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSemesterplan()
+    {
+        return $this->semesterplan;
+    }
 }
