@@ -111,6 +111,7 @@ class VeranstaltungHistoryType extends AbstractType
         $form->add('voraussetzungLP', 'choice', $voraussetzungLPChoiceOptions);
 
 
+
         $pruefungsformenChoiceOptions = array(
             'label' => 'Prüfungsform:',
             'choices' => ArrayValues::$pruefungsformen,
