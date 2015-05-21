@@ -80,7 +80,7 @@ class VeranstaltungType extends AbstractType
         if($lehrform == null){
             $lehrformOptions['data'] = 'Vorlesungen mit Tafel und Videoprojektion'; //default
         }
-        $form->add('lehrform', 'text', $lehrformOptions);
+        $form->add('lehrform', 'textarea', $lehrformOptions);
 
         $dauer = $input->getDauer();
         $dauerOptions = array('label' => 'Dauer:', 'required' => false, 'attr' => array('min' => '1'));

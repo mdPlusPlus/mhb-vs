@@ -302,7 +302,7 @@ class DozentController extends Controller
             $modulHistory->setVoraussetzungInh($modul->getVoraussetzungInh());
             $modulHistory->setLehrform($modul->getLehrform());
             $modulHistory->setVoraussetzungLP($encoder->encode($modul->getVoraussetzungLP(), 'json'));
-            $modulHistory->setErlaeuterungenLP($modul->getErlaueterungenLP());
+            $modulHistory->setErlaeuterungenLP($modul->getErlaeuterungenLP());
         }
 
 
