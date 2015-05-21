@@ -121,6 +121,49 @@ class DozentController extends Controller
     /**
      * @param int $id
      *
+     * @Route("/restricted/dozent/alteVersionen/{id}", name="alteVersionen")
+     * @Template("FHBingenMHBBundle:Dozent:alteVersionen.html.twig")
+     *
+     * Hier werden mögliche alte Versionen aus der History-Tabelle zur gegebenen ID aufgelistet.
+     *
+     * @return array
+     */
+    public function alteVersionenAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $alt = $em->getRepository('FHBingenMHBBundle:VeranstaltungHistory')->findBy(array('Modul_ID' => $id));
+
+        return array('alteVersionen' => $alt, 'pageTitle' => 'Alte Versionen');
+    }
+
+
+    /**
+     * @param int $id
+     *
+     * @Route("/restricted/dozent/alteVersionAnzeigen/{id}/{version}", name="alteVersionAnzeigen")
+     * @Template("FHBingenMHBBundle:Dozent:alteVersionAnzeigen.html.twig")
+     *
+     * Hier wird eine alte Version eines Moduls angezeigt
+     *
+     * @return array
+     */
+    public function alteVersionenAnzeigenAction($id, $version)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $alt = $em->getRepository('FHBingenMHBBundle:VeranstaltungHistory')->findOneBy(array('Modul_ID' => $id, 'Versionsnummer' => $version));
+
+        $einheit = explode(' ', $alt->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
+
+        $form = $this->createForm(new Form\VeranstaltungHistoryType($id, $version), $alt);
+
+        return array('form' => $form->createView(), 'alteVersion' => $alt, 'pageTitle' => 'Alte Version Anzeigen', 'einheit' => $einheit);
+
+    }
+
+
+    /**
+     * @param int $id
+     *
      * @Route("/restricted/dozent/planungLoeschen/{id}", name="planungLoeschen")
      *
      * Hier wird eine Planung anhand von der ID gelöscht
