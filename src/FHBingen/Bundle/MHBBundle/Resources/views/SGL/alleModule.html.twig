@@ -15,12 +15,13 @@
             <thead>
             <tr>
                 <th>Modultitel</th>
-                <th style="min-width: 80px; width: 7%">Kürzel</th>
-                <th style="min-width: 100px; width: 12%">Erstelldatum</th>
-                <th style="min-width: 130px; width: 15%">Häufigkeit</th>
-                <th style="min-width: 150px; width: 23%">Modulbeauftragte/r</th>
-                <th style="min-width: 150px; width: 23%">Autor</th>
-                <th style="min-width: 220px; width: 23%">Studiengang</th>
+                <th style="min-width: 70px; width: 7%">Kürzel</th>
+                <th style="min-width: 80px; width: 10%">Erstelldatum</th>
+                <th style="min-width: 120px; width: 15%">Häufigkeit</th>
+                <th style="min-width: 120px; width: 19%">Modulbeauftragte/r</th>
+                <th style="min-width: 120px; width: 19%">Autor</th>
+                <th style="min-width: 200px; width: 20%">Studiengang</th>
+                <th style="min-width: 120px; width: 13%">Alte Versionen</th>
             </tr>
             </thead>
             <tbody>
@@ -41,6 +42,9 @@
                         {% endfor %}
                         <a href=" {{ path('vorAngebot', {'modulID': veranstaltung.getModulID()}) }}">In weiterem
                             Studiengang anbieten</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('alteVersionen', {'id': veranstaltung.getModulID()}) }}">Alte Versionen</a>
                     </td>
                 </tr>
                 {% set count = count +1 %}

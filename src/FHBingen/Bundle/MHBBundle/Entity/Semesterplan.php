@@ -281,4 +281,5 @@ class Semesterplan
     {
         return $this->semester;
     }
+
 }

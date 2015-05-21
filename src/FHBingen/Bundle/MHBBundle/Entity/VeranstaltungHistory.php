@@ -26,7 +26,7 @@ class VeranstaltungHistory extends VeranstaltungSuperClass
 
     /**
      * @ORM\Column(type="integer", nullable=false)
-     * @ORM\ID
+     * @ORM\Id
      */
     protected $Modul_ID;
 
