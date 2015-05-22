@@ -75,41 +75,6 @@ class VeranstaltungSuperClass
      */
     protected $Kuerzel;
 
-    //Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
-    /**
-     * @ORM\Column(type="string", length=70, nullable=false, unique=true)
-     * @Assert\Length(
-     *      min = 5,
-     *      minMessage = "Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     *      max = 70,
-     *      maxMessage = "Der deutsche Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
-     * )
-     * @Assert\NotBlank(
-     *      message = "Der deutsche Modultitel muss gesetzt werden."
-     * )
-     * @Assert\Regex(
-     *     pattern = "/[A-ZÄÖÜa-zäöüß0-9 \-]{5,70}/",
-     *     message = "Der deutsche Name darf nur aus Buchstaben, Zahlen, Leerzeichen und Bindestrichen bestehen."
-     * )
-     */
-    protected $Name;
-
-    //Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
-    /**
-     * @ORM\Column(type="string", length=70, nullable=true, unique=true)
-     * @Assert\Length(
-     *      min = 5,
-     *      minMessage = "Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
-     *      max = 70,
-     *      maxMessage = "Der englische Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
-     * )
-     * @Assert\Regex(
-     *     pattern = "/[A-ZÄÖÜa-zäöüß0-9 \-]{5,70}/",
-     *     message = "Der englische Name darf nur aus Buchstaben, Zahlen, Leerzeichen und Bindestrichen bestehen."
-     * )
-     */
-    protected $NameEN;
-
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      * @Assert\Choice(
