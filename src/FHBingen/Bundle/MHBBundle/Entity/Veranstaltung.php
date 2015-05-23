@@ -31,12 +31,58 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Veranstaltung extends VeranstaltungSuperClass
 {
 
-    /*
-     * @Override
+    //Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
+    /**
+     * @ORM\Column(type="string", length=70, nullable=false, unique=true)
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "Der deutsche Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     *      max = 70,
+     *      maxMessage = "Der deutsche Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
+     * )
+     * @Assert\NotBlank(
+     *      message = "Der deutsche Modultitel muss gesetzt werden."
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß0-9 \-]{5,70}/",
+     *     message = "Der deutsche Name darf nur aus Buchstaben, Zahlen, Leerzeichen und Bindestrichen bestehen."
+     * )
+     */
+    protected $Name;
+
+    //Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
+    /**
+     * @ORM\Column(type="string", length=70, nullable=true, unique=true)
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "Der englische Modul-Titel muss aus mindestens {{ limit }} Zeichen bestehen.",
+     *      max = 70,
+     *      maxMessage = "Der englische Modul-Titel darf maximal aus {{ limit }} Zeichen bestehen.",
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[A-ZÄÖÜa-zäöüß0-9 \-]{5,70}/",
+     *     message = "Der englische Name darf nur aus Buchstaben, Zahlen, Leerzeichen und Bindestrichen bestehen."
+     * )
+     */
+    protected $NameEN;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\ID
      * @ORM\GeneratedValue(strategy="AUTO")
      */
 
     protected $Modul_ID;
+
+    /**
+     * Get Modul_ID
+     *
+     * @return integer
+     */
+    public function getModulID()
+    {
+        return $this->Modul_ID;
+    }
 
 
 
@@ -50,11 +96,6 @@ class Veranstaltung extends VeranstaltungSuperClass
     protected $Status;
 
 
-
-    /**
-     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="veranstaltung", cascade={"all"})
-     */
-    protected $semesterplan;
 
     /**
      * @ORM\OneToMany(targetEntity="Angebot", mappedBy="veranstaltung", cascade={"all"})
@@ -98,7 +139,6 @@ class Veranstaltung extends VeranstaltungSuperClass
         $this->grundmodul       = new ArrayCollection();    //TODO: richtig?
         $this->kernfach         = new ArrayCollection();
         $this->lehrende         = new ArrayCollection();
-        $this->semesterplan     = new ArrayCollection();
     }
 
     /**
@@ -126,39 +166,7 @@ class Veranstaltung extends VeranstaltungSuperClass
     }
 
 
-    /**
-     * Add semesterplan
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
-     *
-     * @return Veranstaltung
-     */
-    public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
-    {
-        $this->semesterplan[] = $semesterplan;
 
-        return $this;
-    }
-
-    /**
-     * Remove semesterplan
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
-     */
-    public function removeSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
-    {
-        $this->semesterplan->removeElement($semesterplan);
-    }
-
-    /**
-     * Get semesterplan
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSemesterplan()
-    {
-        return $this->semesterplan;
-    }
 
     /**
      * Add angebot

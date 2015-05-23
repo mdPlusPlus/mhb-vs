@@ -15,12 +15,13 @@
             <table id="modulverantwortlicher" class="table table-bordered tablesorter">
                 <thead>
                 <tr>
-                    <th style="width:30%">Modultitel</th>
-                    <th style="min-width: 100px; width: 7%">Kürzel</th>
-                    <th style="min-width: 130px; width: 12%">Erstelldatum</th>
-                    <th style="min-width: 150px; width: 15%">Häufigkeit</th>
-                    <th style="min-width: 220px; width: 23%">Lehrende</th>
+                    <th style="width:25%">Modultitel</th>
+                    <th style="min-width: 80px; width: 5%">Kürzel</th>
+                    <th style="min-width: 110px; width: 10%">Erstelldatum</th>
+                    <th style="min-width: 130px; width: 15%">Häufigkeit</th>
+                    <th style="min-width: 150px; width: 18%">Lehrende</th>
                     <th style="min-width: 220px; width: 23%">Studiengang</th>
+                    <th style="min-width: 130px; width: 14%">Alte Versionen</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,6 +55,9 @@
                             <a href=" {{ path('vorAngebot', {'modulID': veranstaltung.getModulID()}) }}">In weiterem
                                 Studiengang anbieten</a>
                         </td>
+                        <td>
+                            <a href="{{ path('alteVersionen', {'id': veranstaltung.getModulID()}) }}">Alte Versionen</a>
+                        </td>
                     </tr>
                     {% set count = count +1 %}
                 {% endfor %}
@@ -68,12 +72,13 @@
             <table id="lehrender" class="table table-bordered tablesorter">
                 <thead>
                 <tr>
-                    <th>Modultitel</th>
-                    <th style="min-width: 100px; width: 7%">Kürzel</th>
-                    <th style="min-width: 130px; width: 12%">Erstelldatum</th>
-                    <th style="min-width: 150px; width: 15%">Häufigkeit</th>
-                    <th style="min-width: 220px; width: 23%">Modulbeauftragter</th>
+                    <th style="width:25%">Modultitel</th>
+                    <th style="min-width: 80px; width: 5%">Kürzel</th>
+                    <th style="min-width: 110px; width: 10%">Erstelldatum</th>
+                    <th style="min-width: 130px; width: 15%">Häufigkeit</th>
+                    <th style="min-width: 150px; width: 18%">Lehrende</th>
                     <th style="min-width: 220px; width: 23%">Studiengang</th>
+                    <th style="min-width: 130px; width: 14%">Alte Versionen</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -96,6 +101,9 @@
                                     {{ Keinem Studiengang zugeordnet }}<br/>
                                 {% endif %}#}
                             {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{{ path('alteVersionen', {'id': veranstaltung.getModulID()}) }}">Alte Versionen</a>
                         </td>
                     </tr>
                  {% set count = count +1 %}

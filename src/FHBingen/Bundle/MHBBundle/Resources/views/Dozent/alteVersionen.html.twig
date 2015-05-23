@@ -1,0 +1,31 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="table-responsive">
+    {% if alteVersionen is not empty %}
+        <table id="alteVersionen" class="table table-bordered tablesorter">
+            <thead>
+            <tr>
+                <th style="width:30%">Modultitel</th>
+                <th style="min-width: 100px; width: 10%">Version</th>
+                <th style="min-width: 130px; width: 15%">Erstelldatum</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for veranstaltunghistory in alteVersionen %}
+                    <tr>
+                        <td>{{ veranstaltunghistory.name }}</td>
+                        <td>
+                            <a href="{{ path('alteVersionAnzeigen', {'id': veranstaltunghistory.getModulID(),
+                            'version':veranstaltunghistory.getVersionsnummer}) }}">{{ veranstaltunghistory.versionsnummer }}</a>
+                        </td>
+                        {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
+                        <td>{{ veranstaltunghistory.erstellungsdatum|date('d.m.Y') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Von diesem Modul existieren keine alten Versionen.</p>
+    {% endif %}
+{% endblock %}

@@ -166,10 +166,7 @@
                 <td>4</td>
                 <td colspan="6">
                     <div class="key">Lehrform</div>
-                    {{ modulBeschreibung.getAngebot().getVeranstaltung().getKontaktzeitVL()/15 }} SWS
-                    Vorlesung, {{ modulBeschreibung.getAngebot().getVeranstaltung().getKontaktzeitSonstige()/15 }}
-                    SWS
-                    sonstige Kontaktzeit
+                    {{ modulBeschreibung.getAngebot().getVeranstaltung().getLehrform() }}
                 </td>
             </tr>
             <tr>

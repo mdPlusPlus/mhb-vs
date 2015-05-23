@@ -167,42 +167,4 @@ class Semester
     {
         return $this->gueltigAbSemester;
     }
-
-    //TODO: Was ist das?
-    /**
-     * Add modul_start
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart
-     *
-     * @return Semester
-     */
-    public function addModulStart(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart)
-    {
-        $this->modul_start[] = $modulStart;
-
-        return $this;
-    }
-
-    //TODO: Was ist das?
-    /**
-     * Remove modul_start
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart
-     */
-    public function removeModulStart(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart)
-    {
-        $this->modul_start->removeElement($modulStart);
-    }
-
-    //TODO: Was ist das?
-    /**
-     * Get modul_start
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getModulStart()
-    {
-        return $this->modul_start;
-    }
-
 }

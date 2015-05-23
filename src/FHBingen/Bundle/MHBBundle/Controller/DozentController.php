@@ -71,7 +71,7 @@ class DozentController extends Controller
         //$dozentLehrt ist ein Array mit allen Modulen, welche der aktuelle Benutzer unterrichtet
         $dozentLehrt = array();
         foreach ($lehrendeVonDozent as $lehrende) {
-            $dozentLehrt[] = $lehrende->getVeranstaltung(); //TODO: keine "expired" anzeigen!
+            $dozentLehrt[] = $lehrende->getVeranstaltung();
         }
         asort($dozentLehrt, SORT_STRING);
 
@@ -115,6 +115,49 @@ class DozentController extends Controller
         $module = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('beauftragter' => $dozent->getDozentenID(), 'Status' => 'in Planung'), array('Name' => 'asc'));
 
         return array('planungen' => $module, 'pageTitle' => 'Modulplanung');
+    }
+
+
+    /**
+     * @param int $id
+     *
+     * @Route("/restricted/dozent/alteVersionen/{id}", name="alteVersionen")
+     * @Template("FHBingenMHBBundle:Dozent:alteVersionen.html.twig")
+     *
+     * Hier werden mögliche alte Versionen aus der History-Tabelle zur gegebenen ID aufgelistet.
+     *
+     * @return array
+     */
+    public function alteVersionenAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $alt = $em->getRepository('FHBingenMHBBundle:VeranstaltungHistory')->findBy(array('Modul_ID' => $id));
+
+        return array('alteVersionen' => $alt, 'pageTitle' => 'Alte Versionen');
+    }
+
+
+    /**
+     * @param int $id
+     *
+     * @Route("/restricted/dozent/alteVersionAnzeigen/{id}/{version}", name="alteVersionAnzeigen")
+     * @Template("FHBingenMHBBundle:Dozent:alteVersionAnzeigen.html.twig")
+     *
+     * Hier wird eine alte Version eines Moduls angezeigt
+     *
+     * @return array
+     */
+    public function alteVersionenAnzeigenAction($id, $version)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $alt = $em->getRepository('FHBingenMHBBundle:VeranstaltungHistory')->findOneBy(array('Modul_ID' => $id, 'Versionsnummer' => $version));
+
+        $einheit = explode(' ', $alt->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
+
+        $form = $this->createForm(new Form\VeranstaltungHistoryType($id, $version), $alt);
+
+        return array('form' => $form->createView(), 'alteVersion' => $alt, 'pageTitle' => 'Alte Version Anzeigen', 'einheit' => $einheit);
+
     }
 
 
@@ -201,6 +244,7 @@ class DozentController extends Controller
                 $modul->setErstellungsdatum(new \DateTime());
                 $modul->setGruppengroesse($form->get('gruppengroesse')->getData());
                 $modul->setHaeufigkeit($form->get('haeufigkeit')->getData());
+                $modul->setLehrform($form->get('lehrform')->getData());
                 $modul->setInhalte($form->get('inhalte')->getData());
                 $modul->setKontaktzeitSonstige($form->get('kontaktzeitSonstige')->getData());
                 $modul->setKontaktzeitVL($form->get('kontaktzeitVL')->getData());
@@ -213,6 +257,7 @@ class DozentController extends Controller
                 $modul->setNameEn($form->get('nameEN')->getData());
                 $modul->setPruefungsformen($encoder->encode($form->get('pruefungsformen')->getData(), 'json'));
                 $modul->setPruefungsformSonstiges($form->get('PruefungsformSonstiges')->getData());
+
 
 
                 //Berechnung des Selbststudiums: LP*30 - Kontaktzeit VL - Kontaktzeit sonstige
@@ -274,7 +319,6 @@ class DozentController extends Controller
             //TODO: History muss noch überarbeitet werden: Wenn nicht valides Formular abgeschickt wird, werden History-Daten mit angepassten Daten überschrieben - stimmt das überhaupt? testen!
             $modulHistory = new Entity\VeranstaltungHistory();
 
-            //TODO: hier fehlen auch Felder
             //schreibt den Veranstaltungsinhalt vor der Änderung in die Historytabelle
             $modulHistory->setAutor($modul->getAutor());
             $modulHistory->setDauer($modul->getDauer());
@@ -299,7 +343,9 @@ class DozentController extends Controller
             $modulHistory->setSpracheSonstiges($modul->getSpracheSonstiges());
             $modulHistory->setVersionsnummer($modul->getVersionsnummer());
             $modulHistory->setVoraussetzungInh($modul->getVoraussetzungInh());
+            $modulHistory->setLehrform($modul->getLehrform());
             $modulHistory->setVoraussetzungLP($encoder->encode($modul->getVoraussetzungLP(), 'json'));
+            $modulHistory->setErlaeuterungenLP($modul->getErlaeuterungenLP());
         }
 
 

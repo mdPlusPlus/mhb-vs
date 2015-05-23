@@ -75,6 +75,13 @@ class VeranstaltungType extends AbstractType
         $form = $event->getForm();
         $encoder = new JsonEncoder();
 
+        $lehrform = $input->getLehrform();
+        $lehrformOptions = array('label' => 'Lehrformen:', 'required' => false);
+        if($lehrform == null){
+            $lehrformOptions['data'] = 'Vorlesungen mit Tafel und Videoprojektion'; //default
+        }
+        $form->add('lehrform', 'textarea', $lehrformOptions);
+
         $dauer = $input->getDauer();
         $dauerOptions = array('label' => 'Dauer:', 'required' => false, 'attr' => array('min' => '1'));
         if ($dauer == null) {
