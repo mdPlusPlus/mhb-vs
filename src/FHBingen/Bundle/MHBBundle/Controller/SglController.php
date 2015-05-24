@@ -619,11 +619,9 @@ class SglController extends Controller
      */
     public function mhbErstellungParseAction()
     {
-
-        //TODO: $request statt $_POST
         $request = $this->get('request');
 
-        if (!empty($_POST)) {
+        if (!empty($request->request)) {
             $em = $this->getDoctrine()->getManager();
 
             $sgl = $this->get('security.context')->getToken()->getUser();
@@ -643,7 +641,7 @@ class SglController extends Controller
 
             $angebote = array();
 
-            foreach ($_POST as $key => $value) {
+            foreach ($request->request as $key => $value) {
                 //break statements richtig?
                 switch ($key) {
                     case 'mhbGueltigAb':
@@ -673,7 +671,7 @@ class SglController extends Controller
             }
 
         } else {
-            return new Response('$_POST was empty');
+            return new Response('request was empty');
         }
     }
 
