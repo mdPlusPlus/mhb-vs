@@ -97,15 +97,22 @@
 
         function resetFunc(){
             {% for key in zuordnung|keys %}
-            {# funktioniert das überhaupt? immer wieder 'var GLEICHERNAME =' ? #}
-            {% set resetJS =
-                'var fachgebietTo = $("#' ~ key|replace({' ': '_'}) ~ '");
-                var fachgebietListItems = $("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").children("li");
-                for (var i = 0; i< fachgebietListItems.length; i++) {
-                    fachgebietTo.append(fachgebietListItems[i]);
-                }'
-            %}
-            {{ resetJS|raw }}
+                {% if key == '' %}
+                    {% set myKey = keyOhneFachgebiet %}
+                {% else %}
+                    {% set myKey = key %}
+                {% endif %}
+
+                {# funktioniert das überhaupt? immer wieder 'var GLEICHERNAME =' ? #}
+                {% set resetJS =
+                    'var fachgebietTo = $("#' ~ myKey|replace({' ': '_'}) ~ '");
+                    var fachgebietListItems = $("#' ~ myKey|replace({' ': '_'}) ~ '_NICHT_MHB").children("li");
+                    for (var i = 0; i< fachgebietListItems.length; i++) {
+                        fachgebietTo.append(fachgebietListItems[i]);
+                    }'
+                %}
+
+                {{ resetJS|raw }}
             {% endfor %}
         }
 
