@@ -97,11 +97,11 @@ class SortFunctions
             }
 
             //mit Fachgebiet vor ohne Fachgebiet
-            if (!is_null($fgA)) {
-                return -1; //A vor B
+            if (is_null($fgA)) {
+                return 1;   //B vor A
             }
-            if (!is_null($fgB)) {
-                return 1;  //B vor A
+            if (is_null($fgB)) {
+                return -1;  //A vor B
             }
 
             //Fachgebiete werden alphabetisch sortiert

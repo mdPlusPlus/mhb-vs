@@ -246,6 +246,8 @@ class SglController extends Controller
         $studiengang = $mhb->getGehoertZu();
         $modulBeschreibungen = array();
 
+
+
         foreach ($angebote as $angebot) {
             $veranstaltung = $angebot->getVeranstaltung();
 
