@@ -44,10 +44,25 @@
     </style>
 </head>
 <body>
-{% set ohneFachgebiet = 'Ohne Fachgebiet' %}
 {% set previousFachgebiet = '' %}
 
 {% for modulBeschreibung in modulBeschreibungen %}
+
+    {% if modulBeschreibung.getAngebot().getAngebotsart() == 'Pflichtfach' %}
+        {% if modulBeschreibung.getAngebot().getFachgebiet() is not null %}
+            {% set fachgebietString = modulBeschreibung.getAngebot().getFachgebiet().getTitel() %}
+        {% else %}
+            {% set fachgebietString = 'Sonstige Pflichtfächer' %}
+        {% endif %}
+    {% elseif modulBeschreibung.getAngebot().getAngebotsart() == 'Wahlpflichtfach' %}
+        {% if modulBeschreibung.getAngebot().getFachgebiet() is not null %}
+            {% set fachgebietString = 'Wahlpflichtfächer ' ~ modulBeschreibung.getAngebot().getFachgebiet().getTitel() %}
+        {% else %}
+            {% set fachgebietString = 'Wahlpflichtfächer (ohne Zuordnung zu Fachgebieten)' %}
+        {% endif %}
+    {% endif %}
+
+
     {% set titelDE = modulBeschreibung.getAngebot().getVeranstaltung().getName() %}
     {% set titelEN = modulBeschreibung.getAngebot().getVeranstaltung().getNameEn() %}
     {% if modulBeschreibung.getAngebot().getAbweichenderNameDE() %}
@@ -58,18 +73,12 @@
     {% endif %}
 
     <div class="modul">
-        <p class="intro">
-        {% if modulBeschreibung.getAngebot().getFachgebiet() is not null %}
-            {% if modulBeschreibung.getAngebot().getFachgebiet().getTitel() != previousFachgebiet %}
-                <h2>{{ modulBeschreibung.getAngebot().getFachgebiet().getTitel() }}</h2>
+        <div class="intro">
+            {% if fachgebietString != previousFachgebiet %}
+                <h2>{{ fachgebietString }}</h2>
             {% endif %}
-        {% else %}
-            {% if ohneFachgebiet != previousFachgebiet %}
-                <h2>{{ ohneFachgebiet }}</h2>
-            {% endif %}
-        {% endif %}
-        <h3>{{ titelDE }} ({{ modulBeschreibung.getAngebot().getCode() }})</h3>
-        </p>
+            <h3>{{ titelDE }} ({{ modulBeschreibung.getAngebot().getCode() }})</h3>
+        </div>
         <table>
             <thead>
             <tr>
@@ -277,11 +286,7 @@
         </table>
     </div>
 
-    {% if modulBeschreibung.getAngebot().getFachgebiet() is not null %}
-        {% set previousFachgebiet = modulBeschreibung.getAngebot().getFachgebiet().getTitel() %}
-    {% else %}
-        {% set previousFachgebiet = ohneFachgebiet %}
-    {% endif %}
+    {% set previousFachgebiet = fachgebietString %}
 
 {% endfor %}
 </body>

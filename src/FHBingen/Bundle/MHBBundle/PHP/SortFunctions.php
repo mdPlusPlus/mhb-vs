@@ -77,31 +77,39 @@ class SortFunctions
      */
     public static function modulBeschreibungSort(ModulBeschreibung $descA, ModulBeschreibung $descB)
     {
-        $fgA = $descA->getAngebot()->getFachgebiet();
-        $fgB = $descB->getAngebot()->getFachgebiet();
+        $isWahlA = ($descA->getAngebot()->getAngebotsart() == 'Wahlpflichtfach') ? true : false;
+        $isWahlB = ($descB->getAngebot()->getAngebotsart() == 'Wahlpflichtfach') ? true : false;
 
-        if ($fgA == $fgB) {
+        if ($isWahlA == $isWahlB) {
+            $fgA = $descA->getAngebot()->getFachgebiet();
+            $fgB = $descB->getAngebot()->getFachgebiet();
 
-            //return 0;
-            $codeA = $descA->getAngebot()->getCode();
-            $codeB = $descB->getAngebot()->getCode();
+            if ( (is_null($fgA) && is_null($fgB)) || ($fgA->getTitel() == $fgB->getTitel()) ) {
+                //return 0;
+                $codeA = $descA->getAngebot()->getCode();
+                $codeB = $descB->getAngebot()->getCode();
 
-            if ($codeA == $codeB) {
-               return 0;
+                if ($codeA == $codeB) {
+                    return 0;
+                }
+
+                return ($codeA < $codeB) ? -1 : 1;
             }
 
-            return ($codeA < $codeB) ? -1 : 1;
+            //mit Fachgebiet vor ohne Fachgebiet
+            if (!is_null($fgA)) {
+                return -1; //A vor B
+            }
+            if (!is_null($fgB)) {
+                return 1;  //B vor A
+            }
+
+            //Fachgebiete werden alphabetisch sortiert
+            return ($fgA->getTitel() < $fgB->getTitel()) ? -1 : 1;
         }
 
-        //Ausnahme wenn eines der Fachgebiete == null ('Ohne Fachgebiet' soll ganz am Ende im MHB kommen, nicht am Anfang)
-        if ($fgA == null) {
-            return 1;
-        }
-        if ($fgB == null) {
-            return -1;
-        }
-
-        return ($fgA < $fgB) ? -1 : 1;
+        //Pflichtfächer vor Wahlpflichtfächern
+        return (!$isWahlA) ? -1 : 1;
     }
 
     /**
