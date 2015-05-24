@@ -43,55 +43,61 @@
 
     </style>
 
+    {% set keyOhneFachgebiet = 'Ohne Fachgebiet' %}
+
     <script type="text/javascript">
         $(document).ready(function () {
             highlightMe(document.getElementById('mhbErstellungLink'));
         });
 
         $(function () {
-            {# TODO: Verbindung 'ohne Fachgebiete' #}
             {% for key in zuordnung|keys %}
-            {% set js_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
-            {% set js_NICHT_MHB = 'jQuery("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").height(jQuery("#' ~ key|replace({' ': '_'}) ~ '").height());' %}
+                {% if key == '' %}
+                    {% set myKey = keyOhneFachgebiet %}
+                {% else %}
+                    {% set myKey = key %}
+                {% endif %}
 
-            {{ js_MHB|raw  }}
-            {{ js_NICHT_MHB|raw }}
+                {% set js_MHB = 'jQuery("#' ~ myKey|replace({' ': '_'}) ~ '").height(jQuery("#' ~ myKey|replace({' ': '_'}) ~ '").height());' %}
+                {% set js_NICHT_MHB = 'jQuery("#' ~ myKey|replace({' ': '_'}) ~ '_NICHT_MHB").height(jQuery("#' ~ myKey|replace({' ': '_'}) ~ '").height());' %}
 
+                {% set connectLeftWithRight =
+                    '$("#' ~ myKey|replace({' ': '_'}) ~ '").sortable({
+                        appendTo: "body",
+                        tolerance: "pointer",
+                        connectWith: "#' ~ myKey|replace({' ': '_'}) ~ '_NICHT_MHB",
+                        revert: "invalid",
+                        forceHelperSize: true,
+                        helper: "original",
+                        placeholder: "angebot li",
+                        scroll: true
+                    }).disableSelection();'
+                %}
+                {% set connectRightWithLeft =
+                    '$("#' ~ myKey|replace({' ': '_'}) ~ '_NICHT_MHB").sortable({
+                        appendTo: "body",
+                        tolerance: "pointer",
+                        connectWith: "#' ~ myKey|replace({' ': '_'}) ~ '",
+                        revert: "invalid",
+                        forceHelperSize: true,
+                        helper: "original",
+                        placeholder: "angebot li",
+                        scroll: true
+                    }).disableSelection();'
+                %}
 
-            {% set connectLeftWithRight =
-                '$("#' ~ key|replace({' ': '_'}) ~ '").sortable({
-                    appendTo: "body",
-                    tolerance: "pointer",
-                    connectWith: "#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB",
-                    revert: "invalid",
-                    forceHelperSize: true,
-                    helper: "original",
-                    placeholder: "angebot li",
-                    scroll: true
-                }).disableSelection();'
-            %}
-            {% set connectRightWithLeft =
-                '$("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").sortable({
-                    appendTo: "body",
-                    tolerance: "pointer",
-                    connectWith: "#' ~ key|replace({' ': '_'}) ~ '",
-                    revert: "invalid",
-                    forceHelperSize: true,
-                    helper: "original",
-                    placeholder: "angebot li",
-                    scroll: true
-                }).disableSelection();'
-            %}
+                {{ js_MHB|raw }}
+                {{ js_NICHT_MHB|raw }}
 
-            {{ connectLeftWithRight|raw }}
-            {{ connectRightWithLeft|raw }}
-
+                {{ connectLeftWithRight|raw }}
+                {{ connectRightWithLeft|raw }}
             {% endfor %}
 
         });
 
         function resetFunc(){
             {% for key in zuordnung|keys %}
+            {# funktioniert das überhaupt? immer wieder 'var GLEICHERNAME =' ? #}
             {% set resetJS =
                 'var fachgebietTo = $("#' ~ key|replace({' ': '_'}) ~ '");
                 var fachgebietListItems = $("#' ~ key|replace({' ': '_'}) ~ '_NICHT_MHB").children("li");
@@ -119,12 +125,12 @@
                 {% for key in zuordnung|keys %}
                     <div class="angebotDiv">
                         {% if key == '' %}
-                            <h4>Ohne Fachgebiet</h4>
-                            <ul id="Ohne_Fachgebiet" class="angebot">
+                            {% set myKey = keyOhneFachgebiet %}
                         {% else %}
-                            <h4>{{ key }}</h4>
-                            <ul id="{{ key|replace({' ': '_'}) }}" class="angebot">
+                            {% set myKey = key %}
                         {% endif %}
+                        <h4>{{ myKey }}</h4>
+                        <ul id="{{ myKey|replace({' ': '_'}) }}" class="angebot">
 
                         {% for angebot in zuordnung[key] %}
                             <li>
@@ -157,14 +163,13 @@
             {% for key in zuordnung|keys %}
                 <div class="angebotDiv">
                     {% if key == '' %}
-                        <h4>Ohne Fachgebiet</h4>
-                        <ul id="Ohne_Fachgebiet_NICHT_MHB" class="angebot">
-                        </ul>
+                        {% set myKey = keyOhneFachgebiet %}
                     {% else %}
-                        <h4>{{ key }}</h4>
-                        <ul id="{{ key|replace({' ': '_'}) ~ '_NICHT_MHB' }}" class="angebot">
-                        </ul>
+                        {% set myKey = key %}
                     {% endif %}
+                    <h4>{{ myKey }}</h4>
+                    <ul id="{{ myKey|replace({' ': '_'}) ~ '_NICHT_MHB' }}" class="angebot">
+                    </ul>
                 </div>
             {% endfor %}
         </div>
