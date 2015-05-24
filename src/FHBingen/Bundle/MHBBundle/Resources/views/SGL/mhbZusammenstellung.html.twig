@@ -21,8 +21,7 @@
             min-height: 42px;
         }
 
-        div#angeboteDiv, div#nichtMhbDiv, ul.angebot,
-        ul.angebot li, ul#nichtMhb li {
+        div#angeboteDiv, div#nichtMhbDiv, ul.angebot, ul.angebot li, ul#nichtMhb li {
             border: 1px solid gray;
 
         }
@@ -149,7 +148,8 @@
                                     <span style="color: red">{{ 'GEÄNDERT' }}</span>
                                 {% endif %}
                             </li>
-                            {% endfor %}
+                        {% endfor %}
+
                         </ul>
                     </div>
                 {% endfor %}
