@@ -591,6 +591,7 @@ class SglController extends Controller
         }
 
         //sortieren
+        ksort($zuordnung);
         foreach ($zuordnung as $key => $value) {
             uasort($zuordnung[$key], array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
         }
