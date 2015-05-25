@@ -58,27 +58,27 @@ class SglController extends Controller
         $alleModule = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
 
         //Filtert die Module die in Planung sind herraus
-        $nichtInPlanung = array();
+        $freigegeben = array();
         foreach ($alleModule as $modul) {
             if ($modul->getStatus() == 'Freigegeben') {
-                $nichtInPlanung[] = $modul;
+                $freigegeben[] = $modul;
             }
         }
-        asort($nichtInPlanung, SORT_STRING);//Sortiert die Veranstaltungen nach Name
+        asort($freigegeben, SORT_STRING);//Sortiert die Veranstaltungen nach Name
 
-        //Sucht die Studeingänge für die Module herraus
+        //Sucht die Studiengänge für die Module herraus
         $stgZuModul = array();
-        foreach ($nichtInPlanung as $modul) {
+        foreach ($freigegeben as $modul) {
             $name = array();
             $angebote = $modul->getAngebot();
             foreach ($angebote as $angebot) {
                 $name[] = (string) $angebot->getStudiengang();
             }
-            asort($name, SORT_STRING);//Sortiert die Studiengänge nach name //TODO: sortierung scheint hier nicht zu funktionieren
+            asort($name, SORT_STRING);//Sortiert die Studiengänge nach Name //TODO: Sortierung scheint hier nicht zu funktionieren
             $stgZuModul[] = $name;
         }
 
-        return array('module' => $nichtInPlanung, 'stgZuModul' => $stgZuModul, 'pageTitle' => 'Alle Module');
+        return array('module' => $freigegeben, 'stgZuModul' => $stgZuModul, 'pageTitle' => 'Alle Module');
     }
 
 
