@@ -23,6 +23,21 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class VeranstaltungHistory extends VeranstaltungSuperClass
 {
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        $string = $this->getName();
+
+        return $string;
+    }
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
+     */
+    protected $Modul_ID;
 
     //Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
@@ -63,7 +78,7 @@ class VeranstaltungHistory extends VeranstaltungSuperClass
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      */
-    protected $Modul_ID;
+    protected $Versionsnummer;
 
     /**
      * Get Modul_ID
@@ -75,6 +90,11 @@ class VeranstaltungHistory extends VeranstaltungSuperClass
         return $this->Modul_ID;
     }
 
+    /**
+     * @param int $id
+     *
+     * @return $this
+     */
     public  function  setModulID($id)
     {
         $this->Modul_ID = $id;
@@ -83,10 +103,53 @@ class VeranstaltungHistory extends VeranstaltungSuperClass
     }
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
+     * Set Name
+     *
+     * @param string $name
+     *
+     * @return Veranstaltung
      */
-    protected $Versionsnummer;
+    public function setName($name)
+    {
+        $this->Name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get Name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->Name;
+    }
+
+    /**
+     * Set NameEN
+     *
+     * @param string $nameEN
+     *
+     * @return Veranstaltung
+     */
+    public function setNameEN($nameEN)
+    {
+        $this->NameEN = $nameEN;
+
+        return $this;
+    }
+
+    /**
+     * Get NameEN
+     *
+     * @return string
+     */
+    public function getNameEN()
+    {
+        return $this->NameEN;
+    }
+
 
     /**
      * Set Versionsnummer

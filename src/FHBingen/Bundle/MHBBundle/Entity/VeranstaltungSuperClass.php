@@ -19,45 +19,24 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 
 /**
+ * Class VeranstaltungSuperClass
+ *
+ * @package FHBingen\Bundle\MHBBundle\Entity
+ *
  * @ORM\MappedSuperclass()
  */
-
 class VeranstaltungSuperClass
 {
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        $string = $this->getName();
-
-        return $string;
-    }
-
     /**
      * @ORM\Column(type="datetime", nullable=false)
      * @Assert\DateTime()
      */
     protected $Erstellungsdatum;
 
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $Lehrform;
-
-    public function getLehrform()
-    {
-        return $this->Lehrform;
-    }
-
-    public function setLehrform($form)
-    {
-        $this->Lehrform = $form;
-
-        return $this;
-    }
 
     //TODO: unique, siehe oben
     /**
@@ -208,7 +187,6 @@ class VeranstaltungSuperClass
      */
     protected $VoraussetzungInhalte;
 
-
     /**
      * Set Erstellungsdatum
      *
@@ -255,54 +233,6 @@ class VeranstaltungSuperClass
     public function getKuerzel()
     {
         return $this->Kuerzel;
-    }
-
-    /**
-     * Set Name
-     *
-     * @param string $name
-     *
-     * @return Veranstaltung
-     */
-    public function setName($name)
-    {
-        $this->Name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get Name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->Name;
-    }
-
-    /**
-     * Set NameEN
-     *
-     * @param string $nameEN
-     *
-     * @return Veranstaltung
-     */
-    public function setNameEN($nameEN)
-    {
-        $this->NameEN = $nameEN;
-
-        return $this;
-    }
-
-    /**
-     * Get NameEN
-     *
-     * @return string 
-     */
-    public function getNameEN()
-    {
-        return $this->NameEN;
     }
 
     /**
@@ -720,31 +650,6 @@ class VeranstaltungSuperClass
      *
      * @return Veranstaltung
      */
-    public function setVoraussetzungInh($voraussetzungInhalte)
-    {
-        $this->VoraussetzungInhalte = $voraussetzungInhalte;
-
-        return $this;
-    }
-
-    /**
-     * Get VoraussetzungInhalte
-     *
-     * @return string 
-     */
-    public function getVoraussetzungInh()
-    {
-        return $this->VoraussetzungInhalte;
-    }
-
-
-    /**
-     * Set VoraussetzungInhalte
-     *
-     * @param string $voraussetzungInhalte
-     *
-     * @return Veranstaltung
-     */
     public function setVoraussetzungInhalte($voraussetzungInhalte)
     {
         $this->VoraussetzungInhalte = $voraussetzungInhalte;
@@ -778,6 +683,25 @@ class VeranstaltungSuperClass
     public function setErlaeuterungenLP($ErlaeuterungenLP)
     {
         $this->ErlaeuterungenLP = $ErlaeuterungenLP;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLehrform()
+    {
+        return $this->Lehrform;
+    }
+
+    /**
+     * @param $form
+     * @return $this
+     */
+    public function setLehrform($form)
+    {
+        $this->Lehrform = $form;
 
         return $this;
     }

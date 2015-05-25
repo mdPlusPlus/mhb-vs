@@ -26,6 +26,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Veranstaltung extends VeranstaltungSuperClass
 {
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        $string = $this->getName();
+
+        return $string;
+    }
 
     //Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
@@ -71,18 +80,6 @@ class Veranstaltung extends VeranstaltungSuperClass
     protected $Modul_ID;
 
     /**
-     * Get Modul_ID
-     *
-     * @return integer
-     */
-    public function getModulID()
-    {
-        return $this->Modul_ID;
-    }
-
-
-
-    /**
      * @ORM\Column(type="string", length=15, nullable=false)
      * @Assert\Choice(
      *      choices = { "in Planung", "Freigegeben", "expired" },
@@ -90,8 +87,6 @@ class Veranstaltung extends VeranstaltungSuperClass
      * )
      */
     protected $Status;
-
-
 
     /**
      * @ORM\OneToMany(targetEntity="Angebot", mappedBy="veranstaltung", cascade={"all"})
@@ -130,11 +125,68 @@ class Veranstaltung extends VeranstaltungSuperClass
     public function __construct()
     {
         $this->angebot          = new ArrayCollection();
-        $this->basis            = new ArrayCollection();
         $this->forderung        = new ArrayCollection();
         $this->grundmodul       = new ArrayCollection();    //TODO: richtig?
         $this->kernfach         = new ArrayCollection();
         $this->lehrende         = new ArrayCollection();
+    }
+
+    /**
+     * Get Modul_ID
+     *
+     * @return integer
+     */
+    public function getModulID()
+    {
+        return $this->Modul_ID;
+    }
+
+    /**
+     * Set Name
+     *
+     * @param string $name
+     *
+     * @return Veranstaltung
+     */
+    public function setName($name)
+    {
+        $this->Name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get Name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->Name;
+    }
+
+    /**
+     * Set NameEN
+     *
+     * @param string $nameEN
+     *
+     * @return Veranstaltung
+     */
+    public function setNameEN($nameEN)
+    {
+        $this->NameEN = $nameEN;
+
+        return $this;
+    }
+
+    /**
+     * Get NameEN
+     *
+     * @return string
+     */
+    public function getNameEN()
+    {
+        return $this->NameEN;
     }
 
     /**
@@ -160,9 +212,6 @@ class Veranstaltung extends VeranstaltungSuperClass
     {
         return $this->Status;
     }
-
-
-
 
     /**
      * Add angebot
