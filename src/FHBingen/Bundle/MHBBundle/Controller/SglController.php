@@ -55,30 +55,9 @@ class SglController extends Controller
     public function alleModuleAction()//Sortierung? nach Studiengang?
     {
         $em = $this->getDoctrine()->getManager();
-        $alleModule = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
+        $freigegebeneModule = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('Status' => 'Freigegeben'), array('Name' => 'ASC'));
 
-        //Filtert die Module die in Planung sind herraus
-        $freigegeben = array();
-        foreach ($alleModule as $modul) {
-            if ($modul->getStatus() == 'Freigegeben') {
-                $freigegeben[] = $modul;
-            }
-        }
-        asort($freigegeben, SORT_STRING);//Sortiert die Veranstaltungen nach Name
-
-        //Sucht die Studiengänge für die Module herraus
-        $stgZuModul = array();
-        foreach ($freigegeben as $modul) {
-            $name = array();
-            $angebote = $modul->getAngebot();
-            foreach ($angebote as $angebot) {
-                $name[] = (string) $angebot->getStudiengang();
-            }
-            asort($name, SORT_STRING);//Sortiert die Studiengänge nach Name //TODO: Sortierung scheint hier nicht zu funktionieren
-            $stgZuModul[] = $name;
-        }
-
-        return array('module' => $freigegeben, 'stgZuModul' => $stgZuModul, 'pageTitle' => 'Alle Module');
+        return array('module' => $freigegebeneModule, 'pageTitle' => 'Alle Module');
     }
 
 

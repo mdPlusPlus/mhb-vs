@@ -574,7 +574,6 @@ class DozentController extends Controller
                 if (!$isWahl) {
                     $fachgebiet = $form->get('fachgebiet')->getData();
                     if (is_null($fachgebiet)) {
-                        //TODO: testen!
                         $this->get('session')->getFlashBag()->add('info', 'Pflichtfächer müssen einem Fachgebiet zugeordnet werden!');
 
                         return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen', 'modul' => $modul, 'studiengang' => $studiengang, 'wahlpflichtfach' => $isWahl);
