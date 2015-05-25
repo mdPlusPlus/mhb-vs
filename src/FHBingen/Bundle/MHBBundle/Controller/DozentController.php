@@ -71,7 +71,7 @@ class DozentController extends Controller
         //$dozentLehrt ist ein Array mit allen Modulen, welche der aktuelle Benutzer unterrichtet
         $dozentLehrt = array();
         foreach ($lehrendeVonDozent as $lehrende) {
-            $dozentLehrt[] = $lehrende->getVeranstaltung();
+            $dozentLehrt[] = $lehrende->getVeranstaltung(); //TODO: keine "expired" anzeigen! (Wenn Lehrende für expired-Module existent)
         }
         asort($dozentLehrt, SORT_STRING);
 
@@ -154,7 +154,7 @@ class DozentController extends Controller
 
         $einheit = explode(' ', $alt->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
-        $form = $this->createForm(new Form\VeranstaltungHistoryType($id, $version), $alt);
+        $form = $this->createForm(new Form\VeranstaltungHistoryType(), $alt);
 
         return array('form' => $form->createView(), 'alteVersion' => $alt, 'pageTitle' => 'Alte Version Anzeigen', 'einheit' => $einheit);
 
@@ -316,12 +316,12 @@ class DozentController extends Controller
         $einheit = explode(' ', $modul->getDauer())[1]; //z.B. '1 Semester' -> ['1', 'Semester']
 
         if ($modus == "bearbeiten") {
-            //TODO: History muss noch überarbeitet werden: Wenn nicht valides Formular abgeschickt wird, werden History-Daten mit angepassten Daten überschrieben - stimmt das überhaupt? testen!
             $modulHistory = new Entity\VeranstaltungHistory();
 
             //schreibt den Veranstaltungsinhalt vor der Änderung in die Historytabelle
             $modulHistory->setAutor($modul->getAutor());
             $modulHistory->setDauer($modul->getDauer());
+            $modulHistory->setErlaeuterungenLP($modul->getErlaeuterungenLP());
             $modulHistory->setErstellungsdatum($modul->getErstellungsdatum());
             $modulHistory->setGruppengroesse($modul->getGruppengroesse());
             $modulHistory->setHaeufigkeit($modul->getHaeufigkeit());
@@ -329,23 +329,22 @@ class DozentController extends Controller
             $modulHistory->setKontaktzeitSonstige($modul->getKontaktzeitSonstige());
             $modulHistory->setKontaktzeitVL($modul->getKontaktzeitVL());
             $modulHistory->setKuerzel($modul->getKuerzel());
-            $modulHistory->setLehrveranstaltungen($encoder->encode($modul->getLehrveranstaltungen(), 'json'));
+            $modulHistory->setLehrform($modul->getLehrform());
+            $modulHistory->setLehrveranstaltungen($modul->getLehrveranstaltungen());
             $modulHistory->setLeistungspunkte($modul->getLeistungspunkte());
             $modulHistory->setLernergebnisse($modul->getLernergebnisse());
             $modulHistory->setLiteratur($modul->getLiteratur());
             $modulHistory->setModulID($modul->getModulID());
             $modulHistory->setName($modul->getName());
             $modulHistory->setNameEN($modul->getNameEN());
-            $modulHistory->setPruefungsformen($encoder->encode($modul->getPruefungsformen(), 'json'));
+            $modulHistory->setPruefungsformen($modul->getPruefungsformen());
             $modulHistory->setPruefungsformSonstiges($modul->getPruefungsformSonstiges());
             $modulHistory->setSelbststudium($modul->getSelbststudium());
             $modulHistory->setSprache($modul->getSprache());
             $modulHistory->setSpracheSonstiges($modul->getSpracheSonstiges());
             $modulHistory->setVersionsnummer($modul->getVersionsnummer());
             $modulHistory->setVoraussetzungInhalte($modul->getVoraussetzungInhalte());
-            $modulHistory->setLehrform($modul->getLehrform());
-            $modulHistory->setVoraussetzungLP($encoder->encode($modul->getVoraussetzungLP(), 'json'));
-            $modulHistory->setErlaeuterungenLP($modul->getErlaeuterungenLP());
+            $modulHistory->setVoraussetzungLP($modul->getVoraussetzungLP());
         }
 
 

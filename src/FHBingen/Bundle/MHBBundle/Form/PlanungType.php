@@ -67,7 +67,7 @@ class PlanungType extends AbstractType
 
         $lehrform = $input->getLehrform();
         $lehrformOptions = array('label' => 'Lehrformen:', 'required' => false);
-        if($lehrform == null){
+        if ($lehrform == null) {
             $lehrformOptions['data'] = 'Vorlesungen mit Tafel und Videoprojektion'; //default
         }
         $form->add('lehrform', 'textarea', $lehrformOptions);

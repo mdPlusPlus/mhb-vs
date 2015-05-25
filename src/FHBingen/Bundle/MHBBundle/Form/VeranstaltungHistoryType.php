@@ -27,19 +27,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
  */
 class VeranstaltungHistoryType extends AbstractType
 {
-    private $modulID;
-    private $version;
-
-    /**
-     * @param int $modulID
-     * @param int $version
-     */
-    public function __construct($modulID, $version)
-    {
-        $this->modulID = $modulID;
-        $this->version =$version;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -63,7 +50,7 @@ class VeranstaltungHistoryType extends AbstractType
             ->add('SpracheSonstiges', 'text', array('label' => 'Sprache Sonstiges: ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => ArrayValues::$lp))
-            ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('voraussetzungInhalte', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('erlaeuterungenLP', 'text', array('label' => 'Erläuterungen zur Vergabe von LP:', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
 
     }
@@ -79,7 +66,7 @@ class VeranstaltungHistoryType extends AbstractType
 
         $lehrform = $input->getLehrform();
         $lehrformOptions = array('label' => 'Lehrformen:', 'required' => false);
-        if($lehrform == null){
+        if ($lehrform == null) {
             $lehrformOptions['data'] = 'Vorlesungen mit Tafel und Videoprojektion'; //default
         }
         $form->add('lehrform', 'textarea', $lehrformOptions);
@@ -109,7 +96,6 @@ class VeranstaltungHistoryType extends AbstractType
             $voraussetzungLPChoiceOptions['data'] = $vorausetzungLP;
         }
         $form->add('voraussetzungLP', 'choice', $voraussetzungLPChoiceOptions);
-
 
 
         $pruefungsformenChoiceOptions = array(
