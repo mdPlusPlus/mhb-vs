@@ -40,7 +40,7 @@
                         {% for angebot in veranstaltung.getAngebot() %}
                             {% set studiengaenge = studiengaenge|merge([angebot.getStudiengang()]) %}
                         {% endfor %}
-                        {% for studiengang in studiengaenge|sort %} {# TODO: Sortierung funktioniert nicht #}
+                        {% for studiengang in studiengaenge|tostringsort %} {# TODO: Sortierung funktioniert nicht #}
                             {{ studiengang }}<br />
                         {% endfor %}
                         <a href=" {{ path('vorAngebot', {'modulID': veranstaltung.getModulID()}) }}">In weiterem Studiengang anbieten</a>

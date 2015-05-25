@@ -57,6 +57,13 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $freigegebeneModule = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('Status' => 'Freigegeben'), array('Name' => 'ASC'));
 
+        $loader = $this->get('twig.loader');
+        $filter = new \Twig_SimpleFilter('tostringsort', function ($arr) {
+                return asort($arr, SORT_STRING);
+        });
+        $twig = new \Twig_Environment($loader);
+        $twig->addFilter($filter);
+
         return array('module' => $freigegebeneModule, 'pageTitle' => 'Alle Module');
     }
 
