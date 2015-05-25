@@ -13,11 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/*
- * TODO:
- * @UniqueEntity(fields="Kuerzel", message="Es existiert bereits eine Veranstaltung mit diesem Kürzel.")
- * wirft fehler wegen MAT2
- */
+
 /**
  * Class Veranstaltung
  *

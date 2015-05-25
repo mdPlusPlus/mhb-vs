@@ -127,7 +127,7 @@ class VerwaltungsController extends Controller
                 /*
                  * TODO:trigger?
                  * Doku: Wenn SGL auf Dozent abgestuft wird, besitzt er immernoch den Studiengang, den er vorher hatte,
-                 * aber da er die rolle ROLE_SGL nicht mehr ausübt, kann er nicht mehr auf die SGl-Funktionen zugreifen,
+                 * aber da er die rolle ROLE_SGL nicht mehr ausübt, kann er nicht mehr auf die SGL-Funktionen zugreifen,
                  * da sich diese hinter der /restricted/sgl firewall befinden
                  */
 

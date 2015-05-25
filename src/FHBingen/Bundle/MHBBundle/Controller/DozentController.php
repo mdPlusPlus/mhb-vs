@@ -492,6 +492,8 @@ class DozentController extends Controller
 
                 $em->persist($modul);
 
+
+                //TODO: 'cascade_validation' testen statt UniqueConstraintViolationException
                 try {
                     $em->flush();
                 } catch (UniqueConstraintViolationException $e) {
