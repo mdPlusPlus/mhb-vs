@@ -1,0 +1,9 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+{% block content %}
+    <ul>
+    {% for semester in semesterListe %}
+        <li><a href="{{ path('semesterPlan', {'semesterString' : semester.getSemester() }) }}">{{ semester }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

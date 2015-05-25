@@ -673,4 +673,32 @@ class SglController extends Controller
         }
     }
 
+    /**
+     * @Route("/restricted/sgl/semesterListe", name="semesterListe")
+     * @Template("@FHBingenMHB/SGL/semesterListe.html.twig")
+     *
+     * @return array
+     */
+    public function semesterListeAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $semesterListe = $em->getRepository('FHBingenMHBBundle:Semester')->findAll();
+        uasort($semesterListe, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'semesterSort'));
+
+        return array('semesterListe' => $semesterListe, 'pageTitle' => 'Semesterliste');
+    }
+
+    /**
+     * @Route("/restricted/sgl/semesterPlan/{semesterString}", name="semesterplan")
+     * @Template("")
+     */
+    public function semesterPlanAction($semesterString)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $veranstaltungen = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
+        uasort($veranstaltungen, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'veranstaltungSort'));
+
+        //TODO
+    }
+
 }
