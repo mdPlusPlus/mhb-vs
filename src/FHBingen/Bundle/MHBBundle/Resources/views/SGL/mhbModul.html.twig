@@ -199,8 +199,8 @@
                         {% endif %}
                     {% endif %}
                     Inhaltlich:
-                    {% if modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInh() != "" %}
-                        {{ modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInh() }}
+                    {% if modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInhalte() != "" %}
+                        {{ modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInhalte() }}
                     {% else %}
                         keine
                     {% endif %}

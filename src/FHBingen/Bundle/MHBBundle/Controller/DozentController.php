@@ -273,7 +273,7 @@ class DozentController extends Controller
                 $modul->setStatus('in Planung');
                // $modul->setStudienleistungSonstiges($form->get('StudienleistungSonstiges')->getData());
                 $modul->setVersionsnummer(0);
-                $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
+                $modul->setVoraussetzungInhalte($form->get('voraussetzungInhalte')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
                 $em->persist($modul);
@@ -342,7 +342,7 @@ class DozentController extends Controller
             $modulHistory->setSprache($modul->getSprache());
             $modulHistory->setSpracheSonstiges($modul->getSpracheSonstiges());
             $modulHistory->setVersionsnummer($modul->getVersionsnummer());
-            $modulHistory->setVoraussetzungInh($modul->getVoraussetzungInh());
+            $modulHistory->setVoraussetzungInhalte($modul->getVoraussetzungInhalte());
             $modulHistory->setLehrform($modul->getLehrform());
             $modulHistory->setVoraussetzungLP($encoder->encode($modul->getVoraussetzungLP(), 'json'));
             $modulHistory->setErlaeuterungenLP($modul->getErlaeuterungenLP());
@@ -424,7 +424,7 @@ class DozentController extends Controller
                     $modul->setVersionsnummer(1);
                 }
 
-                $modul->setVoraussetzungInh($form->get('voraussetzungInh')->getData());
+                $modul->setVoraussetzungInhalte($form->get('voraussetzungInhalte')->getData());
                 $modul->setVoraussetzungLP($encoder->encode($form->get('voraussetzungLP')->getData(), 'json'));
 
                 $lehrendeArr = $form->get('lehrende')->getData()->toArray();

@@ -131,12 +131,12 @@ class PlanungType extends AbstractType
         }
         $form->add('SpracheSonstiges', 'text', $spracheSonstigesOptions);
 
-        $vorausetzungInh = $input->getVoraussetzungInh();
-        $vorausetzungInhOptions = array('label' => 'Voraussetzung inhaltlich: ', 'required' => false, 'attr' => array('class' => 'textAreaClass'));
-        if ($vorausetzungInh == null) {
-            $vorausetzungInhOptions['data'] = 'keine';
+        $voraussetzungInhalte = $input->getVoraussetzungInhalte();
+        $voraussetzungInhalteOptions = array('label' => 'Voraussetzung inhaltlich: ', 'required' => false, 'attr' => array('class' => 'textAreaClass'));
+        if ($voraussetzungInhalte == null) {
+            $voraussetzungInhalteOptions['data'] = 'keine';
         }
-        $form->add('voraussetzungInh', 'textarea', $vorausetzungInhOptions);
+        $form->add('voraussetzungInhalte', 'textarea', $voraussetzungInhalteOptions);
 
         $lehrveranstaltungen = $input->getLehrveranstaltungen();
         $lehrveranstaltungenOptions = array(
