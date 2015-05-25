@@ -9,11 +9,14 @@
 namespace FHBingen\Bundle\MHBBundle\Form;
 
 use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
+
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 
 /**
  * Class SemesterplanType
@@ -28,7 +31,26 @@ class SemesterplanType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //TODO
+        $builder
+            ->add('SWSUebung')
+            ->add('SWSVorlesung')
+            ->add('AnzahlUebungsgruppen')
+            ->add('GroesseUebungsgruppen')
+            ->add('istLehrbeauftragter')
+            ->add('findetStatt')
+            ->add('angebot')
+            ->add('dozent')
+            ->add('semester');
+    }
+
+    /**
+    * @param OptionsResolverInterface $resolver
+    */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Semesterplan'
+        ));
     }
 
     /**
