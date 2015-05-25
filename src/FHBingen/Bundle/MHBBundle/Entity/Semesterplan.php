@@ -122,6 +122,7 @@ class Semesterplan
      * Set sws_uebung
      *
      * @param integer $swsUebung
+     *
      * @return Semesterplan
      */
     public function setSWSUebung($swsUebung)
@@ -247,7 +248,7 @@ class Semesterplan
     public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender = null)
     {
         $this->dozent = $lehrender;
-    
+
         return $this;
     }
 
@@ -271,7 +272,7 @@ class Semesterplan
     public function setSemester(\FHBingen\Bundle\MHBBundle\Entity\Semester $semester = null)
     {
         $this->semester = $semester;
-    
+
         return $this;
     }
 
