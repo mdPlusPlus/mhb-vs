@@ -689,16 +689,31 @@ class SglController extends Controller
     }
 
     /**
-     * @Route("/restricted/sgl/semesterPlan/{semesterString}", name="semesterplan")
-     * @Template("")
+     * @Route("/restricted/sgl/semesterPlan/{semesterString}", name="semesterPlan")
+     * @Template("@FHBingenMHB/SGL/semesterPlanListe.html.twig")
      */
     public function semesterPlanAction($semesterString)
     {
-        $em = $this->getDoctrine()->getManager();
-        $veranstaltungen = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
-        uasort($veranstaltungen, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'veranstaltungSort'));
-
         //TODO
+        $em = $this->getDoctrine()->getManager();
+//        $veranstaltungen = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
+//        uasort($veranstaltungen, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'veranstaltungSort'));
+//
+//
+//        $form = $this->createForm(new Form\SemesterplanListeType());
+//
+//        $request = $this->get('request');
+//        $form->handleRequest($request);
+//
+//        if ($request->getMethod() == 'POST') {
+//            if ($form->isValid()) {
+//
+//            }
+//        }
+        $semester = $em->getRepository('FHBingenMHBBundle:Semesterplan')->findOneBy(array('semester' => $semesterString));
+        $liste = $em->getRepository('FHBingenMHBBundle:Semesterplan')->findBy(array('semester' => $semester));
+
+        return array('semesterplanListe' => $liste, 'pageTitle' => 'Semesterplan');
     }
 
 }
