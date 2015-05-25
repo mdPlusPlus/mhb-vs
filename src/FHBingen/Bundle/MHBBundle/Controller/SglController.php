@@ -57,14 +57,26 @@ class SglController extends Controller
         $em = $this->getDoctrine()->getManager();
         $freigegebeneModule = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findBy(array('Status' => 'Freigegeben'), array('Name' => 'ASC'));
 
-        $loader = $this->get('twig.loader');
-        $filter = new \Twig_SimpleFilter('tostringsort', function ($arr) {
-                return asort($arr, SORT_STRING);
-        });
-        $twig = new \Twig_Environment($loader);
-        $twig->addFilter($filter);
+        //Sucht die Studiengänge für die Module herraus
+        $stgZuModul = array();
+        foreach ($freigegebeneModule as $modul) {
+            $studiengaenge = array();
+            $angebote = $modul->getAngebot();
+            foreach ($angebote as $angebot) {
+                $studiengaenge[] = $angebot->getStudiengang();
+            }
+            asort($studiengaenge, SORT_STRING);//Sortiert die Studiengänge nach Name
+            $stgZuModul[] = $studiengaenge;
+        }
 
-        return array('module' => $freigegebeneModule, 'pageTitle' => 'Alle Module');
+//        $loader = $this->get('twig.loader');
+//        $filter = new \Twig_SimpleFilter('toStringSort', function ($arr) {
+//                return asort($arr, SORT_STRING);
+//        });
+//        $twig = new \Twig_Environment($loader);
+//        $twig->addFilter($filter);
+
+        return array('module' => $freigegebeneModule, 'stgZuModul' => $stgZuModul, 'pageTitle' => 'Alle Module');
     }
 
 

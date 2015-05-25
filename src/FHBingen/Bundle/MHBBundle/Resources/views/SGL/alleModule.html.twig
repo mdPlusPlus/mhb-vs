@@ -25,6 +25,7 @@
             </tr>
             </thead>
             <tbody>
+            {% set count = 0 %}
             {% for veranstaltung in module %}
                 <tr>
                     <td>
@@ -36,12 +37,17 @@
                     <td>{{ veranstaltung.beauftragter }}</td>
                     <td>{{ veranstaltung.autor }}</td>
                     <td>
-                        {% set studiengaenge = [] %}
-                        {% for angebot in veranstaltung.getAngebot() %}
-                            {% set studiengaenge = studiengaenge|merge([angebot.getStudiengang()]) %}
-                        {% endfor %}
-                        {% for studiengang in studiengaenge|tostringsort %} {# TODO: Sortierung funktioniert nicht #}
-                            {{ studiengang }}<br />
+
+                        {#{% set studiengaenge = [] %}#}
+                        {#{% for angebot in veranstaltung.getAngebot() %}#}
+                            {#{% set studiengaenge = studiengaenge|merge([angebot.getStudiengang()]) %}#}
+                        {#{% endfor %}#}
+                        {#{% for studiengang in studiengaenge|toStringSort %} &#123;&#35; TODO: Sortierung funktioniert nicht &#35;&#125;#}
+                            {#{{ studiengang }}<br />#}
+                        {#{% endfor %}#}
+
+                        {% for studiengang in stgZuModul[count] %}
+                            {{ studiengang }}<br/>
                         {% endfor %}
                         <a href=" {{ path('vorAngebot', {'modulID': veranstaltung.getModulID()}) }}">In weiterem Studiengang anbieten</a>
                     </td>
@@ -49,6 +55,7 @@
                         <a href="{{ path('alteVersionen', {'id': veranstaltung.getModulID()}) }}">Alte Versionen</a>
                     </td>
                 </tr>
+                {% set count = count +1 %}
             {% endfor %}
             </tbody>
         </table>
