@@ -100,6 +100,9 @@ class Semesterplan
      */
     protected $angebot;
 
+    //vllt statt angebot veranstaltung?
+    //protected $veranstaltung;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="semesterplan")
@@ -135,7 +138,7 @@ class Semesterplan
      */
     public function getSWSUebung()
     {
-        return $this->swsUebung;
+        return $this->SWSUebung;
     }
 
     /**
@@ -171,7 +174,7 @@ class Semesterplan
      */
     public function setAnzahlUebungsgruppen($anzahlUebungsgruppen)
     {
-        $this->anzahlUebungsgruppen = $anzahlUebungsgruppen;
+        $this->AnzahlUebungsgruppen = $anzahlUebungsgruppen;
     
         return $this;
     }
@@ -183,7 +186,7 @@ class Semesterplan
      */
     public function getAnzahlUebungsgruppen()
     {
-        return $this->anzahlUebungsgruppen;
+        return $this->AnzahlUebungsgruppen;
     }
 
     /**
@@ -195,7 +198,7 @@ class Semesterplan
      */
     public function setGroesseUebungsgruppen($groesseUebungsgruppen)
     {
-        $this->groesseUebungsgruppen = $groesseUebungsgruppen;
+        $this->GroesseUebungsgruppen = $groesseUebungsgruppen;
     
         return $this;
     }
@@ -207,32 +210,32 @@ class Semesterplan
      */
     public function getGroesseUebungsgruppen()
     {
-        return $this->groesseUebungsgruppen;
+        return $this->GroesseUebungsgruppen;
     }
 
-    /**
-     * Set module
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
-     *
-     * @return Semesterplan
-     */
-    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
-    {
-        $this->veranstaltung = $module;
-    
-        return $this;
-    }
+//    /**
+//     * Set module
+//     *
+//     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
+//     *
+//     * @return Semesterplan
+//     */
+//    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
+//    {
+//        $this->veranstaltung = $module;
+//
+//        return $this;
+//    }
 
-    /**
-     * Get module
-     *
-     * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
-     */
-    public function getVeranstaltung()
-    {
-        return $this->veranstaltung;
-    }
+//    /**
+//     * Get module
+//     *
+//     * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung
+//     */
+//    public function getVeranstaltung()
+//    {
+//        return $this->veranstaltung;
+//    }
 
     /**
      * Set lehrender
