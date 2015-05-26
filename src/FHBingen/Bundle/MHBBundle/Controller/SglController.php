@@ -716,8 +716,10 @@ class SglController extends Controller
 //            }
 //        }
         $semester = $em->getRepository('FHBingenMHBBundle:Semesterplan')->findOneBy(array('semester' => $semesterString));
-        $liste = $em->getRepository('FHBingenMHBBundle:Semesterplan')->findBy(array('semester' => $semester));
+        //$liste = $em->getRepository('FHBingenMHBBundle:Semesterplan')->findBy(array('semester' => $semester));
+        $liste = $angebote;
 
+        //   return array('form' => $form->createView(), 'pageTitle' => 'Semesterplan');
         return array('semesterplanListe' => $liste, 'pageTitle' => 'Semesterplan');
     }
 

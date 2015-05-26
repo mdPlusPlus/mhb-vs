@@ -1,15 +1,42 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
+
 {% block content %}
     <table xmlns="http://www.w3.org/1999/html">
+    <div class="table-responsive">
+    {% if semesterplanListe is not empty %}
+    <table id="semesterplan" class="table table-bordered tablesorter">
         <thead>
+        <tr>
+            <th style="width:25%">Modul</th>
+            <th style="min-width: 80px; width: 5%">Findet statt?</th>
+            <th style="min-width: 110px; width: 15%">Dozent</th>
+            <th style="min-width: 80px; width: 5%">Lehrbeauftragter</th>
+            <th style="min-width: 70px; width: 10%">SWS Vorlesung</th>
+            <th style="min-width: 70px; width: 10%">SWS Übung</th>
+            <th style="min-width: 100px; width: 15%">Anzahl Übungsgruppen</th>
+            <th style="min-width: 100px; width: 15%">Grösse einer Übungsgruppe</th>
+        </tr>
         </thead>
+        {% endif %}
         <tbody>
-            {% for semesterplan in semesterplanListe %}
-            <tr>
-                <td>STUFF</td>
-            </tr>
-            {% endfor %}
+        {% for semesterplan in semesterplanListe %}
+             <td>{{ semesterplan.__toString() }}</td>
+            <td style="text-align: center"><input id="findetstatt" type="checkbox"/></td>
+            <td>
+            {#TODO: Dozent hinzufügen
+            {% block beauftragter %}
+                    {{ form_row(form.beauftragter) }}
+                {% endblock beauftragter %#}</td>
+            <td style="text-align: center"><input id="findetstatt" type="checkbox"/></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tbody>
+        {% endfor %}
     </table>
+        {% include '@FHBingenMHB/buttons.html.twig' %}
+    </div>
+
 {% endblock %}
