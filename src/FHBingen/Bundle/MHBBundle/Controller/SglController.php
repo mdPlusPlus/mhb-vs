@@ -696,8 +696,13 @@ class SglController extends Controller
     {
         //TODO
         $em = $this->getDoctrine()->getManager();
-//        $veranstaltungen = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findAll();
-//        uasort($veranstaltungen, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'veranstaltungSort'));
+        $user = $this->get('security.context')->getToken()->getUser();
+        $userid = $user->getDozentenID();
+        $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $userid));
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang->getStudiengangID()));
+        uasort($angebote, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
+
+        $form = $this->createForm(new Form\SemesterplanType());
 //
 //
 //        $form = $this->createForm(new Form\SemesterplanListeType());

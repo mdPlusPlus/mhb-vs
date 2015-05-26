@@ -36,21 +36,21 @@ class VeranstaltungHistoryType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
 
         $builder
-            ->add('kuerzel', 'text', array('label' => 'Modulkürzel [#]: ', 'required' => true))
-            ->add('name', 'text', array('label' => 'Modulname (deutsch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
-            ->add('nameEN', 'text', array('label' => 'Modulname (englisch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
-            ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots [#]: ', 'required' => true, 'choices' => ArrayValues::$frequency))
-            ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
-            ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => true))
+            ->add('name', 'text', array('label' => 'Modulname (deutsch): ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
+            ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
+            ->add('haeufigkeit', 'choice', array('label' => 'Häufigkeit des Angebots: ', 'required' => true, 'choices' => ArrayValues::$frequency))
+            ->add('kontaktzeitVL', 'integer', array('label' => 'Kontaktzeit Vorlesung (in Stunden): ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige (in Stunden): ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('selbststudium', 'integer', array('label' => false, 'required' => true, 'attr' => array('min' => '0', 'hidden' => true)))
-            ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße [#]: ', 'required' => true, 'attr' => array('min' => '0')))
-            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebnisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('sprache', 'choice', array('label' => 'Sprache [#]: ', 'required' => true, 'choices' => ArrayValues::$lang))
+            ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße: ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebnisse: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('sprache', 'choice', array('label' => 'Sprache: ', 'required' => true, 'choices' => ArrayValues::$lang))
             ->add('SpracheSonstiges', 'text', array('label' => 'Sprache Sonstiges: ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
-            ->add('literatur', 'textarea', array('label' => 'Literaturverweise [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => ArrayValues::$lp))
-            ->add('voraussetzungInhalte', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte: ', 'required' => true, 'choices' => ArrayValues::$lp))
+            ->add('voraussetzungInhalte', 'textarea', array('label' => 'Voraussetzung inhaltlich: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('erlaeuterungenLP', 'text', array('label' => 'Erläuterungen zur Vergabe von LP:', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
 
     }
