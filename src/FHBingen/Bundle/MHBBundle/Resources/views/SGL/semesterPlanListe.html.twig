@@ -2,9 +2,8 @@
 
 
 {% block content %}
-    <table xmlns="http://www.w3.org/1999/html">
     <div class="table-responsive">
-    {% if semesterplanListe is not empty %}
+    {#{% if form.semesterplan is not empty %}#}
     <table id="semesterplan" class="table table-bordered tablesorter">
         <thead>
         <tr>
@@ -18,25 +17,24 @@
             <th style="min-width: 100px; width: 15%">Grösse einer Übungsgruppe</th>
         </tr>
         </thead>
-        {% endif %}
+        {#{% endif %}#}
         <tbody>
-        {% for semesterplan in semesterplanListe %}
-             <td>{{ semesterplan.__toString() }}</td>
-            <td style="text-align: center"><input id="findetstatt" type="checkbox"/></td>
-            <td>
-            {#TODO: Dozent hinzufügen
-            {% block beauftragter %}
-                    {{ form_row(form.beauftragter) }}
-                {% endblock beauftragter %#}</td>
-            <td style="text-align: center"><input id="findetstatt" type="checkbox"/></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+        {{ form_start(form) }}
+        {% for semesterplan in form.semesterplan %}
+
+            <td>{{ form_widget(semesterplan.angebot) }}</td>
+            <td style="text-align: center">{{ form_widget(semesterplan.findetStatt) }}</td>
+            <td>{{ form_widget(semesterplan.dozent) }}</td>
+            <td style="text-align: center">{{ form_widget(semesterplan.istLehrbeauftragter) }}</td>
+            <td>{{ form_widget(semesterplan.SWSVorlesung) }}</td>
+            <td>{{ form_widget(semesterplan.SWSUebung) }}</td>
+            <td>{{ form_widget(semesterplan.AnzahlUebungsgruppen) }}</td>
+            <td>{{ form_widget(semesterplan.GroesseUebungsgruppen) }}</td>
         </tbody>
         {% endfor %}
     </table>
         {% include '@FHBingenMHB/buttons.html.twig' %}
+        {{ form_end(form) }}
     </div>
 
 {% endblock %}

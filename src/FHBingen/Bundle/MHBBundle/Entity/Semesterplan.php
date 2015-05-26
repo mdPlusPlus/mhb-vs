@@ -286,4 +286,73 @@ class Semesterplan
         return $this->semester;
     }
 
+
+    /**
+     * Set istLehrbeauftragter
+     *
+     * @param boolean $istLehrbeauftragter
+     * @return Semesterplan
+     */
+    public function setIstLehrbeauftragter($istLehrbeauftragter)
+    {
+        $this->istLehrbeauftragter = $istLehrbeauftragter;
+
+        return $this;
+    }
+
+    /**
+     * Get istLehrbeauftragter
+     *
+     * @return boolean 
+     */
+    public function getIstLehrbeauftragter()
+    {
+        return $this->istLehrbeauftragter;
+    }
+
+    /**
+     * Set findetStatt
+     *
+     * @param boolean $findetStatt
+     * @return Semesterplan
+     */
+    public function setFindetStatt($findetStatt)
+    {
+        $this->findetStatt = $findetStatt;
+
+        return $this;
+    }
+
+    /**
+     * Get findetStatt
+     *
+     * @return boolean 
+     */
+    public function getFindetStatt()
+    {
+        return $this->findetStatt;
+    }
+
+    /**
+     * Set angebot
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
+     * @return Semesterplan
+     */
+    public function setAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
+    {
+        $this->angebot = $angebot;
+
+        return $this;
+    }
+
+    /**
+     * Get angebot
+     *
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Angebot 
+     */
+    public function getAngebot()
+    {
+        return $this->angebot;
+    }
 }

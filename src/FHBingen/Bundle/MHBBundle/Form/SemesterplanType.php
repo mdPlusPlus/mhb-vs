@@ -32,19 +32,14 @@ class SemesterplanType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('SWSUebung', 'text', array('label' => 'SWS Übung: ', 'required' => true))
-            ->add('SWSVorlesung', 'text', array('label' => 'SWS Vorlesung: ', 'required' => true))
-            ->add('AnzahlUebungsgruppen', 'text', array('label' => 'Anzahl der Übungsgruppen: ', 'required' => true))
-            ->add('GroesseUebungsgruppen', 'text', array('label' => 'Grösse einer Übungsgruppe: ', 'required' => true))
-
-
-            //TODO: Lehrbeauftragter und findetStatt besser in OnPreSetData?!
-            ->add('istLehrbeauftragter', 'checkbox', array('required' => false, 'label' => 'ist Lehrbeauftragter?'))
-            ->add('findetStatt', 'checkbox', array('required' => false, 'label' => 'findet statt?'))
-
-            ->add('angebot', 'entity', array('label' => "Modul: ", 'required' => true, 'class' => 'FHBingenMHBBundle:Angebot'))
-            ->add('dozent', 'entity', array('label' => "Dozent: ", 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
-            ->add('semester');
+            ->add('SWSUebung', 'text', array('label' => false, 'required' => true))
+            ->add('SWSVorlesung', 'text', array('label' => false, 'required' => true))
+            ->add('AnzahlUebungsgruppen', 'text', array('label' => false, 'required' => true))
+            ->add('GroesseUebungsgruppen', 'text', array('label' => false, 'required' => true))
+            ->add('istLehrbeauftragter', 'checkbox', array('label' => false, 'required' => true))
+            ->add('findetStatt', 'checkbox', array('label' => false, 'required' => true))
+            ->add('angebot', 'entity', array('label' => false, 'required' => true, 'class' => 'FHBingenMHBBundle:Angebot', 'disabled' => true))
+            ->add('dozent', 'entity', array('label' => false, 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'));
     }
 
     /**
