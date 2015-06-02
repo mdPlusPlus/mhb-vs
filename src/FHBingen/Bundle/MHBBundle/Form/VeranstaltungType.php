@@ -55,6 +55,7 @@ class VeranstaltungType extends AbstractType
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('selbststudium', 'integer', array('label' => false, 'required' => true, 'attr' => array('min' => '0', 'hidden' => true)))
             ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße [#]: ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('lehrform', 'textarea', array('label' => 'Lehrformen [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebnisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('sprache', 'choice', array('label' => 'Sprache [#]: ', 'required' => true, 'choices' => ArrayValues::$lang))
@@ -75,12 +76,12 @@ class VeranstaltungType extends AbstractType
         $form = $event->getForm();
         $encoder = new JsonEncoder();
 
-        $lehrform = $input->getLehrform();
-        $lehrformOptions = array('label' => 'Lehrformen:', 'required' => false);
-        if ($lehrform == null) {
-            $lehrformOptions['data'] = 'Vorlesungen mit Tafel und Videoprojektion'; //default
-        }
-        $form->add('lehrform', 'textarea', $lehrformOptions);
+//        $lehrform = $input->getLehrform();
+//        $lehrformOptions = array('label' => 'Lehrformen:', 'required' => false);
+//        if ($lehrform == null) {
+//            $lehrformOptions['data'] = 'Vorlesungen mit Tafel und Videoprojektion'; //default
+//        }
+//        $form->add('lehrform', 'textarea', $lehrformOptions);
 
         $dauer = $input->getDauer();
         $dauerOptions = array('label' => 'Dauer:', 'required' => false, 'attr' => array('min' => '1'));
