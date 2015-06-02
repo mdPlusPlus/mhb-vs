@@ -694,7 +694,6 @@ class SglController extends Controller
      */
     public function semesterPlanAction($semesterString)
     {
-        //TODO
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $userid = $user->getDozentenID();
@@ -702,25 +701,66 @@ class SglController extends Controller
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang->getStudiengangID()));
         uasort($angebote, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
 
-        $form = $this->createForm(new Form\SemesterplanType());
-//
-//
-//        $form = $this->createForm(new Form\SemesterplanListeType());
-//
-//        $request = $this->get('request');
-//        $form->handleRequest($request);
-//
-//        if ($request->getMethod() == 'POST') {
-//            if ($form->isValid()) {
-//
-//            }
-//        }
-        $semester = $em->getRepository('FHBingenMHBBundle:Semesterplan')->findOneBy(array('semester' => $semesterString));
-        //$liste = $em->getRepository('FHBingenMHBBundle:Semesterplan')->findBy(array('semester' => $semester));
-        $liste = $angebote;
+        $semester = $em->getRepository('FHBingenMHBBundle:Semester')->findOneBy(array('Semester' => $semesterString));
 
-        //   return array('form' => $form->createView(), 'pageTitle' => 'Semesterplan');
-        return array('semesterplanListe' => $liste, 'pageTitle' => 'Semesterplan');
+
+
+        foreach ($angebote as $angebot) {
+            $semesterplaene = $em->getRepository('FHBingenMHBBundle:Semesterplan')->findOneBy(array('semester' => $semester, 'angebot' => $angebot));
+
+            if (is_null($semesterplaene)) {
+                $semesterplan = new Entity\Semesterplan();
+                $semesterplan->setAngebot($angebot);
+                $semesterplan->setAnzahlUebungsgruppen(0);
+                $semesterplan->setDozent($angebot->getVeranstaltung()->getBeauftragter());
+                $semesterplan->setFindetStatt(true);
+                $semesterplan->setGroesseUebungsgruppen($angebot->getVeranstaltung()->getGruppengroesse());
+                $semesterplan->setIstLehrbeauftragter(false);
+                $semesterplan->setSemester($semester);
+                $semesterplan->setSWSUebung($angebot->getVeranstaltung()->getKontaktzeitSonstige());
+                $semesterplan->setSWSVorlesung($angebot->getVeranstaltung()->getKontaktzeitVL());
+
+                $semester->addSemesterplan($semesterplan);
+                $em->persist($semesterplan);
+                $em->flush();
+            }
+        }
+
+
+
+
+        $form = $this->createForm(new Form\SemesterplanListeType(), $semester);
+        $request = $this->get('request');
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $semesterplaene = $form->get('semesterplan')->getData();
+
+                foreach ($semesterplaene as $semesterplan) {
+//                    $semesterplan->setAngebot($fo);
+//                    $semesterplan->setAnzahlUebungsgruppen($form->get(''));
+//                    $semesterplan->setDozent($angebot->getVeranstaltung()->getBeauftragter());
+//                    $semesterplan->setFindetStatt(true);
+//                    $semesterplan->setGroesseUebungsgruppen($angebot->getVeranstaltung()->getGruppengroesse());
+//                    $semesterplan->setIstLehrbeauftragter(false);
+//                    $semesterplan->setSemester($semester);
+//                    $semesterplan->setSWSUebung($angebot->getVeranstaltung()->getKontaktzeitSonstige());
+//                    $semesterplan->setSWSVorlesung($angebot->getVeranstaltung()->getKontaktzeitVL());
+
+                    $em->persist($semesterplan);
+                    $em->flush();
+                }
+
+                $this->get('session')->getFlashBag()->add('info', 'Semesterplan erfolgreich gespeichert.');
+
+                return $this->redirect($this->generateUrl('semesterListe'));
+
+            }
+        }
+
+        return array('form' => $form->createView(), 'pageTitle' => 'Semesterpläne');
+
     }
 
 }
