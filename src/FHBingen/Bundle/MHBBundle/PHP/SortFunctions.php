@@ -85,7 +85,10 @@ class SortFunctions
             $fgA = $descA->getAngebot()->getFachgebiet();
             $fgB = $descB->getAngebot()->getFachgebiet();
 
-            if ( (is_null($fgA) && is_null($fgB)) || ($fgA->getTitel() == $fgB->getTitel()) ) {
+            if (
+                (is_null($fgA) && is_null($fgB)) ||
+                ( (!is_null($fgA) && !is_null($fgB) && ($fgA->getTitel() == $fgB->getTitel())) ) //bug hiermit gefixt?
+            ) {
                 //return 0;
                 $codeA = $descA->getAngebot()->getCode();
                 $codeB = $descB->getAngebot()->getCode();
