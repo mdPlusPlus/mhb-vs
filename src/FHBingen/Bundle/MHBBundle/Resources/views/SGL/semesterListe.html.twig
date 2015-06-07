@@ -1,6 +1,13 @@
 {% extends 'FHBingenMHBBundle::layout.html.twig' %}
 
 {% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('semesterplanungLink'));
+        });
+    </script>
+
     <ul>
     {% for semester in semesterListe %}
         <li><a href="{{ path('semesterPlan', {'semesterString' : semester.getSemester() }) }}">{{ semester }}</a></li>

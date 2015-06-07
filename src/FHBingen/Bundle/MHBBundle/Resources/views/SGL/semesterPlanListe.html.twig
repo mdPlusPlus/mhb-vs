@@ -2,6 +2,13 @@
 
 
 {% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('semesterplanungLink'));
+        });
+    </script>
+
     <div class="table-responsive">
     {#{% if form.semesterplan is not empty %}#}
     <table id="semesterplan" class="table table-bordered tablesorter">

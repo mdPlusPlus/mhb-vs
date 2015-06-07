@@ -689,6 +689,10 @@ class SglController extends Controller
     }
 
     /**
+     * @param string $semesterString
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @Route("/restricted/sgl/semesterPlan/{semesterString}", name="semesterPlan")
      * @Template("@FHBingenMHB/SGL/semesterPlanListe.html.twig")
      */
