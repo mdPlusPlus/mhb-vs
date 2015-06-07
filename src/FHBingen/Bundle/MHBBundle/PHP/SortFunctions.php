@@ -87,7 +87,7 @@ class SortFunctions
 
             if (
                 (is_null($fgA) && is_null($fgB)) ||
-                ( (!is_null($fgA) && !is_null($fgB) && ($fgA->getTitel() == $fgB->getTitel())) ) //bug hiermit gefixt?
+                ( (!is_null($fgA) && !is_null($fgB) && ($fgA->getTitel() == $fgB->getTitel())) )
             ) {
                 //return 0;
                 $codeA = $descA->getAngebot()->getCode();
