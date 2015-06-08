@@ -776,12 +776,13 @@ class DozentController extends Controller
                 $newSuffix = '';
                 $newInt = $oldInt + 1;
                 if ($newInt >= 10 && $newInt <= 99) {
+                    //zweistellig
                     $newSuffix = strval($newInt);
-                } elseif ($newInt < 10 && $newInt > 0) {
+                } elseif ($newInt > 0 && $newInt < 10) {
                     //1-9
                     $newSuffix = '0' . strval($newInt);
                 } else {
-                    //TODO: ERROR
+                    //TODO: ERROR (sollte nicht vorkommen)
                 }
 
                 $newCode = str_replace($oldSuffix, $newSuffix, $highestCode);
