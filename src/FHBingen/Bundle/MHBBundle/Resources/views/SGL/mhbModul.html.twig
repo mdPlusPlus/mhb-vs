@@ -8,7 +8,7 @@
     <title>Modulhandbuch</title>
     <style type="text/css">
         .modul {
-            /*page-break-after: always;*/
+            /*page-break-after: always;*/ /* nicht notwendig, wenn page-break vor .intro */
         }
 
         .modul .intro {
@@ -29,14 +29,16 @@
         .modul table th, .modul table td {
             border: 1px solid gray;
             padding: 0 10px;
+        }
+
+        .modul table tr {
             page-break-inside: avoid;
         }
 
         .modul .studiensemester {
             border: none;
             padding: 0 10px 0 0;
-            /*white-space: nowrap;*/
-            /*funktioniert iwie nicht*/
+            /*white-space: nowrap;*/ /*funktioniert iwie nicht*/
         }
 
         .modul .startsemester {
