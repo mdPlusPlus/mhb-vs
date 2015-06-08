@@ -720,10 +720,10 @@ class DozentController extends Controller
          */
 
         //hat Angebot bereits Code?
-        if (!is_null($angebot->getCode())) {
-            //ja
-            return $angebot->getCode();
-        } else {
+//        if (!is_null($angebot->getCode())) {
+//            //ja
+//            return $angebot->getCode();
+//        } else {
             //nein
 
             $isWahlpflichtfach = false;
@@ -761,24 +761,28 @@ class DozentController extends Controller
 
             //TODO
 
+            $pattern = "'" . $codeToLookFor . "%'";
+            //$pattern = "'B-IN-%'";
+
+
             $qb = new QueryBuilder($em);
 
             $bisherigeCodes = $qb   ->select('a.Code')
                                     ->from('FHBingenMHBBundle:Angebot', 'a')
-                                    ->where($qb->expr()->like('a.Code', $codeToLookFor))
-                                    ->orderBy('a.Code')
+                                    ->where($qb->expr()->like('a.Code', $pattern))
+                                    ->orderBy('a.Code', 'DESC')
                                     ->getQuery()
                                     ->getResult();
 
-            $respone = '';
+            $response = '';
             foreach ($bisherigeCodes as $code) {
-                $respone = $respone . $code . '<br />';
+                $response = $response . $code['Code'] . '<br />';
             }
 
-            return new Response($respone);
+            return new Response($response);
 
             //
-        }
+        //}
     }
 
     /**
@@ -787,7 +791,7 @@ class DozentController extends Controller
     public function testCode()
     {
         $em = $this->getDoctrine()->getManager();
-        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->find(371);
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->find(116);
 
         return $this->returnCodeForAngebot($angebot);
     }
