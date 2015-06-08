@@ -707,23 +707,28 @@ class DozentController extends Controller
         return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen', 'modul' => $modul);
     }
 
+    /**
+     * Gibt den für ein Angebot zu vergebenen Code zurück. Existiert bereits ein Code, wird dieser zurückgegeben.
+     *
+     * @param Entity\Angebot $angebot
+     *
+     * @return string
+     */
     private function returnCodeForAngebot(Entity\Angebot $angebot)
     {
         $em = $this->getDoctrine()->getManager();
         /*
          * 1. hat Angebot bereits Code?
          * 2. nein -> existiert bereits ein Code für das Fachgebiet des Angebots? | ja -> gib Code zurück
-         * 3. ja -> hole höchsten Code | nein -> erstelle Code mit 01
+         * 3. ja -> hole höchsten Code + 1 | nein -> erstelle Code mit 01
          * 4. gib Code zurück
-         *
-         * beachten: Was ist wenn Angebot kein Fachgebiet hat?
          */
 
         //hat Angebot bereits Code?
-//        if (!is_null($angebot->getCode())) {
-//            //ja
-//            return $angebot->getCode();
-//        } else {
+        if (!is_null($angebot->getCode())) {
+            //ja
+            return $angebot->getCode();
+        } else {
             //nein
 
             $isWahlpflichtfach = false;
@@ -741,15 +746,8 @@ class DozentController extends Controller
             if ($hasFachgebiet) {
                 if (!$isWahlpflichtfach) {
                     $codeToLookFor = $codeToLookFor . '-' . $angebot->getFachgebiet()->getKuerzelP();
-
-                    //$bisherigeAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('fachgebiet' => $angebot->getFachgebiet(), 'Angebotsart' => 'Pflichtfach'));
-                    //TODO: Achtung, könnte Probleme mit Informatik Vertiefung geben, weil Kürzel unterschiedlich
-
                 } else {
                     $codeToLookFor = $codeToLookFor . '-' . $angebot->getFachgebiet()->getKuerzelWP();
-
-                    //$bisherigeAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('fachgebiet' => $angebot->getFachgebiet(), 'Angebotsart' => 'Wahlpflichtfach'));
-                    //TODO: Achtung, könnte Probleme mit Informatik Vertiefung geben, weil Kürzel unterschiedlich
                 }
             } else {
                 if (!$isWahlpflichtfach) {
@@ -759,11 +757,7 @@ class DozentController extends Controller
                 }
             }
 
-            //TODO
-
             $pattern = "'" . $codeToLookFor . "%'";
-            //$pattern = "'B-IN-%'";
-
 
             $qb = new QueryBuilder($em);
 
@@ -777,13 +771,39 @@ class DozentController extends Controller
             if (!empty($bisherigeCodes)) {
                 $highestCode = $bisherigeCodes[0]['Code'];
 
-                return new Response($highestCode); //debug
-            } else {
-                return new Response('no highest code found'); //debug
-            }
+                $oldSuffix = substr($highestCode, -2); //z.B. '09'
+                $oldInt = intval($oldSuffix); //z.B. 9
+                $newSuffix = '';
+                $newInt = $oldInt + 1;
+                if ($newInt >= 10 && $newInt <= 99) {
+                    $newSuffix = strval($newInt);
+                } elseif ($newInt < 10 && $newInt > 0) {
+                    //1-9
+                    $newSuffix = '0' . strval($newInt);
+                } else {
+                    //TODO: ERROR
+                }
 
-            //
-        //}
+                $newCode = str_replace($oldSuffix, $newSuffix, $highestCode);
+
+                return $newCode;
+            } else {
+                //return 'no highest code found';
+                if ($hasFachgebiet) {
+                    if (!$isWahlpflichtfach) {
+                        return $angebot->getStudiengang() . '-' . $angebot->getFachgebiet()->getKuerzelP() . '-01';
+                    } else {
+                        return $angebot->getStudiengang() . '-' . $angebot->getFachgebiet()->getKuerzelWP() . '-01';
+                    }
+                } else {
+                    if (!$isWahlpflichtfach) {
+                        return $angebot->getStudiengang() . '-' . $this::KUERZEL_P_OHNE_FG . '-01';
+                    } else {
+                        return $angebot->getStudiengang() . '-' . $this::KUERZEL_WP_OHNE_FG . '-01';
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -791,10 +811,11 @@ class DozentController extends Controller
      */
     public function testCode()
     {
+        //TODO: remove function
         $em = $this->getDoctrine()->getManager();
         //$angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->find(116);
         $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->find(375);
 
-        return $this->returnCodeForAngebot($angebot);
+        return new Response($this->returnCodeForAngebot($angebot));
     }
 }
