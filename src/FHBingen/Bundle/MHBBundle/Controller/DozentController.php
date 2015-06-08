@@ -9,6 +9,7 @@
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\QueryBuilder;
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -591,7 +592,8 @@ class DozentController extends Controller
                     }
                 }
 
-                $angebot->setCode($this->returnCodeForAngebot($angebot));
+                $angebot->setCode(null);
+                //$angebot->setCode($this->returnCodeForAngebot($angebot));
                 $angebot->setVeranstaltung($modul);
                 $angebot->setStudiengang($studiengang);
                 $angebot->setAngebotsart($angebotsart);
@@ -705,7 +707,8 @@ class DozentController extends Controller
         return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen', 'modul' => $modul);
     }
 
-    private function returnCodeForAngebot(Entity\Angebot $angebot) {
+    private function returnCodeForAngebot(Entity\Angebot $angebot)
+    {
         $em = $this->getDoctrine()->getManager();
         /*
          * 1. hat Angebot bereits Code?
@@ -756,14 +759,36 @@ class DozentController extends Controller
                 }
             }
 
-            //querybuilder get all angebot with code starting with codetolookfor
+            //TODO
 
-            /*TODO*/
+            $qb = new QueryBuilder($em);
 
+            $bisherigeCodes = $qb   ->select('a.Code')
+                                    ->from('FHBingenMHBBundle:Angebot', 'a')
+                                    ->where($qb->expr()->like('a.Code', $codeToLookFor))
+                                    ->orderBy('a.Code')
+                                    ->getQuery()
+                                    ->getResult();
+
+            $respone = '';
+            foreach ($bisherigeCodes as $code) {
+                $respone = $respone . $code . '<br />';
+            }
+
+            return new Response($respone);
+
+            //
         }
+    }
 
+    /**
+     * @Route("/testCode")
+     */
+    public function testCode()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->find(371);
 
-        $code = null;
-        return $code;
+        return $this->returnCodeForAngebot($angebot);
     }
 }
