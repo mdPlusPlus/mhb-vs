@@ -25,6 +25,16 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 class DozentController extends Controller
 {
     /**
+     * Default-Kürzel für Pflichtfächer ohne Fachgebiet (sollte es nach aktueller Implementation nie geben)
+     */
+    const KUERZEL_P_OHNE_FG = 'PF';
+
+    /**
+     * Default-Kürzel für Wahlpflichtfächer ohne Fachgebiet
+     */
+    const KUERZEL_WP_OHNE_FG = 'WP';
+
+    /**
      * @Route("/restricted/dozent/eigeneModule", name="eigeneModule")
      * @Template("FHBingenMHBBundle:Dozent:eigeneModule.html.twig")
      *
@@ -581,7 +591,7 @@ class DozentController extends Controller
                     }
                 }
 
-                $angebot->setCode(null);
+                $angebot->setCode($this->returnCodeForAngebot($angebot));
                 $angebot->setVeranstaltung($modul);
                 $angebot->setStudiengang($studiengang);
                 $angebot->setAngebotsart($angebotsart);
@@ -693,5 +703,67 @@ class DozentController extends Controller
         }
 
         return array('form' => $form->createView(), 'pageTitle' => 'Angebot erstellen', 'modul' => $modul);
+    }
+
+    private function returnCodeForAngebot(Entity\Angebot $angebot) {
+        $em = $this->getDoctrine()->getManager();
+        /*
+         * 1. hat Angebot bereits Code?
+         * 2. nein -> existiert bereits ein Code für das Fachgebiet des Angebots? | ja -> gib Code zurück
+         * 3. ja -> hole höchsten Code | nein -> erstelle Code mit 01
+         * 4. gib Code zurück
+         *
+         * beachten: Was ist wenn Angebot kein Fachgebiet hat?
+         */
+
+        //hat Angebot bereits Code?
+        if (!is_null($angebot->getCode())) {
+            //ja
+            return $angebot->getCode();
+        } else {
+            //nein
+
+            $isWahlpflichtfach = false;
+            if (!$angebot->getAngebotsart() == 'Pflichtfach') {
+                $isWahlpflichtfach = true;
+            }
+
+            $hasFachgebiet = false;
+            if (!is_null($angebot->getFachgebiet())) {
+               $hasFachgebiet = true;
+            }
+
+            $codeToLookFor = $angebot->getStudiengang()->getKuerzel(); //z.B. 'B-IN'
+            $bisherigeAngebote = null;
+            if ($hasFachgebiet) {
+                if (!$isWahlpflichtfach) {
+                    $codeToLookFor = $codeToLookFor . '-' . $angebot->getFachgebiet()->getKuerzelP();
+
+                    //$bisherigeAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('fachgebiet' => $angebot->getFachgebiet(), 'Angebotsart' => 'Pflichtfach'));
+                    //TODO: Achtung, könnte Probleme mit Informatik Vertiefung geben, weil Kürzel unterschiedlich
+
+                } else {
+                    $codeToLookFor = $codeToLookFor . '-' . $angebot->getFachgebiet()->getKuerzelWP();
+
+                    //$bisherigeAngebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('fachgebiet' => $angebot->getFachgebiet(), 'Angebotsart' => 'Wahlpflichtfach'));
+                    //TODO: Achtung, könnte Probleme mit Informatik Vertiefung geben, weil Kürzel unterschiedlich
+                }
+            } else {
+                if (!$isWahlpflichtfach) {
+                    $codeToLookFor = $codeToLookFor . '-' . $this::KUERZEL_P_OHNE_FG;
+                } else {
+                    $codeToLookFor = $codeToLookFor . '-' . $this::KUERZEL_WP_OHNE_FG;
+                }
+            }
+
+            //querybuilder get all angebot with code starting with codetolookfor
+
+            /*TODO*/
+
+        }
+
+
+        $code = null;
+        return $code;
     }
 }
