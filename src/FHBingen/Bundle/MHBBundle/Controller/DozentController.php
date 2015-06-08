@@ -774,12 +774,13 @@ class DozentController extends Controller
                                     ->getQuery()
                                     ->getResult();
 
-            $response = '';
-            foreach ($bisherigeCodes as $code) {
-                $response = $response . $code['Code'] . '<br />';
-            }
+            if (!empty($bisherigeCodes)) {
+                $highestCode = $bisherigeCodes[0]['Code'];
 
-            return new Response($response);
+                return new Response($highestCode); //debug
+            } else {
+                return new Response('no highest code found'); //debug
+            }
 
             //
         //}
@@ -791,7 +792,8 @@ class DozentController extends Controller
     public function testCode()
     {
         $em = $this->getDoctrine()->getManager();
-        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->find(116);
+        //$angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->find(116);
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->find(375);
 
         return $this->returnCodeForAngebot($angebot);
     }
