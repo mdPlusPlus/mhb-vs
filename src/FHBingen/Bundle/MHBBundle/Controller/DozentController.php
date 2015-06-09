@@ -708,7 +708,7 @@ class DozentController extends Controller
     }
 
     /**
-     * Gibt den für ein Angebot zu vergebenen Code zurück. Existiert bereits ein Code, wird dieser zurückgegeben.
+     * Gibt den für ein Angebot zu vergebenden Code zurück. Existiert bereits ein Code, wird dieser zurückgegeben.
      *
      * @param Entity\Angebot $angebot
      *
@@ -780,7 +780,7 @@ class DozentController extends Controller
                     $newSuffix = strval($newInt);
                 } elseif ($newInt > 0 && $newInt < 10) {
                     //1-9
-                    $newSuffix = '0' . strval($newInt);
+                    $newSuffix = '0' . strval($newInt); //0 vorne anhängen '9' -> '09'
                 } else {
                     //TODO: ERROR (sollte nicht vorkommen)
                 }
@@ -789,7 +789,7 @@ class DozentController extends Controller
 
                 return $newCode;
             } else {
-                //return 'no highest code found';
+                //noch kein Code für diese Kombination aus Fachgebiet und Angebotsart vorhanden
                 if ($hasFachgebiet) {
                     if (!$isWahlpflichtfach) {
                         return $angebot->getStudiengang() . '-' . $angebot->getFachgebiet()->getKuerzelP() . '-01';
