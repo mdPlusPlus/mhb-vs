@@ -266,7 +266,11 @@
                             {% if lehrender.getDozent().getNachname() == 'Alle' %}
                                 Alle Dozenten des Studiengangs {{ modulBeschreibung.getAngebot().getStudiengang() }}
                             {% else %}
-                                {{ lehrender.getDozent() }}
+                                {% if lehrender == modulBeschreibung.getAngebot().getVeranstaltung().getLehrende()|last %}
+                                    {{ lehrender.getDozent() }}
+                                {% else %}
+                                    {{ lehrender.getDozent() ~ ', ' }}
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     {% endif %}
