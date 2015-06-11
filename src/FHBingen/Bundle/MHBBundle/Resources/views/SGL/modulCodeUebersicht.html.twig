@@ -11,7 +11,7 @@
         });
     </script>
     <div class="table-responsive">
-        <h3>Module ohne Modulcode aus Studiengang {{ studiengang.__toString() }}</h3>
+        <h4>Module ohne Modulcode aus Studiengang {{ studiengang.__toString() }}</h4>
         {% if angeboteOhneCode is not empty %}
             <table id="table-without-code" class="table table-bordered tablesorter">
                 <thead>
@@ -41,7 +41,7 @@
             <p>Es gibt zurzeit keine Angebote ohne Modulcode in Ihrem Studiengang.</p>
         {% endif %}
 
-        <h3 style="margin-top: 50px">Module mit Modulcode aus Studiengang {{ studiengang.__toString() }}</h3>
+        <h4 style="margin-top: 50px">Module mit Modulcode aus Studiengang {{ studiengang.__toString() }}</h4>
         <table id="table-with-code" class="table table-bordered tablesorter">
             <thead>
             <tr>
