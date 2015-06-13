@@ -2,10 +2,7 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
-use FHBingen\Bundle\MHBBundle\Entity\Angebot;
-use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung;
-use FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -14,11 +11,18 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 
+/**
+ * Class DefaultController
+ *
+ * @package FHBingen\Bundle\MHBBundle\Controller
+ */
 class DefaultController extends Controller
 {
     /**
      * @Route("/")
      * @Route("/index")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction()
     {

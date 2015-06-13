@@ -90,27 +90,32 @@ class SglController extends Controller
      */
     public function modulCodeUebersichtAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $userMail = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
-        $dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
+        //$user = $this->get('security.context')->getToken()->getUser();
+        //$userMail = $user->getUsername();
+        //$dozent = $em->getRepository('FHBingenMHBBundle:Dozent')->findOneBy(array('email' => $userMail));
+        $dozent = $this->get('security.context')->getToken()->getUser();
         $studiengang = $em->getRepository('FHBingenMHBBundle:Studiengang')->findOneBy(array('sgl' => $dozent->getDozentenID()));
 
-        //findet die Angebote ohne Modulcode
-        $angeboteOhneCode = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('Code' => null, 'studiengang' => $studiengang));
-        uasort($angeboteOhneCode, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
-
-        //Filtert die Angebote ohne Modulcode und aus anderen Studiengängen heraus
         $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('studiengang' => $studiengang));
+        $angeboteOhneCode = array();
         $angeboteMitCode = array();
-        foreach ($angebote as $value) {
-            if (!is_null($value->getCode())) {
-                $angeboteMitCode[] = $value;
+        foreach ($angebote as $angebot) {
+            $modulcodezuweisung = $em->getRepository('FHBingenMHBBundle:Modulcodezuweisung')->findOneBy(array(
+                'studiengang'   => $angebot->getStudiengang(),
+                'fachgebiet'    => $angebot->getFachgebiet(),
+                'veranstaltung' => $angebot->getVeranstaltung()
+            ));
+            if (is_null($modulcodezuweisung)) {
+                $angeboteOhneCode[] = $angebot;
+            } else {
+                $angeboteMitCode[] = $angebot;
             }
         }
+        uasort($angeboteOhneCode, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
         uasort($angeboteMitCode, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'angebotSort'));
 
-        return array('angeboteMitCode' => $angeboteMitCode, 'angeboteOhneCode' => $angeboteOhneCode, 'studiengang' => $studiengang, 'pageTitle' => 'Modulcodes');
+        return array('angeboteOhneCode' => $angeboteOhneCode, 'angeboteMitCode' => $angeboteMitCode, 'studiengang' => $studiengang, 'pageTitle' => 'Modulcodes');
     }
 
 

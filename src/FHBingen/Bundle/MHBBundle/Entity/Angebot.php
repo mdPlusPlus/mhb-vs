@@ -136,11 +136,40 @@ class Angebot
      */
     protected $RegelsemesterWS;
 
+    //////
+
+    /**
+     * Get Code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        //DON'T REMOVE THIS FUNCTION!
+        $zuweisungen = $this->getVeranstaltung()->getModulcodezuweisung();
+        foreach ($zuweisungen as $zuweisung) {
+            if (
+                ($zuweisung->getStudiengang()   == $this->getStudiengang()) &&
+                ($zuweisung->getFachgebiet()    == $this->getFachgebiet()) &&
+                ($zuweisung->getVeranstaltung() == $this->getVeranstaltung())
+            ) {
+                if (!is_null($zuweisung->getOverwrite())) {
+                    return $zuweisung->getOverwrite();
+                } else {
+                    return $zuweisung->getCode();
+                }
+            }
+        }
+
+        return null;
+    }
+
+    //////
 
     /**
      * Get Angebots_ID
      *
-     * @return integer 
+     * @return integer
      */
     public function getAngebotsID()
     {
@@ -185,15 +214,7 @@ class Angebot
         return $this;
     }
 
-    /**
-     * Get Code
-     *
-     * @return string 
-     */
-    public function getCode()
-    {
-        return $this->Code;
-    }
+
 
     /**
      * Set AbweichenderNameDE

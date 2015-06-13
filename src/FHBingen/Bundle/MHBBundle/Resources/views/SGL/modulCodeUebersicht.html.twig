@@ -29,7 +29,6 @@
                             <a href="{{ path('modulCodeErstellung', {'id': angebotOhneCode.getVeranstaltung().getModulID(),
                                 'studiengangid': angebotOhneCode.getStudiengang().getStudiengangID()}) }}">{{ angebotOhneCode.getVeranstaltung() }}</a>
                         </td>
-                        {#<td>{{ angebotOhneCode.getCode() }}</td>#}
                         {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                         <td>{{ angebotOhneCode.getVeranstaltung().getErstellungsdatum()|date('d.m.Y') }}</td>
                         <td>{{ angebotOhneCode.getVeranstaltung().getAutor() }}</td>
