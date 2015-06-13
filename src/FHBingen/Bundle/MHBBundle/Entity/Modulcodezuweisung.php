@@ -32,11 +32,10 @@ class Modulcodezuweisung
     private $studiengang;
 
     /**
-     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Fachgebiet", inversedBy="modulcodezuweisung")
      * @ORM\JoinColumn(name="fachgebiet", referencedColumnName="Fachgebiets_ID", nullable=true)
      */
-    private $fachgebiet;
+    private $fachgebiet; //nicht ID, weil composite keys nicht NULL sein dürfen
 
     /**
      * @ORM\Id()
@@ -60,7 +59,7 @@ class Modulcodezuweisung
      *     message = "Bitte verwenden Sie folgendes Muster für den Modulcode: z.B. B-IN-MN01, B-IN-V05"
      * )
      */
-    private $code;
+    private $code; //TODO: besser als integer?
 
     /**
      * @ORM\Column(type="string", nullable=true, unique=true)
@@ -93,8 +92,6 @@ class Modulcodezuweisung
 
 
     ////////////////////////
-
-
 
     /**
      * Set code
@@ -171,7 +168,7 @@ class Modulcodezuweisung
      * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
      * @return Modulcodezuweisung
      */
-    public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
+    public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet = null)
     {
         $this->fachgebiet = $fachgebiet;
 

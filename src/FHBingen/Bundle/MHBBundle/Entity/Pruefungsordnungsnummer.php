@@ -15,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Pruefungsordnungsnummer
  *
+ * Diese Klasse ist für die Transition nach HISinOne vorgesehen
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Pruefungsordnungsnummer")

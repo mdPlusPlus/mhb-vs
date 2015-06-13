@@ -4,6 +4,7 @@ namespace FHBingen\Bundle\MHBBundle\Controller;
 
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
+use FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung;
 use FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -52,34 +53,7 @@ class DefaultController extends Controller
         );
     }
 
-    /**
-     * Initialerstellung von Semestern
-     */
-    public function semesterCreate()
-    {
-        //legt die Semester-Objekte an und gibt sie als Array zurück
-        //TODO: In Oberfäche integieren ?
-        $semester0 = new Semester();
-        $semester0->setSemester('WS14');
-
-        $semester1 = new Semester();
-        $semester1->setSemester('SS15');
-
-        $semester2 = new Semester();
-        $semester2->setSemester('WS15');
-
-        $semester3 = new Semester();
-        $semester3->setSemester('SS16');
-
-        $semesterArr = array(
-            $semester0,
-            $semester1,
-            $semester2,
-            $semester3
-        );
-
-        return $semesterArr;
-    }
+    //TODO: Semestererstellung (automatisch?)
 
     /**
      * Initialerstellung von Userrollen
@@ -123,101 +97,35 @@ class DefaultController extends Controller
     //[DONE] 2. bleibende Fachgebiete umbenennen
     //[DONE] 3. Angboterstellung von Wahlpflichtfächern: String-Überprüfen deaktivieren
     //[DONE] 4. Abfrage einbauen, dass bei Pflichtfächern ein Fachgebiet vergeben werden muss
-    //TODO: 5. Unterscheidung in MHB neu machen
-    //TODO: 6. Modulcode-Erstellung: Wenn kein Fachgebiet, dann WP als Code bei Wahlpflicht
+    //[DONE] 5. Unterscheidung in MHB neu machen
+    //[DONE] 6. Modulcode-Erstellung: Wenn kein Fachgebiet, dann WP als Code bei Wahlpflicht
     //TODO: 7. Kürzel für Fachgebiete überprüfen/vervollständigen
     //TODO: 8. Kürzel für Fachgebiete nullable=false
+    //TODO: 9. automatische Modulcodevergabe
 
-    public function convertFachgebieteInformatik()
+
+
+    /**
+     * @Route("/modulcodeCopy")
+     */
+    public function modulcodeCopyAction()
     {
-        //37 -> null
         $em = $this->getDoctrine()->getManager();
-        $wahlpflichfaecher = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('fachgebiet' => 37));
+        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
 
-        $response = '';
-        foreach ($wahlpflichfaecher as $fach) {
-            $fach->setFachgebiet(null);
-            $response = $response . $fach . '<br />';
+        foreach ($angebote as $angebot) {
+            if (!is_null($angebot->getCode())) {
+                $code = new Modulcodezuweisung();
+                $code->setStudiengang($angebot->getStudiengang());
+                $code->setFachgebiet($angebot->getFachgebiet());
+                $code->setVeranstaltung($angebot->getVeranstaltung());
+                $code->setCode($angebot->getCode());
+                $em->persist($code);
+            }
         }
 
         $em->flush();
 
-        return new Response($response);
-    }
-
-    public function convertFachgebieteBioInformatik()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $response = '';
-
-        //29 -> 26
-        $wpBiotechnik = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('fachgebiet' => 29));
-        $biotechnik = $em->getRepository('FHBingenMHBBundle:Fachgebiet')->find(26);
-
-        foreach ($wpBiotechnik as $fach) {
-            $fach->setFachgebiet($biotechnik);
-            $response = $response . $fach . '<br />';
-        }
-
-        //30 -> 25
-        $wpInformatik = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('fachgebiet' => 30));
-        $informatik = $em->getRepository('FHBingenMHBBundle:Fachgebiet')->find(25);
-
-        foreach ($wpInformatik as $fach) {
-            $fach->setFachgebiet($informatik);
-            $response = $response . $fach . '<br />';
-        }
-
-        //31 -> 27
-        $wpBioinformatik = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('fachgebiet' => 31));
-        $bioinformatik = $em->getRepository('FHBingenMHBBundle:Fachgebiet')->find(27);
-
-        foreach ($wpBioinformatik as $fach) {
-            $fach->setFachgebiet($bioinformatik);
-            $response = $response . $fach . '<br />';
-        }
-
-        $em->flush();
-
-        return new Response($response);
-    }
-
-    public function convertFachgebieteMoCo()
-    {
-        //44 -> null
-        $em = $this->getDoctrine()->getManager();
-        $wahlpflichfaecher = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('fachgebiet' => 44));
-
-        $response = '';
-        foreach ($wahlpflichfaecher as $fach) {
-            $fach->setFachgebiet(null);
-            $response = $response . $fach . '<br />';
-        }
-
-        $em->flush();
-
-        return new Response($response);
-    }
-
-    public function convertFachgebieteInfSys()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $response = '';
-
-        //48->53
-        $wpInformatik = $em->getRepository('FHBingenMHBBundle:Angebot')->findBy(array('fachgebiet' => 48));
-        $informatik = $em->getRepository('FHBingenMHBBundle:Fachgebiet')->find(53);
-
-        foreach ($wpInformatik as $fach) {
-            $fach->setFachgebiet($informatik);
-            $response = $response . $fach . '<br />';
-        }
-
-        $em->flush();
-
-        //49 umbenennen
-        //48 löschen
-
-        return new Response($response);
+        return new Response('!');
     }
 }
