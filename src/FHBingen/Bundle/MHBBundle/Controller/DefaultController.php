@@ -105,9 +105,6 @@ class DefaultController extends Controller
 
 
 
-    /**
-     * @Route("/modulcodeCopy")
-     */
     public function modulcodeCopyAction()
     {
         $em = $this->getDoctrine()->getManager();
