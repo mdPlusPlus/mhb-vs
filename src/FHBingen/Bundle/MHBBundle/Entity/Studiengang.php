@@ -99,7 +99,7 @@ class Studiengang
 
     /**
      * @ORM\OneToMany(targetEntity="Angebot", mappedBy="studiengang", cascade={"all"})
-     * */
+     */
     protected $angebot;
 
     /**
@@ -133,10 +133,11 @@ class Studiengang
      */
     public function __construct()
     {
-        $this->angebot       = new ArrayCollection();
-        $this->fachgebiete   = new ArrayCollection();
-        $this->richtung      = new ArrayCollection();
-        $this->modulhandbuch = new ArrayCollection();
+        $this->angebot            = new ArrayCollection();
+        $this->fachgebiete        = new ArrayCollection();
+        $this->richtung           = new ArrayCollection();
+        $this->modulcodezuweisung = new ArrayCollection();
+        $this->modulhandbuch      = new ArrayCollection();
     }
 
     /**
@@ -417,5 +418,47 @@ class Studiengang
     public function getFachgebiete()
     {
         return $this->fachgebiete;
+    }
+
+    //////
+
+    /**
+     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="studiengang")
+     */
+    private $modulcodezuweisung;
+
+    //////
+
+    /**
+     * Add modulcodezuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     * @return Studiengang
+     */
+    public function addModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
+    {
+        $this->modulcodezuweisung[] = $modulcodezuweisung;
+
+        return $this;
+    }
+
+    /**
+     * Remove modulcodezuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     */
+    public function removeModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
+    {
+        $this->modulcodezuweisung->removeElement($modulcodezuweisung);
+    }
+
+    /**
+     * Get modulcodezuweisung
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getModulcodezuweisung()
+    {
+        return $this->modulcodezuweisung;
     }
 }

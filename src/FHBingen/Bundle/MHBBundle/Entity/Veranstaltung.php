@@ -124,11 +124,12 @@ class Veranstaltung extends VeranstaltungSuperClass
      */
     public function __construct()
     {
-        $this->angebot          = new ArrayCollection();
-        $this->forderung        = new ArrayCollection();
-        $this->grundmodul       = new ArrayCollection();    //TODO: richtig?
-        $this->kernfach         = new ArrayCollection();
-        $this->lehrende         = new ArrayCollection();
+        $this->angebot            = new ArrayCollection();
+        $this->forderung          = new ArrayCollection();
+        $this->grundmodul         = new ArrayCollection();    //TODO: richtig?
+        $this->kernfach           = new ArrayCollection();
+        $this->lehrende           = new ArrayCollection();
+        $this->modulcodezuweisung = new ArrayCollection();
     }
 
     /**
@@ -461,5 +462,47 @@ class Veranstaltung extends VeranstaltungSuperClass
     public function getVersionsnummer()
     {
         return $this->Versionsnummer;
+    }
+
+    //////
+
+    /**
+     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="veranstaltung")
+     */
+    private $modulcodezuweisung;
+
+    //////
+
+    /**
+     * Add modulcodezuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     * @return Veranstaltung
+     */
+    public function addModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
+    {
+        $this->modulcodezuweisung[] = $modulcodezuweisung;
+
+        return $this;
+    }
+
+    /**
+     * Remove modulcodezuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     */
+    public function removeModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
+    {
+        $this->modulcodezuweisung->removeElement($modulcodezuweisung);
+    }
+
+    /**
+     * Get modulcodezuweisung
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getModulcodezuweisung()
+    {
+        return $this->modulcodezuweisung;
     }
 }

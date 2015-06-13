@@ -7,6 +7,7 @@
  */
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -89,7 +90,8 @@ class Fachgebiet
      */
     public function __construct()
     {
-        $this->angebot = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->angebot            = new ArrayCollection();
+        $this->modulcodezuweisung = new ArrayCollection();
     }
 
     /**
@@ -231,5 +233,48 @@ class Fachgebiet
     public function getStudiengang()
     {
         return $this->studiengang;
+    }
+
+
+    //////
+
+    /**
+     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="fachgebiet")
+     */
+    private $modulcodezuweisung;
+
+    //////
+
+    /**
+     * Add modulcodezuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     * @return Fachgebiet
+     */
+    public function addModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
+    {
+        $this->modulcodezuweisung[] = $modulcodezuweisung;
+
+        return $this;
+    }
+
+    /**
+     * Remove modulcodezuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     */
+    public function removeModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
+    {
+        $this->modulcodezuweisung->removeElement($modulcodezuweisung);
+    }
+
+    /**
+     * Get modulcodezuweisung
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getModulcodezuweisung()
+    {
+        return $this->modulcodezuweisung;
     }
 }
