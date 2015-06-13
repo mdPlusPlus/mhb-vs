@@ -18,32 +18,35 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Modulcodezuweisung")
+ *
+ * @UniqueEntity(fields="code",      ignoreNull=true, message="Es existiert bereits ein Modulcodezuweisung für diesen Code.")
+ * @UniqueEntity(fields="overwrite", ignoreNull=true, message="Es existiert bereits ein Modulcodezuwesiung für diesen Code.")
  */
 class Modulcodezuweisung
 {
     /**
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="modulcodezuweisung")
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Studiengang", inversedBy="modulcodezuweisung")
      * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
      */
     private $studiengang;
 
     /**
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Fachgebiet", inversedBy="modulcodezuweisung")
-     * @ORM\JoinColumn(name="fachgebiet", referencedColumnName="Fachgebiets_ID", nullable=false)
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Fachgebiet", inversedBy="modulcodezuweisung")
+     * @ORM\JoinColumn(name="fachgebiet", referencedColumnName="Fachgebiets_ID", nullable=true)
      */
-    private $fachgebiet; //TODO: nullable=true?
+    private $fachgebiet;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="modulcodezuweisung")
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Veranstaltung", inversedBy="modulcodezuweisung")
      * @ORM\JoinColumn(name="veranstaltung", referencedColumnName="Modul_ID", nullable=false)
      */
     private $veranstaltung;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, unique=true)
      *
      * @ORM\Column(type="string", length=10, nullable=true, unique=true)
      * @Assert\Length(
@@ -60,7 +63,7 @@ class Modulcodezuweisung
     private $code;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, unique=true)
      *
      * @ORM\Column(type="string", length=10, nullable=true, unique=true)
      * @Assert\Length(
@@ -74,7 +77,7 @@ class Modulcodezuweisung
      *     message = "Bitte verwenden Sie folgendes Muster für den Modulcode: z.B. B-IN-MN01, B-IN-V05"
      * )
      */
-    private $overwrite; //TODO: id?
+    private $overwrite; //streng genommen darf overwrite auch nicht in code vorkommen und umgekehrt -> vernachlässigbar
 
     /**
      * @return string
