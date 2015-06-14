@@ -208,6 +208,7 @@ class Angebot implements ObjectManagerAware
             }
         }
 
+        //TODO: remove
         //wenn nicht gefunden, dann...
         if (!$found) {
             $neueZuweisung = new Modulcodezuweisung();

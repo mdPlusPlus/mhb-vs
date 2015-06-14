@@ -8,12 +8,13 @@
 
 namespace FHBingen\Bundle\MHBBundle\EntityListener;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 use FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung;
+
 
 /**
  * Class AngebotListener
@@ -22,6 +23,16 @@ use FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung;
  */
 class AngebotListener
 {
+    /**
+     * Default-Kürzel für Pflichtfächer ohne Fachgebiet (sollte es nach aktueller Implementation nie geben)
+     */
+    const KUERZEL_P_OHNE_FG = 'PF';
+
+    /**
+     * Default-Kürzel für Wahlpflichtfächer ohne Fachgebiet
+     */
+    const KUERZEL_WP_OHNE_FG = 'WP';
+
     /**
      * @param Angebot            $angebot
      * @param LifecycleEventArgs $args
@@ -38,6 +49,22 @@ class AngebotListener
     public function postPersist(Angebot $angebot, LifecycleEventArgs $args)
     {
         //file_put_contents('angebot.log', 'postPersist' . PHP_EOL, FILE_APPEND);
+
+        $em = $args->getObjectManager();
+        $modulcodezuweisung = $em->getRepository('FHBingenMHBBundle:Modulcodezuweisung')->findOneBy(array(
+            'studiengang'   => $angebot->getStudiengang(),
+            'fachgebiet'    => $angebot->getFachgebiet(),
+            'veranstaltung' => $angebot->getVeranstaltung(),
+        ));
+
+        if (is_null($modulcodezuweisung)) {
+            $neu = new Modulcodezuweisung();
+            $neu->setStudiengang($angebot->getStudiengang());
+            $neu->setFachgebiet($angebot->getFachgebiet());
+            $neu->setVeranstaltung($angebot->getVeranstaltung());
+
+            //TODO
+        }
     }
 
     /**
@@ -137,5 +164,95 @@ class AngebotListener
     public function postLoad(Angebot $angebot, LifecycleEventArgs $args)
     {
         //file_put_contents('angebot.log', 'postFlush' . PHP_EOL, FILE_APPEND);
+    }
+
+    //////
+
+    /**
+     * Gibt den für ein Angebot zu vergebenden Code zurück. Existiert bereits ein Code, wird dieser zurückgegeben.
+     *
+     */
+    private function returnCodeForAngebot(EntityManager $em, Angebot $angebot)
+    {
+        //TODO: prüfen!
+        /*
+         * 2. nein -> existiert bereits ein Code für das Fachgebiet des Angebots? | ja -> gib Code zurück
+         * 3. ja -> hole höchsten Code + 1 | nein -> erstelle Code mit 01
+         * 4. gib Code zurück
+         */
+
+        $isWahlpflichtfach = false;
+        if ($angebot->getAngebotsart() == 'Wahlpflichtfach') {
+            $isWahlpflichtfach = true;
+        }
+
+        $hasFachgebiet = false;
+        if (!is_null($angebot->getFachgebiet())) {
+            $hasFachgebiet = true;
+        }
+
+        $codeToLookFor = $angebot->getStudiengang()->getKuerzel(); //z.B. 'B-IN'
+        if ($hasFachgebiet) {
+            if (!$isWahlpflichtfach) {
+                $codeToLookFor = $codeToLookFor . '-' . $angebot->getFachgebiet()->getKuerzelP();
+            } else {
+                $codeToLookFor = $codeToLookFor . '-' . $angebot->getFachgebiet()->getKuerzelWP();
+            }
+        } else {
+            if (!$isWahlpflichtfach) {
+                $codeToLookFor = $codeToLookFor . '-' . $this::KUERZEL_P_OHNE_FG;
+            } else {
+                $codeToLookFor = $codeToLookFor . '-' . $this::KUERZEL_WP_OHNE_FG;
+            }
+        }
+
+        $pattern = "'" . $codeToLookFor . "%'"; // z.B.: 'B-IN-WP%'
+
+        $qb = $em->createQueryBuilder();
+
+        $bisherigeCodes = $qb
+            ->select('mcz.Code')
+            ->from('FHBingenMHBBundle:Modulcodezuweisung', 'mcz')
+            ->where($qb->expr()->like('mcz.Code', $pattern))
+            ->orderBy('mcz.Code', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        if (!empty($bisherigeCodes)) {
+            $highestCode = $bisherigeCodes[0]['Code'];
+
+            $oldSuffix = substr($highestCode, -2); //z.B. '09'
+            $oldInt = intval($oldSuffix); //z.B. 9
+            $newSuffix = '';
+            $newInt = $oldInt + 1;
+            if ($newInt >= 10 && $newInt <= 99) {
+                //zweistellig
+                $newSuffix = strval($newInt);
+            } elseif ($newInt > 0 && $newInt < 10) {
+                //1-9
+                $newSuffix = '0' . strval($newInt); //0 vorne anhängen '9' -> '09'
+            } else {
+                //TODO: ERROR (sollte nicht vorkommen)
+            }
+
+            $newCode = str_replace($oldSuffix, $newSuffix, $highestCode);
+
+            return $newCode;
+        } else {
+            //noch kein Code für diese Kombination aus Fachgebiet und Angebotsart vorhanden
+            if ($hasFachgebiet) {
+                if (!$isWahlpflichtfach) {
+                    return $angebot->getStudiengang() . '-' . $angebot->getFachgebiet()->getKuerzelP() . '-01';
+                } else {
+                    return $angebot->getStudiengang() . '-' . $angebot->getFachgebiet()->getKuerzelWP() . '-01';
+                }
+            } else {
+                if (!$isWahlpflichtfach) {
+                    return $angebot->getStudiengang() . '-' . $this::KUERZEL_P_OHNE_FG . '-01';
+                } else {
+                    return $angebot->getStudiengang() . '-' . $this::KUERZEL_WP_OHNE_FG . '-01';
+                }
+            }
+        }
     }
 }
