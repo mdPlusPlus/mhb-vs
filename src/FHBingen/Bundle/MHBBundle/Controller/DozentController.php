@@ -599,8 +599,7 @@ class DozentController extends Controller
                 $angebot->setAbweichenderNameDE($form->get('abweichenderNameDE')->getData());
                 $angebot->setAbweichenderNameEN($form->get('abweichenderNameEN')->getData());
                 $angebot->setFachgebiet($form->get('fachgebiet')->getData());
-                //$angebot->setCode(null); //ACHTUNG: Darf erst nach setVeranstaltung() aufgerufen werden!
-                //$angebot->setCode($this->returnCodeForAngebot($angebot));
+                //$angebot->setCode() entfällt, siehe AngebotListener
 
                 //falls es sich um ein Wahlpflichtfach handelt und es Kernfächer gibt
                 if ($isWahl) {

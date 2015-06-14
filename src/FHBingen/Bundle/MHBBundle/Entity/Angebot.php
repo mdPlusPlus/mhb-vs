@@ -186,6 +186,8 @@ class Angebot implements ObjectManagerAware
     /**
      * Set Code
      *
+     * $this->veranstaltung MUSS gesetzt sein, bevor diese Funktion aufgerufen werden kann
+     *
      * @param string $code
      *
      * @return Angebot
