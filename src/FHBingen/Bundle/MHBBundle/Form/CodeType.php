@@ -26,8 +26,7 @@ class CodeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('code', 'text', array('label' => 'Code: ', 'required' => true, 'attr' => array('maxlength' => '9')));
+        $builder->add('overwrite', 'text', array('label' => 'Code: ', 'required' => true, 'attr' => array('maxlength' => '9')));
     }
 
     /**
@@ -36,7 +35,7 @@ class CodeType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Angebot'
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung'
         ));
     }
 

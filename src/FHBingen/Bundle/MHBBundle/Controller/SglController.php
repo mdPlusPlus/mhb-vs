@@ -120,41 +120,59 @@ class SglController extends Controller
 
 
     /**
-     * @param int $id
-     * @param int $studiengangid
+     * @param int $studiengangID
+     * @param int $veranstaltungID
      *
-     * @Route("/restricted/sgl/modulCodeErstellung/{id}/{studiengangid}", name="modulCodeErstellung")
+     * @Route("/restricted/sgl/modulCodeErstellung/{studiengangID}/{veranstaltungID}", name="modulCodeErstellung")
      * @Template("FHBingenMHBBundle:SGL:modulCodeErstellung.html.twig")
      *
      * updatet einen bestimmten Modulcode anhand der angegebenen Daten
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function modulCodeErstellungAction($id, $studiengangid)
+    public function modulCodeErstellungAction($studiengangID, $veranstaltungID)
     {
         $em = $this->getDoctrine()->getManager();
-        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('veranstaltung' => $id, 'studiengang' => $studiengangid));
-        $modul = $angebot->getVeranstaltung();
-        $studiengang = $angebot->getStudiengang();
-        $form = $this->createForm(new Form\CodeType(), $angebot);
 
-        $request = $this->get('request');
-        $form->handleRequest($request);
-        //Speichert den neuen Modulcode in der Angebotstabelle
-        if ($request->getMethod() == 'POST') {
-            if ($form->isValid()) {
-                $angebot->setCode($form->get('code')->getData());
-                $em->persist($angebot);
-                $em->flush();
+        $angebot = $em->getRepository('FHBingenMHBBundle:Angebot')->findOneBy(array('studiengang' => $studiengangID, 'veranstaltung' => $veranstaltungID));
 
-                $this->get('session')->getFlashBag()->add('info', 'Der Code wurde erfolgreich bearbeitet.');
+        if (!is_null($angebot)) {
+            $modulcodezuweisung = $em->getRepository('FHBingenMHBBundle:Modulcodezuweisung')->findOneBy(array(
+                'studiengang' => $angebot->getStudiengang(),
+                'fachgebiet' => $angebot->getFachgebiet(),
+                'veranstaltung' => $angebot->getVeranstaltung(),
+            ));
 
-                return $this->redirect($this->generateUrl('modulCodeUebersicht'));
+            if (is_null($modulcodezuweisung)) {
+                $modulcodezuweisung = new Entity\Modulcodezuweisung();
+                $modulcodezuweisung->setStudiengang($angebot->getStudiengang());
+                $modulcodezuweisung->setFachgebiet($angebot->getFachgebiet());
+                $modulcodezuweisung->setVeranstaltung($angebot->getVeranstaltung());
             }
 
+            $form = $this->createForm(new Form\CodeType(), $modulcodezuweisung);
+
+            $request = $this->get('request');
+            $form->handleRequest($request);
+            //Speichert den neuen Modulcode in der Angebotstabelle
+            if ($request->getMethod() == 'POST') {
+                if ($form->isValid()) {
+                    $em->persist($modulcodezuweisung);
+                    $em->flush();
+
+                    $this->get('session')->getFlashBag()->add('info', 'Der Code wurde erfolgreich bearbeitet.');
+
+                    return $this->redirect($this->generateUrl('modulCodeUebersicht'));
+                }
+
+            }
+
+            return array('form' => $form->createView(), 'angebot' => $angebot, 'pageTitle' => 'Modulcodeerstellung');
+        } else {
+            return new Response('Fehler: Es wurde kein Angebot-Entity mit dem Studiengang ' . $studiengangID . ' und der Veranstaltung ' . $veranstaltungID . ' gefunden.');
         }
 
-        return array('form' => $form->createView(), 'modul' => $modul, 'studiengang' => $studiengang, 'pageTitle' => 'Modulcodeerstellung');
+
     }
 
 

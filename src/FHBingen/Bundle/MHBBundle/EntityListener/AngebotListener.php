@@ -13,6 +13,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
+use FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung;
 
 /**
  * Class AngebotListener
@@ -75,7 +76,6 @@ class AngebotListener
         //$entity = $args->getObject();
         $em = $args->getObjectManager();
 
-        //$em = $this->getDoctrine()->getManager();
         $isLastAngebot = false;
         if ($angebot->getVeranstaltung()->getAngebot()->count() == 1) {
             $isLastAngebot = true;
@@ -91,15 +91,6 @@ class AngebotListener
         file_put_contents('angebot.log', $logString . PHP_EOL, FILE_APPEND);
         */
         //
-
-        //Studienplan-Entities
-/*        $studienplaene = $em->getRepository('FHBingenMHBBundle:Studienplan')->findBy(array(
-            'veranstaltung' => $angebot->getVeranstaltung()->getModulID(),
-            'studiengang' => $angebot->getStudiengang()->getStudiengangID()
-        ));
-        foreach ($studienplaene as $studienplan) {
-            $em->remove($studienplan);
-        }*/
 
         //Kernfach-Entities
         $vertiefungsrichtungen = $angebot->getStudiengang()->getRichtung();

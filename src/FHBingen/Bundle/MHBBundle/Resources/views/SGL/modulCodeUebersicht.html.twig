@@ -26,8 +26,11 @@
                 {% for angebotOhneCode in angeboteOhneCode %}
                     <tr>
                         <td>
-                            <a href="{{ path('modulCodeErstellung', {'id': angebotOhneCode.getVeranstaltung().getModulID(),
-                                'studiengangid': angebotOhneCode.getStudiengang().getStudiengangID()}) }}">{{ angebotOhneCode.getVeranstaltung() }}</a>
+                            <a href="{{ path('modulCodeErstellung', {
+                                'studiengangID':   angebotOhneCode.getStudiengang().getStudiengangID(),
+                                'veranstaltungID': angebotOhneCode.getVeranstaltung().getModulID(),
+                                }) }}
+                            ">{{ angebotOhneCode.getVeranstaltung() }}</a>
                         </td>
                         {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
                         <td>{{ angebotOhneCode.getVeranstaltung().getErstellungsdatum()|date('d.m.Y') }}</td>
@@ -53,8 +56,12 @@
             <tbody>
             {% for angebotMitCode in angeboteMitCode %}
                 <tr>
-                    <td><a href="{{ path('modulCodeErstellung', {'id': angebotMitCode.getVeranstaltung().getModulID(),
-                            'studiengangid': angebotMitCode.getStudiengang().getStudiengangID()}) }}">{{ angebotMitCode.getVeranstaltung() }}</a>
+                    <td>
+                        <a href="{{ path('modulCodeErstellung', {
+                            'studiengangID':   angebotMitCode.getStudiengang().getStudiengangID(),
+                            'veranstaltungID': angebotMitCode.getVeranstaltung().getModulID(),
+                            }) }}
+                        ">{{ angebotMitCode.getVeranstaltung() }}</a>
                     </td>
                     <td>{{ angebotMitCode.getCode() }}</td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}

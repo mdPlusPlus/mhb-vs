@@ -89,12 +89,12 @@ class Veranstaltung extends VeranstaltungSuperClass
     protected $Status;
 
     /**
-     * @ORM\OneToMany(targetEntity="Angebot", mappedBy="veranstaltung", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Angebot", mappedBy="veranstaltung")
      */
     protected $angebot;
 
     /**
-     * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="veranstaltung", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Lehrende", mappedBy="veranstaltung")
      */
     protected $lehrende;
 
@@ -105,17 +105,17 @@ class Veranstaltung extends VeranstaltungSuperClass
     protected $beauftragter;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="veranstaltung", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="veranstaltung")
      */
     protected $kernfach;
 
     /**
-     * @ORM\OneToMany(targetEntity="Modulvoraussetzung", mappedBy="modul", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Modulvoraussetzung", mappedBy="modul")
      */
     private $grundmodul;
 
     /**
-     * @ORM\OneToMany(targetEntity="Modulvoraussetzung", mappedBy="voraussetzung", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Modulvoraussetzung", mappedBy="voraussetzung")
      */
     private $forderung;
 

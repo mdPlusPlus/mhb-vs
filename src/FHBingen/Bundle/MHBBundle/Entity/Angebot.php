@@ -8,9 +8,15 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManagerAware;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Validator\Constraints as Assert;
+
+// * @UniqueEntity(fields="Code",               ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem Code.")
 
 /**
  * Class Angebot
@@ -18,13 +24,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\EntityListeners({"FHBingen\Bundle\MHBBundle\EntityListener\AngebotListener"})
- * @UniqueEntity(fields="Code",               ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem Code.")
+
  * @UniqueEntity(fields="AbweichenderNameDE", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen deutschen Titel.")
  * @UniqueEntity(fields="AbweichenderNameEN", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen englischen Titel.")
  * @ORM\Table(name="Angebot")
  * @ORM\HasLifecycleCallbacks
  */
-class Angebot
+class Angebot implements ObjectManagerAware
 {
     /**
      * @return string
@@ -76,20 +82,20 @@ class Angebot
      */
     protected	$Angebotsart;
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true, unique=true)
-     * @Assert\Length(
-     *      min = 8,
-     *      minMessage = "Der Modulcode muss mindestens {{ limit }} Zeichen lang sein.",
-     *      max = 9,
-     *      maxMessage = "Der Modulcode darf maximal {{ limit }} Zeichen lang sein."
-     * )
-     * @Assert\Regex(
-     *     pattern = "/[BM]\-[A-Z]{2,2}\-[A-Z]{1,2}[0-9]{2,2}/",
-     *     message = "Bitte verwenden Sie folgendes Muster für den Modulcode: z.B. B-IN-MN01, B-IN-V05"
-     * )
-     */
-    protected	$Code;
+//    /**
+//     * @ORM\Column(type="string", length=10, nullable=true, unique=true)
+//     * @Assert\Length(
+//     *      min = 8,
+//     *      minMessage = "Der Modulcode muss mindestens {{ limit }} Zeichen lang sein.",
+//     *      max = 9,
+//     *      maxMessage = "Der Modulcode darf maximal {{ limit }} Zeichen lang sein."
+//     * )
+//     * @Assert\Regex(
+//     *     pattern = "/[BM]\-[A-Z]{2,2}\-[A-Z]{1,2}[0-9]{2,2}/",
+//     *     message = "Bitte verwenden Sie folgendes Muster für den Modulcode: z.B. B-IN-MN01, B-IN-V05"
+//     * )
+//     */
+//    protected	$Code;
 
     // Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
@@ -136,7 +142,20 @@ class Angebot
      */
     protected $RegelsemesterWS;
 
-    //////
+    ////// BEGIN OF IMPORTANT CODE //////
+
+    private $em;
+
+    /**
+     * Wird benötigt um auf den Entity-Manager zugreifen zu können.
+     *
+     * @param ObjectManager $objectManager
+     * @param ClassMetadata $classMetadata
+     */
+    public function injectObjectManager(ObjectManager $objectManager, ClassMetadata $classMetadata)
+    {
+        $this->em = $objectManager;
+    }
 
     /**
      * Get Code
@@ -164,7 +183,45 @@ class Angebot
         return null;
     }
 
-    //////
+    /**
+     * Set Code
+     *
+     * @param string $code
+     *
+     * @return Angebot
+     */
+    public function setCode($code)
+    {
+        //DON'T REMOVE THIS FUNCTION!
+        $zuweisungen = $this->getVeranstaltung()->getModulcodezuweisung();
+        $found = false;
+        foreach ($zuweisungen as $zuweisung) {
+            if (
+                ($zuweisung->getStudiengang()   == $this->getStudiengang()) &&
+                ($zuweisung->getFachgebiet()    == $this->getFachgebiet()) &&
+                ($zuweisung->getVeranstaltung() == $this->getVeranstaltung())
+            ) {
+                $zuweisung->setCode($code);
+                $found = true;
+            }
+        }
+
+        //wenn nicht gefunden, dann...
+        if (!$found) {
+            $neueZuweisung = new Modulcodezuweisung();
+            $neueZuweisung->setStudiengang($this->getStudiengang());
+            $neueZuweisung->setFachgebiet($this->getFachgebiet());
+            $neueZuweisung->setVeranstaltung($this->getVeranstaltung());
+            $neueZuweisung->setCode($code);
+
+            //$this->em->persist($neueZuweisung);
+            //$this->em->flush(); //notwendig?
+        }
+
+        return $this;
+    }
+
+    ////// END OF IMPORTANT CODE //////
 
     /**
      * Get Angebots_ID
@@ -199,22 +256,6 @@ class Angebot
     {
         return $this->Angebotsart;
     }
-
-    /**
-     * Set Code
-     *
-     * @param string $code
-     *
-     * @return Angebot
-     */
-    public function setCode($code)
-    {
-        $this->Code = $code;
-
-        return $this;
-    }
-
-
 
     /**
      * Set AbweichenderNameDE

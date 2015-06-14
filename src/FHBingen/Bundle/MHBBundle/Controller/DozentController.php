@@ -592,14 +592,15 @@ class DozentController extends Controller
                     }
                 }
 
-                $angebot->setCode(null);
-                //$angebot->setCode($this->returnCodeForAngebot($angebot));
+
                 $angebot->setVeranstaltung($modul);
                 $angebot->setStudiengang($studiengang);
                 $angebot->setAngebotsart($angebotsart);
                 $angebot->setAbweichenderNameDE($form->get('abweichenderNameDE')->getData());
                 $angebot->setAbweichenderNameEN($form->get('abweichenderNameEN')->getData());
                 $angebot->setFachgebiet($form->get('fachgebiet')->getData());
+                //$angebot->setCode(null); //ACHTUNG: Darf erst nach setVeranstaltung() aufgerufen werden!
+                //$angebot->setCode($this->returnCodeForAngebot($angebot));
 
                 //falls es sich um ein Wahlpflichtfach handelt und es Kernfächer gibt
                 if ($isWahl) {
@@ -727,7 +728,7 @@ class DozentController extends Controller
         //hat Angebot bereits Code?
         if (!is_null($angebot->getCode())) {
             //ja
-            return $angebot->getCode();
+            return $angebot->getCode(); //TODO: hier wird der ggf. der overwrite zurückgegeben
         } else {
             //nein
 
@@ -757,14 +758,14 @@ class DozentController extends Controller
                 }
             }
 
-            $pattern = "'" . $codeToLookFor . "%'";
+            $pattern = "'" . $codeToLookFor . "%'"; // z.B.: 'B-IN%'
 
             $qb = new QueryBuilder($em);
 
-            $bisherigeCodes = $qb   ->select('a.Code')
-                                    ->from('FHBingenMHBBundle:Angebot', 'a')
-                                    ->where($qb->expr()->like('a.Code', $pattern))
-                                    ->orderBy('a.Code', 'DESC')
+            $bisherigeCodes = $qb   ->select('mcz.Code')
+                                    ->from('FHBingenMHBBundle:Modulcodezuweisung', 'mcz')
+                                    ->where($qb->expr()->like('mcz.Code', $pattern))
+                                    ->orderBy('mcz.Code', 'DESC')
                                     ->getQuery()
                                     ->getResult();
 
