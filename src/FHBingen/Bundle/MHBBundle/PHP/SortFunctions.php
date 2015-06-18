@@ -12,6 +12,7 @@ namespace FHBingen\Bundle\MHBBundle\PHP;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Semester;
+use FHBingen\Bundle\MHBBundle\Entity\Semesterplan;
 use FHBingen\Bundle\MHBBundle\Entity\Studienplan;
 use FHBingen\Bundle\MHBBundle\Entity\Veranstaltung;
 
@@ -154,5 +155,20 @@ class SortFunctions
         }
 
         return ($jahrA < $jahrB) ? -1 : 1;
+    }
+
+    /**
+     * @param Semesterplan $spA
+     * @param Semesterplan $spB
+     *
+     * @return int
+     */
+    public static function semesterplanSort(Semesterplan $spA, Semesterplan $spB)
+    {
+        if ($spA->getAngebot()->__toString() == $spB->getAngebot()->__toString()) {
+            return 0;
+        }
+
+        return ($spA->getAngebot()->__toString() < $spB->getAngebot()->__toString()) ? -1 : 1;
     }
 }

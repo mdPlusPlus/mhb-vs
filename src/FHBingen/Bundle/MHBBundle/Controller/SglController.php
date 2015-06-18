@@ -764,13 +764,15 @@ class SglController extends Controller
 
         $form = $this->createForm(new Form\SemesterplanListeType(), $semester);
 
-        //Filterung nach Studiengängen (eher unschön, aber geht scheinbar nicht anders)
+        //Filterung nach Studiengängen (eher unschön, aber geht scheinbar nicht anders) und Sortierung
         $semesterplanliste = $form->get('semesterplan')->getData();
         foreach ($semesterplanliste as $sp) {
             if ($sp->getAngebot()->getStudiengang() != $studiengang) {
                 $semesterplanliste->removeElement($sp);
             }
         }
+        $semesterplanliste = $semesterplanliste->toArray();
+        uasort($semesterplanliste, array('FHBingen\Bundle\MHBBundle\PHP\SortFunctions', 'semesterplanSort'));
         $form->get('semesterplan')->setData($semesterplanliste);
 
         $request = $this->get('request');
