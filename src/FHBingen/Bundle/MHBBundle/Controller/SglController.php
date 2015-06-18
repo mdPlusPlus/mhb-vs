@@ -730,8 +730,6 @@ class SglController extends Controller
 
         $semester = $em->getRepository('FHBingenMHBBundle:Semester')->findOneBy(array('Semester' => $semesterString));
 
-
-
         foreach ($angebote as $angebot) {
             $semesterplaene = $em->getRepository('FHBingenMHBBundle:Semesterplan')->findOneBy(array('semester' => $semester, 'angebot' => $angebot));
 
@@ -744,17 +742,14 @@ class SglController extends Controller
                 $semesterplan->setGroesseUebungsgruppen($angebot->getVeranstaltung()->getGruppengroesse());
                 $semesterplan->setIstLehrbeauftragter(false);
                 $semesterplan->setSemester($semester);
-                $semesterplan->setSWSUebung($angebot->getVeranstaltung()->getKontaktzeitSonstige());
-                $semesterplan->setSWSVorlesung($angebot->getVeranstaltung()->getKontaktzeitVL());
+                $semesterplan->setSWSUebung($angebot->getVeranstaltung()->getKontaktzeitSonstige() / 15);
+                $semesterplan->setSWSVorlesung($angebot->getVeranstaltung()->getKontaktzeitVL() / 15);
 
                 $semester->addSemesterplan($semesterplan);
                 $em->persist($semesterplan);
                 $em->flush();
             }
         }
-
-
-
 
         $form = $this->createForm(new Form\SemesterplanListeType(), $semester);
         $request = $this->get('request');
@@ -765,25 +760,18 @@ class SglController extends Controller
                 $semesterplaene = $form->get('semesterplan')->getData();
 
                 foreach ($semesterplaene as $semesterplan) {
-//                    $semesterplan->setAngebot($fo);
-//                    $semesterplan->setAnzahlUebungsgruppen($form->get(''));
-//                    $semesterplan->setDozent($angebot->getVeranstaltung()->getBeauftragter());
-//                    $semesterplan->setFindetStatt(true);
-//                    $semesterplan->setGroesseUebungsgruppen($angebot->getVeranstaltung()->getGruppengroesse());
-//                    $semesterplan->setIstLehrbeauftragter(false);
-//                    $semesterplan->setSemester($semester);
-//                    $semesterplan->setSWSUebung($angebot->getVeranstaltung()->getKontaktzeitSonstige());
-//                    $semesterplan->setSWSVorlesung($angebot->getVeranstaltung()->getKontaktzeitVL());
-
                     $em->persist($semesterplan);
-                    $em->flush();
                 }
+
+                $em->flush();
 
                 $this->get('session')->getFlashBag()->add('info', 'Semesterplan erfolgreich gespeichert.');
 
                 return $this->redirect($this->generateUrl('semesterListe'));
-
             }
+//            else {
+//                return new Response($form->getErrorsAsString());
+//            }
         }
 
         return array('form' => $form->createView(), 'pageTitle' => 'Semesterpläne');

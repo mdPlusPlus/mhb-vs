@@ -32,14 +32,14 @@ class SemesterplanType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('SWSUebung', 'text', array('label' => false, 'required' => true))
-            ->add('SWSVorlesung', 'text', array('label' => false, 'required' => true))
-            ->add('AnzahlUebungsgruppen', 'text', array('label' => false, 'required' => true))
-            ->add('GroesseUebungsgruppen', 'text', array('label' => false, 'required' => true))
-            ->add('istLehrbeauftragter', 'checkbox', array('label' => false, 'required' => true))
-            ->add('findetStatt', 'checkbox', array('label' => false, 'required' => true))
-            ->add('angebot', 'entity', array('label' => false, 'required' => true, 'class' => 'FHBingenMHBBundle:Angebot', 'disabled' => true))
-            ->add('dozent', 'entity', array('label' => false, 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'));
+            ->add('angebot', 'entity', array(              'label' => false, 'required' => true, 'error_bubbling' => true, 'class' => 'FHBingenMHBBundle:Angebot', 'disabled' => true))
+            ->add('findetStatt', 'checkbox', array(        'label' => false, 'required' => true, 'error_bubbling' => true))
+            ->add('dozent', 'entity', array(               'label' => false, 'required' => true, 'error_bubbling' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+            ->add('istLehrbeauftragter', 'checkbox', array('label' => false, 'required' => true, 'error_bubbling' => true))
+            ->add('SWSVorlesung', 'text', array(           'label' => false, 'required' => true, 'error_bubbling' => true))
+            ->add('SWSUebung', 'text', array(              'label' => false, 'required' => true, 'error_bubbling' => true))
+            ->add('AnzahlUebungsgruppen', 'text', array(   'label' => false, 'required' => true, 'error_bubbling' => true))
+            ->add('GroesseUebungsgruppen', 'text', array(  'label' => false, 'required' => true, 'error_bubbling' => true));
     }
 
     /**
@@ -48,7 +48,7 @@ class SemesterplanType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Semesterplan'
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Semesterplan',
         ));
     }
 
