@@ -738,7 +738,17 @@ class SglController extends Controller
                 $semesterplan->setAngebot($angebot);
                 $semesterplan->setAnzahlUebungsgruppen(0);
                 $semesterplan->setDozent($angebot->getVeranstaltung()->getBeauftragter());
-                $semesterplan->setFindetStatt(true);
+
+                if ($angebot->getVeranstaltung()->getHaeufigkeit() == 'Sommersemester' && stristr($semesterString, 'SS') === false) {
+                    //WS-Semesterplan für SS-Veranstaltung
+                    $semesterplan->setFindetStatt(false);
+                } elseif ($angebot->getVeranstaltung()->getHaeufigkeit() == 'Wintersemester' && stristr($semesterString, 'WS') === false) {
+                    //SS-Semesterplan für WS-Veranstaltung
+                    $semesterplan->setFindetStatt(false);
+                } else {
+                    $semesterplan->setFindetStatt(true);
+                }
+
                 $semesterplan->setGroesseUebungsgruppen($angebot->getVeranstaltung()->getGruppengroesse());
                 $semesterplan->setIstLehrbeauftragter(false);
                 $semesterplan->setSemester($semester);

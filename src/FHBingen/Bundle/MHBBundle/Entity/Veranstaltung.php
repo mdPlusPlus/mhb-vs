@@ -120,6 +120,11 @@ class Veranstaltung extends VeranstaltungSuperClass
     private $forderung;
 
     /**
+     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="veranstaltung")
+     */
+    private $modulcodezuweisung;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -463,15 +468,6 @@ class Veranstaltung extends VeranstaltungSuperClass
     {
         return $this->Versionsnummer;
     }
-
-    //////
-
-    /**
-     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="veranstaltung")
-     */
-    private $modulcodezuweisung;
-
-    //////
 
     /**
      * Add modulcodezuweisung
