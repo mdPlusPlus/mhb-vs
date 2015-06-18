@@ -8,7 +8,6 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
 use FHBingen\Bundle\MHBBundle\PHP\ModulBeschreibung;

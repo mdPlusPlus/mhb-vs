@@ -8,22 +8,26 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
-
+/**
+ * Class VerwaltungsController
+ *
+ * @package FHBingen\Bundle\MHBBundle\Controller
+ */
 class VerwaltungsController extends Controller
 {
     /**
+     * Unterscheidet zwischen SGL und Dozent und gibt diese jeweils sortiert in einem Array zurück
+     *
+     * @return array
+     *
      * @Route("/restricted/sgl/showUsers", name="benutzerVerwaltung")
      * @Template("FHBingenMHBBundle:Verwaltung:benutzerVerwaltung.html.twig")
-     *
-     * Unterscheidet zwischen SGL und Dozent und gibt diese jeweils sortiert in einem Array zurück
      */
     public function SglShowUsersAction()
     {
@@ -53,10 +57,12 @@ class VerwaltungsController extends Controller
     }
 
     /**
-     * @Route("/restricted/sgl/passwordReset", name="passwdReset")
+     * Setzt das Passwort bei Dozenten auf "Autor"
+     * Setzt das Passwort bei SQL auf "Editor"
      *
-     * setzt das Passwort bei Dozenten auf "Autor"
-     * setzt das Passwort bei SQL auf "Editor"
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/restricted/sgl/passwordReset", name="passwdReset")
      */
     public function resetAction()
     {
@@ -80,23 +86,27 @@ class VerwaltungsController extends Controller
     }
 
     /**
-     * @Route("/restricted/sgl/createUsers", name="benutzerErstellen")
-     *
      * Legt einen neuen Dozenten mit den eingegebenen Daten an
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/restricted/sgl/createUsers", name="benutzerErstellen")
      */
-
     public function SglCreateUserAction()
     {
         return $this->redirect($this->generateUrl('benutzerBearbeiten', array('userid' => -1)));
     }
 
     /**
+     * Updatet einen bestimmten Dozent anhand der angegebenen Daten
+     *
+     * @param int $userid
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @Route("/restricted/sgl/updateUsers/{userid}", name="benutzerBearbeiten")
      * @Template("FHBingenMHBBundle:Verwaltung:benutzerErstellen.html.twig")
-     *
-     * updatet einen bestimmten Dozent anhand der angegebenen Daten
      */
-
     public function SglUpdateUserAction($userid)
     {
         $em = $this->getDoctrine()->getManager();
@@ -147,12 +157,13 @@ class VerwaltungsController extends Controller
     }
 
     /**
+     * Sucht alle angelegten Studiengänge und gibt diese sortiert aus
+     *
+     * @return array
+     *
      * @Route("/restricted/sgl/showAllCourses", name="studiengangVerwaltung")
      * @Template("FHBingenMHBBundle:Verwaltung:alleStudiengaenge.html.twig")
-     *
-     * Sucht alle angelegten Studiengänge und gibt diese sortiert aus
      */
-
     public function SglShowAllCoursesAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -168,9 +179,11 @@ class VerwaltungsController extends Controller
     }
 
     /**
-     * @Route("/restricted/sgl/createCourse", name="studiengangErstellen")
-     *
      * Legt einen Studiengang anhand der angegebenen Daten an. Dazu gehören auch Fachgebiete und Vertiefungsrichtungen
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/restricted/sgl/createCourse", name="studiengangErstellen")
      */
     public function SglCreateCourseAction()
     {
@@ -178,10 +191,14 @@ class VerwaltungsController extends Controller
     }
 
     /**
+     * Updatet einen Studiengang nach den angegebenen Daten
+     *
+     * @param int $courseID
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @Route("/restricted/sgl/updateCourse/{courseID}", name="studiengangBearbeiten")
      * @Template("FHBingenMHBBundle:Verwaltung:studiengangAnzeigen.html.twig")
-     *
-     * Updatet einen Studiengang nach den angegebenen Daten
      */
     public function SglUpdateCourseAction($courseID)
     {
@@ -198,11 +215,6 @@ class VerwaltungsController extends Controller
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
-                /*
-                 * TODO:
-                 * - überprüfen ob Vertiefungsrichtung oder Fachgebeiet doppelt in Feldern steht
-                 * - vllt sollte man Vertiefungen + Fachgebeiete nicht umbenennen können (oder nur über spezielle Maske)
-                 */
                 $studiengang->setFachbereich($form->get('fachbereich')->getData());     //choice
                 $studiengang->setGrad($form->get('grad')->getData());                   //choice
                 $studiengang->setTitel($form->get('titel')->getData());                 //text
@@ -277,9 +289,13 @@ class VerwaltungsController extends Controller
 
 
     /**
-     * @Route("/restricted/sgl/SglUserDeactivation/{userid}", name="SglUserDeactivation")
-     *
      * Deaktiviert den User
+     *
+     * @param int $userid
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/restricted/sgl/SglUserDeactivation/{userid}", name="SglUserDeactivation")
      */
     public function SglUserDeactivationAction($userid)
     {
@@ -294,9 +310,13 @@ class VerwaltungsController extends Controller
     }
 
     /**
-     * @Route("/restricted/sgl/SglUserActivation/{userid}", name="SglUserActivation")
-     *
      * Aktiviert den User
+     *
+     * @param int $userid
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/restricted/sgl/SglUserActivation/{userid}", name="SglUserActivation")
      */
     public function SglUserActivationAction($userid)
     {

@@ -2,13 +2,10 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
-use FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -61,6 +58,8 @@ class DefaultController extends Controller
 
     /**
      * Initialerstellung von Userrollen
+     *
+     * @return Response
      */
     public function createRolesAction()
     {
@@ -94,39 +93,5 @@ class DefaultController extends Controller
         $em->flush();
 
         return new Response("Rollen angelegt");
-    }
-
-    //[DONE] 0. B-IN-IVxx und B-IN-V zu "Informatik Vertiefung" ändern
-    //[DONE] 1. alte Fachgebiete löschen
-    //[DONE] 2. bleibende Fachgebiete umbenennen
-    //[DONE] 3. Angboterstellung von Wahlpflichtfächern: String-Überprüfen deaktivieren
-    //[DONE] 4. Abfrage einbauen, dass bei Pflichtfächern ein Fachgebiet vergeben werden muss
-    //[DONE] 5. Unterscheidung in MHB neu machen
-    //[DONE] 6. Modulcode-Erstellung: Wenn kein Fachgebiet, dann WP als Code bei Wahlpflicht
-    //TODO: 7. Kürzel für Fachgebiete überprüfen/vervollständigen
-    //TODO: 8. Kürzel für Fachgebiete nullable=false
-    //TODO: 9. automatische Modulcodevergabe
-
-
-
-    public function modulcodeCopyAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $angebote = $em->getRepository('FHBingenMHBBundle:Angebot')->findAll();
-
-        foreach ($angebote as $angebot) {
-            if (!is_null($angebot->getCode())) {
-                $code = new Modulcodezuweisung();
-                $code->setStudiengang($angebot->getStudiengang());
-                $code->setFachgebiet($angebot->getFachgebiet());
-                $code->setVeranstaltung($angebot->getVeranstaltung());
-                $code->setCode($angebot->getCode());
-                $em->persist($code);
-            }
-        }
-
-        $em->flush();
-
-        return new Response('!');
     }
 }
