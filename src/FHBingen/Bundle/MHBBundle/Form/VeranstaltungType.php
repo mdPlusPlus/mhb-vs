@@ -140,6 +140,7 @@ class VeranstaltungType extends AbstractType
         //$lehrende = $input->getLehrende();
         $lehrendeOptions = array('label' => false, 'type' => new LehrendeType(),
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+            'cascade_validation'    => true,    //wichtig für collections!
             'options' => array(
                 'required' => false,
                 'attr' => array(
@@ -149,9 +150,10 @@ class VeranstaltungType extends AbstractType
         );
         $form->add('lehrende', 'collection', $lehrendeOptions); //TODO: 'cascade_validation' testen statt UniqueConstraintViolationException
 
-        //$voraussetzung =$input->getForderung();
+        //$voraussetzung = $input->getForderung();
         $voraussetzungOptions = array('label' => false, 'type' => new VoraussetzungType($this->modulID),
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+            'cascade_validation'    => true,    //wichtig für collections!
             'options' => array(
                 'required' => false,
                 'attr' => array(
@@ -169,7 +171,8 @@ class VeranstaltungType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Veranstaltung'
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Veranstaltung',
+            'cascade_validation'    => true,   //wichtig für embedded forms!
         ));
     }
 

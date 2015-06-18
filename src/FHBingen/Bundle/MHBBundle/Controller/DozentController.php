@@ -8,7 +8,8 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\DBAL\DBALException;
+//use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -489,14 +490,14 @@ class DozentController extends Controller
                     }
 
                 }
-
                 $em->persist($modul);
-
 
                 //TODO: 'cascade_validation' testen statt UniqueConstraintViolationException
                 try {
                     $em->flush();
-                } catch (UniqueConstraintViolationException $e) {
+                //} catch (UniqueConstraintViolationException $e) {
+                //workaround für fehlende Exception: UniqueConstraintViolationException -> DBALException
+                } catch (DBALException $e) {
                     $this->get('session')->getFlashBag()->add('info', 'Bitte nicht zweimal den gleichen Lehrenden bzw. die gleiche Veranstaltung auswählen.');
 
                     return array('form' => $form->createView(), 'pageTitle' => 'Modulbearbeitung', 'einheit' => $einheit);
