@@ -10,7 +10,6 @@ namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class VeranstaltungHistory
@@ -149,7 +148,6 @@ class VeranstaltungHistory extends VeranstaltungSuperClass
     {
         return $this->NameEN;
     }
-
 
     /**
      * Set Versionsnummer

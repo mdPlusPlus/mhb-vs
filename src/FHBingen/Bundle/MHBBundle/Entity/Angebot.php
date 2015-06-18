@@ -8,15 +8,14 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectManagerAware;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 
-// * @UniqueEntity(fields="Code",               ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem Code.")
 
 /**
  * Class Angebot
@@ -24,7 +23,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\EntityListeners({"FHBingen\Bundle\MHBBundle\EntityListener\AngebotListener"})
-
  * @UniqueEntity(fields="AbweichenderNameDE", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen deutschen Titel.")
  * @UniqueEntity(fields="AbweichenderNameEN", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen englischen Titel.")
  * @ORM\Table(name="Angebot")
@@ -142,6 +140,11 @@ class Angebot implements ObjectManagerAware
      */
     protected $RegelsemesterWS;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="angebot", cascade={"all"})
+     */
+    protected $semesterplan;
+
     ////// BEGIN OF IMPORTANT CODE //////
 
     private $em;
@@ -196,7 +199,6 @@ class Angebot implements ObjectManagerAware
     {
         //DON'T REMOVE THIS FUNCTION!
         $zuweisungen = $this->getVeranstaltung()->getModulcodezuweisung();
-        $found = false;
         foreach ($zuweisungen as $zuweisung) {
             if (
                 ($zuweisung->getStudiengang()   == $this->getStudiengang()) &&
@@ -204,27 +206,21 @@ class Angebot implements ObjectManagerAware
                 ($zuweisung->getVeranstaltung() == $this->getVeranstaltung())
             ) {
                 $zuweisung->setCode($code);
-                $found = true;
             }
-        }
-
-        //TODO: remove
-        //wenn nicht gefunden, dann...
-        if (!$found) {
-            $neueZuweisung = new Modulcodezuweisung();
-            $neueZuweisung->setStudiengang($this->getStudiengang());
-            $neueZuweisung->setFachgebiet($this->getFachgebiet());
-            $neueZuweisung->setVeranstaltung($this->getVeranstaltung());
-            $neueZuweisung->setCode($code);
-
-            //$this->em->persist($neueZuweisung);
-            //$this->em->flush(); //notwendig?
         }
 
         return $this;
     }
 
     ////// END OF IMPORTANT CODE //////
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->semesterplan = new ArrayCollection();
+    }
 
     /**
      * Get Angebots_ID
@@ -428,11 +424,6 @@ class Angebot implements ObjectManagerAware
     {
         return $this->RegelsemesterWS;
     }
-
-    /**
-     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="angebot", cascade={"all"})
-     */
-    protected $semesterplan;
 
     /**
      * Add semesterplan

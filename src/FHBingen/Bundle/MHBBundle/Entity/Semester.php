@@ -7,6 +7,7 @@
  */
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -51,6 +52,25 @@ class Semester
     protected $Semester;
 
     /**
+     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="semester", cascade={"all"})
+     * */
+    protected $semesterplan;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gueltigAb")
+     */
+    protected $gueltigAbSemester;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gueltigAbSemester = new ArrayCollection();
+        $this->semesterplan      = new ArrayCollection();
+    }
+
+    /**
      * Set Semester
      *
      * @param string $semester
@@ -72,24 +92,6 @@ class Semester
     public function getSemester()
     {
         return $this->Semester;
-    }
-
-
-    /*Abhaengigkeiten*/
-
-    /*Semesterplan*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="semester", cascade={"all"})
-     * */
-    protected $semesterplan;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->semesterplan = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -125,14 +127,6 @@ class Semester
     {
         return $this->semesterplan;
     }
-
-
-    /*Modulhandbuch/Semester*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gueltigAb")
-     */
-    protected $gueltigAbSemester;
 
     /**
      * Add sem

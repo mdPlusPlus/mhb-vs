@@ -97,6 +97,7 @@ class Modulcodezuweisung
      * Set code
      *
      * @param string $code
+     *
      * @return Modulcodezuweisung
      */
     public function setCode($code)
@@ -120,6 +121,7 @@ class Modulcodezuweisung
      * Set overwrite
      *
      * @param string $overwrite
+     *
      * @return Modulcodezuweisung
      */
     public function setOverwrite($overwrite)
@@ -143,6 +145,7 @@ class Modulcodezuweisung
      * Set studiengang
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     *
      * @return Modulcodezuweisung
      */
     public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
@@ -166,6 +169,7 @@ class Modulcodezuweisung
      * Set fachgebiet
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
+     *
      * @return Modulcodezuweisung
      */
     public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet = null)
@@ -189,6 +193,7 @@ class Modulcodezuweisung
      * Set veranstaltung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung
+     *
      * @return Modulcodezuweisung
      */
     public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung)

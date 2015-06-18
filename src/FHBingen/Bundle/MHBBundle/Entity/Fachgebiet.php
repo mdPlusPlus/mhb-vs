@@ -86,6 +86,11 @@ class Fachgebiet
     protected $studiengang;
 
     /**
+     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="fachgebiet")
+     */
+    private $modulcodezuweisung;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -235,20 +240,11 @@ class Fachgebiet
         return $this->studiengang;
     }
 
-
-    //////
-
-    /**
-     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="fachgebiet")
-     */
-    private $modulcodezuweisung;
-
-    //////
-
     /**
      * Add modulcodezuweisung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     *
      * @return Fachgebiet
      */
     public function addModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)

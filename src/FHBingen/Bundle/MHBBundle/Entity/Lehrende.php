@@ -57,7 +57,7 @@ class Lehrende
     public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul)
     {
         $this->veranstaltung = $modul;
-    
+
         return $this;
     }
 
@@ -81,7 +81,7 @@ class Lehrende
     public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender)
     {
         $this->dozent = $lehrender;
-    
+
         return $this;
     }
 

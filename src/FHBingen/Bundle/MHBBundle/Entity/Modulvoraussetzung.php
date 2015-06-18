@@ -8,7 +8,6 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -48,8 +47,6 @@ class Modulvoraussetzung
      */
     private $voraussetzung;
 
-
-
     /**
      * Set modul
      *
@@ -60,7 +57,7 @@ class Modulvoraussetzung
     public function setModul(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul)
     {
         $this->modul = $modul;
-    
+
         return $this;
     }
 
@@ -84,7 +81,7 @@ class Modulvoraussetzung
     public function setVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $voraussetzung)
     {
         $this->voraussetzung = $voraussetzung;
-    
+
         return $this;
     }
 

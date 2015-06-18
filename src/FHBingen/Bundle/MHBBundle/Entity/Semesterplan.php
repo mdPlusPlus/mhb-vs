@@ -20,8 +20,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Semesterplan
 {
-    //TODO: Entity vollständig überarbeiten
-
     /**
      * @return string
      */
@@ -90,19 +88,11 @@ class Semesterplan
     protected $findetStatt;
 
     /**
-     * Abhaengigkeiten
-     */
-
-    /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Angebot", inversedBy="semesterplan")
      * @ORM\JoinColumn(name="angebot", referencedColumnName="Angebots_ID", nullable=false)
      */
     protected $angebot;
-
-    //vllt statt angebot veranstaltung?
-    //protected $veranstaltung;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="semesterplan")
@@ -128,7 +118,7 @@ class Semesterplan
     public function setSWSUebung($swsUebung)
     {
         $this->SWSUebung = $swsUebung;
-    
+
         return $this;
     }
 
@@ -152,7 +142,7 @@ class Semesterplan
     public function setSWSVorlesung($swsVorlesung)
     {
         $this->SWSVorlesung = $swsVorlesung;
-    
+
         return $this;
     }
 
@@ -176,7 +166,7 @@ class Semesterplan
     public function setAnzahlUebungsgruppen($anzahlUebungsgruppen)
     {
         $this->AnzahlUebungsgruppen = $anzahlUebungsgruppen;
-    
+
         return $this;
     }
 
@@ -200,7 +190,7 @@ class Semesterplan
     public function setGroesseUebungsgruppen($groesseUebungsgruppen)
     {
         $this->GroesseUebungsgruppen = $groesseUebungsgruppen;
-    
+
         return $this;
     }
 
@@ -213,30 +203,6 @@ class Semesterplan
     {
         return $this->GroesseUebungsgruppen;
     }
-
-//    /**
-//     * Set module
-//     *
-//     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
-//     *
-//     * @return Semesterplan
-//     */
-//    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
-//    {
-//        $this->veranstaltung = $module;
-//
-//        return $this;
-//    }
-
-//    /**
-//     * Get module
-//     *
-//     * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung
-//     */
-//    public function getVeranstaltung()
-//    {
-//        return $this->veranstaltung;
-//    }
 
     /**
      * Set lehrender
@@ -291,6 +257,7 @@ class Semesterplan
      * Set istLehrbeauftragter
      *
      * @param boolean $istLehrbeauftragter
+     *
      * @return Semesterplan
      */
     public function setIstLehrbeauftragter($istLehrbeauftragter)
@@ -314,6 +281,7 @@ class Semesterplan
      * Set findetStatt
      *
      * @param boolean $findetStatt
+     *
      * @return Semesterplan
      */
     public function setFindetStatt($findetStatt)
@@ -337,6 +305,7 @@ class Semesterplan
      * Set angebot
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
+     *
      * @return Semesterplan
      */
     public function setAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)

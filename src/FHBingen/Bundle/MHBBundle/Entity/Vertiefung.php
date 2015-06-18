@@ -9,7 +9,6 @@
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -20,7 +19,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="Vertiefung")
  * @ORM\HasLifecycleCallbacks
  */
-
 class Vertiefung
 {
 
@@ -58,6 +56,18 @@ class Vertiefung
     protected $Name;
 
     /**
+     * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="vertiefung", cascade={"all"})
+     */
+    protected   $vertiefung;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="richtung")
+     * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
+     */
+    protected $studiengang;
+
+    /**
      * Get Vertiefungs_ID
      *
      * @return integer 
@@ -77,7 +87,7 @@ class Vertiefung
     public function setName($name)
     {
         $this->Name = $name;
-    
+
         return $this;
     }
 
@@ -90,9 +100,6 @@ class Vertiefung
     {
         return $this->Name;
     }
-
-
-
 
     /**
      * Constructor
@@ -112,7 +119,7 @@ class Vertiefung
     public function addVertiefung(\FHBingen\Bundle\MHBBundle\Entity\Kernfach $vertiefung)
     {
         $this->vertiefung[] = $vertiefung;
-    
+
         return $this;
     }
 
@@ -136,23 +143,6 @@ class Vertiefung
         return $this->vertiefung;
     }
 
-    /*Abhaengigkeiten*/
-
-    /*Kernfach*/
-    /**
-     * @ORM\OneToMany(targetEntity="Kernfach", mappedBy="vertiefung", cascade={"all"})
-     * */
-    protected   $vertiefung;
-
-
-    /*Vertiefungsrichtung/Studiengang*/
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="richtung")
-     * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
-     */
-    protected $studiengang;
-
     /**
      * Set stgang
      *
@@ -163,7 +153,7 @@ class Vertiefung
     public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $stgang = null)
     {
         $this->studiengang = $stgang;
-    
+
         return $this;
     }
 

@@ -10,8 +10,8 @@ namespace FHBingen\Bundle\MHBBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -311,8 +311,6 @@ class Veranstaltung extends VeranstaltungSuperClass
         return $this->beauftragter;
     }
 
-
-
     /**
      * Add kernfach
      *
@@ -473,6 +471,7 @@ class Veranstaltung extends VeranstaltungSuperClass
      * Add modulcodezuweisung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     *
      * @return Veranstaltung
      */
     public function addModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)

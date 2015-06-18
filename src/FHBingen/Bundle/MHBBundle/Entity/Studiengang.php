@@ -127,6 +127,10 @@ class Studiengang
      */
     protected $fachgebiete; //sollte das nicht Singular 'fachgebiet' sein?
 
+    /**
+     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="studiengang")
+     */
+    private $modulcodezuweisung;
 
     /**
      * Constructor
@@ -154,6 +158,7 @@ class Studiengang
      * Set Fachbereich
      *
      * @param integer $fachbereich
+     *
      * @return Studiengang
      */
     public function setFachbereich($fachbereich)
@@ -177,6 +182,7 @@ class Studiengang
      * Set Grad
      *
      * @param string $grad
+     *
      * @return Studiengang
      */
     public function setGrad($grad)
@@ -200,6 +206,7 @@ class Studiengang
      * Set Titel
      *
      * @param string $titel
+     *
      * @return Studiengang
      */
     public function setTitel($titel)
@@ -223,6 +230,7 @@ class Studiengang
      * Set Kuerzel
      *
      * @param string $kuerzel
+     *
      * @return Studiengang
      */
     public function setKuerzel($kuerzel)
@@ -246,6 +254,7 @@ class Studiengang
      * Set Beschreibung
      *
      * @param string $beschreibung
+     *
      * @return Studiengang
      */
     public function setBeschreibung($beschreibung)
@@ -269,6 +278,7 @@ class Studiengang
      * Add angebot
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
+     *
      * @return Studiengang
      */
     public function addAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
@@ -302,6 +312,7 @@ class Studiengang
      * Add richtung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Vertiefung $richtung
+     *
      * @return Studiengang
      */
     public function addRichtung(\FHBingen\Bundle\MHBBundle\Entity\Vertiefung $richtung)
@@ -335,6 +346,7 @@ class Studiengang
      * Set sgl
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $sgl
+     *
      * @return Studiengang
      */
     public function setSgl(\FHBingen\Bundle\MHBBundle\Entity\Dozent $sgl)
@@ -358,6 +370,7 @@ class Studiengang
      * Add modulhandbuch
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $modulhandbuch
+     *
      * @return Studiengang
      */
     public function addModulhandbuch(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $modulhandbuch)
@@ -391,6 +404,7 @@ class Studiengang
      * Add fachgebiete
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiete
+     *
      * @return Studiengang
      */
     public function addFachgebiete(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiete)
@@ -420,19 +434,11 @@ class Studiengang
         return $this->fachgebiete;
     }
 
-    //////
-
-    /**
-     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="studiengang")
-     */
-    private $modulcodezuweisung;
-
-    //////
-
     /**
      * Add modulcodezuweisung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     *
      * @return Studiengang
      */
     public function addModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
