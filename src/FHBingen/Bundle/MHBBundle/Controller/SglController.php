@@ -8,6 +8,7 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FHBingen\Bundle\MHBBundle\Entity;
 use FHBingen\Bundle\MHBBundle\Form;
 use FHBingen\Bundle\MHBBundle\PHP\ModulBeschreibung;
@@ -762,6 +763,16 @@ class SglController extends Controller
         }
 
         $form = $this->createForm(new Form\SemesterplanListeType(), $semester);
+
+        //Filterung nach Studiengängen (eher unschön, aber geht scheinbar nicht anders)
+        $semesterplanliste = $form->get('semesterplan')->getData();
+        foreach ($semesterplanliste as $sp) {
+            if ($sp->getAngebot()->getStudiengang() != $studiengang) {
+                $semesterplanliste->removeElement($sp);
+            }
+        }
+        $form->get('semesterplan')->setData($semesterplanliste);
+
         $request = $this->get('request');
         $form->handleRequest($request);
 
@@ -779,9 +790,6 @@ class SglController extends Controller
 
                 return $this->redirect($this->generateUrl('semesterListe'));
             }
-//            else {
-//                return new Response($form->getErrorsAsString());
-//            }
         }
 
         return array('form' => $form->createView(), 'pageTitle' => 'Semesterpläne');
