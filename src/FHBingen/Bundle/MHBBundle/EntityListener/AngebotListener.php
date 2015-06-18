@@ -48,8 +48,6 @@ class AngebotListener
      */
     public function postPersist(Angebot $angebot, LifecycleEventArgs $args)
     {
-        //file_put_contents('angebot.log', 'postPersist' . PHP_EOL, FILE_APPEND);
-
         $em = $args->getObjectManager();
         $modulcodezuweisung = $em->getRepository('FHBingenMHBBundle:Modulcodezuweisung')->findOneBy(array(
             'studiengang'   => $angebot->getStudiengang(),
@@ -111,17 +109,6 @@ class AngebotListener
             $isLastAngebot = true;
         }
 
-        //logging
-        /*
-        if ($isLastAngebot) {
-            $logString = 'Veranstaltung: "' . $angebot->getVeranstaltung() . '", Studiengang: "' . $angebot->getStudiengang() . '", isLastAngebot: true';
-        } else {
-            $logString = 'Veranstaltung: "' . $angebot->getVeranstaltung() . '", Studiengang: "' . $angebot->getStudiengang() . '", isLastAngebot: false';
-        }
-        file_put_contents('angebot.log', $logString . PHP_EOL, FILE_APPEND);
-        */
-        //
-
         //Kernfach-Entities
         $vertiefungsrichtungen = $angebot->getStudiengang()->getRichtung();
         $kernfaecherOfVeranstaltung = $em->getRepository('FHBingenMHBBundle:Kernfach')->findBy(array('veranstaltung' => $angebot->getVeranstaltung()->getModulID()));
@@ -144,9 +131,6 @@ class AngebotListener
             $angebot->getVeranstaltung()->setStatus('expired');
             $angebot->getVeranstaltung()->setErstellungsdatum(new \DateTime());
         }
-
-        //Angebot-Entity
-        //$em->remove($angebot);
 
         $em->flush();
     }
@@ -174,11 +158,13 @@ class AngebotListener
     /**
      * Gibt den für ein Angebot zu vergebenden Code zurück.
      *
+     * @param EntityManager $em
+     * @param Angebot       $angebot
+     *
+     * @return mixed|string
      */
     private function returnCodeForAngebot(EntityManager $em, Angebot $angebot)
     {
-        //TODO: prüfen!
-
         $isWahlpflichtfach = false;
         if ($angebot->getAngebotsart() == 'Wahlpflichtfach') {
             $isWahlpflichtfach = true;
