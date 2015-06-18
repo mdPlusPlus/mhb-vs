@@ -63,7 +63,10 @@ class AngebotListener
             $neu->setFachgebiet($angebot->getFachgebiet());
             $neu->setVeranstaltung($angebot->getVeranstaltung());
 
-            //TODO
+            $neu->setCode($this->returnCodeForAngebot($em, $angebot));
+
+            $em->persist($neu);
+            $em->flush();
         }
     }
 
@@ -169,17 +172,12 @@ class AngebotListener
     //////
 
     /**
-     * Gibt den für ein Angebot zu vergebenden Code zurück. Existiert bereits ein Code, wird dieser zurückgegeben.
+     * Gibt den für ein Angebot zu vergebenden Code zurück.
      *
      */
     private function returnCodeForAngebot(EntityManager $em, Angebot $angebot)
     {
         //TODO: prüfen!
-        /*
-         * 2. nein -> existiert bereits ein Code für das Fachgebiet des Angebots? | ja -> gib Code zurück
-         * 3. ja -> hole höchsten Code + 1 | nein -> erstelle Code mit 01
-         * 4. gib Code zurück
-         */
 
         $isWahlpflichtfach = false;
         if ($angebot->getAngebotsart() == 'Wahlpflichtfach') {
@@ -194,9 +192,17 @@ class AngebotListener
         $codeToLookFor = $angebot->getStudiengang()->getKuerzel(); //z.B. 'B-IN'
         if ($hasFachgebiet) {
             if (!$isWahlpflichtfach) {
-                $codeToLookFor = $codeToLookFor . '-' . $angebot->getFachgebiet()->getKuerzelP();
+                if (!is_null($angebot->getFachgebiet()->getKuerzelP())) {
+                    $codeToLookFor = $codeToLookFor . '-' . $angebot->getFachgebiet()->getKuerzelP();
+                } else {
+                    $codeToLookFor = $codeToLookFor . '-' . $this::KUERZEL_P_OHNE_FG;
+                }
             } else {
-                $codeToLookFor = $codeToLookFor . '-' . $angebot->getFachgebiet()->getKuerzelWP();
+                if (!is_null($angebot->getFachgebiet()->getKuerzelWP())) {
+                    $codeToLookFor = $codeToLookFor . '-' . $angebot->getFachgebiet()->getKuerzelWP();
+                } else {
+                    $codeToLookFor = $codeToLookFor . '-' . $this::KUERZEL_WP_OHNE_FG;
+                }
             }
         } else {
             if (!$isWahlpflichtfach) {
@@ -211,15 +217,26 @@ class AngebotListener
         $qb = $em->createQueryBuilder();
 
         $bisherigeCodes = $qb
-            ->select('mcz.Code')
+            ->select('mcz.code')
             ->from('FHBingenMHBBundle:Modulcodezuweisung', 'mcz')
-            ->where($qb->expr()->like('mcz.Code', $pattern))
-            ->orderBy('mcz.Code', 'DESC')
+            ->where($qb->expr()->like('mcz.code', $pattern))
+            ->orderBy('mcz.code', 'DESC')
             ->getQuery()
             ->getResult();
 
+        //könnte man nutzen, wenn angebotsart ebenfalls in Modulcodezuweisung enthalten wäre
+        /*
+        $bisherigeCodes = $em->getRepository('FHBingenMHBBundle:Modulcodezuweisung')->findBy(
+            array(
+                'studiengang' => $angebot->getStudiengang(),
+                'fachgebiet'  => $angebot->getFachgebiet(),
+                'angebotsart' => $angebot->getAngebotsart(),
+            ), array('code' => 'DESC')
+        );
+        */
+
         if (!empty($bisherigeCodes)) {
-            $highestCode = $bisherigeCodes[0]['Code'];
+            $highestCode = $bisherigeCodes[0]['code'];
 
             $oldSuffix = substr($highestCode, -2); //z.B. '09'
             $oldInt = intval($oldSuffix); //z.B. 9
@@ -242,15 +259,23 @@ class AngebotListener
             //noch kein Code für diese Kombination aus Fachgebiet und Angebotsart vorhanden
             if ($hasFachgebiet) {
                 if (!$isWahlpflichtfach) {
-                    return $angebot->getStudiengang() . '-' . $angebot->getFachgebiet()->getKuerzelP() . '-01';
+                    if (!is_null($angebot->getFachgebiet()->getKuerzelP())) {
+                        return $angebot->getStudiengang()->getKuerzel() . '-' . $angebot->getFachgebiet()->getKuerzelP() . '01';
+                    } else {
+                        return $angebot->getStudiengang()->getKuerzel() . '-' . $this::KUERZEL_P_OHNE_FG . '01';
+                    }
                 } else {
-                    return $angebot->getStudiengang() . '-' . $angebot->getFachgebiet()->getKuerzelWP() . '-01';
+                    if (!is_null($angebot->getFachgebiet()->getKuerzelWP())) {
+                        return $angebot->getStudiengang()->getKuerzel() . '-' . $angebot->getFachgebiet()->getKuerzelWP() . '01';
+                    } else {
+                        return $angebot->getStudiengang()->getKuerzel() . '-' . $this::KUERZEL_WP_OHNE_FG . '01';
+                    }
                 }
             } else {
                 if (!$isWahlpflichtfach) {
-                    return $angebot->getStudiengang() . '-' . $this::KUERZEL_P_OHNE_FG . '-01';
+                    return $angebot->getStudiengang()->getKuerzel() . '-' . $this::KUERZEL_P_OHNE_FG . '01';
                 } else {
-                    return $angebot->getStudiengang() . '-' . $this::KUERZEL_WP_OHNE_FG . '-01';
+                    return $angebot->getStudiengang()->getKuerzel() . '-' . $this::KUERZEL_WP_OHNE_FG . '01';
                 }
             }
         }
