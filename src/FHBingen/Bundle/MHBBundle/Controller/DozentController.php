@@ -138,6 +138,7 @@ class DozentController extends Controller
 
     /**
      * @param int $id
+     * @param int $version
      *
      * @Route("/restricted/dozent/alteVersionAnzeigen/{id}/{version}", name="alteVersionAnzeigen")
      * @Template("FHBingenMHBBundle:Dozent:alteVersionAnzeigen.html.twig")
@@ -293,7 +294,8 @@ class DozentController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int    $id
+     * @param string $modus
      *
      * @Route("/restricted/dozent/modulBearbeiten/{id}/{modus}", defaults={"modus" = "bearbeiten"}, name="modulBearbeiten")
      * @Template("FHBingenMHBBundle:Dozent:modulBearbeiten.html.twig")

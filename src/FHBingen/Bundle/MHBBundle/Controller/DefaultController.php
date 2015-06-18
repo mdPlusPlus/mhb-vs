@@ -2,6 +2,7 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
+use FHBingen\Bundle\MHBBundle\Entity\Role;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
