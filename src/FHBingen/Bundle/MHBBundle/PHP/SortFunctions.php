@@ -13,7 +13,6 @@ use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 use FHBingen\Bundle\MHBBundle\Entity\Dozent;
 use FHBingen\Bundle\MHBBundle\Entity\Semester;
 use FHBingen\Bundle\MHBBundle\Entity\Semesterplan;
-use FHBingen\Bundle\MHBBundle\Entity\Studienplan;
 use FHBingen\Bundle\MHBBundle\Entity\Veranstaltung;
 
 /**

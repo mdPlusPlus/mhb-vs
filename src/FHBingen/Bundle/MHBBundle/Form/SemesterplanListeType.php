@@ -8,16 +8,10 @@
 
 namespace FHBingen\Bundle\MHBBundle\Form;
 
-use FHBingen\Bundle\MHBBundle\Entity\Studiengang;
-use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
-
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\ORM\Query\Expr;
 
 
 /**

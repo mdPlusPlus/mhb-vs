@@ -9,7 +9,6 @@
 namespace FHBingen\Bundle\MHBBundle\Form;
 
 use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;

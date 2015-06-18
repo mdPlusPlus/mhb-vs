@@ -7,13 +7,10 @@
  */
 namespace FHBingen\Bundle\MHBBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
 /**
  * Class VorAngebotType
