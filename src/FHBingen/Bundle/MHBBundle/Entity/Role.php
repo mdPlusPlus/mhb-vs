@@ -14,12 +14,19 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * Class Role
+ *
+ * @package FHBingen\Bundle\MHBBundle\Entity
+ *
  * @ORM\Table(name="Roles")
  * @ORM\Entity()
  */
 class Role implements RoleInterface
 {
 
+    /**
+     * @return null|string
+     */
     public function __toString()
     {
 //TODO: Nach Abnahme de-kommentieren und testen!
@@ -60,6 +67,9 @@ class Role implements RoleInterface
      */
     private $users;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -94,7 +104,7 @@ class Role implements RoleInterface
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -118,7 +128,7 @@ class Role implements RoleInterface
     public function setRole($role)
     {
         $this->role = $role;
-    
+
         return $this;
     }
 
@@ -132,7 +142,7 @@ class Role implements RoleInterface
     public function addUser(UserInterface $users)
     {
         $this->users[] = $users;
-    
+
         return $this;
     }
 

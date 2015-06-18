@@ -695,12 +695,13 @@ class VeranstaltungSuperClass
     }
 
     /**
-     * @param $form
+     * @param string $lehrform
+     *
      * @return $this
      */
-    public function setLehrform($form)
+    public function setLehrform($lehrform)
     {
-        $this->Lehrform = $form;
+        $this->Lehrform = $lehrform;
 
         return $this;
     }

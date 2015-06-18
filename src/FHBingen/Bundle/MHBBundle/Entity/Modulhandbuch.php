@@ -72,6 +72,18 @@ class Modulhandbuch
     protected $Beschreibung;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="gueltigAbSemester")
+     * @ORM\JoinColumn(name="gueltigAb", referencedColumnName="Semester", nullable=false)
+     */
+    protected $gueltigAb;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="modulhandbuch")
+     * @ORM\JoinColumn(name="gehoertZu", referencedColumnName="Studiengang_ID", nullable=false)
+     */
+    protected $gehoertZu;
+
+    /**
      * Get MHB_ID
      *
      * @return integer 
@@ -91,7 +103,7 @@ class Modulhandbuch
     public function setVersionsnummer($mhbVersionsnummer)
     {
         $this->Versionsnummer = $mhbVersionsnummer;
-    
+
         return $this;
     }
 
@@ -115,7 +127,7 @@ class Modulhandbuch
     public function setErstellungsdatum($erstellungsdatum)
     {
         $this->Erstellungsdatum = $erstellungsdatum;
-    
+
         return $this;
     }
 
@@ -133,12 +145,13 @@ class Modulhandbuch
      * Set Beschreibung
      *
      * @param string $beschreibung
+     *
      * @return Modulhandbuch
      */
     public function setBeschreibung($beschreibung)
     {
         $this->Beschreibung = $beschreibung;
-    
+
         return $this;
     }
 
@@ -152,26 +165,6 @@ class Modulhandbuch
         return $this->Beschreibung;
     }
 
-    /*Abhaengigkeiten*/
-
-    /*Angebot*/
-
-    /*Modulhandbuch/Semester*/
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="gueltigAbSemester")
-     * @ORM\JoinColumn(name="gueltigAb", referencedColumnName="Semester", nullable=false)
-     */
-    protected $gueltigAb;
-
-    /*Modulhandbuch/Studiengang*/
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="modulhandbuch")
-     * @ORM\JoinColumn(name="gehoertZu", referencedColumnName="Studiengang_ID", nullable=false)
-     */
-    protected $gehoertZu;
-
     /**
      * Set gueltig_ab
      *
@@ -182,7 +175,7 @@ class Modulhandbuch
     public function setGueltigAb(\FHBingen\Bundle\MHBBundle\Entity\Semester $gueltigAb)
     {
         $this->gueltigAb = $gueltigAb;
-    
+
         return $this;
     }
 
@@ -206,7 +199,7 @@ class Modulhandbuch
     public function setGehoertZu(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $gehoertZu)
     {
         $this->gehoertZu = $gehoertZu;
-    
+
         return $this;
     }
 
@@ -220,11 +213,19 @@ class Modulhandbuch
         return $this->gehoertZu;
     }
 
+    /**
+     * @return mixed
+     */
     public function getAutor()
     {
      return $this->Autor;
     }
 
+    /**
+     * @param string $autor
+     *
+     * @return $this
+     */
     public function setAutor($autor)
     {
         $this->Autor = $autor;
