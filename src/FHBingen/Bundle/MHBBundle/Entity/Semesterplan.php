@@ -57,9 +57,7 @@ class Semesterplan
      * @ORM\Column(type="integer")
      * @Assert\Range(
      *      min = 0,
-     *      max = 5,
      *      minMessage = "Ein Modul braucht mindestens {{ limit }} Übungsgruppen",
-     *      maxMessage = "Ein Modul darf nicht mehr als {{ limit }} Übungsgruppen haben"
      * )
      */
     protected $AnzahlUebungsgruppen;
@@ -68,11 +66,8 @@ class Semesterplan
      * @ORM\Column(type="integer")
      * @Assert\Range(
      *      min = 0,
-     *      max = 30,
      *      minMessage = "Eine Übungsgruppe muss aus mindestens {{ limit }} Studenten bestehen",
-     *      maxMessage = "Eine Übungsgruppe darf aus nicht mehr als {{ limit }} Studenten bestehen"
      * )
-     * TODO: Welche Übungsgruppengröße sinnvoll?
      */
     protected $GroesseUebungsgruppen;
 
