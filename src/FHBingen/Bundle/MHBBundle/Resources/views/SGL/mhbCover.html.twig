@@ -41,6 +41,12 @@
             height: 100%;
             vertical-align: middle;
         }
+
+        img#fh-logo {
+            vertical-align: middle;
+            max-width: 80%;
+        }
+
     </style>
 </head>
 <body>
@@ -55,7 +61,7 @@
     <div id="middleDiv">
         <span class="helper"></span>
         {# funktioniert nur auf VM, nicht lokal #}
-        <img src="{{ asset('bundles/fhbingenmhb/images/fh.jpg', absolute=true) }}" alt="FH Logo" width="80%"/>
+        <img id="fh-logo" src="{{ asset('bundles/fhbingenmhb/images/fh.jpg', absolute=true) }}" alt="FH Logo"/>
     </div>
 
     <div id="bottomDiv">
