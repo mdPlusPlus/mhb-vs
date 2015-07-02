@@ -9,25 +9,37 @@
         }
 
         #coverDiv {
-            display:table;
             text-align: center;
         }
 
         #topDiv, #middleDiv, #bottomDiv {
-            display:table-row;
-            vertical-align:middle;
+            position:absolute;
+            left:50%;
+            margin-left:-50%;
+            width:100%;
         }
 
-        #topDiv, #bottomDiv {
-            height: 20%;
+        #topDiv {
+            top:5%;
+            height:20%;
         }
-
         #middleDiv {
-            height: 60%;
+            top:20%;
+            height:50%;
+        }
+        #bottomDiv {
+            top:75%;
+            height:25%;
         }
 
         span#fachbereich {
             font-weight: bold;
+        }
+
+        .helper {
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
         }
     </style>
 </head>
@@ -41,6 +53,7 @@
     </div>
 
     <div id="middleDiv">
+        <span class="helper"></span>
         {# funktioniert nur auf VM, nicht lokal #}
         <img src="{{ asset('bundles/fhbingenmhb/images/fh.jpg', absolute=true) }}" alt="FH Logo" width="80%"/>
     </div>
