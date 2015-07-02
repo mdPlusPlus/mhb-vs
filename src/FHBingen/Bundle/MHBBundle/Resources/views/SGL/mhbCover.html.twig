@@ -4,49 +4,69 @@
     <title>Deckblatt des Modulhandbuchs für den Studiengang {{ studiengang }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style type="text/css">
-        #centerDiv {
-            text-align: center;
-            padding-top: 100px;
+        html, body, #coverDiv {
+            height: 100%;
         }
-        p#fachbereich {
+
+        #coverDiv {
+            text-align: center;
+        }
+
+        #topDiv, #middleDiv, #bottomDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #topDiv, #bottomDiv {
+            height: 20%;
+        }
+
+        #middleDiv {
+            height: 60%;
+        }
+
+        span#fachbereich {
             font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div id="centerDiv">
+<div id="coverDiv">
+    <div id="topDiv">
         <h1>
-            Modulhandbuch<br />
+            Modulhandbuch<br/>
             {{ studiengang }} ({{ studiengang.kuerzel }})
         </h1>
+    </div>
 
-        <br />
-
+    <div id="middleDiv">
         {# funktioniert nur auf VM, nicht lokal #}
-        {# <img src="{{ asset('bundles/fhbingenmhb/images/fh_alt.png', absolute=true) }}" alt="FH Logo" width="450px" height="450px"/> #}
-        <img src="{{ asset('bundles/fhbingenmhb/images/fh.jpg', absolute=true) }}" alt="FH Logo" width="900px" height="400px"/>
+        <img src="{{ asset('bundles/fhbingenmhb/images/fh.jpg', absolute=true) }}" alt="FH Logo" width="80%"/>
+    </div>
 
-        <p id="fachbereich">
+    <div id="bottomDiv">
+        <p>
+        <span id="fachbereich">
             {% if studiengang.fachbereich == 1 %}
                 Fachbereich 1 - Life Sciences and Engineering
             {% endif %}
             {% if studiengang.fachbereich == 2 %}
                 Fachbereich 2 - Technik, Informatik und Wirtschaft
             {% endif %}
-        </p>
+        </span>
+            <br/>
 
-        <br />
+            {{ mhb.beschreibung }} <br/>
 
-        <p>
-            {{ mhb.beschreibung }} <br />
+            <br/>
+            <br/>
 
-            <br />
-            <br />
-
-            Studiengangleiter: {{ studiengang.sgl }}<br />
-            Erstellt am {{ datum }}<br />
+            Studiengangleiter: {{ studiengang.sgl }}<br/>
+            Erstellt am {{ datum }}<br/>
             Gültig ab {{ mhb.gueltigAb }}
         </p>
     </div>
+</div>
 </body>
 </html>
