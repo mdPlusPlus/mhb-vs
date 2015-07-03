@@ -1,0 +1,51 @@
+{% extends 'FHBingenMHBBundle::layout.html.twig' %}
+
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            <!-- navbar highlighting -->
+            highlightMe(document.getElementById('semesterplanungLink'));
+        });
+    </script>
+
+    <div class="table-responsive">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <table id="semesterplan" class="table table-bordered tablesorter">
+
+            <thead>
+            <tr>
+                <th style="width:25%">Modul</th>
+                <th style="min-width: 80px; width: 5%">Findet statt?</th>
+                <th style="min-width: 110px; width: 15%">Dozent</th>
+                <th style="min-width: 80px; width: 5%">Lehrbeauftragter</th>
+                <th style="min-width: 70px; width: 10%">SWS Vorlesung</th>
+                <th style="min-width: 70px; width: 10%">SWS Übung</th>
+                <th style="min-width: 100px; width: 15%">Anzahl Übungsgruppen</th>
+                <th style="min-width: 100px; width: 15%">Grösse einer Übungsgruppe</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for semesterplan in form.semesterplan %}
+                <tr>
+                    <td>{{ form_widget(semesterplan.angebot) }}</td>
+                    <td style="text-align: center">{{ form_widget(semesterplan.findetStatt) }}</td>
+                    <td>{{ form_widget(semesterplan.dozent) }}</td>
+                    <td style="text-align: center">{{ form_widget(semesterplan.istLehrbeauftragter) }}</td>
+                    <td>{{ form_widget(semesterplan.SWSVorlesung) }}</td>
+                    <td>{{ form_widget(semesterplan.SWSUebung) }}</td>
+                    <td>{{ form_widget(semesterplan.AnzahlUebungsgruppen) }}</td>
+                    <td>{{ form_widget(semesterplan.GroesseUebungsgruppen) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+        {% include '@FHBingenMHB/buttons.html.twig' %}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

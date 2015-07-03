@@ -18,15 +18,15 @@
         });
     </script>
 
-    <h3>Modul aus {{ studiengang }} bearbeiten</h3>
+    {# TODO: Hinweis darauf ausgeben, dass hier nur der "Overwrite" festgelegt wird. #}
+
+    <h4>{{ 'Veranstaltung "' ~ angebot.getVeranstaltung() ~ '" aus ' ~ angebot.getStudiengang() ~ ' bearbeiten'}}</h4>
     <div class="table-responsive">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <table class="table table-bordered">
             {{ form_errors(form) }}
-            {% if modul != NULL %}
-            {{ modul.getName() }}
-            {% endif %}
-            {{ form_row(form.code) }}
+            {# {{ form(form.code) }} #}
+            {{ form_row(form.overwrite) }}
         </table>
 
         {% include '@FHBingenMHB/buttons.html.twig' %}

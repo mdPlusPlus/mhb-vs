@@ -108,11 +108,14 @@
                 {% include 'FHBingenMHBBundle:Prototypes:listItem.html.twig' with { 'items' : form.richtung.vars.prototype } %}
             {% endfilter %}">
 
-            {% for vertiefungField in form.richtung %}
+            {% for vertiefung in form.richtung %}
                 <li>
-                    {{ form_errors(vertiefungField) }}
-                    {{ form_widget(vertiefungField) }}
+                    {{ form_errors(vertiefung) }}
+                    {{ form_widget(vertiefung) }}
                     <a href="#" onclick="jQuery(this).parent().remove()">Vertiefungsrichtung entfernen</a>
+                    {% for x in vertiefung %}
+                        {{ form_errors(x) }}
+                    {% endfor %}
                 </li>
             {% endfor %}
         </ul>
@@ -125,10 +128,13 @@
             {% endfilter %}">
 
             {% for fachgebiet in form.fachgebiete %}
+                {# TODO: Bei 1280x1024 gibt es einen Zeilenumbruch #}
                 <li>
-                    {{ form_errors(fachgebiet) }}
                     {{ form_widget(fachgebiet) }}
                     <a href="#" onclick="jQuery(this).parent().remove()">Fachgebiet entfernen</a>
+                    {% for x in fachgebiet %}
+                        {{ form_errors(x) }}
+                    {% endfor %}
                 </li>
             {% endfor %}
         </ul>

@@ -8,7 +8,7 @@
     <title>Modulhandbuch</title>
     <style type="text/css">
         .modul {
-            /*page-break-after: always;*/
+            /*page-break-after: always;*/ /* nicht notwendig, wenn page-break vor .intro */
         }
 
         .modul .intro {
@@ -31,11 +31,14 @@
             padding: 0 10px;
         }
 
-        .modul .studiensemseter {
+        .modul table tr {
+            page-break-inside: avoid;
+        }
+
+        .modul .studiensemester {
             border: none;
             padding: 0 10px 0 0;
-            /*white-space: nowrap;*/
-            /*funktioniert iwie nicht*/
+            /*white-space: nowrap;*/ /*funktioniert iwie nicht*/
         }
 
         .modul .startsemester {
@@ -47,6 +50,22 @@
 {% set previousFachgebiet = '' %}
 
 {% for modulBeschreibung in modulBeschreibungen %}
+
+    {% if modulBeschreibung.getAngebot().getAngebotsart() == 'Pflichtfach' %}
+        {% if modulBeschreibung.getAngebot().getFachgebiet() is not null %}
+            {% set fachgebietString = modulBeschreibung.getAngebot().getFachgebiet().getTitel() %}
+        {% else %}
+            {% set fachgebietString = 'Sonstige Pflichtfächer' %}
+        {% endif %}
+    {% elseif modulBeschreibung.getAngebot().getAngebotsart() == 'Wahlpflichtfach' %}
+        {% if modulBeschreibung.getAngebot().getFachgebiet() is not null %}
+            {% set fachgebietString = 'Wahlpflichtfächer ' ~ modulBeschreibung.getAngebot().getFachgebiet().getTitel() %}
+        {% else %}
+            {% set fachgebietString = 'Wahlpflichtfächer (ohne Zuordnung zu Fachgebieten)' %}
+        {% endif %}
+    {% endif %}
+
+
     {% set titelDE = modulBeschreibung.getAngebot().getVeranstaltung().getName() %}
     {% set titelEN = modulBeschreibung.getAngebot().getVeranstaltung().getNameEn() %}
     {% if modulBeschreibung.getAngebot().getAbweichenderNameDE() %}
@@ -57,12 +76,12 @@
     {% endif %}
 
     <div class="modul">
-        <p class="intro">
-        {% if modulBeschreibung.getAngebot().getFachgebiet().getTitel() != previousFachgebiet %}
-            <h2>{{ modulBeschreibung.getAngebot().getFachgebiet().getTitel() }}</h2>
-        {% endif %}
-        <h3>{{ titelDE }} ({{ modulBeschreibung.getAngebot().getCode() }})</h3>
-        </p>
+        <div class="intro">
+            {% if fachgebietString != previousFachgebiet %}
+                <h2>{{ fachgebietString }}</h2>
+            {% endif %}
+            <h3>{{ titelDE }} ({{ modulBeschreibung.getAngebot().getCode() }})</h3>
+        </div>
         <table>
             <thead>
             <tr>
@@ -89,12 +108,14 @@
                 <td colspan="2">
                     <div class="key">Studiensemeseter bei Studienbeginn</div>
                     <table>
-                        {% for studienplan in modulBeschreibung.getStudienplaene() %}
                             <tr>
-                                <td class="studiensemseter startsemester">{{ studienplan.getStartsemester() }}:</td>
-                                <td class="studiensemseter">{{ studienplan.getRegelsemester()|replace({'[': '', ']': ''}) }}</td>
+                                <td class="studiensemester startsemester">SS:</td>
+                                <td class="studiensemester">{{ modulBeschreibung.getAngebot().getRegelsemesterSS()|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' ersetzen #}
                             </tr>
-                        {% endfor %}
+                            <tr>
+                                <td class="studiensemester startsemester">WS:</td>
+                                <td class="studiensemester">{{ modulBeschreibung.getAngebot().getRegelsemesterWS()|replace({'[': '', ']': ''}) }}</td> {# TODO: eventuell auch '{' und '}' ersetzen #}
+                            </tr>
                     </table>
                 </td>
                 <td>
@@ -157,10 +178,7 @@
                 <td>4</td>
                 <td colspan="6">
                     <div class="key">Lehrform</div>
-                    {{ modulBeschreibung.getAngebot().getVeranstaltung().getKontaktzeitVL()/15 }} SWS
-                    Vorlesung, {{ modulBeschreibung.getAngebot().getVeranstaltung().getKontaktzeitSonstige()/15 }}
-                    SWS
-                    sonstige Kontaktzeit
+                    {{ modulBeschreibung.getAngebot().getVeranstaltung().getLehrform() }}
                 </td>
             </tr>
             <tr>
@@ -184,8 +202,8 @@
                         {% endif %}
                     {% endif %}
                     Inhaltlich:
-                    {% if modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInh() != "" %}
-                        {{ modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInh() }}
+                    {% if modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInhalte() != "" %}
+                        {{ modulBeschreibung.getAngebot().getVeranstaltung().getVoraussetzungInhalte() }}
                     {% else %}
                         keine
                     {% endif %}
@@ -209,32 +227,26 @@
                     <div class="key">Voraussetzungen für die Vergabe von Leistungspunkten</div>
                     {% if modulBeschreibung.getVoraussetzungenLP() is not empty %}
                         {% for voraussetzung in modulBeschreibung.getVoraussetzungenLP() %}
-                            {{ voraussetzung }}
-                            {% if voraussetzung == 'Prüfungsleistung' and modulBeschreibung.getAngebot().getVeranstaltung().getPruefungsleistungSonstiges() is not empty %}
-                                ({{ modulBeschreibung.getAngebot().getVeranstaltung().getPruefungsleistungSonstiges() }})
-                            {% endif %}
-                            {% if voraussetzung == 'Studienleistung' and modulBeschreibung.getAngebot().getVeranstaltung().getStudienleistungSonstiges() is not empty %}
-                                ({{ modulBeschreibung.getAngebot().getVeranstaltung().getStudienleistungSonstiges() }})
-                            {% endif %}
+                            {{ voraussetzung }}<br/>
+                            {{ 'Erläuterungen: ' ~ modulBeschreibung.getAngebot().getVeranstaltung().getErlaeuterungenLP() }}
                             <br/>
                         {% endfor %}
-                    {% else %}
-                        ... {# TODO: Warum "..."? #}
                     {% endif %}
                 </td>
             </tr>
-            {# TODO: wenn leer -> key nicht ausgeben -> testen! #}
-            {% if modulBeschreibung.getFremdeStudiengaenge() is not empty %}
-                <tr>
-                    <td>8</td>
-                    <td colspan="6">
-                        <div class="key">Verwendung des Moduls (in anderen Studiengängen)</div>
+            <tr>
+                <td>8</td>
+                <td colspan="6">
+                    <div class="key">Verwendung des Moduls (in anderen Studiengängen)</div>
+                    {% if modulBeschreibung.getFremdeStudiengaenge() is not empty %}
                         {% for studiengang in modulBeschreibung.getFremdeStudiengaenge() %}
                             {{ studiengang }}<br/>
                         {% endfor %}
-                    </td>
-                </tr>
-            {% endif %}
+                    {% else %}
+                        Das Modul wird in keinem anderen Studiengang verwendet.
+                    {% endif %}
+                </td>
+            </tr>
             <tr>
                 <td>9</td>
                 <td colspan="6">
@@ -254,7 +266,11 @@
                             {% if lehrender.getDozent().getNachname() == 'Alle' %}
                                 Alle Dozenten des Studiengangs {{ modulBeschreibung.getAngebot().getStudiengang() }}
                             {% else %}
-                                {{ lehrender.getDozent() }}
+                                {% if lehrender == modulBeschreibung.getAngebot().getVeranstaltung().getLehrende()|last %}
+                                    {{ lehrender.getDozent() }}
+                                {% else %}
+                                    {{ lehrender.getDozent() ~ ', ' }}
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -277,7 +293,7 @@
         </table>
     </div>
 
-    {% set previousFachgebiet = modulBeschreibung.getAngebot().getFachgebiet().getTitel() %}
+    {% set previousFachgebiet = fachgebietString %}
 
 {% endfor %}
 </body>

@@ -2,21 +2,25 @@
 
 namespace FHBingen\Bundle\MHBBundle\Controller;
 
-use FHBingen\Bundle\MHBBundle\Entity\Modulvoraussetzung;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FHBingen\Bundle\MHBBundle\Entity\Role;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\HttpFoundation\Response;
 
 
-
+/**
+ * Class DefaultController
+ *
+ * @package FHBingen\Bundle\MHBBundle\Controller
+ */
 class DefaultController extends Controller
 {
     /**
      * @Route("/")
      * @Route("/index")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction()
     {
@@ -51,39 +55,12 @@ class DefaultController extends Controller
         );
     }
 
-    /**
-     * Initialerstellung von Semestern
-     */
-    public function semesterCreate()
-    {
-        //legt die Semester-Objekte an und gibt sie als Array zurück
-        //TODO: In Oberfäche integieren ?
-        $semester0 = new Semester();
-        $semester0->setSemester('WS14');
-
-        $semester1 = new Semester();
-        $semester1->setSemester('SS15');
-
-        $semester2 = new Semester();
-        $semester2->setSemester('WS15');
-
-        $semester3 = new Semester();
-        $semester3->setSemester('SS16');
-
-        $semesterArr = array(
-            $semester0,
-            $semester1,
-            $semester2,
-            $semester3
-        );
-
-        return $semesterArr;
-    }
+    //TODO: Semestererstellung (automatisch?)
 
     /**
      * Initialerstellung von Userrollen
      *
-     * @Route("/create/roles")
+     * @return Response
      */
     public function createRolesAction()
     {
@@ -117,33 +94,5 @@ class DefaultController extends Controller
         $em->flush();
 
         return new Response("Rollen angelegt");
-    }
-
-    /**
-     * @Route("/create/vor")
-     */
-    public function voraussetzungAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $test = $em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>156));
-
-//        $mv = new Modulvoraussetzung();
-//        $mv->setModul($test);
-//        $mv->setVoraussetzung($em->getRepository('FHBingenMHBBundle:Veranstaltung')->findOneBy(array('Modul_ID'=>9)));
-//        $test->addForderung($mv);
-        $result ="";
-//
-//       $em->persist($mv);
-//       $em->persist($test);
-//        $em->flush();
-
-        $entries = $test->getGrundmodul();
-
-        foreach ($entries as $entry) {
-            $result= $result."+++".$entry;
-        }
-
-        return new Response($result);
     }
 }

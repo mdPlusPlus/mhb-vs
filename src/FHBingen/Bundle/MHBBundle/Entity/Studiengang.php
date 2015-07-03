@@ -8,23 +8,26 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Studiengang
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @UniqueEntity(fields="Titel", message="Es existiert bereits ein Studiengang mit diesem Titel.")
  * @UniqueEntity(fields="Kuerzel", message="Es existiert bereits ein Studiengang mit diesem Kürzel.")
  * @UniqueEntity(fields="sgl", message="Es existiert bereits ein Studiengang mit diesem Studiengangleiter.")
  * @ORM\Table(name="Studiengang")
- * @ORM\HasLifecycleCallbacks
  */
-
 class Studiengang
 {
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $string = $this->getGrad().' '.$this->getTitel();
@@ -48,11 +51,11 @@ class Studiengang
      *      maxMessage = "Fachbereich {{ limit }} ist Maximum"
      * )
      */
-    protected $Fachbereich;
+    protected $Fachbereich; //Fehlermeldungen sinnvoll?
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
-     * @Assert\Choice(choices = {"Bachelor", "Master"}, message = "Wählen Sie einen gültigen Bildungsgrad")
+     * @Assert\Choice(choices = {"Bachelor", "Master"}, message = "Wählen Sie einen gültigen Bildungsgrad.")
      */
     protected $Grad;
 
@@ -95,6 +98,53 @@ class Studiengang
     protected $Beschreibung;
 
     /**
+     * @ORM\OneToMany(targetEntity="Angebot", mappedBy="studiengang", cascade={"all"})
+     */
+    protected $angebot;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Vertiefung", mappedBy="studiengang")
+     */
+    protected $richtung; //warum nicht '$vertiefungsrichtung'?
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="studiengang")
+     * @ORM\JoinColumn(name="sgl", referencedColumnName="Dozenten_ID", nullable=false, unique=true)
+     */
+    protected $sgl;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gehoertZu")
+     */
+    protected $modulhandbuch; //sind eigentlich die MHB, wer hat den Scheiß verbockt?
+
+    /**
+     * @ORM\OneToMany(targetEntity="Fachgebiet", mappedBy="studiengang")
+     * @Assert\Count(
+     *      min = "1",
+     *      minMessage = "Sie müssen mindestens ein Fachgebiet anlegen."
+     * )
+     */
+    protected $fachgebiete; //sollte das nicht Singular 'fachgebiet' sein?
+
+    /**
+     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="studiengang")
+     */
+    private $modulcodezuweisung;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->angebot            = new ArrayCollection();
+        $this->fachgebiete        = new ArrayCollection();
+        $this->richtung           = new ArrayCollection();
+        $this->modulcodezuweisung = new ArrayCollection();
+        $this->modulhandbuch      = new ArrayCollection();
+    }
+
+    /**
      * Get Studiengang_ID
      *
      * @return integer 
@@ -108,12 +158,13 @@ class Studiengang
      * Set Fachbereich
      *
      * @param integer $fachbereich
+     *
      * @return Studiengang
      */
     public function setFachbereich($fachbereich)
     {
         $this->Fachbereich = $fachbereich;
-    
+
         return $this;
     }
 
@@ -131,12 +182,13 @@ class Studiengang
      * Set Grad
      *
      * @param string $grad
+     *
      * @return Studiengang
      */
     public function setGrad($grad)
     {
         $this->Grad = $grad;
-    
+
         return $this;
     }
 
@@ -154,12 +206,13 @@ class Studiengang
      * Set Titel
      *
      * @param string $titel
+     *
      * @return Studiengang
      */
     public function setTitel($titel)
     {
         $this->Titel = $titel;
-    
+
         return $this;
     }
 
@@ -168,7 +221,7 @@ class Studiengang
      *
      * @return string 
      */
-        public function getTitel()
+    public function getTitel()
     {
         return $this->Titel;
     }
@@ -177,12 +230,13 @@ class Studiengang
      * Set Kuerzel
      *
      * @param string $kuerzel
+     *
      * @return Studiengang
      */
     public function setKuerzel($kuerzel)
     {
         $this->Kuerzel = $kuerzel;
-    
+
         return $this;
     }
 
@@ -200,12 +254,13 @@ class Studiengang
      * Set Beschreibung
      *
      * @param string $beschreibung
+     *
      * @return Studiengang
      */
     public function setBeschreibung($beschreibung)
     {
         $this->Beschreibung = $beschreibung;
-    
+
         return $this;
     }
 
@@ -219,25 +274,17 @@ class Studiengang
         return $this->Beschreibung;
     }
 
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->angebot = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
     /**
      * Add angebot
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
+     *
      * @return Studiengang
      */
     public function addAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
     {
         $this->angebot[] = $angebot;
-    
+
         return $this;
     }
 
@@ -261,58 +308,17 @@ class Studiengang
         return $this->angebot;
     }
 
-
-
-    /*Abhaengigkeiten*/
-
-    /*Angebot*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Angebot", mappedBy="studiengang", cascade={"all"})
-     * */
-    protected $angebot;
-
-    /*Vertiefungsrichtung*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Vertiefung", mappedBy="studiengang")
-     */
-    protected $richtung;
-
-    /*Modulbeauftragter (Dozent/Modul)*/
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="studiengang")
-     * @ORM\JoinColumn(name="sgl", referencedColumnName="Dozenten_ID", nullable=false, unique=true)
-     */
-    protected $sgl;
-
-    /*Modulhandbuch/Studiengang*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gehoertZu")
-     */
-    protected $studiengang;
-
-
-    /*Fachgebiet/Studiengang*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Fachgebiet", mappedBy="studiengang")
-     */
-    protected $fachgebiete;
-
-
     /**
      * Add richtung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Vertiefung $richtung
+     *
      * @return Studiengang
      */
     public function addRichtung(\FHBingen\Bundle\MHBBundle\Entity\Vertiefung $richtung)
     {
         $this->richtung[] = $richtung;
-    
+
         return $this;
     }
 
@@ -340,12 +346,13 @@ class Studiengang
      * Set sgl
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $sgl
+     *
      * @return Studiengang
      */
     public function setSgl(\FHBingen\Bundle\MHBBundle\Entity\Dozent $sgl)
     {
         $this->sgl = $sgl;
-    
+
         return $this;
     }
 
@@ -360,59 +367,61 @@ class Studiengang
     }
 
     /**
-     * Add studiengang
+     * Add modulhandbuch
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $studiengang
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $modulhandbuch
+     *
      * @return Studiengang
      */
-    public function addStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $studiengang)
+    public function addModulhandbuch(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $modulhandbuch)
     {
-        $this->studiengang[] = $studiengang;
-    
+        $this->modulhandbuch[] = $modulhandbuch;
+
         return $this;
     }
 
     /**
-     * Remove studiengang
+     * Remove modulhandbuch
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $studiengang
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $modulhandbuch
      */
-    public function removeStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $studiengang)
+    public function removeModulhandbuch(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $modulhandbuch)
     {
-        $this->studiengang->removeElement($studiengang);
+        $this->modulhandbuch->removeElement($modulhandbuch);
     }
 
     /**
-     * Get studiengang
+     * Get modulhandbuch
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getStudiengang()
+    public function getModulhandbuch()
     {
-        return $this->studiengang;
+        return $this->modulhandbuch;
     }
 
     /**
      * Add fachgebiete
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiete
+     *
      * @return Studiengang
      */
-    public function addFachgebiete(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
+    public function addFachgebiete(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiete)
     {
-        $this->fachgebiete[] = $fachgebiet;
-    
+        $this->fachgebiete[] = $fachgebiete;
+
         return $this;
     }
 
     /**
-     * Remove fachgebiet
+     * Remove fachgebiete
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiete
      */
-    public function removeFachgebiete(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet)
+    public function removeFachgebiete(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiete)
     {
-        $this->fachgebiete->removeElement($fachgebiet);
+        $this->fachgebiete->removeElement($fachgebiete);
     }
 
     /**
@@ -425,42 +434,37 @@ class Studiengang
         return $this->fachgebiete;
     }
 
-    /*Studienplan*/
     /**
-     * @ORM\OneToMany(targetEntity="Studienplan", mappedBy="studiengang", cascade={"all"})
-     * */
-    protected $studienplanZuStudienplan;
-
-    /**
-     * Add studienplan_stgang
+     * Add modulcodezuweisung
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     *
      * @return Studiengang
      */
-    public function addStudienplanZuStudienplan(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang)
+    public function addModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
     {
-        $this->studienplanZuStudienplan[] = $studienplanStgang;
-    
+        $this->modulcodezuweisung[] = $modulcodezuweisung;
+
         return $this;
     }
 
     /**
-     * Remove studienplan_stgang
+     * Remove modulcodezuweisung
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
      */
-    public function removeStudienplanZuStudienplan(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $studienplanStgang)
+    public function removeModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
     {
-        $this->studienplanZuStudienplan->removeElement($studienplanStgang);
+        $this->modulcodezuweisung->removeElement($modulcodezuweisung);
     }
 
     /**
-     * Get studienplan_stgang
+     * Get modulcodezuweisung
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getStudienplanZuStudienplan()
+    public function getModulcodezuweisung()
     {
-        return $this->studienplanZuStudienplan;
+        return $this->modulcodezuweisung;
     }
 }

@@ -31,17 +31,18 @@ class PlanungType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
             ->add('kuerzel', 'text', array('label' => 'Modulkürzel: ', 'required' => false))
             ->add('name', 'text', array('label' => 'Modulname (deutsch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('nameEN', 'text', array('label' => 'Modulname (englisch): ', 'required' => false, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
             ->add('selbststudium', 'integer', array('label' => false, 'required' => false, 'attr' => array('min' => '0', 'hidden' => true)))
+            ->add('lehrform', 'textarea', array('label' => 'Lehrform: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebnisse: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise: ', 'required' => false, 'attr' => array('class' => 'textAreaClass')))
             ->add('PruefungsformSonstiges', 'text', array('label' => 'Sonstige Prüfungsform:', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
-            //->add('StudienleistungSonstiges', 'text', array('label' => 'weitere Angaben zur Studienleistung', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
     }
 
     /**
@@ -63,6 +64,14 @@ class PlanungType extends AbstractType
             $haeufigkeitOptions['data'] = 'Sommersemester'; //default
         }
         $form->add('haeufigkeit', 'choice', $haeufigkeitOptions);
+
+
+//        $lehrform = $input->getLehrform();
+//        $lehrformOptions = array('label' => 'Lehrformen:', 'required' => false);
+//        if ($lehrform == null) {
+//            $lehrformOptions['data'] = 'Vorlesungen mit Tafel und Videoprojektion'; //default
+//        }
+//        $form->add('lehrform', 'textarea', $lehrformOptions);
 
         $dauer = $input->getDauer();
         $dauerOptions = array('label' => 'Dauer:', 'required' => false, 'attr' => array('min' => '1'));
@@ -123,12 +132,12 @@ class PlanungType extends AbstractType
         }
         $form->add('SpracheSonstiges', 'text', $spracheSonstigesOptions);
 
-        $vorausetzungInh = $input->getVoraussetzungInh();
-        $vorausetzungInhOptions = array('label' => 'Voraussetzung inhaltlich: ', 'required' => false, 'attr' => array('class' => 'textAreaClass'));
-        if ($vorausetzungInh == null) {
-            $vorausetzungInhOptions['data'] = 'keine';
+        $voraussetzungInhalte = $input->getVoraussetzungInhalte();
+        $voraussetzungInhalteOptions = array('label' => 'Voraussetzung inhaltlich: ', 'required' => false, 'attr' => array('class' => 'textAreaClass'));
+        if ($voraussetzungInhalte == null) {
+            $voraussetzungInhalteOptions['data'] = 'keine';
         }
-        $form->add('voraussetzungInh', 'textarea', $vorausetzungInhOptions);
+        $form->add('voraussetzungInhalte', 'textarea', $voraussetzungInhalteOptions);
 
         $lehrveranstaltungen = $input->getLehrveranstaltungen();
         $lehrveranstaltungenOptions = array(
@@ -171,16 +180,16 @@ class PlanungType extends AbstractType
             $vorausetzungLP = $encoder->decode($vorausetzungLP, 'json');
             $voraussetzungLPOptions['data'] = $vorausetzungLP;
         } else {
-            $voraussetzungLPOptions['data'] = array('Prüfungsleistung' => 'Prüfungsleistung'); //default
+            $voraussetzungLPOptions['data'] = array('bestandene Prüfungsleistung' => 'bestandene Prüfungsleistung'); //default
         }
         $form->add('voraussetzungLP', 'choice', $voraussetzungLPOptions);
 
-        $pruefungsungsleistungSonstiges = $input->getPruefungsleistungSonstiges();
-        $pruefungsungsleistungSonstigesOptions = array('label' => 'Erläuterungen', 'required' => false, 'attr' => array('class' => 'sonstigesClass'));
-        if ($pruefungsungsleistungSonstiges == null) {
-            $pruefungsungsleistungSonstigesOptions['data'] = 'Bestandene Modulprüfung'; //default
+        $erlaeuterungenLP = $input->getErlaeuterungenLP();
+        $erlaeuterungenLPOptions = array('label' => 'Erläuterungen zur Vergabe von LP:', 'required' => false, 'attr' => array('class' => 'sonstigesClass'));
+        if ($erlaeuterungenLP == null) {
+            $erlaeuterungenLPOptions['data'] = 'Bestandene Modulprüfung'; //default
         }
-        $form->add('PruefungsleistungSonstiges', 'text', $pruefungsungsleistungSonstigesOptions);
+        $form->add('erlaeuterungenLP', 'text', $erlaeuterungenLPOptions);
     }
 
     /**

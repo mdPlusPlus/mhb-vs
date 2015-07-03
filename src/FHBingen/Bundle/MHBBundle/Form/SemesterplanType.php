@@ -1,36 +1,60 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Mischa
- * Date: 08.12.2014
- * Time: 16:01
+ * User: mdPlusPlus
+ * Date: 25.05.2015
+ * Time: 18:47
  */
 
 namespace FHBingen\Bundle\MHBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-//TODO: wo genutzt?
+
+/**
+ * Class SemesterplanType
+ *
+ * @package FHBingen\Bundle\MHBBundle\Form
+ */
 class SemesterplanType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
-            ->add('semester', 'entity', array('label' => 'Semester: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Semester'))
-            ->add('lehrender', 'entity', array('label' => 'Dozent: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
-            ->add('module', 'entity', array('label' => 'Veranstaltung: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Veranstaltung'))
-            ->add('swsUebung', 'integer', array('label' => 'SWSUebung: ', 'required' => true))
-            ->add('swsVorlesung', 'integer', array('label' => 'SWSVorlesung: ', 'required' => true))
-            ->add('anzahlUebungsgruppen', 'integer', array('label' => 'Anzahl Uebungsgruppen: ', 'required' => true))
-            ->add('groesseUebungsgruppen', 'integer', array('label' => 'Groesse Uebungsgruppen: ', 'required' => true))
-            ->add('reset', 'reset')
-            ->add('submit', 'submit');
+            ->add('angebot', 'entity', array(              'label' => false, 'required' => true, 'error_bubbling' => true, 'class' => 'FHBingenMHBBundle:Angebot', 'disabled' => true))
+            ->add('findetStatt', 'checkbox', array(        'label' => false, 'required' => true, 'error_bubbling' => true))
+            ->add('dozent', 'entity', array(               'label' => false, 'required' => true, 'error_bubbling' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
+            ->add('istLehrbeauftragter', 'checkbox', array('label' => false, 'required' => true, 'error_bubbling' => true))
+            ->add('SWSVorlesung', 'text', array(           'label' => false, 'required' => true, 'error_bubbling' => true))
+            ->add('SWSUebung', 'text', array(              'label' => false, 'required' => true, 'error_bubbling' => true))
+            ->add('AnzahlUebungsgruppen', 'text', array(   'label' => false, 'required' => true, 'error_bubbling' => true))
+            ->add('GroesseUebungsgruppen', 'text', array(  'label' => false, 'required' => true, 'error_bubbling' => true));
     }
 
+    /**
+    * @param OptionsResolverInterface $resolver
+    */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Semesterplan',
+        ));
+    }
+
+    /**
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
+     */
     public function getName()
     {
         return 'semesterplan';
     }
+
 }

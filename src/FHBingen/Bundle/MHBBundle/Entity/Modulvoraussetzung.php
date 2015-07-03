@@ -8,19 +8,20 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  * Class Modulvoraussetzung
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Modulvoraussetzung")
  * @ORM\HasLifecycleCallbacks
  */
-class Modulvoraussetzung {
+class Modulvoraussetzung
+{
 
     /**
      * @return string
@@ -46,18 +47,17 @@ class Modulvoraussetzung {
      */
     private $voraussetzung;
 
-
-
     /**
      * Set modul
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul
+     *
      * @return Modulvoraussetzung
      */
     public function setModul(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul)
     {
         $this->modul = $modul;
-    
+
         return $this;
     }
 
@@ -75,12 +75,13 @@ class Modulvoraussetzung {
      * Set voraussetzung
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $voraussetzung
+     *
      * @return Modulvoraussetzung
      */
     public function setVoraussetzung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $voraussetzung)
     {
         $this->voraussetzung = $voraussetzung;
-    
+
         return $this;
     }
 

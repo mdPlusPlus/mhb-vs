@@ -12,15 +12,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Semesterplan
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Semesterplan")
  * @ORM\HasLifecycleCallbacks
  */
-
 class Semesterplan
 {
-
+    /**
+     * @return string
+     */
     public function __toString()
     {
         //TODO $Semester richtig? getter?
@@ -28,12 +30,6 @@ class Semesterplan
 
         return $string;
     }
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $Semesterplan_ID;
 
     /**
      * @ORM\Column(type="integer")
@@ -61,9 +57,7 @@ class Semesterplan
      * @ORM\Column(type="integer")
      * @Assert\Range(
      *      min = 0,
-     *      max = 5,
      *      minMessage = "Ein Modul braucht mindestens {{ limit }} Übungsgruppen",
-     *      maxMessage = "Ein Modul darf nicht mehr als {{ limit }} Übungsgruppen haben"
      * )
      */
     protected $AnzahlUebungsgruppen;
@@ -72,24 +66,28 @@ class Semesterplan
      * @ORM\Column(type="integer")
      * @Assert\Range(
      *      min = 0,
-     *      max = 30,
      *      minMessage = "Eine Übungsgruppe muss aus mindestens {{ limit }} Studenten bestehen",
-     *      maxMessage = "Eine Übungsgruppe darf aus nicht mehr als {{ limit }} Studenten bestehen"
      * )
-     * TODO: Welche Übungsgruppengröße sinnvoll?
      */
     protected $GroesseUebungsgruppen;
 
-    /**
-     * Abhaengigkeiten
-     */
 
     /**
-     * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="semesterplan")
-     * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $veranstaltung;
+    protected $istLehrbeauftragter;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $findetStatt;
+
+    /**
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Angebot", inversedBy="semesterplan")
+     * @ORM\JoinColumn(name="angebot", referencedColumnName="Angebots_ID", nullable=false)
+     */
+    protected $angebot;
 
     /**
      * @ORM\ManyToOne(targetEntity="Dozent", inversedBy="semesterplan")
@@ -98,31 +96,24 @@ class Semesterplan
     protected $dozent;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="semesterplan")
      * @ORM\JoinColumn(name="semester", referencedColumnName="Semester", nullable=false)
      * */
     protected $semester;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getSemesterplan_ID()
-    {
-        return $this->Semesterplan_ID;
-    }
 
     /**
      * Set sws_uebung
      *
      * @param integer $swsUebung
+     *
      * @return Semesterplan
      */
     public function setSWSUebung($swsUebung)
     {
         $this->SWSUebung = $swsUebung;
-    
+
         return $this;
     }
 
@@ -133,19 +124,20 @@ class Semesterplan
      */
     public function getSWSUebung()
     {
-        return $this->swsUebung;
+        return $this->SWSUebung;
     }
 
     /**
      * Set sws_vorlesung
      *
      * @param integer $swsVorlesung
+     *
      * @return Semesterplan
      */
     public function setSWSVorlesung($swsVorlesung)
     {
         $this->SWSVorlesung = $swsVorlesung;
-    
+
         return $this;
     }
 
@@ -163,12 +155,13 @@ class Semesterplan
      * Set anzahl_uebungsgruppen
      *
      * @param integer $anzahlUebungsgruppen
+     *
      * @return Semesterplan
      */
     public function setAnzahlUebungsgruppen($anzahlUebungsgruppen)
     {
-        $this->anzahlUebungsgruppen = $anzahlUebungsgruppen;
-    
+        $this->AnzahlUebungsgruppen = $anzahlUebungsgruppen;
+
         return $this;
     }
 
@@ -179,19 +172,20 @@ class Semesterplan
      */
     public function getAnzahlUebungsgruppen()
     {
-        return $this->anzahlUebungsgruppen;
+        return $this->AnzahlUebungsgruppen;
     }
 
     /**
      * Set groesse_uebungsgruppen
      *
      * @param integer $groesseUebungsgruppen
+     *
      * @return Semesterplan
      */
     public function setGroesseUebungsgruppen($groesseUebungsgruppen)
     {
-        $this->groesseUebungsgruppen = $groesseUebungsgruppen;
-    
+        $this->GroesseUebungsgruppen = $groesseUebungsgruppen;
+
         return $this;
     }
 
@@ -202,42 +196,20 @@ class Semesterplan
      */
     public function getGroesseUebungsgruppen()
     {
-        return $this->groesseUebungsgruppen;
-    }
-
-    /**
-     * Set module
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
-     * @return Semesterplan
-     */
-    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
-    {
-        $this->veranstaltung = $module;
-    
-        return $this;
-    }
-
-    /**
-     * Get module
-     *
-     * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
-     */
-    public function getVeranstaltung()
-    {
-        return $this->veranstaltung;
+        return $this->GroesseUebungsgruppen;
     }
 
     /**
      * Set lehrender
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender
+     *
      * @return Semesterplan
      */
     public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender = null)
     {
         $this->dozent = $lehrender;
-    
+
         return $this;
     }
 
@@ -255,12 +227,13 @@ class Semesterplan
      * Set semester
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $semester
+     *
      * @return Semesterplan
      */
     public function setSemester(\FHBingen\Bundle\MHBBundle\Entity\Semester $semester = null)
     {
         $this->semester = $semester;
-    
+
         return $this;
     }
 
@@ -272,5 +245,78 @@ class Semesterplan
     public function getSemester()
     {
         return $this->semester;
+    }
+
+
+    /**
+     * Set istLehrbeauftragter
+     *
+     * @param boolean $istLehrbeauftragter
+     *
+     * @return Semesterplan
+     */
+    public function setIstLehrbeauftragter($istLehrbeauftragter)
+    {
+        $this->istLehrbeauftragter = $istLehrbeauftragter;
+
+        return $this;
+    }
+
+    /**
+     * Get istLehrbeauftragter
+     *
+     * @return boolean 
+     */
+    public function getIstLehrbeauftragter()
+    {
+        return $this->istLehrbeauftragter;
+    }
+
+    /**
+     * Set findetStatt
+     *
+     * @param boolean $findetStatt
+     *
+     * @return Semesterplan
+     */
+    public function setFindetStatt($findetStatt)
+    {
+        $this->findetStatt = $findetStatt;
+
+        return $this;
+    }
+
+    /**
+     * Get findetStatt
+     *
+     * @return boolean 
+     */
+    public function getFindetStatt()
+    {
+        return $this->findetStatt;
+    }
+
+    /**
+     * Set angebot
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
+     *
+     * @return Semesterplan
+     */
+    public function setAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
+    {
+        $this->angebot = $angebot;
+
+        return $this;
+    }
+
+    /**
+     * Get angebot
+     *
+     * @return \FHBingen\Bundle\MHBBundle\Entity\Angebot 
+     */
+    public function getAngebot()
+    {
+        return $this->angebot;
     }
 }

@@ -7,13 +7,10 @@
  */
 namespace FHBingen\Bundle\MHBBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
 /**
  * Class VorAngebotType
@@ -26,7 +23,6 @@ use Symfony\Component\Form\FormEvents;
 class VorAngebotType extends AbstractType
 {
     private $studiengangIDs;
-    private $queryString;
 
     /**
      * @param array $studiengangIDs
@@ -36,19 +32,6 @@ class VorAngebotType extends AbstractType
     public function __construct(array $studiengangIDs)
     {
         $this->studiengangIDs = $studiengangIDs;
-        $this->queryString = "";
-
-        //concatenating the query strings
-        $max = sizeof($this->studiengangIDs);
-        for ($i = 0; $i < $max; $i++) {
-            if ($i < $max-1) {
-                //not last entry
-                $this->queryString=$this->queryString. 's.Studiengang_ID=' . $this->studiengangIDs[$i].' or ';
-            } else {
-                //last entry or only entry
-                $this->queryString =$this->queryString. ' s.Studiengang_ID=' . $this->studiengangIDs[$i];
-            }
-        }
     }
 
     /**
@@ -58,15 +41,19 @@ class VorAngebotType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //->add('modulid', 'hidden', array('required' => true))
-
             ->add('studiengang', 'entity', array(
                 'label' => 'Studiengang: ',
                 'required' => true,
                 'class' => 'FHBingenMHBBundle:Studiengang',
                 'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('s')->where($this->queryString);
-                }))
+                    $qb = $er->createQueryBuilder('s');
+                    $qb->add('where', $qb->expr()->in('s.Studiengang_ID', $this->studiengangIDs)) //warning?
+                    ->orderBy('s.Grad', 'ASC')
+                    ->addOrderBy('s.Titel', 'ASC');
+
+                    return $qb;
+                },
+            ))
 
             ->add('angebotsart', 'choice', array('label' => 'Angebotsart:', 'required' => true, 'choices' => ArrayValues::$offerTypes))
 

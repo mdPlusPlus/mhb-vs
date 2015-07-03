@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deckblatt des Modulhandbuchs für den Studiengang {{ studiengang }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style type="text/css">
+        html, body, #coverDiv {
+            height: 100%;
+        }
+
+        #coverDiv {
+            text-align: center;
+        }
+
+        #topDiv, #middleDiv, #bottomDiv {
+            position:absolute;
+            left:50%;
+            margin-left:-50%;
+            width:100%;
+        }
+
+        #topDiv {
+            top:5%;
+            height:20%;
+        }
+        #middleDiv {
+            top:20%;
+            height:50%;
+        }
+        #bottomDiv {
+            top:75%;
+            height:25%;
+        }
+
+        span#fachbereich {
+            font-weight: bold;
+        }
+
+        .helper {
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        img#fh-logo {
+            vertical-align: middle;
+            max-width: 80%;
+        }
+
+    </style>
+</head>
+<body>
+<div id="coverDiv">
+    <div id="topDiv">
+        <h1>
+            Modulhandbuch<br/>
+            {{ studiengang }} ({{ studiengang.kuerzel }})
+        </h1>
+    </div>
+
+    <div id="middleDiv">
+        <span class="helper"></span>
+        {# funktioniert nur auf VM, nicht lokal #}
+        <img id="fh-logo" src="{{ asset('bundles/fhbingenmhb/images/fh.jpg', absolute=true) }}" alt="FH Logo"/>
+    </div>
+
+    <div id="bottomDiv">
+        <p>
+        <span id="fachbereich">
+            {% if studiengang.fachbereich == 1 %}
+                Fachbereich 1 - Life Sciences and Engineering
+            {% endif %}
+            {% if studiengang.fachbereich == 2 %}
+                Fachbereich 2 - Technik, Informatik und Wirtschaft
+            {% endif %}
+        </span>
+            <br/>
+            <br/>
+
+            {{ mhb.beschreibung }}<br/>
+
+            <br/>
+            <br/>
+
+            Studiengangleiter: {{ studiengang.sgl }}<br/>
+            Erstellt am {{ datum }}<br/>
+            Gültig ab {{ mhb.gueltigAb }}
+        </p>
+    </div>
+</div>
+</body>
+</html>

@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Lehrende
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Lehrende")
@@ -21,6 +22,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Lehrende
 {
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $string = (string) $this->dozent . ' ' .(string) $this->veranstaltung;
@@ -46,13 +50,14 @@ class Lehrende
     /**
      * Set module
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul
+     *
      * @return Lehrende
      */
     public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modul)
     {
         $this->veranstaltung = $modul;
-    
+
         return $this;
     }
 
@@ -70,12 +75,13 @@ class Lehrende
      * Set lehrender
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender
+     *
      * @return Lehrende
      */
     public function setDozent(\FHBingen\Bundle\MHBBundle\Entity\Dozent $lehrender)
     {
         $this->dozent = $lehrender;
-    
+
         return $this;
     }
 

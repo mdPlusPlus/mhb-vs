@@ -7,12 +7,14 @@
  */
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Semester
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @UniqueEntity(fields="Semester", message="Dieses Semester wurde bereits in die Datenbank eingetragen.")
@@ -23,9 +25,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Semester
 {
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $string = $this->getSemester();
+
         return $string;
     }
 
@@ -46,9 +52,29 @@ class Semester
     protected $Semester;
 
     /**
+     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="semester", cascade={"all"})
+     * */
+    protected $semesterplan;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gueltigAb")
+     */
+    protected $gueltigAbSemester;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gueltigAbSemester = new ArrayCollection();
+        $this->semesterplan      = new ArrayCollection();
+    }
+
+    /**
      * Set Semester
      *
      * @param string $semester
+     *
      * @return Semester
      */
     public function setSemester($semester)
@@ -68,28 +94,11 @@ class Semester
         return $this->Semester;
     }
 
-
-    /*Abhaengigkeiten*/
-
-    /*Semesterplan*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="semester", cascade={"all"})
-     * */
-    protected $semesterplan;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->semesterplan = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
     /**
      * Add semesterplan
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
+     *
      * @return Semester
      */
     public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
@@ -119,18 +128,11 @@ class Semester
         return $this->semesterplan;
     }
 
-
-    /*Modulhandbuch/Semester*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Modulhandbuch", mappedBy="gueltigAb")
-     */
-    protected $gueltigAbSemester;
-
     /**
      * Add sem
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $sem
+     *
      * @return Semester
      */
     public function addGueltigAbSemester(\FHBingen\Bundle\MHBBundle\Entity\Modulhandbuch $sem)
@@ -158,72 +160,5 @@ class Semester
     public function getGueltigAbSemester()
     {
         return $this->gueltigAbSemester;
-    }
-
-    /**
-     * Add modul_start
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart
-     * @return Semester
-     */
-    public function addModulStart(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart)
-    {
-        $this->modul_start[] = $modulStart;
-
-        return $this;
-    }
-
-    /**
-     * Remove modul_start
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart
-     */
-    public function removeModulStart(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $modulStart)
-    {
-        $this->modul_start->removeElement($modulStart);
-    }
-
-    /**
-     * Get modul_start
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getModulStart()
-    {
-        return $this->modul_start;
-    }
-
-
-    /**
-     * Add regelsem
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem
-     * @return Semester
-     */
-    public function addRegelsem(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem)
-    {
-        $this->regelsem[] = $regelsem;
-
-        return $this;
-    }
-
-    /**
-     * Remove regelsem
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem
-     */
-    public function removeRegelSemester(\FHBingen\Bundle\MHBBundle\Entity\Studienplan $regelsem)
-    {
-        $this->regelsem->removeElement($regelsem);
-    }
-
-    /**
-     * Get regelsem
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getRegelSemester()
-    {
-        return $this->regelsem;
     }
 }

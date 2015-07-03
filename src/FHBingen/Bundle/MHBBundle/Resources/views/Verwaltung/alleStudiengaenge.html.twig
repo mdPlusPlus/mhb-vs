@@ -17,17 +17,17 @@
         <table id="table" class="table table-bordered tablesorter">
             <thead>
                 <tr>
-                    <th style="">Studiengang</th>
-                    <th style="">Abschluss</th>
-                    <th style="">Studiengangleiter/in</th>
+                    <th style="width: 150px">Abschluss</th>
+                    <th>Studiengang</th>
+                    <th style="width: 400px">Studiengangleiter/in</th>
                 </tr>
             </thead>
             <tbody>
             {% for gang in courses %}
                 <tr>
-                    <td><a href="{{ path('studiengangBearbeiten', {'courseID': gang['Studiengang_ID']}) }}">{{ gang['Studiengang'] }}</a></td>
                     <td>{{ gang['Grad'] }}</td>
-                    <td>{{ gang['Titel']~' '~gang['Nachname'] }}</td>
+                    <td><a href="{{ path('studiengangBearbeiten', {'courseID': gang['Studiengang_ID']}) }}">{{ gang['studiengangTitel'] ~ ' (' ~ gang['Kuerzel'] ~ ')' }}</a></td>
+                    <td>{{ gang['dozentTitel'] ~ ' ' ~ gang['Name'] ~ ' ' ~ gang['Nachname'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>

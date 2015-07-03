@@ -9,7 +9,6 @@
 namespace FHBingen\Bundle\MHBBundle\PHP;
 
 
-use Doctrine\ORM\PersistentCollection;
 use FHBingen\Bundle\MHBBundle\Entity\Angebot;
 
 
@@ -25,7 +24,6 @@ class ModulBeschreibung
 
     private $angebot;
     private $fremdeStudiengaenge;
-    private $studienplaene;
     private $voraussetzungen;
     private $pruefungsformen;
     private $lehrveranstaltungen;
@@ -63,21 +61,6 @@ class ModulBeschreibung
         $this->fremdeStudiengaenge = $fremdeStudiengaenge;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getStudienplaene()
-    {
-        return $this->studienplaene;
-    }
-
-    /**
-     * @param array $studienplaene
-     */
-    public function setStudienplaene(array $studienplaene)
-    {
-        $this->studienplaene = $studienplaene;
-    }
 
     /**
      * @return mixed

@@ -8,26 +8,30 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManagerAware;
 use Doctrine\ORM\Mapping as ORM;
-use FHBingen\Bundle\MHBBundle\PHP\ModulBeschreibung;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Class Angebot
  *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
+ * @ORM\EntityListeners({"FHBingen\Bundle\MHBBundle\EntityListener\AngebotListener"})
  * @UniqueEntity(fields="AbweichenderNameDE", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen deutschen Titel.")
  * @UniqueEntity(fields="AbweichenderNameEN", ignoreNull=true, message="Es existiert bereits ein Angebot mit diesem studiengangspezifischen englischen Titel.")
  * @ORM\Table(name="Angebot")
  * @ORM\HasLifecycleCallbacks
  */
-
-class Angebot
+class Angebot implements ObjectManagerAware
 {
     /**
-     * @return null|string
+     * @return string
      */
     public function __toString()
     {
@@ -42,11 +46,6 @@ class Angebot
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="ModulhandbuchZuweisung", mappedBy="angebot", cascade={"all"})
-     */
-    private $zuweisung;
-
-    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -56,19 +55,19 @@ class Angebot
     /**
      * @ORM\ManyToOne(targetEntity="Veranstaltung", inversedBy="angebot")
      * @ORM\JoinColumn(name="modul", referencedColumnName="Modul_ID", nullable=false)
-     * */
+     */
     protected $veranstaltung;
 
     /**
      * @ORM\ManyToOne(targetEntity="Fachgebiet", inversedBy="angebot")
-     * @ORM\JoinColumn(name="fachgebiet", referencedColumnName="Fachgebiets_ID", nullable=false)
-     * */
+     * @ORM\JoinColumn(name="fachgebiet", referencedColumnName="Fachgebiets_ID", nullable=true)
+     */
     protected $fachgebiet;
 
     /**
      * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="angebot")
      * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
-     * */
+     */
     protected $studiengang;
 
 
@@ -81,20 +80,20 @@ class Angebot
      */
     protected	$Angebotsart;
 
-    /**
-     * @ORM\Column(type="string", length=20, nullable=false)
-     * @Assert\Length(
-     *      min = 8,
-     *      minMessage = "Der Modulcode muss mindestens {{ limit }} Zeichen lang sein.",
-     *      max = 9,
-     *      maxMessage = "Der Modulcode darf maximal {{ limit }} Zeichen lang sein."
-     * )
-     * @Assert\Regex(
-     *     pattern = "/[BM]\-[A-Z]{2,2}\-[A-Z]{1,2}[0-9]{2,2}/",
-     *     message = "Bitte verwenden Sie folgendes Muster für den Modulcode: z.B. B-IN-MN01, B-IN-V05"
-     * )
-     */
-    protected	$Code;
+//    /**
+//     * @ORM\Column(type="string", length=10, nullable=true, unique=true)
+//     * @Assert\Length(
+//     *      min = 8,
+//     *      minMessage = "Der Modulcode muss mindestens {{ limit }} Zeichen lang sein.",
+//     *      max = 9,
+//     *      maxMessage = "Der Modulcode darf maximal {{ limit }} Zeichen lang sein."
+//     * )
+//     * @Assert\Regex(
+//     *     pattern = "/[BM]\-[A-Z]{2,2}\-[A-Z]{1,2}[0-9]{2,2}/",
+//     *     message = "Bitte verwenden Sie folgendes Muster für den Modulcode: z.B. B-IN-MN01, B-IN-V05"
+//     * )
+//     */
+//    protected	$Code;
 
     // Wenn bei PDF-Erstellung auf '(' und ')' im Titel geprüft wird um auf Fachgebiet zu testen, dürfen '(' und ')' hier nicht im Titel auftauchen
     /**
@@ -126,42 +125,201 @@ class Angebot
      *     message = "Der studiengangspezifische englische Name darf nur aus Buchstaben, Zahlen, Leerzeichen und Bindestrichen bestehen."
      * )
      */
-    protected	$AbweichenderNameEN;
+    protected $AbweichenderNameEN;
+
+
+    /**
+     * @ORM\Column(type="text", nullable=false)
+     * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
+     */
+    protected $RegelsemesterSS;
+
+    /**
+     * @ORM\Column(type="text", nullable=false)
+     * @Assert\NotBlank(message = "Die Regelsemester müssen gesetzt werden.")
+     */
+    protected $RegelsemesterWS;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Semesterplan", mappedBy="angebot", cascade={"all"})
+     */
+    protected $semesterplan;
+
+    ////// BEGIN OF IMPORTANT CODE //////
+
+    private $em;
+
+    /**
+     * Wird benötigt um auf den Entity-Manager zugreifen zu können.
+     *
+     * @param ObjectManager $objectManager
+     * @param ClassMetadata $classMetadata
+     */
+    public function injectObjectManager(ObjectManager $objectManager, ClassMetadata $classMetadata)
+    {
+        $this->em = $objectManager;
+    }
+
+    /**
+     * Get Code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        //DON'T REMOVE THIS FUNCTION!
+        $zuweisungen = $this->getVeranstaltung()->getModulcodezuweisung();
+        foreach ($zuweisungen as $zuweisung) {
+            if (
+                ($zuweisung->getStudiengang()   == $this->getStudiengang()) &&
+                ($zuweisung->getFachgebiet()    == $this->getFachgebiet()) &&
+                ($zuweisung->getVeranstaltung() == $this->getVeranstaltung())
+            ) {
+                if (!is_null($zuweisung->getOverwrite())) {
+                    return $zuweisung->getOverwrite();
+                } else {
+                    return $zuweisung->getCode();
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Set Code
+     *
+     * $this->veranstaltung MUSS gesetzt sein, bevor diese Funktion aufgerufen werden kann
+     *
+     * @param string $code
+     *
+     * @return Angebot
+     */
+    public function setCode($code)
+    {
+        //DON'T REMOVE THIS FUNCTION!
+        $zuweisungen = $this->getVeranstaltung()->getModulcodezuweisung();
+        foreach ($zuweisungen as $zuweisung) {
+            if (
+                ($zuweisung->getStudiengang()   == $this->getStudiengang()) &&
+                ($zuweisung->getFachgebiet()    == $this->getFachgebiet()) &&
+                ($zuweisung->getVeranstaltung() == $this->getVeranstaltung())
+            ) {
+                $zuweisung->setCode($code);
+            }
+        }
+
+        return $this;
+    }
+
+    ////// END OF IMPORTANT CODE //////
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->zuweisung = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->semesterplan = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get Angebots_ID
      *
-     * @return integer 
+     * @return integer
      */
-    public function getAngebots_ID()
+    public function getAngebotsID()
     {
         return $this->Angebots_ID;
     }
 
     /**
-     * Set module
+     * Set Angebotsart
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module
+     * @param string $angebotsart
      *
      * @return Angebot
      */
-    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $module = null)
+    public function setAngebotsart($angebotsart)
     {
-        $this->veranstaltung = $module;
-    
+        $this->Angebotsart = $angebotsart;
+
         return $this;
     }
 
     /**
-     * Get module
+     * Get Angebotsart
+     *
+     * @return string 
+     */
+    public function getAngebotsart()
+    {
+        return $this->Angebotsart;
+    }
+
+    /**
+     * Set AbweichenderNameDE
+     *
+     * @param string $abweichenderNameDE
+     *
+     * @return Angebot
+     */
+    public function setAbweichenderNameDE($abweichenderNameDE)
+    {
+        $this->AbweichenderNameDE = $abweichenderNameDE;
+
+        return $this;
+    }
+
+    /**
+     * Get AbweichenderNameDE
+     *
+     * @return string 
+     */
+    public function getAbweichenderNameDE()
+    {
+        return $this->AbweichenderNameDE;
+    }
+
+    /**
+     * Set AbweichenderNameEN
+     *
+     * @param string $abweichenderNameEN
+     *
+     * @return Angebot
+     */
+    public function setAbweichenderNameEN($abweichenderNameEN)
+    {
+        $this->AbweichenderNameEN = $abweichenderNameEN;
+
+        return $this;
+    }
+
+    /**
+     * Get AbweichenderNameEN
+     *
+     * @return string 
+     */
+    public function getAbweichenderNameEN()
+    {
+        return $this->AbweichenderNameEN;
+    }
+
+    /**
+     * Set veranstaltung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung
+     *
+     * @return Angebot
+     */
+    public function setVeranstaltung(\FHBingen\Bundle\MHBBundle\Entity\Veranstaltung $veranstaltung)
+    {
+        $this->veranstaltung = $veranstaltung;
+
+        return $this;
+    }
+
+    /**
+     * Get veranstaltung
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Veranstaltung 
      */
@@ -180,7 +338,7 @@ class Angebot
     public function setFachgebiet(\FHBingen\Bundle\MHBBundle\Entity\Fachgebiet $fachgebiet = null)
     {
         $this->fachgebiet = $fachgebiet;
-    
+
         return $this;
     }
 
@@ -201,10 +359,10 @@ class Angebot
      *
      * @return Angebot
      */
-    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null)
+    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
     {
         $this->studiengang = $studiengang;
-    
+
         return $this;
     }
 
@@ -218,153 +376,86 @@ class Angebot
         return $this->studiengang;
     }
 
+
     /**
-     * Set Angebotsart
+     * Set RegelsemesterSS
      *
-     * @param string $angebotsart
+     * @param string $regelsemesterSS
      *
      * @return Angebot
      */
-    public function setAngebotsart($angebotsart)
+    public function setRegelsemesterSS($regelsemesterSS)
     {
-        $this->Angebotsart = $angebotsart;
-    
+        $this->RegelsemesterSS = $regelsemesterSS;
+
         return $this;
     }
 
     /**
-     * Get Angebotsart
+     * Get RegelsemesterSS
      *
      * @return string 
      */
-    public function getAngebotsart()
+    public function getRegelsemesterSS()
     {
-        return $this->Angebotsart;
+        return $this->RegelsemesterSS;
     }
 
     /**
-     * Set Code
+     * Set RegelsemesterWS
      *
-     * @param string $code
+     * @param string $regelsemesterWS
      *
      * @return Angebot
      */
-    public function setCode($code)
+    public function setRegelsemesterWS($regelsemesterWS)
     {
-        $this->Code = $code;
-    
+        $this->RegelsemesterWS = $regelsemesterWS;
+
         return $this;
     }
 
     /**
-     * Get Code
+     * Get RegelsemesterWS
      *
      * @return string 
      */
-    public function getCode()
+    public function getRegelsemesterWS()
     {
-        return $this->Code;
+        return $this->RegelsemesterWS;
     }
 
     /**
-     * Set abweichender_Titel_DE
+     * Add semesterplan
      *
-     * @param string $abweichenderNameDE
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
      *
-     * @return Angebot
+     * @return Veranstaltung
      */
-    public function setAbweichenderNameDE($abweichenderNameDE)
+    public function addSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
     {
-        $this->AbweichenderNameDE = $abweichenderNameDE;
-    
-        return $this;
-    }
-
-    /**
-     * Get abweichender_Titel_DE
-     *
-     * @return string 
-     */
-    public function getAbweichenderNameDE()
-    {
-        return $this->AbweichenderNameDE;
-    }
-
-    /**
-     * Set abweichender_Titel_EN
-     *
-     * @param string $abweichenderNameEN
-     *
-     * @return Angebot
-     */
-    public function setAbweichenderNameEN($abweichenderNameEN)
-    {
-        $this->AbweichenderNameEN = $abweichenderNameEN;
-    
-        return $this;
-    }
-
-    /**
-     * Get abweichender_Titel_EN
-     *
-     * @return string 
-     */
-    public function getAbweichenderNameEN()
-    {
-        return $this->AbweichenderNameEN;
-    }
-
-    /**
-     * Get Angebots_ID
-     *
-     * @return integer 
-     */
-    public function getAngebotsID()
-    {
-        return $this->Angebots_ID;
-    }
-
-    /**
-     * Add zuweisung
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
-     *
-     * @return Angebot
-     */
-    public function addZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
-    {
-        $this->zuweisung[] = $zuweisung;
+        $this->semesterplan[] = $semesterplan;
 
         return $this;
     }
 
     /**
-     * Remove zuweisung
+     * Remove semesterplan
      *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan
      */
-    public function removeZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
+    public function removeSemesterplan(\FHBingen\Bundle\MHBBundle\Entity\Semesterplan $semesterplan)
     {
-        $this->zuweisung->removeElement($zuweisung);
+        $this->semesterplan->removeElement($semesterplan);
     }
 
     /**
-     * Get zuweisung
+     * Get semesterplan
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getZuweisung()
+    public function getSemesterplan()
     {
-        return $this->zuweisung;
+        return $this->semesterplan;
     }
-
-//    /**
-//     * @return ModulBeschreibung
-//     */
-//    public function getModulBeschreibung() {
-//        $modulBeschreibung = new ModulBeschreibung();
-//        $modulBeschreibung->setAngebot($this);
-//
-//        return $modulBeschreibung;
-//    }
 }

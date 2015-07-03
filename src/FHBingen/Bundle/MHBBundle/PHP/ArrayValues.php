@@ -8,7 +8,13 @@
 
 namespace FHBingen\Bundle\MHBBundle\PHP;
 
-class ArrayValues {
+/**
+ * Class ArrayValues
+ *
+ * @package FHBingen\Bundle\MHBBundle\PHP
+ */
+class ArrayValues
+{
 
     /**
      * Häufigkeit
@@ -156,13 +162,10 @@ class ArrayValues {
      * wird benutzt in:
      * - Form/PlanungType.php
      * - Form/VeranstaltungType.php
-     *
-     * TODO: 'Prüfungsleistung' ändern zu 'bestandene Prüfungsleistung'
-     * TODO: 'Prüfungsleistung' ändern zu 'bestandene Prüfungsleistung'
      */
     public static $voraussetzungLP = array(
-        'Prüfungsleistung' => 'bestandene Prüfungsleistung',
-        'Studienleistung' => 'bestandene Studienleistung',
+        'bestandene Prüfungsleistung' => 'bestandene Prüfungsleistung',
+        'bestandene Studienleistung' => 'bestandene Studienleistung',
     );
 
     /**

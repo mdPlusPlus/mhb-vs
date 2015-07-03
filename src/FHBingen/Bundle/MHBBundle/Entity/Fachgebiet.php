@@ -7,19 +7,23 @@
  */
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Fachgebiet
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Fachgebiet")
  * @ORM\HasLifecycleCallbacks
  */
-
 class Fachgebiet
 {
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $string = $this->getTitel();
@@ -29,7 +33,7 @@ class Fachgebiet
 
     /**
      * @ORM\Column(type="integer")
-     * @ORM\ID
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $Fachgebiets_ID;
@@ -51,66 +55,62 @@ class Fachgebiet
     protected $Titel;
 
     /**
-     * Get Fachgebiets_ID
-     *
-     * @return integer 
+     * @ORM\Column(type="string", length=2, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/[A-ZÄÖÜ]{2,2}/",
+     *     match=true,
+     *     message="Das Fachgebietskürzel (Pflichtfach) darf nur aus zwei Großbuchstaben bestehen."
+     * )
      */
-    public function getFachgebietsID()
-    {
-        return $this->Fachgebiets_ID;
-    }
+    protected $KuerzelP; //TODO: nullable=false, wenn alle Fachgebiete ihre Kürzel bekommen haben
 
     /**
-     * Set Titel
-     *
-     * @param string $titel
-     * @return Fachgebiet
+     * @ORM\Column(type="string", length=2, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/[A-ZÄÖÜ]{2,2}/",
+     *     match=true,
+     *     message="Das Fachgebietskürzel (Wahlpflichfach) darf nur aus zwei Großbuchstaben bestehen."
+     * )
      */
-    public function setTitel($titel)
-    {
-        $this->Titel = $titel;
-    
-        return $this;
-    }
-
-    /**
-     * Get Titel
-     *
-     * @return string 
-     */
-    public function getTitel()
-    {
-        return $this->Titel;
-    }
-
-
-    /*Abhaengigkeiten*/
-
-
-    /*Angebot*/
+    protected $KuerzelWP; //TODO: nullable=false, wenn alle Fachgebiete ihre Kürzel bekommen haben
 
     /**
      * @ORM\OneToMany(targetEntity="Angebot", mappedBy="fachgebiet", cascade={"all"})
      * */
     protected $angebot;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="fachgebiete")
+     * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
+     */
+    protected $studiengang;
+
+    /**
+     * @ORM\OneToMany(targetEntity="FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung", mappedBy="fachgebiet")
+     */
+    private $modulcodezuweisung;
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->angebot = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->angebot            = new ArrayCollection();
+        $this->modulcodezuweisung = new ArrayCollection();
     }
 
     /**
      * Add angebot
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot
+     *
      * @return Fachgebiet
      */
     public function addAngebot(\FHBingen\Bundle\MHBBundle\Entity\Angebot $angebot)
     {
+        $angebot->setFachgebiet($this);
         $this->angebot[] = $angebot;
-    
+
         return $this;
     }
 
@@ -127,41 +127,150 @@ class Fachgebiet
     /**
      * Get angebot
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAngebot()
     {
         return $this->angebot;
     }
 
-    /*Fachgbiet/Studiengang*/
+    /**
+     * Get Fachgebiets_ID
+     *
+     * @return integer 
+     */
+    public function getFachgebietsID()
+    {
+        return $this->Fachgebiets_ID;
+    }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="fachgebiete")
-     * @ORM\JoinColumn(name="studiengang", referencedColumnName="Studiengang_ID", nullable=false)
+     * Set Titel
+     *
+     * @param string $titel
+     *
+     * @return Fachgebiet
      */
-    protected $studiengang;
+    public function setTitel($titel)
+    {
+        $this->Titel = $titel;
+
+        return $this;
+    }
+
+    /**
+     * Get Titel
+     *
+     * @return string 
+     */
+    public function getTitel()
+    {
+        return $this->Titel;
+    }
+
+    /**
+     * Set KuerzelP
+     *
+     * @param string $kuerzelP
+     *
+     * @return Fachgebiet
+     */
+    public function setKuerzelP($kuerzelP)
+    {
+        $this->KuerzelP = $kuerzelP;
+
+        return $this;
+    }
+
+    /**
+     * Get KuerzelP
+     *
+     * @return string 
+     */
+    public function getKuerzelP()
+    {
+        return $this->KuerzelP;
+    }
+
+    /**
+     * Set KuerzelWP
+     *
+     * @param string $kuerzelWP
+     *
+     * @return Fachgebiet
+     */
+    public function setKuerzelWP($kuerzelWP)
+    {
+        $this->KuerzelWP = $kuerzelWP;
+
+        return $this;
+    }
+
+    /**
+     * Get KuerzelWP
+     *
+     * @return string 
+     */
+    public function getKuerzelWP()
+    {
+        return $this->KuerzelWP;
+    }
 
     /**
      * Set studiengang
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang
+     *
      * @return Fachgebiet
      */
-    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang = null)
+    public function setStudiengang(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $studiengang)
     {
         $this->studiengang = $studiengang;
-    
+
         return $this;
     }
 
     /**
-     * Get hat
+     * Get studiengang
      *
      * @return \FHBingen\Bundle\MHBBundle\Entity\Studiengang 
      */
     public function getStudiengang()
     {
         return $this->studiengang;
+    }
+
+    /**
+     * Add modulcodezuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     *
+     * @return Fachgebiet
+     */
+    public function addModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
+    {
+        $this->modulcodezuweisung[] = $modulcodezuweisung;
+
+        return $this;
+    }
+
+    /**
+     * Remove modulcodezuweisung
+     *
+     * @param \FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung
+     */
+    public function removeModulcodezuweisung(\FHBingen\Bundle\MHBBundle\Entity\Modulcodezuweisung $modulcodezuweisung)
+    {
+        $this->modulcodezuweisung->removeElement($modulcodezuweisung);
+    }
+
+    /**
+     * Get modulcodezuweisung
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getModulcodezuweisung()
+    {
+        return $this->modulcodezuweisung;
     }
 }

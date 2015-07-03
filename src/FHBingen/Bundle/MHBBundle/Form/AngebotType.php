@@ -7,12 +7,9 @@
  */
 namespace FHBingen\Bundle\MHBBundle\Form;
 
-use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
 /**
  * Class AngebotType
@@ -44,14 +41,10 @@ class AngebotType extends AbstractType
     {
         $builder->add('fachgebiet', 'entity', array(
                 'label' => "Fachgebiet:",
-                'required' => true,
+                'required' => false,
                 'class' => 'FHBingenMHBBundle:Fachgebiet',
                 'query_builder' => function(EntityRepository $er) {
-                    if ($this->isWahl) {
-                        return $er->createQueryBuilder('f')->select('')->where('f.studiengang = ' . $this->studiengangID, 'f.Titel like \'%Wahlpflicht%\' ');
-                    } else {
-                        return $er->createQueryBuilder('f')->select('')->where('f.studiengang = ' . $this->studiengangID, 'f.Titel not like \'%Wahlpflicht%\'');
-                    }
+                        return $er->createQueryBuilder('f')->select('')->where('f.studiengang = ' . $this->studiengangID);
                 },
             ));
 
@@ -63,15 +56,14 @@ class AngebotType extends AbstractType
                 'expanded' => true,
                 'class' => 'FHBingenMHBBundle:Vertiefung',
                 'query_builder' => function(EntityRepository $er) {
-                    //SELECT * FROM `Fachgebiet` WHERE `studiengang` = 2
                     return $er->createQueryBuilder('v')->select('')->where('v.studiengang = ' . $this->studiengangID);
                 },
             ));
         }
 
         $builder
-            ->add('abweichenderNameDE', 'text', array('label' => 'abweichender Titel (Deutsch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
-            ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
+            ->add('abweichenderNameDE', 'text', array('label' => 'abweichender Titel (Deutsch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass', 'maxlength' => '70')))
+            ->add('abweichenderNameEN', 'text', array('label' => 'abweichender Titel (Englisch): ', 'required' => false, 'attr' => array('class' => 'sonstigesClass', 'maxlength' => '70')));
     }
 
     /**

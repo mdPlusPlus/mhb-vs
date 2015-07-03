@@ -11,11 +11,9 @@ namespace FHBingen\Bundle\MHBBundle\Form;
 use FHBingen\Bundle\MHBBundle\PHP\ArrayValues;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 /**
@@ -43,8 +41,9 @@ class VeranstaltungType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
             ->add('beauftragter', 'entity', array('label' => "Modulbeauftragte/r [#]: ", 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent'))
             ->add('kuerzel', 'text', array('label' => 'Modulkürzel [#]: ', 'required' => true))
             ->add('name', 'text', array('label' => 'Modulname (deutsch) [#]: ', 'required' => true, 'attr' => array('class' => 'modulNameClass', 'maxlength' => '70')))
@@ -54,14 +53,15 @@ class VeranstaltungType extends AbstractType
             ->add('kontaktzeitSonstige', 'integer', array('label' => 'Kontaktzeit sonstige (in Stunden) [#]: ', 'required' => true, 'attr' => array('min' => '0')))
             ->add('selbststudium', 'integer', array('label' => false, 'required' => true, 'attr' => array('min' => '0', 'hidden' => true)))
             ->add('gruppengroesse', 'integer', array('label' => 'Gruppengröße [#]: ', 'required' => true, 'attr' => array('min' => '0')))
+            ->add('lehrform', 'textarea', array('label' => 'Lehrformen [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('lernergebnisse', 'textarea', array('label' => 'Lernergebnisse [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('inhalte', 'textarea', array('label' => 'Lehrinhalte [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('sprache', 'choice', array('label' => 'Sprache [#]: ', 'required' => true, 'choices' => ArrayValues::$lang))
             ->add('SpracheSonstiges', 'text', array('label' => 'Sprache Sonstiges: ', 'required' => false, 'attr' => array('class' => 'sonstigesClass')))
             ->add('literatur', 'textarea', array('label' => 'Literaturverweise [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
             ->add('leistungspunkte', 'choice', array('label' => 'Leistungspunkte [#]: ', 'required' => true, 'choices' => ArrayValues::$lp))
-            ->add('voraussetzungInh', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('PruefungsleistungSonstiges', 'text', array('label' => 'Erläuterungen zur Vergabe von LP:', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
+            ->add('voraussetzungInhalte', 'textarea', array('label' => 'Voraussetzung inhaltlich [#]: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
+            ->add('erlaeuterungenLP', 'text', array('label' => 'Erläuterungen zur Vergabe von LP:', 'required' => false, 'attr' => array('class' => 'sonstigesClass')));
 
     }
 
@@ -73,6 +73,13 @@ class VeranstaltungType extends AbstractType
         $input = $event->getData();
         $form = $event->getForm();
         $encoder = new JsonEncoder();
+
+//        $lehrform = $input->getLehrform();
+//        $lehrformOptions = array('label' => 'Lehrformen:', 'required' => false);
+//        if ($lehrform == null) {
+//            $lehrformOptions['data'] = 'Vorlesungen mit Tafel und Videoprojektion'; //default
+//        }
+//        $form->add('lehrform', 'textarea', $lehrformOptions);
 
         $dauer = $input->getDauer();
         $dauerOptions = array('label' => 'Dauer:', 'required' => false, 'attr' => array('min' => '1'));
@@ -130,11 +137,10 @@ class VeranstaltungType extends AbstractType
         $form->add('lehrveranstaltungen', 'choice', $lehrveranstaltungenChoiceOptions);
 
 
-
-
         //$lehrende = $input->getLehrende();
         $lehrendeOptions = array('label' => false, 'type' => new LehrendeType(),
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+            'cascade_validation'    => true,    //wichtig für collections!
             'options' => array(
                 'required' => false,
                 'attr' => array(
@@ -142,11 +148,12 @@ class VeranstaltungType extends AbstractType
                 )
             )
         );
-        $form->add('lehrende', 'collection', $lehrendeOptions);
+        $form->add('lehrende', 'collection', $lehrendeOptions); //TODO: 'cascade_validation' testen statt UniqueConstraintViolationException
 
-        //$voraussetzung =$input->getForderung();
+        //$voraussetzung = $input->getForderung();
         $voraussetzungOptions = array('label' => false, 'type' => new VoraussetzungType($this->modulID),
             'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+            'cascade_validation'    => true,    //wichtig für collections!
             'options' => array(
                 'required' => false,
                 'attr' => array(
@@ -164,7 +171,8 @@ class VeranstaltungType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Veranstaltung'
+            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Veranstaltung',
+            'cascade_validation'    => true,   //wichtig für embedded forms!
         ));
     }
 

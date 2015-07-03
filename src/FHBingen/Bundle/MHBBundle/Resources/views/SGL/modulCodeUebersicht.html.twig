@@ -11,27 +11,30 @@
         });
     </script>
     <div class="table-responsive">
-        <h3>Module ohne Modulcode aus Studiengang {{ studiengang.__toString() }}</h3>
-        {% if dummyAngebote is not empty %}
+        <h4>Module ohne Modulcode aus Studiengang {{ studiengang.__toString() }}</h4>
+        {% if angeboteOhneCode is not empty %}
             <table id="table-without-code" class="table table-bordered tablesorter">
                 <thead>
                 <tr>
                     <th>Modultitel</th>
-                    <th style="min-width: 130px; width: 12%">Modulcode</th>
+                    {#<th style="min-width: 130px; width: 12%">Modulcode</th>#}
                     <th style="min-width: 130px; width: 12%">Erstelldatum</th>
                     <th style="min-width: 130px; width: 12%">Autor</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for dummy in dummyAngebote %}
+                {% for angebotOhneCode in angeboteOhneCode %}
                     <tr>
-                        <td><a href="{{ path('modulCodeErstellung', {'id': dummy.getVeranstaltung().getModulID(),
-                                'studiengangid': dummy.getStudiengang().getStudiengangID()}) }}">{{ dummy.getVeranstaltung() }}</a>
+                        <td>
+                            <a href="{{ path('modulCodeErstellung', {
+                                'studiengangID':   angebotOhneCode.getStudiengang().getStudiengangID(),
+                                'veranstaltungID': angebotOhneCode.getVeranstaltung().getModulID(),
+                                }) }}
+                            ">{{ angebotOhneCode.getVeranstaltung() }}</a>
                         </td>
-                        <td>{{ dummy.getCode() }}</td>
                         {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
-                        <td>{{ dummy.getVeranstaltung().getErstellungsdatum()|date('d.m.Y') }}</td>
-                        <td>{{ dummy.getVeranstaltung().getAutor() }}</td>
+                        <td>{{ angebotOhneCode.getVeranstaltung().getErstellungsdatum()|date('d.m.Y') }}</td>
+                        <td>{{ angebotOhneCode.getVeranstaltung().getAutor() }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -40,7 +43,7 @@
             <p>Es gibt zurzeit keine Angebote ohne Modulcode in Ihrem Studiengang.</p>
         {% endif %}
 
-        <h3 style="margin-top: 50px">Module mit Modulcode aus Studiengang {{ studiengang.__toString() }}</h3>
+        <h4 style="margin-top: 50px">Module mit Modulcode aus Studiengang {{ studiengang.__toString() }}</h4>
         <table id="table-with-code" class="table table-bordered tablesorter">
             <thead>
             <tr>
@@ -51,15 +54,19 @@
             </tr>
             </thead>
             <tbody>
-            {% for normal in angebote %}
+            {% for angebotMitCode in angeboteMitCode %}
                 <tr>
-                    <td><a href="{{ path('modulCodeErstellung', {'id': normal.getVeranstaltung().getModulID(),
-                            'studiengangid': normal.getStudiengang().getStudiengangID()}) }}">{{ normal.getVeranstaltung() }}</a>
+                    <td>
+                        <a href="{{ path('modulCodeErstellung', {
+                            'studiengangID':   angebotMitCode.getStudiengang().getStudiengangID(),
+                            'veranstaltungID': angebotMitCode.getVeranstaltung().getModulID(),
+                            }) }}
+                        ">{{ angebotMitCode.getVeranstaltung() }}</a>
                     </td>
-                    <td>{{ normal.getCode() }}</td>
+                    <td>{{ angebotMitCode.getCode() }}</td>
                     {# bei Date wird immer |date('Y-m-d') benötigt um als String zu casten #}
-                    <td>{{ normal.getVeranstaltung().getErstellungsdatum()|date('d.m.Y') }}</td>
-                    <td>{{ normal.getVeranstaltung().getAutor() }}</td>
+                    <td>{{ angebotMitCode.getVeranstaltung().getErstellungsdatum()|date('d.m.Y') }}</td>
+                    <td>{{ angebotMitCode.getVeranstaltung().getAutor() }}</td>
                 </tr>
             {% endfor %}
             </tbody>

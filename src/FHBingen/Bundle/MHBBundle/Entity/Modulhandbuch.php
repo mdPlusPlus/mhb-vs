@@ -8,21 +8,22 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Studiengang
+ *
  * @package FHBingen\Bundle\MHBBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="Modulhandbuch")
  * @ORM\HasLifecycleCallbacks
  */
-
 class Modulhandbuch
 {
-
+    /**
+     * @return string
+     */
     public function __toString()
     {
         //TODO richtig? getter?
@@ -31,6 +32,9 @@ class Modulhandbuch
         return $string;
     }
 
+    /**
+     * @return string
+     */
     public function getMhbTitel()
     {
         return 'MHB_' . $this->getGehoertZu()->getKuerzel() . '_' . $this->getGueltigAb() . '_V' . $this->getVersionsnummer();
@@ -67,11 +71,17 @@ class Modulhandbuch
      */
     protected $Beschreibung;
 
-    public function __construct()
-    {
-        $this->zuweisung = new ArrayCollection();
-        //TODO: funktioniert das?
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="gueltigAbSemester")
+     * @ORM\JoinColumn(name="gueltigAb", referencedColumnName="Semester", nullable=false)
+     */
+    protected $gueltigAb;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="modulhandbuch")
+     * @ORM\JoinColumn(name="gehoertZu", referencedColumnName="Studiengang_ID", nullable=false)
+     */
+    protected $gehoertZu;
 
     /**
      * Get MHB_ID
@@ -84,20 +94,21 @@ class Modulhandbuch
     }
 
     /**
-     * Set MHB_Versionsnummer
+     * Set Versionsnummer
      *
-     * @param integer $mHBVersionsnummer
+     * @param integer $mhbVersionsnummer
+     *
      * @return Modulhandbuch
      */
-    public function setVersionsnummer($mHBVersionsnummer)
+    public function setVersionsnummer($mhbVersionsnummer)
     {
-        $this->Versionsnummer = $mHBVersionsnummer;
-    
+        $this->Versionsnummer = $mhbVersionsnummer;
+
         return $this;
     }
 
     /**
-     * Get MHB_Versionsnummer
+     * Get Versionsnummer
      *
      * @return integer 
      */
@@ -110,12 +121,13 @@ class Modulhandbuch
      * Set Erstellungsdatum
      *
      * @param \DateTime $erstellungsdatum
+     *
      * @return Modulhandbuch
      */
     public function setErstellungsdatum($erstellungsdatum)
     {
         $this->Erstellungsdatum = $erstellungsdatum;
-    
+
         return $this;
     }
 
@@ -133,12 +145,13 @@ class Modulhandbuch
      * Set Beschreibung
      *
      * @param string $beschreibung
+     *
      * @return Modulhandbuch
      */
     public function setBeschreibung($beschreibung)
     {
         $this->Beschreibung = $beschreibung;
-    
+
         return $this;
     }
 
@@ -152,41 +165,17 @@ class Modulhandbuch
         return $this->Beschreibung;
     }
 
-    /*Abhaengigkeiten*/
-
-    /*Angebot*/
-
-    /**
-     * @ORM\OneToMany(targetEntity="ModulhandbuchZuweisung" , mappedBy="mhb" , cascade={"all"})
-     */
-    private $zuweisung;
-
-    /*Modulhandbuch/Semester*/
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="gueltigAbSemester")
-     * @ORM\JoinColumn(name="gueltigAb", referencedColumnName="Semester", nullable=false)
-     */
-    protected $gueltigAb;
-
-    /*Modulhandbuch/Studiengang*/
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Studiengang", inversedBy="studiengang")
-     * @ORM\JoinColumn(name="gehoertZu", referencedColumnName="Studiengang_ID", nullable=false)
-     */
-    protected $gehoertZu;
-
     /**
      * Set gueltig_ab
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Semester $gueltigAb
+     *
      * @return Modulhandbuch
      */
-    public function setGueltigAb(\FHBingen\Bundle\MHBBundle\Entity\Semester $gueltigAb = null)
+    public function setGueltigAb(\FHBingen\Bundle\MHBBundle\Entity\Semester $gueltigAb)
     {
         $this->gueltigAb = $gueltigAb;
-    
+
         return $this;
     }
 
@@ -204,12 +193,13 @@ class Modulhandbuch
      * Set gehoert_zu
      *
      * @param \FHBingen\Bundle\MHBBundle\Entity\Studiengang $gehoertZu
+     *
      * @return Modulhandbuch
      */
-    public function setGehoertZu(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $gehoertZu = null)
+    public function setGehoertZu(\FHBingen\Bundle\MHBBundle\Entity\Studiengang $gehoertZu)
     {
         $this->gehoertZu = $gehoertZu;
-    
+
         return $this;
     }
 
@@ -223,48 +213,23 @@ class Modulhandbuch
         return $this->gehoertZu;
     }
 
+    /**
+     * @return mixed
+     */
     public function getAutor()
     {
      return $this->Autor;
     }
 
+    /**
+     * @param string $autor
+     *
+     * @return $this
+     */
     public function setAutor($autor)
     {
         $this->Autor = $autor;
 
         return $this;
-    }
-
-    /**
-     * Add zuweisung
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
-     * @return Modulhandbuch
-     */
-    public function addZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
-    {
-        $this->zuweisung[] = $zuweisung;
-
-        return $this;
-    }
-
-    /**
-     * Remove zuweisung
-     *
-     * @param \FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung
-     */
-    public function removeZuweisung(\FHBingen\Bundle\MHBBundle\Entity\ModulhandbuchZuweisung $zuweisung)
-    {
-        $this->zuweisung->removeElement($zuweisung);
-    }
-
-    /**
-     * Get zuweisung
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getZuweisung()
-    {
-        return $this->zuweisung;
     }
 }

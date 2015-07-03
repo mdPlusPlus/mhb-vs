@@ -8,18 +8,25 @@
 
 namespace FHBingen\Bundle\MHBBundle\Entity;
 
-use Symfony\Component\Security\Core\Role\RoleInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * Class Role
+ *
+ * @package FHBingen\Bundle\MHBBundle\Entity
+ *
  * @ORM\Table(name="Roles")
  * @ORM\Entity()
  */
 class Role implements RoleInterface
 {
 
+    /**
+     * @return null|string
+     */
     public function __toString()
     {
 //TODO: Nach Abnahme de-kommentieren und testen!
@@ -60,6 +67,9 @@ class Role implements RoleInterface
      */
     private $users;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -88,12 +98,13 @@ class Role implements RoleInterface
      * Set name
      *
      * @param string $name
+     *
      * @return Role
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -111,30 +122,34 @@ class Role implements RoleInterface
      * Set role
      *
      * @param string $role
+     *
      * @return Role
      */
     public function setRole($role)
     {
         $this->role = $role;
-    
+
         return $this;
     }
 
     /**
      * Add users
      *
+     * @param UserInterface $users
+     *
      * @return Role
      */
     public function addUser(UserInterface $users)
     {
         $this->users[] = $users;
-    
+
         return $this;
     }
 
     /**
      * Remove users
      *
+     * @param UserInterface $users
      */
     public function removeUser(UserInterface $users)
     {

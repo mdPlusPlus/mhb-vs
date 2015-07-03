@@ -35,39 +35,47 @@ class StudiengangType extends AbstractType
             ->add('titel', 'text', array('label' => 'Titel: ', 'required' => true, 'attr' => array('class' => 'sonstigesClass')))
             ->add('kuerzel', 'text', array('label' => 'Kürzel: ', 'required' => true))
             ->add('beschreibung', 'textarea', array('label' => 'Beschreibung: ', 'required' => true, 'attr' => array('class' => 'textAreaClass')))
-            ->add('sgl', 'entity', array('label' => 'Studiengangleiter: ', 'required' => true, 'class' => 'FHBingenMHBBundle:Dozent',
+            ->add('sgl', 'entity', array(
+                'label' => 'Studiengangleiter: ',
+                'required' => true,
+                'class' => 'FHBingenMHBBundle:Dozent',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('s')
                         ->where('s.roles=2')
                         ->OrderBy('s.Nachname', 'ASC');
-                },))
-
-            //Ab hier neuer Merge mit VertiefungType und FachgebietType
-
-            //TODO: Asserts werden nicht angewendet!
-            ->add('richtung', 'collection', array('label' => false, 'type' => new VertiefungType(),
-                'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
-                'options' => array(
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'Vertiefung'
-                    )
-                    )
+                }
             ))
 
-            /*
-             * TODO:
-             *  - Asserts werden nicht angewendet!
-             *  - außerdem ist es möglich Studiengänge ohne Fachgebiete anzulegen, in denen dann keine Angebote erstellt werden können, weil keine Fachgebiete existieren.
-             */
-            ->add('fachgebiete', 'collection', array('label' => false, 'type' => new FachgebietType(),
-                'delete_empty' => true, 'allow_add' => true, 'allow_delete' => true,
+            ->add('richtung', 'collection', array(
+                'type'                  => new VertiefungType(),
+                'label'                 => false,
+                'allow_add'             => true,
+                'allow_delete'          => true,
+                'delete_empty'          => true,
+                'cascade_validation'    => true,    //wichtig für collections!
+                //'error_bubbling'        => true,
                 'options' => array(
-                    'required' => true,
+                    'required'          => false,
                     'attr' => array(
-                        'class' => 'Fachgebiet'
-                    ),
+                        'class'         => 'Vertiefung'
                     )
+                )
+            ))
+
+            ->add('fachgebiete', 'collection', array(
+                'type'                  => new FachgebietType(),
+                'label'                 => false,
+                'allow_add'             => true,
+                'allow_delete'          => true,
+                'delete_empty'          => true,
+                'cascade_validation'    => true,    //wichtig für collections!
+                //'error_bubbling'        => true,
+                'options' => array(
+                    'required'          => true,
+                    'attr' => array(
+                        'class'         => 'Fachgebiet'
+                    )
+                )
             ));
     }
 
@@ -77,7 +85,8 @@ class StudiengangType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FHBingen\Bundle\MHBBundle\Entity\Studiengang'
+            'data_class'            => 'FHBingen\Bundle\MHBBundle\Entity\Studiengang',
+            'cascade_validation'    => true,   //wichtig für embedded forms!
         ));
     }
 
