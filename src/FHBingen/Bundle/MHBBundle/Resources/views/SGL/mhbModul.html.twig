@@ -61,7 +61,7 @@
         {% if modulBeschreibung.getAngebot().getFachgebiet() is not null %}
             {% set fachgebietString = 'Wahlpflichtfächer ' ~ modulBeschreibung.getAngebot().getFachgebiet().getTitel() %}
         {% else %}
-            {% set fachgebietString = 'Wahlpflichtfächer (ohne Zuordnung zu Fachgebieten)' %}
+            {% set fachgebietString = 'Wahlpflichtfächer ohne Zuordnung zu Fachgebieten' %}
         {% endif %}
     {% endif %}
 
