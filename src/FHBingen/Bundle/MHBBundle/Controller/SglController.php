@@ -391,6 +391,7 @@ class SglController extends Controller
             'footer-left' => 'Fachhochschule Bingen',
             'footer-center' => $footerText,
             'footer-right' => '[page]/[toPage]',
+            'footer-spacing' => 5, //in mm
             'title' => $titel,
             'disable-javascript' => true,
             //'no-outline' => true,
