@@ -41,6 +41,9 @@ class SglController extends Controller
      * Pfad zur Linux-Binary von wkhtmltopdf
      */
     const WKHTMLTOPDF_BIN_LIN = '../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64';
+    //const WKHTMLTOPDF_BIN_LIN = '/usr/bin/wkhtmltopdf';
+    //const WKHTMLTOPDF_BIN_LIN = '/usr/local/bin/wkhtmltopdf';
+
 
 
     /**
